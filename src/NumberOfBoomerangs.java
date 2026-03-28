@@ -8,7 +8,7 @@ import java.util.HashMap;
  *
  * Return the number of boomerangs.
  */
-class Solution {
+class NumberOfBoomerangs {
     public int numberOfBoomerangs(int[][] points) {
         int result = 0;
 

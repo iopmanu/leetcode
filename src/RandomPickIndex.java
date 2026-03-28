@@ -14,11 +14,11 @@ import java.util.random.RandomGeneratorFactory;
  * Solution(int[] nums) Initializes the object with the array nums.
  * int pick(int target) Picks a random index i from nums where nums[i] == target. If there are multiple valid i's, then each index should have an equal probability of returning.
  */
-class Solution {
+class RandomPickIndex {
     private final HashMap<Integer, List<Integer>> valueToIndex = new HashMap<>();
     private final RandomGenerator generator = RandomGeneratorFactory.getDefault().create();
 
-    public Solution(int[] nums) {
+    public RandomPickIndex(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             int value = nums[i];
             valueToIndex.computeIfAbsent(value, (v) -> new ArrayList<>()).add(i);
