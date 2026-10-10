@@ -23,8 +23,8 @@ def check(root, capture_json=None):
         "trees-and-lists", "dp-and-backtracking", "windows-and-prefixes",
         "greedy-and-intervals", "math-and-bits",
     }
-    if len(records) != 252:
-        errors.append(f"expected 252 submission records; found {len(records)}")
+    if len(records) != 369:
+        errors.append(f"expected 369 submission records; found {len(records)}")
     ids, problems, topics, hashes, paths = set(), set(), set(), set(), set()
     by_id = {}
     source_index = (root / "SOURCES.md").read_text(encoding="utf-8") if (root / "SOURCES.md").is_file() else ""
@@ -53,7 +53,11 @@ def check(root, capture_json=None):
             errors.append(f"problem ID/title mismatch: {sid}")
         if not re.fullmatch(r"[0-9a-f]{64}", record["sha256"]):
             errors.append(f"invalid SHA-256: {sid}")
-        if not record["url"].startswith(record["problem_url"] + "submissions/") or not record["url"].rstrip("/").endswith(f"/{sid}"):
+        allowed_source_urls = {
+            record["problem_url"] + f"submissions/{sid}",
+            f"https://leetcode.com/submissions/detail/{sid}",
+        }
+        if record["url"].rstrip("/") not in allowed_source_urls:
             errors.append(f"source URL/ID mismatch: {sid}")
         original = root / path
         if not original.is_file():
@@ -73,7 +77,7 @@ def check(root, capture_json=None):
     actual_paths = {p.relative_to(root).as_posix() for p in (root / "topics").glob("*/originals/*") if p.is_file()}
     for path in sorted(actual_paths - paths):
         errors.append(f"unlisted original: {path}")
-    for count, expected, name in [(len(problems), 167, "problems"), (len(hashes), 247, "distinct source hashes")]:
+    for count, expected, name in [(len(problems), 249, "problems"), (len(hashes), 359, "distinct source hashes")]:
         if count != expected:
             errors.append(f"expected {expected} {name}; found {count}")
     if topics != expected_topics:
@@ -83,7 +87,7 @@ def check(root, capture_json=None):
         try:
             capture = json.loads(capture_json.read_text(encoding="utf-8"))
             captured = {r["submission_id"]: r for r in capture}
-            if len(capture) != 252 or len(captured) != 252 or set(captured) != ids:
+            if len(capture) != 369 or len(captured) != 369 or set(captured) != ids:
                 errors.append("capture and manifest source IDs/counts differ")
             for sid in ids & set(captured):
                 record, original = by_id[sid], captured[sid]
@@ -111,7 +115,7 @@ def main():
         for error in errors:
             print(f"FAIL: {error}")
         return 1
-    print(f"PASS: 252 originals, 167 problems, 247 distinct code texts, 11 topics, {total_bytes:,} unchanged source bytes")
+    print(f"PASS: 369 originals, 249 problems, 359 distinct code texts, 11 topics, {total_bytes:,} unchanged source bytes")
     print("PASS: every original is linked from its topic and the complete source index")
     if args.capture_json:
         print("PASS: all original files also match the supplied captured code strings byte for byte")

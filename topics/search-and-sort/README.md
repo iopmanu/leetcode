@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**21 captured problems · 51 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**35 captured problems · 71 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Pattern reminders
 
@@ -56,6 +56,46 @@ Partition smaller sorted array so left side has ceil(total/2), enforce maxLeft<=
 - [Original 2147722433](originals/4__2147722433.cpp) · [LeetCode submission](https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/2147722433/)
 - [Original 2147703761](originals/4__2147703761.cpp) · [LeetCode submission](https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/2147703761/)
 - [Original 1621118867](originals/4__1621118867.cpp) · [LeetCode submission](https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/1621118867/)
+
+### 15. 3Sum
+
+[Problem](https://leetcode.com/problems/3sum/) · Tags: Sorting, Two pointers, Deduplication
+
+Sort, fix one index, opposite-pointer scan. Older version inserts triples in a set; newer skips duplicates in place and appends to vector.
+
+**Original-code context:** Sorting mutates nums. The newer source skips duplicates directly and uses int for the three-value sum; nums.size()-2 relies on the original n>=3 contract. The older ordered-set variant adds deduplication overhead to the quadratic scan.
+
+**Captured variants:** 2 accepted C++ submissions captured; all original versions are retained.
+
+- [Original 2147771319](originals/15__2147771319.cpp) · [LeetCode submission](https://leetcode.com/problems/3sum/submissions/2147771319/)
+- [Original 2131829341](originals/15__2131829341.cpp) · [LeetCode submission](https://leetcode.com/problems/3sum/submissions/2131829341/)
+
+### 18. 4Sum
+
+[Problem](https://leetcode.com/problems/4sum/) · Tags: Sorting, Two pointers, Deduplication
+
+Sort, fix two positions, scan other two with opposite pointers. Two older versions deduplicate using set<vector<int>>; two newer submissions have identical code using duplicate skipping and vector output.
+
+**Original-code context:** The newer source widens target subtraction to long long; nums[k]+nums[m] remains int and relies on the original element bounds. Its two newest submission records have identical code. The scan is O(n cubed), with additional ordered-set deduplication work in the older variants.
+
+**Captured variants:** 4 accepted C++ submissions captured; all original versions are retained.
+
+- [Original 2147786844](originals/18__2147786844.cpp) · [LeetCode submission](https://leetcode.com/problems/4sum/submissions/2147786844/)
+- [Original 2147786330](originals/18__2147786330.cpp) · [LeetCode submission](https://leetcode.com/problems/4sum/submissions/2147786330/)
+- [Original 2127374675](originals/18__2127374675.cpp) · [LeetCode submission](https://leetcode.com/problems/4sum/submissions/2127374675/)
+- [Original 2025531964](originals/18__2025531964.cpp) · [LeetCode submission](https://leetcode.com/problems/4sum/submissions/2025531964/)
+
+### 26. Remove Duplicates from Sorted Array
+
+[Problem](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) · Tags: Sorted arrays, Read/write pointers
+
+Read index and write frontier; copy each new distinct value.
+
+**Original-code context:** O(n), O(1); returns 1 on an empty vector, which lies outside official nonempty constraint.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2147762984](originals/26__2147762984.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-duplicates-from-sorted-array/submissions/2147762984/)
 
 ### 33. Search in Rotated Sorted Array
 
@@ -123,6 +163,30 @@ Shrink ambiguous equal boundaries; otherwise identify sorted half and retain mat
 - [Original 2146739961](originals/81__2146739961.cpp) · [LeetCode submission](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/submissions/2146739961/)
 - [Original 2146727441](originals/81__2146727441.cpp) · [LeetCode submission](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/submissions/2146727441/)
 
+### 88. Merge Sorted Array
+
+[Problem](https://leetcode.com/problems/merge-sorted-array/) · Tags: Sorted arrays, Backward merge
+
+Backward merge into spare tail of nums1; copy remaining nums2 prefix.
+
+**Original-code context:** O(m+n), O(1); no need to copy remaining nums1.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2147757984](originals/88__2147757984.cpp) · [LeetCode submission](https://leetcode.com/problems/merge-sorted-array/submissions/2147757984/)
+
+### 128. Longest Consecutive Sequence
+
+[Problem](https://leetcode.com/problems/longest-consecutive-sequence/) · Tags: Hash set, Sequence starts
+
+Deduplicates nums into unordered_set, starts only at values with no predecessor, and scans successors.
+
+**Original-code context:** The linear expected-time argument depends on starting only at sequence minima.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2025467217](originals/128__2025467217.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-consecutive-sequence/submissions/2025467217/)
+
 ### 153. Find Minimum in Rotated Sorted Array
 
 [Problem](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) · Tags: Binary search, Rotated arrays
@@ -134,6 +198,43 @@ Find first index on low sorted run by comparing middle with fixed final value or
 - [Original 2146698709](originals/153__2146698709.cpp) · [LeetCode submission](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2146698709/)
 - [Original 2127418311](originals/153__2127418311.cpp) · [LeetCode submission](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2127418311/)
 - [Original 2024485741](originals/153__2024485741.cpp) · [LeetCode submission](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2024485741/)
+
+### 162. Find Peak Element
+
+[Problem](https://leetcode.com/problems/find-peak-element/) · Tags: Binary search, Slope
+
+Handles endpoint peaks, then binary-searches the interior using comparisons with both neighbors.
+
+**Original-code context:** Neighbor accesses are safe because the endpoint checks leave the search within [1,n-2].
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2024553766](originals/162__2024553766.cpp) · [LeetCode submission](https://leetcode.com/problems/find-peak-element/submissions/2024553766/)
+
+### 167. Two Sum II - Input Array Is Sorted
+
+[Problem](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) · Tags: Binary search, Sorted arrays
+
+Binary-search complement for each index: newer explicit search restricted to suffix, older lower_bound across whole array with distinct-index check.
+
+**Original-code context:** These actual sources use O(n log n) binary search, not the O(n) two-pointer method suggested by common solutions.
+
+**Captured variants:** 2 accepted C++ submissions captured; all original versions are retained.
+
+- [Original 2147765072](originals/167__2147765072.cpp) · [LeetCode submission](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/submissions/2147765072/)
+- [Original 2130670973](originals/167__2130670973.cpp) · [LeetCode submission](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/submissions/2130670973/)
+
+### 189. Rotate Array
+
+[Problem](https://leetcode.com/problems/rotate-array/) · Tags: Arrays, Reversal
+
+k modulo n; reverse final k elements, reverse prefix, reverse entire array.
+
+**Original-code context:** O(n) time/O(1) space; assumes nonempty input, as the problem requires.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2147800911](originals/189__2147800911.cpp) · [LeetCode submission](https://leetcode.com/problems/rotate-array/submissions/2147800911/)
 
 ### 215. Kth Largest Element in an Array
 
@@ -150,6 +251,18 @@ Hoare-style partition around middle element, recurse only partition containing z
 - [Original 2132995910](originals/215__2132995910.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132995910/)
 - [Original 2132966164](originals/215__2132966164.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132966164/)
 - [Original 2132965197](originals/215__2132965197.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132965197/)
+
+### 283. Move Zeroes
+
+[Problem](https://leetcode.com/problems/move-zeroes/) · Tags: Arrays, Stable compaction
+
+Scan right, swap nonzero into left frontier when needed, advance left if nonzero.
+
+**Original-code context:** Stable nonzero order, O(n), O(1).
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2126091678](originals/283__2126091678.cpp) · [LeetCode submission](https://leetcode.com/problems/move-zeroes/submissions/2126091678/)
 
 ### 287. Find the Duplicate Number
 
@@ -284,3 +397,64 @@ Find peak, binary-search ascending half first then descending half.
 
 - [Original 2147557289](originals/1095__2147557289.cpp) · [LeetCode submission](https://leetcode.com/problems/find-in-mountain-array/submissions/2147557289/)
 - [Original 2147556354](originals/1095__2147556354.cpp) · [LeetCode submission](https://leetcode.com/problems/find-in-mountain-array/submissions/2147556354/)
+
+### 1366. Rank Teams by Votes
+
+[Problem](https://leetcode.com/problems/rank-teams-by-votes/) · Tags: Custom sorting, Rank counts
+
+Map counts per rank; sort teams by descending lexicographic vote-count vector, alphabetically on full tie.
+
+**Original-code context:** Comparator uses map operator[] and may insert zero entries; O(VT+T² log T), O(T²) worst-case rank counts.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2119622834](originals/1366__2119622834.cpp) · [LeetCode submission](https://leetcode.com/problems/rank-teams-by-votes/submissions/2119622834/)
+
+### 1752. Check if Array Is Sorted and Rotated
+
+[Problem](https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/) · Tags: Rotated order, Linear scan
+
+Finds the first descending adjacent pair as a pivot, rejects any later descent, and requires the last value to be at most the first.
+
+**Original-code context:** Uses INT_MIN as the no-pivot sentinel.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2011679923](originals/1752__2011679923.cpp) · [LeetCode submission](https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/submissions/2011679923/)
+
+### 2517. Maximum Tastiness of Candy Basket
+
+[Problem](https://leetcode.com/problems/maximum-tastiness-of-candy-basket/) · Tags: Answer binary search, Greedy spacing
+
+Sorts prices in place, checks whether k prices can be picked at minimum spacing d, and maximizes feasible d.
+
+**Original-code context:** The two sources differ mainly in int versus size_t search/index variables. canPick starts from index 0 after already counting price[0], so d=0 counts that first price twice; zero remains feasible under the original contract. The unsigned high=mid-1 form relies on zero being feasible. Sorting mutates price.
+
+**Captured variants:** 2 accepted C++ submissions retained; distinctions are described above.
+
+- [Original 2024256883](originals/2517__2024256883.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-tastiness-of-candy-basket/submissions/2024256883/)
+- [Original 2024256312](originals/2517__2024256312.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-tastiness-of-candy-basket/submissions/2024256312/)
+
+### 2560. House Robber IV
+
+[Problem](https://leetcode.com/problems/house-robber-iv/) · Tags: Answer binary search, Greedy feasibility
+
+Searches a capability threshold. canRob greedily takes affordable houses and skips the following index; return left after low/high convergence.
+
+**Original-code context:** The predicate tests robbed>=k and is monotone in the threshold.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2024348959](originals/2560__2024348959.cpp) · [LeetCode submission](https://leetcode.com/problems/house-robber-iv/submissions/2024348959/)
+
+### 3759. Count Elements With at Least K Greater Values
+
+[Problem](https://leetcode.com/problems/count-elements-with-at-least-k-greater-values/) · Tags: Sorting, Custom binary search
+
+Sorts nums and invokes a custom upperBound for each value, then counts those with enough strictly greater elements.
+
+**Original-code context:** The helper saturates at n-1 rather than returning n like std::upper_bound. The extra nums[upb]>nums[i] check handles the no-greater-element case. The arithmetic is written as n-upb+1>k, equivalent to n-upb>=k; preserve this source wording in originals.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2012345290](originals/3759__2012345290.cpp) · [LeetCode submission](https://leetcode.com/problems/count-elements-with-at-least-k-greater-values/submissions/2012345290/)

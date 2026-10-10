@@ -1,6 +1,6 @@
 # My original LeetCode solutions: contest and interview handbook
 
-A source-first handbook of **VanyushaDoronin's captured accepted C++ solutions**: **252 submission records for 167 problems**, grouped into 11 topics.
+A source-first handbook of **VanyushaDoronin's captured accepted C++ solutions**: **369 submission records for 249 problems**, grouped into 11 topics.
 
 The C++ files in each `originals/` folder are unchanged. Their UTF-8 bytes match the captured code strings, including wrappers, includes, comments, names, indentation, trailing whitespace, debug output, and missing final newlines. Equivalent submissions and exact duplicate code texts remain separate records.
 
@@ -10,24 +10,24 @@ The C++ files in each `originals/` folder are unchanged. Their UTF-8 bytes match
 - [Source index](SOURCES.md): every captured problem and every original implementation.
 - [Coverage and limitations](COVERAGE.md): the inspected inventory and the known collection gaps.
 - [Validation](VALIDATION.md): source-fidelity checks and what they establish.
-- [Source manifest](sources.json): submission ID, problem, source URL, SHA-256, and local path for all 252 records.
+- [Source manifest](sources.json): submission ID, problem, source URL, SHA-256, and local path for all 369 records.
 - [Tab-separated source index](source-index.tsv): the same source records in a compact searchable format.
 
 ## Topics
 
 | Topic | Problems | Submissions |
 | --- | ---: | ---: |
-| [Range queries](topics/range-queries/README.md) | 6 | 7 |
-| [DSU and graphs](topics/dsu-and-graphs/README.md) | 14 | 22 |
-| [Search and sort](topics/search-and-sort/README.md) | 21 | 51 |
-| [Monotonic structures and heaps](topics/monotonic-and-heaps/README.md) | 17 | 34 |
-| [Design structures](topics/design-structures/README.md) | 11 | 16 |
-| [Strings and tries](topics/strings-and-tries/README.md) | 22 | 23 |
-| [Trees and lists](topics/trees-and-lists/README.md) | 26 | 34 |
-| [DP and backtracking](topics/dp-and-backtracking/README.md) | 11 | 12 |
-| [Windows and prefixes](topics/windows-and-prefixes/README.md) | 13 | 17 |
-| [Greedy and intervals](topics/greedy-and-intervals/README.md) | 13 | 19 |
-| [Math and bits](topics/math-and-bits/README.md) | 13 | 17 |
+| [Range queries](topics/range-queries/README.md) | 7 | 8 |
+| [DSU and graphs](topics/dsu-and-graphs/README.md) | 32 | 49 |
+| [Search and sort](topics/search-and-sort/README.md) | 35 | 71 |
+| [Monotonic structures and heaps](topics/monotonic-and-heaps/README.md) | 18 | 37 |
+| [Design structures](topics/design-structures/README.md) | 12 | 18 |
+| [Strings and tries](topics/strings-and-tries/README.md) | 34 | 40 |
+| [Trees and lists](topics/trees-and-lists/README.md) | 28 | 36 |
+| [DP and backtracking](topics/dp-and-backtracking/README.md) | 23 | 31 |
+| [Windows and prefixes](topics/windows-and-prefixes/README.md) | 17 | 21 |
+| [Greedy and intervals](topics/greedy-and-intervals/README.md) | 19 | 29 |
+| [Math and bits](topics/math-and-bits/README.md) | 24 | 29 |
 
 ## How to use it
 
@@ -59,4 +59,4 @@ For an additional byte-for-byte comparison with the separately retained normaliz
 python3 tools/check_originals.py --capture-json /path/to/normalized-records.json
 ```
 
-The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 50 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.
+The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 69 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.

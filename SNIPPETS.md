@@ -6,9 +6,9 @@ A snippet may need its original class context, standard includes, a LeetCode nod
 
 These are source fragments, not a newly designed standalone C++ library. `tools/verify_snippets.py` checks exact source equality, not algorithm correctness on arbitrary inputs.
 
-## Missing requested graph implementations
+## Requested graph implementations
 
-Dijkstra, Prim, and Yen have not been added: their original code was not captured before authenticated access was blocked. All three captured 1584 variants are Kruskal. The missing graph sources are listed in [COVERAGE.md](COVERAGE.md). They can be added unchanged when the original code becomes available.
+Dijkstra is now backed by the original [743 min-heap implementation](topics/dsu-and-graphs/originals/743__2158089044.cpp) and the [778 minimax variant](topics/dsu-and-graphs/originals/778__2159581294.cpp). Their unchanged [additive](topics/dsu-and-graphs/snippets/dijkstra-network-delay.cpp) and [minimax](topics/dsu-and-graphs/snippets/dijkstra-minimax-grid.cpp) excerpts are available directly. The recovered [2045 implementation](topics/dsu-and-graphs/originals/2045__2158128996.cpp) tracks two distinct arrival times with a deque; it is not Yen’s simple-path algorithm. No original Prim or Yen implementation has been verified in the captured code. The three captured 1584 variants and the sorted-edge 778 variant use Kruskal/DSU. Uncaptured implementations are not replaced by newly written code.
 
 ## [design-structures](topics/design-structures/README.md)
 
@@ -36,6 +36,13 @@ Original: [146. LRU Cache](topics/design-structures/originals/146__2143986850.cp
 
 Full original source, including class wrapper and LeetCode usage comment. Most-recent entries are moved to the front with list::splice; eviction removes the back entry. Assumes positive capacity; inserting into a zero-capacity cache reaches values.back() on an empty list. contains retains the original C++20 requirement. Relies on LeetCode-provided standard-library includes.
 
+### [RandomizedSet: dense values with swap-tail deletion](topics/design-structures/snippets/randomized-set-swap-tail.cpp)
+
+Original: [380. Insert Delete GetRandom O(1)](topics/design-structures/originals/380__2125968160.cpp#L1-L46) · [submission 2125968160](https://leetcode.com/problems/insert-delete-getrandom-o1/submissions/2125968160/)
+
+Full original RandomizedSet source, including its LeetCode usage comment. A value-to-index map tracks a dense vector; deletion swaps the last value into the removed slot and updates its index. Hash operations are expected constant time, and getRandom assumes a nonempty set. The original rand()%size can be biased and uses the existing RNG state; neither behavior has been rewritten. contains requires C++20.
+
+
 ## [dp-and-backtracking](topics/dp-and-backtracking/README.md)
 
 ### [Backtracking: choose, recurse, undo](topics/dp-and-backtracking/snippets/backtrack-n-queens.cpp)
@@ -55,6 +62,25 @@ Whole original Solution is retained because helper depends on the memoization me
 Original: [329. Longest Increasing Path in a Matrix](topics/dp-and-backtracking/originals/329__2139455187.cpp#L1-L56) · [submission 2139455187](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/submissions/2139455187/)
 
 Whole original Solution is retained because dfs depends on the dp member and longestIncreasingPath setup. Includes the original visited set, packed key, and C++20 contains call. The initial prev = -1 assumes the original nonnegative matrix values. dp.resize does not reset existing cells on repeat calls to the same Solution object.
+
+### [Maximum product subarray: retain both extrema](topics/dp-and-backtracking/snippets/maximum-product-two-states.cpp)
+
+Original: [152. Maximum Product Subarray](topics/dp-and-backtracking/originals/152__2000724011.cpp#L3-L19) · [submission 2000724011](https://leetcode.com/problems/maximum-product-subarray/submissions/2000724011/)
+
+Complete original maxProduct method. Saves both previous maximum and minimum before updating either state, because multiplying a negative value swaps their roles. Runs in O(n) time and O(1) state. The source assumes nonempty input and retains int multiplication under the original product bounds.
+
+### [Kadane: update the best before discarding a negative prefix](topics/dp-and-backtracking/snippets/kadane-maximum-subarray.cpp)
+
+Original: [53. Maximum Subarray](topics/dp-and-backtracking/originals/53__2000625681.cpp#L3-L15) · [submission 2000625681](https://leetcode.com/problems/maximum-subarray/submissions/2000625681/)
+
+Complete original maxSubArray method. The best starts at INT_MIN, is updated before the running sum resets, and therefore retains the largest element for all-negative nonempty input. O(n) time and O(1) state. Original int arithmetic, nonempty-input contract, and unqualified max remain unchanged.
+
+### [Word search: mark a board cell, recurse, then restore it](topics/dp-and-backtracking/snippets/word-search-mark-restore.cpp)
+
+Original: [79. Word Search](topics/dp-and-backtracking/originals/79__2168591618.cpp#L3-L38) · [submission 2168591618](https://leetcode.com/submissions/detail/2168591618/)
+
+Complete original exist method. Temporarily replaces a matched board cell with #, explores four neighbors, then restores that cell. The bitwise | operations evaluate every recursive branch, including after a successful one; the unused uint64_t key is preserved. The board alphabet must exclude #, and the original board is nonempty. Recursion uses path-length state and can perform exponential search.
+
 
 ## [dsu-and-graphs](topics/dsu-and-graphs/README.md)
 
@@ -148,6 +174,49 @@ Original: [1584. Min Cost to Connect All Points](topics/dsu-and-graphs/originals
 
 Complete original nested UnionFind struct. Used by the Kruskal minCostConnectPoints function in kruskal-min-cost-connect-points.cpp; original indentation preserved.
 
+### [Dijkstra: finalize on minimum-heap pop](topics/dsu-and-graphs/snippets/dijkstra-network-delay.cpp)
+
+Original: [743. Network Delay Time](topics/dsu-and-graphs/originals/743__2158089044.cpp#L3-L32) · [submission 2158089044](https://leetcode.com/problems/network-delay-time/submissions/2158089044/)
+
+Complete original networkDelayTime method, including adjacency construction and the unreachable -1 return. A vertex is finalized on its first heap pop; later entries for that vertex are skipped. The original has no tentative-distance table and can retain O(E) candidate paths. Requires nonnegative weights, the original int-range bounds, standard-library includes, and C++20 contains. No names, types, checks, or formatting have been changed.
+
+### [Minimax Dijkstra: minimize the largest height on a path](topics/dsu-and-graphs/snippets/dijkstra-minimax-grid.cpp)
+
+Original: [778. Swim in Rising Water](topics/dsu-and-graphs/originals/778__2159581294.cpp#L3-L42) · [submission 2159581294](https://leetcode.com/problems/swim-in-rising-water/submissions/2159581294/)
+
+Complete original swimInWater method. The heap key is the maximum height encountered so far, and a transition uses max(currentTime, nextHeight). The original i*r+j visited key is preserved and assumes the problem’s square grid; use of contains retains the C++20 requirement. Includes and class context are supplied by the original LeetCode harness. This source is minimax Dijkstra, not Prim.
+
+### [Second arrival: two distinct time labels with red-light waits](topics/dsu-and-graphs/snippets/two-distinct-arrival-times.cpp)
+
+Original: [2045. Second Minimum Time to Reach Destination](topics/dsu-and-graphs/originals/2045__2158128996.cpp#L3-L44) · [submission 2158128996](https://leetcode.com/problems/second-minimum-time-to-reach-destination/submissions/2158128996/)
+
+Complete original secondMinimum method. Keeps two distinct arrival times per vertex, waits through a red traffic-light phase, and propagates with a deque under the original uniform edge-time and synchronized-light rules. Vertices may be revisited. This is not Yen’s simple-path algorithm: there are no root/spur paths or exclusion sets. INT_MAX and the original problem’s guaranteed second arrival remain unchanged.
+
+### [Tarjan lowlink: bridges in an undirected graph](topics/dsu-and-graphs/snippets/tarjan-bridges.cpp)
+
+Original: [1192. Critical Connections in a Network](topics/dsu-and-graphs/originals/1192__2158532377.cpp#L1-L50) · [submission 2158532377](https://leetcode.com/problems/critical-connections-in-a-network/submissions/2158532377/)
+
+Full original Solution class, preserving disc, low, parent, adj, time, the DFS helper, and public entry point. A tree edge is a bridge exactly when low[child]>disc[parent]. The parent-by-vertex skip relies on the original simple-graph contract, and recursion can be deep. Member traversal state is not reset for independent reuse of the same object; no initialization changes or parallel-edge support were added.
+
+### [Tarjan lowlink: articulation points in an island](topics/dsu-and-graphs/snippets/tarjan-articulation-grid.cpp)
+
+Original: [1568. Minimum Number of Days to Disconnect Island](topics/dsu-and-graphs/originals/1568__2158580259.cpp#L1-L87) · [submission 2158580259](https://leetcode.com/problems/minimum-number-of-days-to-disconnect-island/submissions/2158580259/)
+
+Full original Solution class for minDays. Non-root articulation uses low[child]>=disc[parent]; a DFS root needs more than one DFS child. parentX and parentY denote the component DFS root, while the parent vector stores immediate parents. Includes the original island/land-count special cases, redundant checks, unused variables, and double semicolon. Traversal members assume the original one-call object lifecycle.
+
+### [Hierholzer: consume directed edges and reverse postorder](topics/dsu-and-graphs/snippets/hierholzer-itinerary.cpp)
+
+Original: [332. Reconstruct Itinerary](topics/dsu-and-graphs/originals/332__2157586346.cpp#L3-L29) · [submission 2157586346](https://leetcode.com/problems/reconstruct-itinerary/submissions/2157586346/)
+
+Complete original findItinerary method. Reverse-sorts destinations, consumes the smallest available destination from the vector back, appends a vertex only after its outgoing edges are exhausted, and reverses the resulting path. The original starts at JFK and assumes the problem’s valid Eulerian-itinerary guarantee. Repeated tickets remain distinct edges; vertices may be revisited. Recursion can use O(E) frames.
+
+### [BFS: scan each reachable jump interval only beyond the frontier](topics/dsu-and-graphs/snippets/bfs-monotone-jump-frontier.cpp)
+
+Original: [1871. Jump Game VII](topics/dsu-and-graphs/originals/1871__2012395473.cpp#L3-L30) · [submission 2012395473](https://leetcode.com/problems/jump-game-vii/submissions/2012395473/)
+
+Complete original canReach method. A deque stores reachable zero positions, while farthest records the largest already-scanned endpoint so overlapping jump ranges are not rescanned. Each position is scanned at most once, giving O(n) time and O(n) queue storage. Preserves size_t queue entries, int loop indexes, and the original valid jump-range/start-cell assumptions. This is unweighted BFS.
+
+
 ## [greedy-and-intervals](topics/greedy-and-intervals/README.md)
 
 ### [Interval scheduling: keep earliest finishing intervals](topics/greedy-and-intervals/snippets/earliest-finish-intervals.cpp)
@@ -162,6 +231,13 @@ Original: [56. Merge Intervals](topics/greedy-and-intervals/originals/56__216738
 
 Complete original merge method. Sorts the input intervals in place. Touching intervals are merged because the condition is result.back()[1] >= interval[0]. Empty input returns an empty result.
 
+### [Two pointers: discard the shorter container boundary](topics/greedy-and-intervals/snippets/two-pointer-container.cpp)
+
+Original: [11. Container With Most Water](topics/greedy-and-intervals/originals/11__2147803818.cpp#L3-L19) · [submission 2147803818](https://leetcode.com/problems/container-with-most-water/submissions/2147803818/)
+
+Complete original maxArea method. Each step records the current area and moves the shorter boundary, moving left on equal heights. Runs in O(n) time and O(1) auxiliary space. Width, heights, multiplication, and the result remain int under the original problem bounds.
+
+
 ## [math-and-bits](topics/math-and-bits/README.md)
 
 ### [Multiplicity counting: all distinct, one pair, all equal](topics/math-and-bits/snippets/three-sum-multiplicity-cases.cpp)
@@ -169,6 +245,19 @@ Complete original merge method. Sorts the input intervals in place. Touching int
 Original: [923. 3Sum With Multiplicity](topics/math-and-bits/originals/923__2140530076.cpp#L25-L33) · [submission 2140530076](https://leetcode.com/problems/3sum-with-multiplicity/submissions/2140530076/)
 
 Literal branch chain from inside the original sorted two-pointer threeSumMulti scan. Requires the surrounding arr, i, j, k, counts, result, and MOD variables and the original scan to avoid duplicate triples. Preserves 1LL promotion and divisions by 2 and 6 before modulo; this is a fragment, not a standalone function.
+
+### [4Sum II: count complements of pair sums](topics/math-and-bits/snippets/four-sum-pair-frequency.cpp)
+
+Original: [454. 4Sum II](topics/math-and-bits/originals/454__2025540323.cpp#L3-L19) · [submission 2025540323](https://leetcode.com/problems/4sum-ii/submissions/2025540323/)
+
+Complete original fourSumCount method. Stores all nums3+nums4 sum frequencies, then adds the count for each negated nums1+nums2 sum. Uses expected quadratic time and quadratic map storage for equal-length arrays. operator[] inserts absent complements with zero count; sums and the result remain int under the source constraints.
+
+### [Bitwise-AND triples: aggregate ordered-pair masks](topics/math-and-bits/snippets/bitwise-and-pair-frequency.cpp)
+
+Original: [982. Triples with Bitwise AND Equal To Zero](topics/math-and-bits/originals/982__2168564891.cpp#L3-L21) · [submission 2168564891](https://leetcode.com/submissions/detail/2168564891/)
+
+Complete original countTriplets method. Counts every ordered pair mask, including repeated indexes, and combines each mask frequency with compatible third values. For D distinct masks, expected work is O(n squared+nD), with O(D) hash-map storage. The original int keys, frequencies, result, and bounds remain unchanged.
+
 
 ## [monotonic-and-heaps](topics/monotonic-and-heaps/README.md)
 
@@ -228,6 +317,13 @@ Original: [3525. Find X Value of Array II](topics/range-queries/originals/3525__
 
 Requires the original environment for unqualified vector, array, ceil and log2. Assumes n > 0, 1 <= k <= 5 and nonnegative values; MAXK is 6 and slot k stores the interval product. query/update calls use node 1 and segment [0, n-1]. Queries must be valid nonempty inclusive ranges. mergePre must retain left-to-right order: the aggregate counts prefixes, so swapping child order changes results. Complete original top-level SegmentTree class. No outer Solution fields are required; the original Solution calling loop is outside this fragment.
 
+### [Lazy segment tree: range-chmin updates and range-min queries](topics/range-queries/snippets/segment-tree-range-chmin.cpp)
+
+Original: [1851. Minimum Interval to Include Each Query](topics/range-queries/originals/1851__2168532079.cpp#L2-L81) · [submission 2168532079](https://leetcode.com/submissions/detail/2168532079/)
+
+Complete original nested SegmentTree definition, including tree, lazy, capacity, public methods, private overloads, and index helpers. Pending updates compose with min; INT_MAX means no pending bound and is the disjoint-query identity. The original caller allocates maxEnd+1 raw coordinates and makes point queries. Initialization/storage are linear in that coordinate capacity, with logarithmic updates and queries. No coordinate compression, bounds checks, or interface changes were added.
+
+
 ## [search-and-sort](topics/search-and-sort/README.md)
 
 ### [Binary search: lower-bound insertion position](topics/search-and-sort/snippets/binary-search-insert-position.cpp)
@@ -259,6 +355,19 @@ Complete original Solution is retained because merge and mergeSort use the class
 Original: [215. Kth Largest Element in an Array](topics/search-and-sort/originals/215__2144679787.cpp#L7-L34) · [submission 2144679787](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144679787/)
 
 Complete original quickselect member function with indentation unchanged. Its original findKthLargest wrapper passes left=0, right=nums.size()-1, and k=nums.size()-k; the helper k is a zero-based ascending rank. Recursion mutates nums, and the original ignores recursive return values before returning nums[k]. Mutates nums and assumes a valid nonempty range and rank. Deterministic middle-element pivot has quadratic worst-case running time. Uses the original unqualified vector and LeetCode compilation context.
+
+### [3Sum: fixed index, opposing pointers, and duplicate skips](topics/search-and-sort/snippets/three-sum-skip-duplicates.cpp)
+
+Original: [15. 3Sum](topics/search-and-sort/originals/15__2147771319.cpp#L3-L35) · [submission 2147771319](https://leetcode.com/problems/3sum/submissions/2147771319/)
+
+Complete original threeSum method. Sorts nums in place, fixes one index, scans the remaining pair from both ends, and skips repeated values after emitting a triple. The n>=3 and bounded-int-sum assumptions of the source problem remain: nums.size()-2 is unsigned and sum remains int. The quadratic scan and original vector output construction are unchanged.
+
+### [Array rotation: reverse suffix, prefix, then whole array](topics/search-and-sort/snippets/array-rotation-three-reversals.cpp)
+
+Original: [189. Rotate Array](topics/search-and-sort/originals/189__2147800911.cpp#L3-L9) · [submission 2147800911](https://leetcode.com/problems/rotate-array/submissions/2147800911/)
+
+Complete original rotate method. Reduces k modulo nums.size(), reverses the final k elements, the preceding prefix, and then the full vector. Mutates the array in O(n) time and O(1) auxiliary space. Requires the original nonempty-array and nonnegative-k contract; no empty-input guard was added.
+
 
 ## [strings-and-tries](topics/strings-and-tries/README.md)
 
@@ -331,4 +440,16 @@ Complete original minWindow method. counts stores outstanding multiplicities; ma
 Original: [560. Subarray Sum Equals K](topics/windows-and-prefixes/originals/560__2130713437.cpp#L1-L23) · [submission 2130713437](https://leetcode.com/problems/subarray-sum-equals-k/submissions/2130713437/)
 
 Whole original captured code is retained so the two introductory prefix-equation comments stay attached to the method without edits. Seeds counts[0] = 1, queries before inserting the current prefix, and keeps the original int accumulator/count types.
+
+### [Difference array: range capacity and prefix reconstruction](topics/windows-and-prefixes/snippets/difference-array-capacity.cpp)
+
+Original: [3355. Zero Array Transformation I](topics/windows-and-prefixes/originals/3355__2119740763.cpp#L3-L19) · [submission 2119740763](https://leetcode.com/problems/zero-array-transformation-i/submissions/2119740763/)
+
+Complete original isZeroArray method. Each inclusive range increments diffs[left] and decrements diffs[right+1]; its prefix sum is the available decrement capacity. The n+1 allocation retains the closing marker past the last element. Queries offer independent optional decrements, so the check is capacity>=nums[i], not equality. Runs in O(n+q) time with O(n) auxiliary space under the original valid-index contract.
+
+### [Unique-character window: jump past the previous occurrence](topics/windows-and-prefixes/snippets/window-last-seen-character.cpp)
+
+Original: [3. Longest Substring Without Repeating Characters](topics/windows-and-prefixes/originals/3__2027316499.cpp#L3-L17) · [submission 2027316499](https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/2027316499/)
+
+Complete original lengthOfLongestSubstring method. Last-seen indexes remain in the hash map, and left=max(left,last+1) prevents an old occurrence from moving the window backward. Expected linear time with alphabet-sized map state, plus the original by-value string copy. contains requires C++20; the unqualified max call and all names are preserved.
 

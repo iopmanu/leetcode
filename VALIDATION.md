@@ -4,12 +4,12 @@ Snapshot: **10 October 2026**.
 
 ## What was checked
 
-- **252 original C++ files** preserve the exact UTF-8 bytes of their captured code strings.
-- The originals cover **167 problems**, **11 topic folders**, and **247 distinct code texts**. Equivalent resubmissions and exact duplicates remain separate records.
-- The total original source payload is **243,650 bytes**. No header, wrapper, comment, whitespace, or final newline was added to an original.
+- **369 original C++ files** preserve the exact UTF-8 bytes of their captured code strings.
+- The originals cover **249 problems**, **11 topic folders**, and **359 distinct code texts**. Equivalent resubmissions and exact duplicates remain separate records.
+- The total original source payload is **356,082 bytes**. No header, wrapper, comment, whitespace, or final newline was added to an original.
 - Each manifest SHA-256 matches its original file and its separately retained captured code record.
 - Each original file is linked from its topic README and the complete source index.
-- **50 key snippets** match literal slices of the original files. Their locations and hashes are recorded in [snippets.json](snippets.json).
+- **69 key snippets** match literal slices of the original files. Their locations and hashes are recorded in [snippets.json](snippets.json).
 - The source-fidelity checker was exercised with temporary altered copies. It rejected changed bytes, a missing source file, an unlisted extra original, and an omitted manifest record.
 
 ## Repeat the checks

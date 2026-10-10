@@ -60,6 +60,17 @@
     "problem_url": "https://leetcode.com/problems/falling-squares/"
   },
   {
+    "source_id": "2168532079",
+    "problem": "1851. Minimum Interval to Include Each Query",
+    "url": "https://leetcode.com/submissions/detail/2168532079/",
+    "sha256": "4258ef1eddec4b68ea277cc5565a08d3e9207efc0d3b810f55963f39d8f34140",
+    "path": "topics/range-queries/originals/1851__2168532079.cpp",
+    "topic": "range-queries",
+    "problem_id": "1851",
+    "problem_url": "https://leetcode.com/problems/minimum-interval-to-include-each-query/",
+    "capture_file": "sources/1851-2168532079.cpp"
+  },
+  {
     "source_id": "2150176033",
     "problem": "3525. Find X Value of Array II",
     "url": "https://leetcode.com/problems/find-x-value-of-array-ii/submissions/2150176033/",
@@ -68,6 +79,28 @@
     "topic": "range-queries",
     "problem_id": "3525",
     "problem_url": "https://leetcode.com/problems/find-x-value-of-array-ii/"
+  },
+  {
+    "source_id": "2157580907",
+    "problem": "127. Word Ladder",
+    "url": "https://leetcode.com/problems/word-ladder/submissions/2157580907/",
+    "sha256": "0327cf6e9c722ec7e77a36960910bb572ba0a856a91c204c744bcd1ee35be657",
+    "path": "topics/dsu-and-graphs/originals/127__2157580907.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "127",
+    "problem_url": "https://leetcode.com/problems/word-ladder/",
+    "capture_file": "recovered-025-050/041-127-2157580907.cpp"
+  },
+  {
+    "source_id": "2157579775",
+    "problem": "127. Word Ladder",
+    "url": "https://leetcode.com/problems/word-ladder/submissions/2157579775/",
+    "sha256": "84f229a1094d9ba6b2958e7361caa03f27c5059dc88e0427828153a243e5898a",
+    "path": "topics/dsu-and-graphs/originals/127__2157579775.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "127",
+    "problem_url": "https://leetcode.com/problems/word-ladder/",
+    "capture_file": "recovered-025-050/041-127-2157579775.cpp"
   },
   {
     "source_id": "2156047108",
@@ -140,6 +173,61 @@
     "problem_url": "https://leetcode.com/problems/course-schedule/"
   },
   {
+    "source_id": "2156096010",
+    "problem": "210. Course Schedule II",
+    "url": "https://leetcode.com/problems/course-schedule-ii/submissions/2156096010/",
+    "sha256": "4d5213998258f9a93d6d4a10d9df9638340e4be7208bc9ee109c35691588284a",
+    "path": "topics/dsu-and-graphs/originals/210__2156096010.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "210",
+    "problem_url": "https://leetcode.com/problems/course-schedule-ii/",
+    "capture_file": "recovered-025-050/050-210-2156096010.cpp"
+  },
+  {
+    "source_id": "2139425292",
+    "problem": "210. Course Schedule II",
+    "url": "https://leetcode.com/problems/course-schedule-ii/submissions/2139425292/",
+    "sha256": "3a18a17404fae14a04bf1671fcfcdf5982f10bebe797b1ebd5c45dd79570833f",
+    "path": "topics/dsu-and-graphs/originals/210__2139425292.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "210",
+    "problem_url": "https://leetcode.com/problems/course-schedule-ii/",
+    "capture_file": "recovered-025-050/050-210-2139425292.cpp"
+  },
+  {
+    "source_id": "2157055776",
+    "problem": "310. Minimum Height Trees",
+    "url": "https://leetcode.com/problems/minimum-height-trees/submissions/2157055776/",
+    "sha256": "ed941296c92055f43e5034965014a475fafd9f62fe78f8bde22b2307072d7c70",
+    "path": "topics/dsu-and-graphs/originals/310__2157055776.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "310",
+    "problem_url": "https://leetcode.com/problems/minimum-height-trees/",
+    "capture_file": "recovered-025-050/044-310-2157055776.cpp"
+  },
+  {
+    "source_id": "2157586346",
+    "problem": "332. Reconstruct Itinerary",
+    "url": "https://leetcode.com/problems/reconstruct-itinerary/submissions/2157586346/",
+    "sha256": "278cb124b655bd0aee70f1be517e10508f72d38b3d4cf3254c8e5e94186ef496",
+    "path": "topics/dsu-and-graphs/originals/332__2157586346.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "332",
+    "problem_url": "https://leetcode.com/problems/reconstruct-itinerary/",
+    "capture_file": "recovered-025-050/040-332-2157586346.cpp"
+  },
+  {
+    "source_id": "2156998589",
+    "problem": "399. Evaluate Division",
+    "url": "https://leetcode.com/problems/evaluate-division/submissions/2156998589/",
+    "sha256": "0e58940bf71e78bd000949ab2a5d155f0111008bb9f63b631350f1f4a3a6c67b",
+    "path": "topics/dsu-and-graphs/originals/399__2156998589.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "399",
+    "problem_url": "https://leetcode.com/problems/evaluate-division/",
+    "capture_file": "recovered-025-050/046-399-2156998589.cpp"
+  },
+  {
     "source_id": "2156035451",
     "problem": "417. Pacific Atlantic Water Flow",
     "url": "https://leetcode.com/problems/pacific-atlantic-water-flow/submissions/2156035451/",
@@ -160,6 +248,39 @@
     "problem_url": "https://leetcode.com/problems/island-perimeter/"
   },
   {
+    "source_id": "2156418430",
+    "problem": "684. Redundant Connection",
+    "url": "https://leetcode.com/problems/redundant-connection/submissions/2156418430/",
+    "sha256": "94095c9007d79236f9943b57352ac82bcd60b00ebe09621731e50e04683d747c",
+    "path": "topics/dsu-and-graphs/originals/684__2156418430.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "684",
+    "problem_url": "https://leetcode.com/problems/redundant-connection/",
+    "capture_file": "recovered-025-050/048-684-2156418430.cpp"
+  },
+  {
+    "source_id": "2156418332",
+    "problem": "684. Redundant Connection",
+    "url": "https://leetcode.com/problems/redundant-connection/submissions/2156418332/",
+    "sha256": "5b3c755df21d7e32e09affad42cda088ed4cc1fdf8ba5e5f0b5170f18ff72c1d",
+    "path": "topics/dsu-and-graphs/originals/684__2156418332.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "684",
+    "problem_url": "https://leetcode.com/problems/redundant-connection/",
+    "capture_file": "recovered-025-050/048-684-2156418332.cpp"
+  },
+  {
+    "source_id": "2156418215",
+    "problem": "684. Redundant Connection",
+    "url": "https://leetcode.com/problems/redundant-connection/submissions/2156418215/",
+    "sha256": "94095c9007d79236f9943b57352ac82bcd60b00ebe09621731e50e04683d747c",
+    "path": "topics/dsu-and-graphs/originals/684__2156418215.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "684",
+    "problem_url": "https://leetcode.com/problems/redundant-connection/",
+    "capture_file": "recovered-025-050/048-684-2156418215.cpp"
+  },
+  {
     "source_id": "2155365320",
     "problem": "695. Max Area of Island",
     "url": "https://leetcode.com/problems/max-area-of-island/submissions/2155365320/",
@@ -170,6 +291,39 @@
     "problem_url": "https://leetcode.com/problems/max-area-of-island/"
   },
   {
+    "source_id": "2156447414",
+    "problem": "721. Accounts Merge",
+    "url": "https://leetcode.com/problems/accounts-merge/submissions/2156447414/",
+    "sha256": "50d0a25c776a7a43abbe696d0722352afd653fc8effa7cc20e568010e3980ae3",
+    "path": "topics/dsu-and-graphs/originals/721__2156447414.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "721",
+    "problem_url": "https://leetcode.com/problems/accounts-merge/",
+    "capture_file": "recovered-025-050/047-721-2156447414.cpp"
+  },
+  {
+    "source_id": "2156444531",
+    "problem": "721. Accounts Merge",
+    "url": "https://leetcode.com/problems/accounts-merge/submissions/2156444531/",
+    "sha256": "fa85c2309650a0bff82e973c9fa571a850c98c041f605d2cd5c839a557a8b138",
+    "path": "topics/dsu-and-graphs/originals/721__2156444531.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "721",
+    "problem_url": "https://leetcode.com/problems/accounts-merge/",
+    "capture_file": "recovered-025-050/047-721-2156444531.cpp"
+  },
+  {
+    "source_id": "2158089044",
+    "problem": "743. Network Delay Time",
+    "url": "https://leetcode.com/problems/network-delay-time/submissions/2158089044/",
+    "sha256": "0f954cc49016df437546ebf9b139fa4cc6829603a934645e4ada4a401750e6cf",
+    "path": "topics/dsu-and-graphs/originals/743__2158089044.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "743",
+    "problem_url": "https://leetcode.com/problems/network-delay-time/",
+    "capture_file": "recovered-025-050/039-743-2158089044.cpp"
+  },
+  {
     "source_id": "2156069275",
     "problem": "752. Open the Lock",
     "url": "https://leetcode.com/problems/open-the-lock/submissions/2156069275/",
@@ -178,6 +332,83 @@
     "topic": "dsu-and-graphs",
     "problem_id": "752",
     "problem_url": "https://leetcode.com/problems/open-the-lock/"
+  },
+  {
+    "source_id": "2159591195",
+    "problem": "778. Swim in Rising Water",
+    "url": "https://leetcode.com/problems/swim-in-rising-water/submissions/2159591195/",
+    "sha256": "68ac5b45f7b64d44ed320804808e6f2c6e971e5027877ef2f9a2ef11f9ae6a18",
+    "path": "topics/dsu-and-graphs/originals/778__2159591195.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "778",
+    "problem_url": "https://leetcode.com/problems/swim-in-rising-water/",
+    "capture_file": "recovered-025-050/032-778-2159591195.cpp"
+  },
+  {
+    "source_id": "2159581294",
+    "problem": "778. Swim in Rising Water",
+    "url": "https://leetcode.com/problems/swim-in-rising-water/submissions/2159581294/",
+    "sha256": "bf96237eeec01c97003a9ec047c0ab021f2775c07c06a3a6dc6ffd3bb754137c",
+    "path": "topics/dsu-and-graphs/originals/778__2159581294.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "778",
+    "problem_url": "https://leetcode.com/problems/swim-in-rising-water/",
+    "capture_file": "recovered-025-050/032-778-2159581294.cpp"
+  },
+  {
+    "source_id": "2159893078",
+    "problem": "803. Bricks Falling When Hit",
+    "url": "https://leetcode.com/problems/bricks-falling-when-hit/submissions/2159893078/",
+    "sha256": "4ce82541f0feeb406e8fae5348260a1d5e0cfabdc54d1026b4d0c4d0560360f9",
+    "path": "topics/dsu-and-graphs/originals/803__2159893078.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "803",
+    "problem_url": "https://leetcode.com/problems/bricks-falling-when-hit/",
+    "capture_file": "recovered-025-050/031-803-2159893078.cpp"
+  },
+  {
+    "source_id": "2158599452",
+    "problem": "827. Making A Large Island",
+    "url": "https://leetcode.com/problems/making-a-large-island/submissions/2158599452/",
+    "sha256": "781c4c58bb64834cddc7647a1414bb704ec199edd1d9a1c391bca76518d54797",
+    "path": "topics/dsu-and-graphs/originals/827__2158599452.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "827",
+    "problem_url": "https://leetcode.com/problems/making-a-large-island/",
+    "capture_file": "recovered-025-050/034-827-2158599452.cpp"
+  },
+  {
+    "source_id": "2158599274",
+    "problem": "827. Making A Large Island",
+    "url": "https://leetcode.com/problems/making-a-large-island/submissions/2158599274/",
+    "sha256": "12943bdf6e8f5a174234463a8ddcababedfded22ace8167f4cc3e4ab777cb591",
+    "path": "topics/dsu-and-graphs/originals/827__2158599274.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "827",
+    "problem_url": "https://leetcode.com/problems/making-a-large-island/",
+    "capture_file": "recovered-025-050/034-827-2158599274.cpp"
+  },
+  {
+    "source_id": "2158599142",
+    "problem": "827. Making A Large Island",
+    "url": "https://leetcode.com/problems/making-a-large-island/submissions/2158599142/",
+    "sha256": "6cdf558c314ebc52701133a5d1af2ea4c3c76166000279cdc97d751930aaefb8",
+    "path": "topics/dsu-and-graphs/originals/827__2158599142.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "827",
+    "problem_url": "https://leetcode.com/problems/making-a-large-island/",
+    "capture_file": "recovered-025-050/034-827-2158599142.cpp"
+  },
+  {
+    "source_id": "2158598652",
+    "problem": "827. Making A Large Island",
+    "url": "https://leetcode.com/problems/making-a-large-island/submissions/2158598652/",
+    "sha256": "bb62c7f085423658f58ce6bc2d38f0edf9122093a7a4ae1c3b9f37f1805b47e8",
+    "path": "topics/dsu-and-graphs/originals/827__2158598652.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "827",
+    "problem_url": "https://leetcode.com/problems/making-a-large-island/",
+    "capture_file": "recovered-025-050/034-827-2158598652.cpp"
   },
   {
     "source_id": "2155965323",
@@ -210,6 +441,28 @@
     "problem_url": "https://leetcode.com/problems/find-the-town-judge/"
   },
   {
+    "source_id": "2158532377",
+    "problem": "1192. Critical Connections in a Network",
+    "url": "https://leetcode.com/problems/critical-connections-in-a-network/submissions/2158532377/",
+    "sha256": "f13f019a8f569766587b1b533b7703a88362a5bbbe47c9fd26eb832b555ce282",
+    "path": "topics/dsu-and-graphs/originals/1192__2158532377.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "1192",
+    "problem_url": "https://leetcode.com/problems/critical-connections-in-a-network/",
+    "capture_file": "recovered-025-050/036-1192-2158532377.cpp"
+  },
+  {
+    "source_id": "2156120061",
+    "problem": "1462. Course Schedule IV",
+    "url": "https://leetcode.com/problems/course-schedule-iv/submissions/2156120061/",
+    "sha256": "5a8d6dab621e85465e998e7474c1483fc308c8d47821b368c8b33fbdc94eb938",
+    "path": "topics/dsu-and-graphs/originals/1462__2156120061.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "1462",
+    "problem_url": "https://leetcode.com/problems/course-schedule-iv/",
+    "capture_file": "recovered-025-050/049-1462-2156120061.cpp"
+  },
+  {
     "source_id": "2162346413",
     "problem": "1489. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree",
     "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/submissions/2162346413/",
@@ -228,6 +481,17 @@
     "topic": "dsu-and-graphs",
     "problem_id": "1489",
     "problem_url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/"
+  },
+  {
+    "source_id": "2158580259",
+    "problem": "1568. Minimum Number of Days to Disconnect Island",
+    "url": "https://leetcode.com/problems/minimum-number-of-days-to-disconnect-island/submissions/2158580259/",
+    "sha256": "dbfacde637d8d1dbb47fbe551a8baa26e7d03aa347c7da0da0d114137fc9dbd9",
+    "path": "topics/dsu-and-graphs/originals/1568__2158580259.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "1568",
+    "problem_url": "https://leetcode.com/problems/minimum-number-of-days-to-disconnect-island/",
+    "capture_file": "recovered-025-050/035-1568-2158580259.cpp"
   },
   {
     "source_id": "2162051692",
@@ -260,6 +524,28 @@
     "problem_url": "https://leetcode.com/problems/min-cost-to-connect-all-points/"
   },
   {
+    "source_id": "2162018515",
+    "problem": "1782. Count Pairs Of Nodes",
+    "url": "https://leetcode.com/problems/count-pairs-of-nodes/submissions/2162018515/",
+    "sha256": "34b6af4f60a707225225f02097304b6a74de761e0b38e1684aa8401def427e99",
+    "path": "topics/dsu-and-graphs/originals/1782__2162018515.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "1782",
+    "problem_url": "https://leetcode.com/problems/count-pairs-of-nodes/",
+    "capture_file": "recovered-025-050/025-1782-2162018515.cpp"
+  },
+  {
+    "source_id": "2012395473",
+    "problem": "1871. Jump Game VII",
+    "url": "https://leetcode.com/problems/jump-game-vii/submissions/2012395473/",
+    "sha256": "f4c3a5862657bbf4495d975534ad7e6571a9d9b54d5e50fd49f10a782e52206a",
+    "path": "topics/dsu-and-graphs/originals/1871__2012395473.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "1871",
+    "problem_url": "https://leetcode.com/problems/jump-game-vii/",
+    "capture_file": "sources/228-2012395473.cpp"
+  },
+  {
     "source_id": "2168377479",
     "problem": "1970. Last Day Where You Can Still Cross",
     "url": "https://leetcode.com/problems/last-day-where-you-can-still-cross/submissions/2168377479/",
@@ -280,6 +566,28 @@
     "problem_url": "https://leetcode.com/problems/last-day-where-you-can-still-cross/"
   },
   {
+    "source_id": "2158128996",
+    "problem": "2045. Second Minimum Time to Reach Destination",
+    "url": "https://leetcode.com/problems/second-minimum-time-to-reach-destination/submissions/2158128996/",
+    "sha256": "d1d56b0c09a0869572953f135eb0fce1ff73d92dd3a3b25faa3abce5ed7cbcb3",
+    "path": "topics/dsu-and-graphs/originals/2045__2158128996.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "2045",
+    "problem_url": "https://leetcode.com/problems/second-minimum-time-to-reach-destination/",
+    "capture_file": "recovered-025-050/037-2045-2158128996.cpp"
+  },
+  {
+    "source_id": "2161904938",
+    "problem": "2242. Maximum Score of a Node Sequence",
+    "url": "https://leetcode.com/problems/maximum-score-of-a-node-sequence/submissions/2161904938/",
+    "sha256": "390c029e2cc52e3cbe6b737096e7ae074a684fbbb17891b3fe16c84fe21dd707",
+    "path": "topics/dsu-and-graphs/originals/2242__2161904938.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "2242",
+    "problem_url": "https://leetcode.com/problems/maximum-score-of-a-node-sequence/",
+    "capture_file": "recovered-025-050/027-2242-2161904938.cpp"
+  },
+  {
     "source_id": "2131979696",
     "problem": "3568. Minimum Moves to Clean the Classroom",
     "url": "https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/submissions/2131979696/",
@@ -288,346 +596,6 @@
     "topic": "dsu-and-graphs",
     "problem_id": "3568",
     "problem_url": "https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/"
-  },
-  {
-    "source_id": "2143813487",
-    "problem": "2. Add Two Numbers",
-    "url": "https://leetcode.com/problems/add-two-numbers/submissions/2143813487/",
-    "sha256": "27bdee1f4535317f54f8a4901a430e69ea9328b0cbcfedfb8ef296a3ee123178",
-    "path": "topics/trees-and-lists/originals/2__2143813487.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "2",
-    "problem_url": "https://leetcode.com/problems/add-two-numbers/"
-  },
-  {
-    "source_id": "2143696811",
-    "problem": "19. Remove Nth Node From End of List",
-    "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/submissions/2143696811/",
-    "sha256": "8899098bfe5815458e264d965d19b66c07ad0da6e38782bf16f36f5bef8a5092",
-    "path": "topics/trees-and-lists/originals/19__2143696811.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "19",
-    "problem_url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
-  },
-  {
-    "source_id": "2143594529",
-    "problem": "21. Merge Two Sorted Lists",
-    "url": "https://leetcode.com/problems/merge-two-sorted-lists/submissions/2143594529/",
-    "sha256": "47f7edeb0850980f2dbc1095dc4f40e0b9fff71cd14cede9df4c9666f5d45715",
-    "path": "topics/trees-and-lists/originals/21__2143594529.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "21",
-    "problem_url": "https://leetcode.com/problems/merge-two-sorted-lists/"
-  },
-  {
-    "source_id": "2144522916",
-    "problem": "23. Merge k Sorted Lists",
-    "url": "https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144522916/",
-    "sha256": "a73f6da9c2ee448802091b06124488d14674ee0736aad61a301d028b1bb477b0",
-    "path": "topics/trees-and-lists/originals/23__2144522916.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "23",
-    "problem_url": "https://leetcode.com/problems/merge-k-sorted-lists/"
-  },
-  {
-    "source_id": "2144097838",
-    "problem": "23. Merge k Sorted Lists",
-    "url": "https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144097838/",
-    "sha256": "227afa180bf90e3c0468a67a6e584c52cca0fa6c292d835c43ff7db9d26c5442",
-    "path": "topics/trees-and-lists/originals/23__2144097838.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "23",
-    "problem_url": "https://leetcode.com/problems/merge-k-sorted-lists/"
-  },
-  {
-    "source_id": "2144552684",
-    "problem": "25. Reverse Nodes in k-Group",
-    "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/submissions/2144552684/",
-    "sha256": "82b9f5256fe3e6b4bb1fce5a4ec988e0fb34b226b4dac7bec9798c6c81988635",
-    "path": "topics/trees-and-lists/originals/25__2144552684.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "25",
-    "problem_url": "https://leetcode.com/problems/reverse-nodes-in-k-group/"
-  },
-  {
-    "source_id": "2140737519",
-    "problem": "98. Validate Binary Search Tree",
-    "url": "https://leetcode.com/problems/validate-binary-search-tree/submissions/2140737519/",
-    "sha256": "4daa7626340418da91c061c9e005bec1f86b4a869b61543be3f0d65ab18264e7",
-    "path": "topics/trees-and-lists/originals/98__2140737519.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "98",
-    "problem_url": "https://leetcode.com/problems/validate-binary-search-tree/"
-  },
-  {
-    "source_id": "2140598575",
-    "problem": "100. Same Tree",
-    "url": "https://leetcode.com/problems/same-tree/submissions/2140598575/",
-    "sha256": "66838e78aff507c7b9c245916323951936efdeaae0dc03eb2b4cc6d301c04070",
-    "path": "topics/trees-and-lists/originals/100__2140598575.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "100",
-    "problem_url": "https://leetcode.com/problems/same-tree/"
-  },
-  {
-    "source_id": "2140704978",
-    "problem": "102. Binary Tree Level Order Traversal",
-    "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/submissions/2140704978/",
-    "sha256": "098474b2d05f7b44038f7e2650d2a9146eb341678eb82b18e138468b743c64b2",
-    "path": "topics/trees-and-lists/originals/102__2140704978.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "102",
-    "problem_url": "https://leetcode.com/problems/binary-tree-level-order-traversal/"
-  },
-  {
-    "source_id": "2140575615",
-    "problem": "104. Maximum Depth of Binary Tree",
-    "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/submissions/2140575615/",
-    "sha256": "13db5103a28c8b3b462ed1fe79820b02040cb05592cf1d779fdedf37e5484647",
-    "path": "topics/trees-and-lists/originals/104__2140575615.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "104",
-    "problem_url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/"
-  },
-  {
-    "source_id": "2141508524",
-    "problem": "105. Construct Binary Tree from Preorder and Inorder Traversal",
-    "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508524/",
-    "sha256": "3db00a5cf100e0e4cecaf92c17c7b5d09215e7792a7ab9851ef0a6e8b1f742d7",
-    "path": "topics/trees-and-lists/originals/105__2141508524.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "105",
-    "problem_url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/"
-  },
-  {
-    "source_id": "2141508275",
-    "problem": "105. Construct Binary Tree from Preorder and Inorder Traversal",
-    "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508275/",
-    "sha256": "6e05d07a31a76120275c0d66357fda336c97cffe99b166215d977d9508b6403b",
-    "path": "topics/trees-and-lists/originals/105__2141508275.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "105",
-    "problem_url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/"
-  },
-  {
-    "source_id": "2140593789",
-    "problem": "110. Balanced Binary Tree",
-    "url": "https://leetcode.com/problems/balanced-binary-tree/submissions/2140593789/",
-    "sha256": "909c87bead55b9d20665c7c095d954bc1ecf92701dd1d07c9762618b4b0a3aca",
-    "path": "topics/trees-and-lists/originals/110__2140593789.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "110",
-    "problem_url": "https://leetcode.com/problems/balanced-binary-tree/"
-  },
-  {
-    "source_id": "2153370936",
-    "problem": "124. Binary Tree Maximum Path Sum",
-    "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2153370936/",
-    "sha256": "409e1c9f18a7da1b4f22413d37fd0f19c34f2895aad849aa0ac4b8e9fdb75027",
-    "path": "topics/trees-and-lists/originals/124__2153370936.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "124",
-    "problem_url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/"
-  },
-  {
-    "source_id": "2141514512",
-    "problem": "124. Binary Tree Maximum Path Sum",
-    "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2141514512/",
-    "sha256": "1828a6b0b54bc6af5bdf1e306d593fc27bc1eee201a812939c83cf77f31afdc0",
-    "path": "topics/trees-and-lists/originals/124__2141514512.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "124",
-    "problem_url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/"
-  },
-  {
-    "source_id": "2143802245",
-    "problem": "138. Copy List with Random Pointer",
-    "url": "https://leetcode.com/problems/copy-list-with-random-pointer/submissions/2143802245/",
-    "sha256": "1e129d20ed320d59de526d0fc03da0fcc92bd04a5b9dbfd64cc267b1f322dd45",
-    "path": "topics/trees-and-lists/originals/138__2143802245.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "138",
-    "problem_url": "https://leetcode.com/problems/copy-list-with-random-pointer/"
-  },
-  {
-    "source_id": "2143629142",
-    "problem": "141. Linked List Cycle",
-    "url": "https://leetcode.com/problems/linked-list-cycle/submissions/2143629142/",
-    "sha256": "8ddcaa253d758abf9a4ceefd76372995ddbb12c7285f103b6f40986edf281311",
-    "path": "topics/trees-and-lists/originals/141__2143629142.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "141",
-    "problem_url": "https://leetcode.com/problems/linked-list-cycle/"
-  },
-  {
-    "source_id": "2143673583",
-    "problem": "143. Reorder List",
-    "url": "https://leetcode.com/problems/reorder-list/submissions/2143673583/",
-    "sha256": "4c944b93ffdb9dbf50d8d864cda9688874631dd5b66f85379e75902c27188aae",
-    "path": "topics/trees-and-lists/originals/143__2143673583.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "143",
-    "problem_url": "https://leetcode.com/problems/reorder-list/"
-  },
-  {
-    "source_id": "2143663379",
-    "problem": "143. Reorder List",
-    "url": "https://leetcode.com/problems/reorder-list/submissions/2143663379/",
-    "sha256": "e207a8ec1b24bc4bbd45b3b3c4dc53676312f57b83f931b893181f76cc07f649",
-    "path": "topics/trees-and-lists/originals/143__2143663379.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "143",
-    "problem_url": "https://leetcode.com/problems/reorder-list/"
-  },
-  {
-    "source_id": "1211639660",
-    "problem": "143. Reorder List",
-    "url": "https://leetcode.com/problems/reorder-list/submissions/1211639660/",
-    "sha256": "a28b274762433403ced055dfb6592f0b7805979f06b1e351cea33770e530834a",
-    "path": "topics/trees-and-lists/originals/143__1211639660.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "143",
-    "problem_url": "https://leetcode.com/problems/reorder-list/"
-  },
-  {
-    "source_id": "2140707899",
-    "problem": "199. Binary Tree Right Side View",
-    "url": "https://leetcode.com/problems/binary-tree-right-side-view/submissions/2140707899/",
-    "sha256": "aa2141bd399d6606db41ef0a416954ee912ab0db53f10fb73248b049644c51de",
-    "path": "topics/trees-and-lists/originals/199__2140707899.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "199",
-    "problem_url": "https://leetcode.com/problems/binary-tree-right-side-view/"
-  },
-  {
-    "source_id": "2143560010",
-    "problem": "206. Reverse Linked List",
-    "url": "https://leetcode.com/problems/reverse-linked-list/submissions/2143560010/",
-    "sha256": "f25bd4bb56c9eaec78f1914b04e6d32e317711dba65267b5b7ed9ea48dccda7e",
-    "path": "topics/trees-and-lists/originals/206__2143560010.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "206",
-    "problem_url": "https://leetcode.com/problems/reverse-linked-list/"
-  },
-  {
-    "source_id": "2126014226",
-    "problem": "206. Reverse Linked List",
-    "url": "https://leetcode.com/problems/reverse-linked-list/submissions/2126014226/",
-    "sha256": "55a8bf178f866d7b707acfb038f24b600d3464db3c981c5e5bc1f671e4967778",
-    "path": "topics/trees-and-lists/originals/206__2126014226.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "206",
-    "problem_url": "https://leetcode.com/problems/reverse-linked-list/"
-  },
-  {
-    "source_id": "2140574036",
-    "problem": "226. Invert Binary Tree",
-    "url": "https://leetcode.com/problems/invert-binary-tree/submissions/2140574036/",
-    "sha256": "98a3ba0fbca1244fefc37896689ebb50bf80986939418ab179ed7c6bd9ca262c",
-    "path": "topics/trees-and-lists/originals/226__2140574036.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "226",
-    "problem_url": "https://leetcode.com/problems/invert-binary-tree/"
-  },
-  {
-    "source_id": "2140766874",
-    "problem": "230. Kth Smallest Element in a BST",
-    "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/submissions/2140766874/",
-    "sha256": "2284641ea1197a29103bee9a0cbf139895e6ef210d81a35cabf2e539cf4fe0ab",
-    "path": "topics/trees-and-lists/originals/230__2140766874.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "230",
-    "problem_url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/"
-  },
-  {
-    "source_id": "2140699724",
-    "problem": "235. Lowest Common Ancestor of a Binary Search Tree",
-    "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/submissions/2140699724/",
-    "sha256": "598213e260f76fd52cf87c92dfabd0758852f165748e3917b478775f8a6360ef",
-    "path": "topics/trees-and-lists/originals/235__2140699724.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "235",
-    "problem_url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/"
-  },
-  {
-    "source_id": "2153777400",
-    "problem": "297. Serialize and Deserialize Binary Tree",
-    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2153777400/",
-    "sha256": "a5d1cbb0232b6e52bc7b19654b9a944d6057d9d007548d86ff1142d59479e0c3",
-    "path": "topics/trees-and-lists/originals/297__2153777400.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "297",
-    "problem_url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
-  },
-  {
-    "source_id": "2141912475",
-    "problem": "297. Serialize and Deserialize Binary Tree",
-    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141912475/",
-    "sha256": "e6faa4a9b95f01ef0b38db4b3f9e79e760bbdc24d01a930488462e0e3275b8c3",
-    "path": "topics/trees-and-lists/originals/297__2141912475.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "297",
-    "problem_url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
-  },
-  {
-    "source_id": "2141671426",
-    "problem": "297. Serialize and Deserialize Binary Tree",
-    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141671426/",
-    "sha256": "31fca9c844930f966683d65bf803406fd5b29871bf1c8cad678d89a993cb6485",
-    "path": "topics/trees-and-lists/originals/297__2141671426.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "297",
-    "problem_url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
-  },
-  {
-    "source_id": "2140582704",
-    "problem": "543. Diameter of Binary Tree",
-    "url": "https://leetcode.com/problems/diameter-of-binary-tree/submissions/2140582704/",
-    "sha256": "4c27e737f2abf52b329e0dc9c2b5c76d2742e1d2459a975a0d29aba3494c351b",
-    "path": "topics/trees-and-lists/originals/543__2140582704.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "543",
-    "problem_url": "https://leetcode.com/problems/diameter-of-binary-tree/"
-  },
-  {
-    "source_id": "2140623050",
-    "problem": "572. Subtree of Another Tree",
-    "url": "https://leetcode.com/problems/subtree-of-another-tree/submissions/2140623050/",
-    "sha256": "e3fb47062e24a751b8b661bee236ca1b6b01694a15d969c2657f734d399a511d",
-    "path": "topics/trees-and-lists/originals/572__2140623050.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "572",
-    "problem_url": "https://leetcode.com/problems/subtree-of-another-tree/"
-  },
-  {
-    "source_id": "2155106387",
-    "problem": "968. Binary Tree Cameras",
-    "url": "https://leetcode.com/problems/binary-tree-cameras/submissions/2155106387/",
-    "sha256": "3d24cf9f75a3b09267f38c585bbe0e050eab2a0da84d8728319e9814c574ae7c",
-    "path": "topics/trees-and-lists/originals/968__2155106387.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "968",
-    "problem_url": "https://leetcode.com/problems/binary-tree-cameras/"
-  },
-  {
-    "source_id": "2140724204",
-    "problem": "1448. Count Good Nodes in Binary Tree",
-    "url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/submissions/2140724204/",
-    "sha256": "52fca821c049b7e8f42bc0b2dbc26ee62f436b9d99f17e802d0acb06876e2971",
-    "path": "topics/trees-and-lists/originals/1448__2140724204.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "1448",
-    "problem_url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/"
-  },
-  {
-    "source_id": "2137363284",
-    "problem": "2265. Count Nodes Equal to Average of Subtree",
-    "url": "https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/submissions/2137363284/",
-    "sha256": "4e353a182485f3fdd8710ee29ff2efc1d773b5d6fc4fe5cb75d29cbb52097844",
-    "path": "topics/trees-and-lists/originals/2265__2137363284.cpp",
-    "topic": "trees-and-lists",
-    "problem_id": "2265",
-    "problem_url": "https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/"
   },
   {
     "source_id": "2147722433",
@@ -658,6 +626,83 @@
     "topic": "search-and-sort",
     "problem_id": "4",
     "problem_url": "https://leetcode.com/problems/median-of-two-sorted-arrays/"
+  },
+  {
+    "source_id": "2147771319",
+    "problem": "15. 3Sum",
+    "url": "https://leetcode.com/problems/3sum/submissions/2147771319/",
+    "sha256": "045db255bf7f36188b999c0dafbe8317917a7b9d0896f6ff8eb1216913a040e5",
+    "path": "topics/search-and-sort/originals/15__2147771319.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "15",
+    "problem_url": "https://leetcode.com/problems/3sum/",
+    "capture_file": "originals/095_15_2147771319.cpp"
+  },
+  {
+    "source_id": "2131829341",
+    "problem": "15. 3Sum",
+    "url": "https://leetcode.com/problems/3sum/submissions/2131829341/",
+    "sha256": "9709752a5476edb174109dcdcfff3425b596e70b0897d91558732ee231aae8cc",
+    "path": "topics/search-and-sort/originals/15__2131829341.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "15",
+    "problem_url": "https://leetcode.com/problems/3sum/",
+    "capture_file": "originals/095_15_2131829341.cpp"
+  },
+  {
+    "source_id": "2147786844",
+    "problem": "18. 4Sum",
+    "url": "https://leetcode.com/problems/4sum/submissions/2147786844/",
+    "sha256": "0696b6e336922eac1fa7ce33c3693a5859aca39d4c9c2b7494ba182a78a2e73d",
+    "path": "topics/search-and-sort/originals/18__2147786844.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "18",
+    "problem_url": "https://leetcode.com/problems/4sum/",
+    "capture_file": "originals/094_18_2147786844.cpp"
+  },
+  {
+    "source_id": "2147786330",
+    "problem": "18. 4Sum",
+    "url": "https://leetcode.com/problems/4sum/submissions/2147786330/",
+    "sha256": "0696b6e336922eac1fa7ce33c3693a5859aca39d4c9c2b7494ba182a78a2e73d",
+    "path": "topics/search-and-sort/originals/18__2147786330.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "18",
+    "problem_url": "https://leetcode.com/problems/4sum/",
+    "capture_file": "originals/094_18_2147786330.cpp"
+  },
+  {
+    "source_id": "2127374675",
+    "problem": "18. 4Sum",
+    "url": "https://leetcode.com/problems/4sum/submissions/2127374675/",
+    "sha256": "6bcd865c0d1bb0fe2c956caec765d5c153de3a5181748c26a67f3c5ef09bd414",
+    "path": "topics/search-and-sort/originals/18__2127374675.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "18",
+    "problem_url": "https://leetcode.com/problems/4sum/",
+    "capture_file": "originals/094_18_2127374675.cpp"
+  },
+  {
+    "source_id": "2025531964",
+    "problem": "18. 4Sum",
+    "url": "https://leetcode.com/problems/4sum/submissions/2025531964/",
+    "sha256": "3a305583fd9480fede9b57a2c4051417e8a3299123c7f15f419cf7ae77472566",
+    "path": "topics/search-and-sort/originals/18__2025531964.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "18",
+    "problem_url": "https://leetcode.com/problems/4sum/",
+    "capture_file": "originals/094_18_2025531964.cpp"
+  },
+  {
+    "source_id": "2147762984",
+    "problem": "26. Remove Duplicates from Sorted Array",
+    "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/submissions/2147762984/",
+    "sha256": "25a78e1c80be4d3637b92845e3051ce4ed85d6aeca1a71587629496fbe7df783",
+    "path": "topics/search-and-sort/originals/26__2147762984.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "26",
+    "problem_url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
+    "capture_file": "originals/097_26_2147762984.cpp"
   },
   {
     "source_id": "2146701709",
@@ -780,6 +825,28 @@
     "problem_url": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/"
   },
   {
+    "source_id": "2147757984",
+    "problem": "88. Merge Sorted Array",
+    "url": "https://leetcode.com/problems/merge-sorted-array/submissions/2147757984/",
+    "sha256": "23da4e90dc0b342b931c85c3c2491ae49c968ce191931e647eae59cfc4316b09",
+    "path": "topics/search-and-sort/originals/88__2147757984.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "88",
+    "problem_url": "https://leetcode.com/problems/merge-sorted-array/",
+    "capture_file": "originals/098_88_2147757984.cpp"
+  },
+  {
+    "source_id": "2025467217",
+    "problem": "128. Longest Consecutive Sequence",
+    "url": "https://leetcode.com/problems/longest-consecutive-sequence/submissions/2025467217/",
+    "sha256": "3a7fa62a6068f97661e535c79bca5642937e42352d666bcafdcb967db3d0b0d1",
+    "path": "topics/search-and-sort/originals/128__2025467217.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "128",
+    "problem_url": "https://leetcode.com/problems/longest-consecutive-sequence/",
+    "capture_file": "sources/220-2025467217.cpp"
+  },
+  {
     "source_id": "2146698709",
     "problem": "153. Find Minimum in Rotated Sorted Array",
     "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2146698709/",
@@ -808,6 +875,50 @@
     "topic": "search-and-sort",
     "problem_id": "153",
     "problem_url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"
+  },
+  {
+    "source_id": "2024553766",
+    "problem": "162. Find Peak Element",
+    "url": "https://leetcode.com/problems/find-peak-element/submissions/2024553766/",
+    "sha256": "46f9c184f39d72daf27072d6fcfa0bc3437cfdf81f696cb23ab27952653cb62d",
+    "path": "topics/search-and-sort/originals/162__2024553766.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "162",
+    "problem_url": "https://leetcode.com/problems/find-peak-element/",
+    "capture_file": "sources/221-2024553766.cpp"
+  },
+  {
+    "source_id": "2147765072",
+    "problem": "167. Two Sum II - Input Array Is Sorted",
+    "url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/submissions/2147765072/",
+    "sha256": "8c538beb3f29b933e1e4011d2cd79e40988bb38bec68dd6c82ede1af4c195f8e",
+    "path": "topics/search-and-sort/originals/167__2147765072.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "167",
+    "problem_url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
+    "capture_file": "originals/096_167_2147765072.cpp"
+  },
+  {
+    "source_id": "2130670973",
+    "problem": "167. Two Sum II - Input Array Is Sorted",
+    "url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/submissions/2130670973/",
+    "sha256": "475053f0761c986793f8383ab8cafee0078c7435131632c944688d19d775ad71",
+    "path": "topics/search-and-sort/originals/167__2130670973.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "167",
+    "problem_url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
+    "capture_file": "originals/096_167_2130670973.cpp"
+  },
+  {
+    "source_id": "2147800911",
+    "problem": "189. Rotate Array",
+    "url": "https://leetcode.com/problems/rotate-array/submissions/2147800911/",
+    "sha256": "7a6884b29dd6b1bf4b7da5879a8d20135ed11cab21a94bf7d8e593b014b4961f",
+    "path": "topics/search-and-sort/originals/189__2147800911.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "189",
+    "problem_url": "https://leetcode.com/problems/rotate-array/",
+    "capture_file": "originals/093_189_2147800911.cpp"
   },
   {
     "source_id": "2144679787",
@@ -878,6 +989,17 @@
     "topic": "search-and-sort",
     "problem_id": "215",
     "problem_url": "https://leetcode.com/problems/kth-largest-element-in-an-array/"
+  },
+  {
+    "source_id": "2126091678",
+    "problem": "283. Move Zeroes",
+    "url": "https://leetcode.com/problems/move-zeroes/submissions/2126091678/",
+    "sha256": "116e51b452bc1856d299834c0f9fa70e2ff9b4e2c2e20c32b61baf36a36f274d",
+    "path": "topics/search-and-sort/originals/283__2126091678.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "283",
+    "problem_url": "https://leetcode.com/problems/move-zeroes/",
+    "capture_file": "originals/205_283_2126091678.cpp"
   },
   {
     "source_id": "2143946691",
@@ -1138,6 +1260,72 @@
     "topic": "search-and-sort",
     "problem_id": "1095",
     "problem_url": "https://leetcode.com/problems/find-in-mountain-array/"
+  },
+  {
+    "source_id": "2119622834",
+    "problem": "1366. Rank Teams by Votes",
+    "url": "https://leetcode.com/problems/rank-teams-by-votes/submissions/2119622834/",
+    "sha256": "2b92d1079bd8d7df538a1d41919f24f632da799efd29253ba127ad27dc9c2f7d",
+    "path": "topics/search-and-sort/originals/1366__2119622834.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "1366",
+    "problem_url": "https://leetcode.com/problems/rank-teams-by-votes/",
+    "capture_file": "originals/212_1366_2119622834.cpp"
+  },
+  {
+    "source_id": "2011679923",
+    "problem": "1752. Check if Array Is Sorted and Rotated",
+    "url": "https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/submissions/2011679923/",
+    "sha256": "2e2ca0b72b09bbfa0cec85b2e25b6fe00d4a70d447a6acdb3626c5ded9b8ab5b",
+    "path": "topics/search-and-sort/originals/1752__2011679923.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "1752",
+    "problem_url": "https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/",
+    "capture_file": "sources/231-2011679923.cpp"
+  },
+  {
+    "source_id": "2024256883",
+    "problem": "2517. Maximum Tastiness of Candy Basket",
+    "url": "https://leetcode.com/problems/maximum-tastiness-of-candy-basket/submissions/2024256883/",
+    "sha256": "0c4781467780629272cf51b1e352d1e5d134c2a98141bfbd94e9787b60696311",
+    "path": "topics/search-and-sort/originals/2517__2024256883.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "2517",
+    "problem_url": "https://leetcode.com/problems/maximum-tastiness-of-candy-basket/",
+    "capture_file": "sources/224-2024256883.cpp"
+  },
+  {
+    "source_id": "2024256312",
+    "problem": "2517. Maximum Tastiness of Candy Basket",
+    "url": "https://leetcode.com/problems/maximum-tastiness-of-candy-basket/submissions/2024256312/",
+    "sha256": "2a4a563d6d8b24ee4d07b65a2e8d505b6e6bf11107c6122dd45a83ca7a3f1310",
+    "path": "topics/search-and-sort/originals/2517__2024256312.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "2517",
+    "problem_url": "https://leetcode.com/problems/maximum-tastiness-of-candy-basket/",
+    "capture_file": "sources/224-2024256312.cpp"
+  },
+  {
+    "source_id": "2024348959",
+    "problem": "2560. House Robber IV",
+    "url": "https://leetcode.com/problems/house-robber-iv/submissions/2024348959/",
+    "sha256": "b627d279e5e325adf451fecdad8f2f3cda8041cf0dab6df04ac2ce596b7031a0",
+    "path": "topics/search-and-sort/originals/2560__2024348959.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "2560",
+    "problem_url": "https://leetcode.com/problems/house-robber-iv/",
+    "capture_file": "sources/223-2024348959.cpp"
+  },
+  {
+    "source_id": "2012345290",
+    "problem": "3759. Count Elements With at Least K Greater Values",
+    "url": "https://leetcode.com/problems/count-elements-with-at-least-k-greater-values/submissions/2012345290/",
+    "sha256": "088147f516de27270f9e39c80ac9a1871286e3986c1874845fa4cd89309abb58",
+    "path": "topics/search-and-sort/originals/3759__2012345290.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "3759",
+    "problem_url": "https://leetcode.com/problems/count-elements-with-at-least-k-greater-values/",
+    "capture_file": "sources/229-2012345290.cpp"
   },
   {
     "source_id": "2147811654",
@@ -1470,6 +1658,39 @@
     "problem_url": "https://leetcode.com/problems/sum-of-subarray-minimums/"
   },
   {
+    "source_id": "2157563441",
+    "problem": "973. K Closest Points to Origin",
+    "url": "https://leetcode.com/problems/k-closest-points-to-origin/submissions/2157563441/",
+    "sha256": "1d09151390c1508a30c202fdda464ac26158b2d623af86dda676c263497ed44c",
+    "path": "topics/monotonic-and-heaps/originals/973__2157563441.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "973",
+    "problem_url": "https://leetcode.com/problems/k-closest-points-to-origin/",
+    "capture_file": "recovered-025-050/042-973-2157563441.cpp"
+  },
+  {
+    "source_id": "2157563214",
+    "problem": "973. K Closest Points to Origin",
+    "url": "https://leetcode.com/problems/k-closest-points-to-origin/submissions/2157563214/",
+    "sha256": "a33a65fc6b14ded4323b2d1bc6de00c4bad28bed830dd45ba3e19cfc42fc21da",
+    "path": "topics/monotonic-and-heaps/originals/973__2157563214.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "973",
+    "problem_url": "https://leetcode.com/problems/k-closest-points-to-origin/",
+    "capture_file": "recovered-025-050/042-973-2157563214.cpp"
+  },
+  {
+    "source_id": "2144675588",
+    "problem": "973. K Closest Points to Origin",
+    "url": "https://leetcode.com/problems/k-closest-points-to-origin/submissions/2144675588/",
+    "sha256": "a33a65fc6b14ded4323b2d1bc6de00c4bad28bed830dd45ba3e19cfc42fc21da",
+    "path": "topics/monotonic-and-heaps/originals/973__2144675588.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "973",
+    "problem_url": "https://leetcode.com/problems/k-closest-points-to-origin/",
+    "capture_file": "recovered-025-050/042-973-2144675588.cpp"
+  },
+  {
     "source_id": "2144668025",
     "problem": "1046. Last Stone Weight",
     "url": "https://leetcode.com/problems/last-stone-weight/submissions/2144668025/",
@@ -1478,6 +1699,1307 @@
     "topic": "monotonic-and-heaps",
     "problem_id": "1046",
     "problem_url": "https://leetcode.com/problems/last-stone-weight/"
+  },
+  {
+    "source_id": "2143986850",
+    "problem": "146. LRU Cache",
+    "url": "https://leetcode.com/problems/lru-cache/submissions/2143986850/",
+    "sha256": "a088815afe4aca6b60b2eff60d76e125ac2c0283559d0a071be8b276f1b11dcb",
+    "path": "topics/design-structures/originals/146__2143986850.cpp",
+    "topic": "design-structures",
+    "problem_id": "146",
+    "problem_url": "https://leetcode.com/problems/lru-cache/"
+  },
+  {
+    "source_id": "2146465049",
+    "problem": "150. Evaluate Reverse Polish Notation",
+    "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/2146465049/",
+    "sha256": "c4befddd4180e566d1ce8a1cf7f2d2ba582d285e16c130fe35946e9d278c666f",
+    "path": "topics/design-structures/originals/150__2146465049.cpp",
+    "topic": "design-structures",
+    "problem_id": "150",
+    "problem_url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/"
+  },
+  {
+    "source_id": "2025562806",
+    "problem": "150. Evaluate Reverse Polish Notation",
+    "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/2025562806/",
+    "sha256": "4b7a418f54b313103f6424281be6a93946d116aa37c50838ecf21c91e26d7b1d",
+    "path": "topics/design-structures/originals/150__2025562806.cpp",
+    "topic": "design-structures",
+    "problem_id": "150",
+    "problem_url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/"
+  },
+  {
+    "source_id": "2146461553",
+    "problem": "155. Min Stack",
+    "url": "https://leetcode.com/problems/min-stack/submissions/2146461553/",
+    "sha256": "3489126bf1f634b5cbcea0df613b83e899ef03b6b81f323072a626480a46cfad",
+    "path": "topics/design-structures/originals/155__2146461553.cpp",
+    "topic": "design-structures",
+    "problem_id": "155",
+    "problem_url": "https://leetcode.com/problems/min-stack/"
+  },
+  {
+    "source_id": "2025573166",
+    "problem": "155. Min Stack",
+    "url": "https://leetcode.com/problems/min-stack/submissions/2025573166/",
+    "sha256": "80e2e033e7767f7a2255230ee5dcb211ed21a333fea26189149dd16fcebde596",
+    "path": "topics/design-structures/originals/155__2025573166.cpp",
+    "topic": "design-structures",
+    "problem_id": "155",
+    "problem_url": "https://leetcode.com/problems/min-stack/"
+  },
+  {
+    "source_id": "2146459626",
+    "problem": "225. Implement Stack using Queues",
+    "url": "https://leetcode.com/problems/implement-stack-using-queues/submissions/2146459626/",
+    "sha256": "6679634a075eec66accf0937fbc0bfd103793a214ac2c699b3fdf2e856d5c74f",
+    "path": "topics/design-structures/originals/225__2146459626.cpp",
+    "topic": "design-structures",
+    "problem_id": "225",
+    "problem_url": "https://leetcode.com/problems/implement-stack-using-queues/"
+  },
+  {
+    "source_id": "2146457265",
+    "problem": "232. Implement Queue using Stacks",
+    "url": "https://leetcode.com/problems/implement-queue-using-stacks/submissions/2146457265/",
+    "sha256": "be486f00da46368b29d09b22f7c752b5baa63e67404e8b277746676a7c3aed4c",
+    "path": "topics/design-structures/originals/232__2146457265.cpp",
+    "topic": "design-structures",
+    "problem_id": "232",
+    "problem_url": "https://leetcode.com/problems/implement-queue-using-stacks/"
+  },
+  {
+    "source_id": "2144760383",
+    "problem": "355. Design Twitter",
+    "url": "https://leetcode.com/problems/design-twitter/submissions/2144760383/",
+    "sha256": "0d122ce430b252f0821965c283ea3508bee1f55dfee501d1d6305bfafa3e1c79",
+    "path": "topics/design-structures/originals/355__2144760383.cpp",
+    "topic": "design-structures",
+    "problem_id": "355",
+    "problem_url": "https://leetcode.com/problems/design-twitter/"
+  },
+  {
+    "source_id": "2125968160",
+    "problem": "380. Insert Delete GetRandom O(1)",
+    "url": "https://leetcode.com/problems/insert-delete-getrandom-o1/submissions/2125968160/",
+    "sha256": "daaec2aeb78dacd868dadd6f2bf4cc804b8aa059202102477d6e5b528e32a80d",
+    "path": "topics/design-structures/originals/380__2125968160.cpp",
+    "topic": "design-structures",
+    "problem_id": "380",
+    "problem_url": "https://leetcode.com/problems/insert-delete-getrandom-o1/",
+    "capture_file": "originals/209_380_2125968160.cpp"
+  },
+  {
+    "source_id": "2116321400",
+    "problem": "380. Insert Delete GetRandom O(1)",
+    "url": "https://leetcode.com/problems/insert-delete-getrandom-o1/submissions/2116321400/",
+    "sha256": "991ae6cdde6a46540ebc2a9b70b0c1ca3fe56034e6e2b2a167ee3da03069eae9",
+    "path": "topics/design-structures/originals/380__2116321400.cpp",
+    "topic": "design-structures",
+    "problem_id": "380",
+    "problem_url": "https://leetcode.com/problems/insert-delete-getrandom-o1/",
+    "capture_file": "originals/209_380_2116321400.cpp"
+  },
+  {
+    "source_id": "2144968388",
+    "problem": "460. LFU Cache",
+    "url": "https://leetcode.com/problems/lfu-cache/submissions/2144968388/",
+    "sha256": "94f8aa6553370ea6988a2a643cd131a744c822a698689fed99da185e1e2af59a",
+    "path": "topics/design-structures/originals/460__2144968388.cpp",
+    "topic": "design-structures",
+    "problem_id": "460",
+    "problem_url": "https://leetcode.com/problems/lfu-cache/"
+  },
+  {
+    "source_id": "2144919830",
+    "problem": "460. LFU Cache",
+    "url": "https://leetcode.com/problems/lfu-cache/submissions/2144919830/",
+    "sha256": "573af2b62ab3b97e13115d8be59450171ebc3539c05cbfdcd10be70496058e44",
+    "path": "topics/design-structures/originals/460__2144919830.cpp",
+    "topic": "design-structures",
+    "problem_id": "460",
+    "problem_url": "https://leetcode.com/problems/lfu-cache/"
+  },
+  {
+    "source_id": "2145817863",
+    "problem": "682. Baseball Game",
+    "url": "https://leetcode.com/problems/baseball-game/submissions/2145817863/",
+    "sha256": "c47c28ade98dfd66d039290410c370b40572d9565d1217be0443006986fca44e",
+    "path": "topics/design-structures/originals/682__2145817863.cpp",
+    "topic": "design-structures",
+    "problem_id": "682",
+    "problem_url": "https://leetcode.com/problems/baseball-game/"
+  },
+  {
+    "source_id": "2144621524",
+    "problem": "706. Design HashMap",
+    "url": "https://leetcode.com/problems/design-hashmap/submissions/2144621524/",
+    "sha256": "b66575f825ef2857358840142c983b0f374ffdaac1550c6deb692a9f98f3cc23",
+    "path": "topics/design-structures/originals/706__2144621524.cpp",
+    "topic": "design-structures",
+    "problem_id": "706",
+    "problem_url": "https://leetcode.com/problems/design-hashmap/"
+  },
+  {
+    "source_id": "2146639743",
+    "problem": "895. Maximum Frequency Stack",
+    "url": "https://leetcode.com/problems/maximum-frequency-stack/submissions/2146639743/",
+    "sha256": "c812274e4f775624ad91035457bd9e7ee94b5767e54e02b6691214344855d6b0",
+    "path": "topics/design-structures/originals/895__2146639743.cpp",
+    "topic": "design-structures",
+    "problem_id": "895",
+    "problem_url": "https://leetcode.com/problems/maximum-frequency-stack/"
+  },
+  {
+    "source_id": "2146625292",
+    "problem": "895. Maximum Frequency Stack",
+    "url": "https://leetcode.com/problems/maximum-frequency-stack/submissions/2146625292/",
+    "sha256": "e6b0d520b859a4de2d99492d792d8f27df32ecaba88c948b5a2f277488a659f7",
+    "path": "topics/design-structures/originals/895__2146625292.cpp",
+    "topic": "design-structures",
+    "problem_id": "895",
+    "problem_url": "https://leetcode.com/problems/maximum-frequency-stack/"
+  },
+  {
+    "source_id": "2146746974",
+    "problem": "981. Time Based Key-Value Store",
+    "url": "https://leetcode.com/problems/time-based-key-value-store/submissions/2146746974/",
+    "sha256": "98628e843e23f668d6e7b73ce250d7415d54519490d0e02c25e857973227e5e5",
+    "path": "topics/design-structures/originals/981__2146746974.cpp",
+    "topic": "design-structures",
+    "problem_id": "981",
+    "problem_url": "https://leetcode.com/problems/time-based-key-value-store/"
+  },
+  {
+    "source_id": "2024512612",
+    "problem": "981. Time Based Key-Value Store",
+    "url": "https://leetcode.com/problems/time-based-key-value-store/submissions/2024512612/",
+    "sha256": "952886f80e17c18ee256e509175e765799d8612ad69aa409d283478d7dfc511b",
+    "path": "topics/design-structures/originals/981__2024512612.cpp",
+    "topic": "design-structures",
+    "problem_id": "981",
+    "problem_url": "https://leetcode.com/problems/time-based-key-value-store/"
+  },
+  {
+    "source_id": "2126227733",
+    "problem": "8. String to Integer (atoi)",
+    "url": "https://leetcode.com/problems/string-to-integer-atoi/submissions/2126227733/",
+    "sha256": "50476e780b8c8345e94223fe66d5e03df368fb321f668f098b1d58e498f68cef",
+    "path": "topics/strings-and-tries/originals/8__2126227733.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "8",
+    "problem_url": "https://leetcode.com/problems/string-to-integer-atoi/"
+  },
+  {
+    "source_id": "2159229559",
+    "problem": "20. Valid Parentheses",
+    "url": "https://leetcode.com/problems/valid-parentheses/submissions/2159229559/",
+    "sha256": "5c56ad56ab9bd8b07ca6b9058d8b864ff93af7096f82b8a90a72e31a0145eb5a",
+    "path": "topics/strings-and-tries/originals/20__2159229559.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "20",
+    "problem_url": "https://leetcode.com/problems/valid-parentheses/",
+    "capture_file": "recovered-025-050/033-20-2159229559.cpp"
+  },
+  {
+    "source_id": "2145824156",
+    "problem": "20. Valid Parentheses",
+    "url": "https://leetcode.com/problems/valid-parentheses/submissions/2145824156/",
+    "sha256": "5c56ad56ab9bd8b07ca6b9058d8b864ff93af7096f82b8a90a72e31a0145eb5a",
+    "path": "topics/strings-and-tries/originals/20__2145824156.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "20",
+    "problem_url": "https://leetcode.com/problems/valid-parentheses/",
+    "capture_file": "recovered-025-050/033-20-2145824156.cpp"
+  },
+  {
+    "source_id": "2130619573",
+    "problem": "20. Valid Parentheses",
+    "url": "https://leetcode.com/problems/valid-parentheses/submissions/2130619573/",
+    "sha256": "e71341a8edcfebc970c599404f1a51487861312f9ef6ba1b7ba7d7280ba41fe3",
+    "path": "topics/strings-and-tries/originals/20__2130619573.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "20",
+    "problem_url": "https://leetcode.com/problems/valid-parentheses/",
+    "capture_file": "recovered-025-050/033-20-2130619573.cpp"
+  },
+  {
+    "source_id": "2163524870",
+    "problem": "28. Find the Index of the First Occurrence in a String",
+    "url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/submissions/2163524870/",
+    "sha256": "79038ad6eab58fd1aa8bf32e2d3e568b6f2669fdf3ec0dec4fdb05657c908b17",
+    "path": "topics/strings-and-tries/originals/28__2163524870.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "28",
+    "problem_url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/"
+  },
+  {
+    "source_id": "2161065445",
+    "problem": "32. Longest Valid Parentheses",
+    "url": "https://leetcode.com/problems/longest-valid-parentheses/submissions/2161065445/",
+    "sha256": "44fe7be3713be3451b5a6868b998033915dd84057ce66e173bc568398e8f5f54",
+    "path": "topics/strings-and-tries/originals/32__2161065445.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "32",
+    "problem_url": "https://leetcode.com/problems/longest-valid-parentheses/",
+    "capture_file": "recovered-025-050/029-32-2161065445.cpp"
+  },
+  {
+    "source_id": "1780529411",
+    "problem": "32. Longest Valid Parentheses",
+    "url": "https://leetcode.com/problems/longest-valid-parentheses/submissions/1780529411/",
+    "sha256": "bc35f8236cb3c3e468c280a25fb40061b305439ca81b5beedffb8c6495eecb0f",
+    "path": "topics/strings-and-tries/originals/32__1780529411.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "32",
+    "problem_url": "https://leetcode.com/problems/longest-valid-parentheses/",
+    "capture_file": "recovered-025-050/029-32-1780529411.cpp"
+  },
+  {
+    "source_id": "2127402160",
+    "problem": "49. Group Anagrams",
+    "url": "https://leetcode.com/problems/group-anagrams/submissions/2127402160/",
+    "sha256": "62fa4a0925e08cc8383c7a3e0bb3e21461a8d655f35c222a91e5d6bde4f98801",
+    "path": "topics/strings-and-tries/originals/49__2127402160.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "49",
+    "problem_url": "https://leetcode.com/problems/group-anagrams/"
+  },
+  {
+    "source_id": "2146563687",
+    "problem": "71. Simplify Path",
+    "url": "https://leetcode.com/problems/simplify-path/submissions/2146563687/",
+    "sha256": "bd6c51cdfd23c69e55a217e13bf666a383989ec4314470d0ebdf15faf53aff26",
+    "path": "topics/strings-and-tries/originals/71__2146563687.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "71",
+    "problem_url": "https://leetcode.com/problems/simplify-path/"
+  },
+  {
+    "source_id": "2149102883",
+    "problem": "76. Minimum Window Substring",
+    "url": "https://leetcode.com/problems/minimum-window-substring/submissions/2149102883/",
+    "sha256": "c886a6633ff15dbbd8ce6886b4fbd779eb3edc3e1f4b4dc2c8ddf6961cb50734",
+    "path": "topics/strings-and-tries/originals/76__2149102883.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "76",
+    "problem_url": "https://leetcode.com/problems/minimum-window-substring/"
+  },
+  {
+    "source_id": "2131820578",
+    "problem": "76. Minimum Window Substring",
+    "url": "https://leetcode.com/problems/minimum-window-substring/submissions/2131820578/",
+    "sha256": "1c01f3b960ee7ca3561a2b5ba8e94562d14c7a81d02838f8486f3b87dd53c140",
+    "path": "topics/strings-and-tries/originals/76__2131820578.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "76",
+    "problem_url": "https://leetcode.com/problems/minimum-window-substring/"
+  },
+  {
+    "source_id": "2147738982",
+    "problem": "125. Valid Palindrome",
+    "url": "https://leetcode.com/problems/valid-palindrome/submissions/2147738982/",
+    "sha256": "dd1ab01f8014eb936f29ae6df81bb4f5b15669b54c248dd46867f85c388225e5",
+    "path": "topics/strings-and-tries/originals/125__2147738982.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "125",
+    "problem_url": "https://leetcode.com/problems/valid-palindrome/"
+  },
+  {
+    "source_id": "2125913880",
+    "problem": "205. Isomorphic Strings",
+    "url": "https://leetcode.com/problems/isomorphic-strings/submissions/2125913880/",
+    "sha256": "bc3a8e4c6b5ebcd152c548b695b0f53180eddaef1ba0b64dc19393eed59830d5",
+    "path": "topics/strings-and-tries/originals/205__2125913880.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "205",
+    "problem_url": "https://leetcode.com/problems/isomorphic-strings/",
+    "capture_file": "originals/210_205_2125913880.cpp"
+  },
+  {
+    "source_id": "2116280947",
+    "problem": "205. Isomorphic Strings",
+    "url": "https://leetcode.com/problems/isomorphic-strings/submissions/2116280947/",
+    "sha256": "ad3c56f8d86197dc710528e707a823fd2450bd98a20080714529e4d7a8ddde92",
+    "path": "topics/strings-and-tries/originals/205__2116280947.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "205",
+    "problem_url": "https://leetcode.com/problems/isomorphic-strings/",
+    "capture_file": "originals/210_205_2116280947.cpp"
+  },
+  {
+    "source_id": "2167350538",
+    "problem": "208. Implement Trie (Prefix Tree)",
+    "url": "https://leetcode.com/problems/implement-trie-prefix-tree/submissions/2167350538/",
+    "sha256": "da342beac2a3d8f32cd3bf7419f29e6270992028de0e55911128723b11ac92d1",
+    "path": "topics/strings-and-tries/originals/208__2167350538.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "208",
+    "problem_url": "https://leetcode.com/problems/implement-trie-prefix-tree/"
+  },
+  {
+    "source_id": "2163593115",
+    "problem": "214. Shortest Palindrome",
+    "url": "https://leetcode.com/problems/shortest-palindrome/submissions/2163593115/",
+    "sha256": "e689af470bfd33d9317a529c0727e0ae7d7bb80af812b505f9b0758da4481080",
+    "path": "topics/strings-and-tries/originals/214__2163593115.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "214",
+    "problem_url": "https://leetcode.com/problems/shortest-palindrome/"
+  },
+  {
+    "source_id": "2130658997",
+    "problem": "242. Valid Anagram",
+    "url": "https://leetcode.com/problems/valid-anagram/submissions/2130658997/",
+    "sha256": "bedad5777fc357843f52deef03c3a8a5875e5f2e0af1230eb844e414e6720806",
+    "path": "topics/strings-and-tries/originals/242__2130658997.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "242",
+    "problem_url": "https://leetcode.com/problems/valid-anagram/"
+  },
+  {
+    "source_id": "792424958",
+    "problem": "392. Is Subsequence",
+    "url": "https://leetcode.com/problems/is-subsequence/submissions/792424958/",
+    "sha256": "d18f5a2152799fcd42043700b02bf8274a7c1db35d289980ca548b9bf2835420",
+    "path": "topics/strings-and-tries/originals/392__792424958.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "392",
+    "problem_url": "https://leetcode.com/problems/is-subsequence/",
+    "capture_file": "sources/494-792424958.cpp"
+  },
+  {
+    "source_id": "2146593107",
+    "problem": "394. Decode String",
+    "url": "https://leetcode.com/problems/decode-string/submissions/2146593107/",
+    "sha256": "90960242c7d3f2e12b2ee05a16cf13db68bdf5ff8ff24e6e259835973c582b28",
+    "path": "topics/strings-and-tries/originals/394__2146593107.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "394",
+    "problem_url": "https://leetcode.com/problems/decode-string/"
+  },
+  {
+    "source_id": "2126086544",
+    "problem": "443. String Compression",
+    "url": "https://leetcode.com/problems/string-compression/submissions/2126086544/",
+    "sha256": "f2addcc05b8d4d2467e45dc690f5dd7ebb09aadf13e39230abab394c7aede162",
+    "path": "topics/strings-and-tries/originals/443__2126086544.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "443",
+    "problem_url": "https://leetcode.com/problems/string-compression/",
+    "capture_file": "originals/206_443_2126086544.cpp"
+  },
+  {
+    "source_id": "2119558730",
+    "problem": "443. String Compression",
+    "url": "https://leetcode.com/problems/string-compression/submissions/2119558730/",
+    "sha256": "736a23d25242482742f9240c3f645be327237a02b4ccbc3415a8cef04f1e094f",
+    "path": "topics/strings-and-tries/originals/443__2119558730.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "443",
+    "problem_url": "https://leetcode.com/problems/string-compression/",
+    "capture_file": "originals/206_443_2119558730.cpp"
+  },
+  {
+    "source_id": "2163579090",
+    "problem": "459. Repeated Substring Pattern",
+    "url": "https://leetcode.com/problems/repeated-substring-pattern/submissions/2163579090/",
+    "sha256": "b60dce121693bd1c0b19680785e8298e63d3c701c72eff2fcf2a3c5db1402af9",
+    "path": "topics/strings-and-tries/originals/459__2163579090.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "459",
+    "problem_url": "https://leetcode.com/problems/repeated-substring-pattern/"
+  },
+  {
+    "source_id": "2022687848",
+    "problem": "522. Longest Uncommon Subsequence II",
+    "url": "https://leetcode.com/problems/longest-uncommon-subsequence-ii/submissions/2022687848/",
+    "sha256": "7dc6f997a7b8373c909ab805985000ef40decfbdddfcad98bdd6b04ce9643ad4",
+    "path": "topics/strings-and-tries/originals/522__2022687848.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "522",
+    "problem_url": "https://leetcode.com/problems/longest-uncommon-subsequence-ii/",
+    "capture_file": "sources/226-2022687848.cpp"
+  },
+  {
+    "source_id": "2161909813",
+    "problem": "678. Valid Parenthesis String",
+    "url": "https://leetcode.com/problems/valid-parenthesis-string/submissions/2161909813/",
+    "sha256": "020b47a09e5958bec70f4fc89c8644e06352bd6d8fe4da4b08df17c899716bb6",
+    "path": "topics/strings-and-tries/originals/678__2161909813.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "678",
+    "problem_url": "https://leetcode.com/problems/valid-parenthesis-string/",
+    "capture_file": "recovered-025-050/026-678-2161909813.cpp"
+  },
+  {
+    "source_id": "2147742976",
+    "problem": "680. Valid Palindrome II",
+    "url": "https://leetcode.com/problems/valid-palindrome-ii/submissions/2147742976/",
+    "sha256": "3e39916a8b39cdbec7b02152a34f419d30ab57459077a9ab937477ed1b9acb6e",
+    "path": "topics/strings-and-tries/originals/680__2147742976.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "680",
+    "problem_url": "https://leetcode.com/problems/valid-palindrome-ii/",
+    "capture_file": "originals/100_680_2147742976.cpp"
+  },
+  {
+    "source_id": "2163561881",
+    "problem": "686. Repeated String Match",
+    "url": "https://leetcode.com/problems/repeated-string-match/submissions/2163561881/",
+    "sha256": "3bca4407f28a15ffd19421459d8fff49b69063bc6c849bc4db96978c567f3282",
+    "path": "topics/strings-and-tries/originals/686__2163561881.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "686",
+    "problem_url": "https://leetcode.com/problems/repeated-string-match/"
+  },
+  {
+    "source_id": "2164622907",
+    "problem": "745. Prefix and Suffix Search",
+    "url": "https://leetcode.com/problems/prefix-and-suffix-search/submissions/2164622907/",
+    "sha256": "a85aa54e39b028e30887549e14e0347eb88f8198145495e79468584822440d71",
+    "path": "topics/strings-and-tries/originals/745__2164622907.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "745",
+    "problem_url": "https://leetcode.com/problems/prefix-and-suffix-search/"
+  },
+  {
+    "source_id": "2162881009",
+    "problem": "856. Score of Parentheses",
+    "url": "https://leetcode.com/problems/score-of-parentheses/submissions/2162881009/",
+    "sha256": "a5d3256519c6aeae96020a56a4e997869c447eb88246eb89a1028f4a247ef6a1",
+    "path": "topics/strings-and-tries/originals/856__2162881009.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "856",
+    "problem_url": "https://leetcode.com/problems/score-of-parentheses/"
+  },
+  {
+    "source_id": "2164607113",
+    "problem": "921. Minimum Add to Make Parentheses Valid",
+    "url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/submissions/2164607113/",
+    "sha256": "065b1bb3a9772f64ab29b560910740c7fa62a7bd5ed7d7b1c3df2cea81d7380a",
+    "path": "topics/strings-and-tries/originals/921__2164607113.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "921",
+    "problem_url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/"
+  },
+  {
+    "source_id": "2155353571",
+    "problem": "953. Verifying an Alien Dictionary",
+    "url": "https://leetcode.com/problems/verifying-an-alien-dictionary/submissions/2155353571/",
+    "sha256": "5c73702982361fca6f1691e8c515b7053fef6167ea0afcef8cc1e8ba6210b654",
+    "path": "topics/strings-and-tries/originals/953__2155353571.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "953",
+    "problem_url": "https://leetcode.com/problems/verifying-an-alien-dictionary/"
+  },
+  {
+    "source_id": "2166675238",
+    "problem": "1021. Remove Outermost Parentheses",
+    "url": "https://leetcode.com/problems/remove-outermost-parentheses/submissions/2166675238/",
+    "sha256": "101847946f05197de82e9edd5e7593055a5a7cf2a64608f5169b0c32fea807cb",
+    "path": "topics/strings-and-tries/originals/1021__2166675238.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "1021",
+    "problem_url": "https://leetcode.com/problems/remove-outermost-parentheses/"
+  },
+  {
+    "source_id": "2153362638",
+    "problem": "1096. Brace Expansion II",
+    "url": "https://leetcode.com/problems/brace-expansion-ii/submissions/2153362638/",
+    "sha256": "5a40bdf5b40a2206cffab192799c6823631bc0d304d36faa99dc1a38ffeafcc5",
+    "path": "topics/strings-and-tries/originals/1096__2153362638.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "1096",
+    "problem_url": "https://leetcode.com/problems/brace-expansion-ii/"
+  },
+  {
+    "source_id": "2158097081",
+    "problem": "1111. Maximum Nesting Depth of Two Valid Parentheses Strings",
+    "url": "https://leetcode.com/problems/maximum-nesting-depth-of-two-valid-parentheses-strings/submissions/2158097081/",
+    "sha256": "c783750bed8ee222684527c6c0ab7e01ef673154721f3df6cf8f906e8e988a3a",
+    "path": "topics/strings-and-tries/originals/1111__2158097081.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "1111",
+    "problem_url": "https://leetcode.com/problems/maximum-nesting-depth-of-two-valid-parentheses-strings/",
+    "capture_file": "recovered-025-050/038-1111-2158097081.cpp"
+  },
+  {
+    "source_id": "2154897406",
+    "problem": "1190. Reverse Substrings Between Each Pair of Parentheses",
+    "url": "https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/submissions/2154897406/",
+    "sha256": "8201d126a1027c58b3c430a52eabc2621d3b6ab52466141038a40b9cb79a1c20",
+    "path": "topics/strings-and-tries/originals/1190__2154897406.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "1190",
+    "problem_url": "https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/"
+  },
+  {
+    "source_id": "2167345569",
+    "problem": "1541. Minimum Insertions to Balance a Parentheses String",
+    "url": "https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/submissions/2167345569/",
+    "sha256": "a582a59261d4b3c2e6c439cbcc0f122d35c5bd38a0e35becaa87ffdccab30037",
+    "path": "topics/strings-and-tries/originals/1541__2167345569.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "1541",
+    "problem_url": "https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/"
+  },
+  {
+    "source_id": "2155954786",
+    "problem": "1614. Maximum Nesting Depth of the Parentheses",
+    "url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/submissions/2155954786/",
+    "sha256": "74dbafa6b7318f12c837397baec63ace877bd50f42de7b68cbe01c21f9161257",
+    "path": "topics/strings-and-tries/originals/1614__2155954786.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "1614",
+    "problem_url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/"
+  },
+  {
+    "source_id": "2147744998",
+    "problem": "1768. Merge Strings Alternately",
+    "url": "https://leetcode.com/problems/merge-strings-alternately/submissions/2147744998/",
+    "sha256": "ea0731dd05c7a38c9ccbe18f9cb99bcb68b75a688579b62516bb1d8a9d0e621d",
+    "path": "topics/strings-and-tries/originals/1768__2147744998.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "1768",
+    "problem_url": "https://leetcode.com/problems/merge-strings-alternately/",
+    "capture_file": "originals/099_1768_2147744998.cpp"
+  },
+  {
+    "source_id": "2154370092",
+    "problem": "1807. Evaluate the Bracket Pairs of a String",
+    "url": "https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/submissions/2154370092/",
+    "sha256": "5c56b810b378a094d278919fdd301bb8c418aae81ded46eb6ee1a31264b2de45",
+    "path": "topics/strings-and-tries/originals/1807__2154370092.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "1807",
+    "problem_url": "https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/"
+  },
+  {
+    "source_id": "765352591",
+    "problem": "2108. Find First Palindromic String in the Array",
+    "url": "https://leetcode.com/problems/find-first-palindromic-string-in-the-array/submissions/765352591/",
+    "sha256": "7ececdb92f2869384d64ecfd4fd7f0e622533a96f03f154ca9926bb17aa990af",
+    "path": "topics/strings-and-tries/originals/2108__765352591.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "2108",
+    "problem_url": "https://leetcode.com/problems/find-first-palindromic-string-in-the-array/",
+    "capture_file": "sources/308-765352591.cpp"
+  },
+  {
+    "source_id": "2011710588",
+    "problem": "3043. Find the Length of the Longest Common Prefix",
+    "url": "https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix/submissions/2011710588/",
+    "sha256": "489579fd308a8430b92d791af6cb17c7cbccc2d279f693ee4e106e9f81200ba3",
+    "path": "topics/strings-and-tries/originals/3043__2011710588.cpp",
+    "topic": "strings-and-tries",
+    "problem_id": "3043",
+    "problem_url": "https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix/",
+    "capture_file": "sources/230-2011710588.cpp"
+  },
+  {
+    "source_id": "2143813487",
+    "problem": "2. Add Two Numbers",
+    "url": "https://leetcode.com/problems/add-two-numbers/submissions/2143813487/",
+    "sha256": "27bdee1f4535317f54f8a4901a430e69ea9328b0cbcfedfb8ef296a3ee123178",
+    "path": "topics/trees-and-lists/originals/2__2143813487.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "2",
+    "problem_url": "https://leetcode.com/problems/add-two-numbers/"
+  },
+  {
+    "source_id": "2143696811",
+    "problem": "19. Remove Nth Node From End of List",
+    "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/submissions/2143696811/",
+    "sha256": "8899098bfe5815458e264d965d19b66c07ad0da6e38782bf16f36f5bef8a5092",
+    "path": "topics/trees-and-lists/originals/19__2143696811.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "19",
+    "problem_url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
+  },
+  {
+    "source_id": "2143594529",
+    "problem": "21. Merge Two Sorted Lists",
+    "url": "https://leetcode.com/problems/merge-two-sorted-lists/submissions/2143594529/",
+    "sha256": "47f7edeb0850980f2dbc1095dc4f40e0b9fff71cd14cede9df4c9666f5d45715",
+    "path": "topics/trees-and-lists/originals/21__2143594529.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "21",
+    "problem_url": "https://leetcode.com/problems/merge-two-sorted-lists/"
+  },
+  {
+    "source_id": "2144522916",
+    "problem": "23. Merge k Sorted Lists",
+    "url": "https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144522916/",
+    "sha256": "a73f6da9c2ee448802091b06124488d14674ee0736aad61a301d028b1bb477b0",
+    "path": "topics/trees-and-lists/originals/23__2144522916.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "23",
+    "problem_url": "https://leetcode.com/problems/merge-k-sorted-lists/"
+  },
+  {
+    "source_id": "2144097838",
+    "problem": "23. Merge k Sorted Lists",
+    "url": "https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144097838/",
+    "sha256": "227afa180bf90e3c0468a67a6e584c52cca0fa6c292d835c43ff7db9d26c5442",
+    "path": "topics/trees-and-lists/originals/23__2144097838.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "23",
+    "problem_url": "https://leetcode.com/problems/merge-k-sorted-lists/"
+  },
+  {
+    "source_id": "2144552684",
+    "problem": "25. Reverse Nodes in k-Group",
+    "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/submissions/2144552684/",
+    "sha256": "82b9f5256fe3e6b4bb1fce5a4ec988e0fb34b226b4dac7bec9798c6c81988635",
+    "path": "topics/trees-and-lists/originals/25__2144552684.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "25",
+    "problem_url": "https://leetcode.com/problems/reverse-nodes-in-k-group/"
+  },
+  {
+    "source_id": "2140737519",
+    "problem": "98. Validate Binary Search Tree",
+    "url": "https://leetcode.com/problems/validate-binary-search-tree/submissions/2140737519/",
+    "sha256": "4daa7626340418da91c061c9e005bec1f86b4a869b61543be3f0d65ab18264e7",
+    "path": "topics/trees-and-lists/originals/98__2140737519.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "98",
+    "problem_url": "https://leetcode.com/problems/validate-binary-search-tree/"
+  },
+  {
+    "source_id": "2140598575",
+    "problem": "100. Same Tree",
+    "url": "https://leetcode.com/problems/same-tree/submissions/2140598575/",
+    "sha256": "66838e78aff507c7b9c245916323951936efdeaae0dc03eb2b4cc6d301c04070",
+    "path": "topics/trees-and-lists/originals/100__2140598575.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "100",
+    "problem_url": "https://leetcode.com/problems/same-tree/"
+  },
+  {
+    "source_id": "2140704978",
+    "problem": "102. Binary Tree Level Order Traversal",
+    "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/submissions/2140704978/",
+    "sha256": "098474b2d05f7b44038f7e2650d2a9146eb341678eb82b18e138468b743c64b2",
+    "path": "topics/trees-and-lists/originals/102__2140704978.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "102",
+    "problem_url": "https://leetcode.com/problems/binary-tree-level-order-traversal/"
+  },
+  {
+    "source_id": "2140575615",
+    "problem": "104. Maximum Depth of Binary Tree",
+    "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/submissions/2140575615/",
+    "sha256": "13db5103a28c8b3b462ed1fe79820b02040cb05592cf1d779fdedf37e5484647",
+    "path": "topics/trees-and-lists/originals/104__2140575615.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "104",
+    "problem_url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/"
+  },
+  {
+    "source_id": "2141508524",
+    "problem": "105. Construct Binary Tree from Preorder and Inorder Traversal",
+    "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508524/",
+    "sha256": "3db00a5cf100e0e4cecaf92c17c7b5d09215e7792a7ab9851ef0a6e8b1f742d7",
+    "path": "topics/trees-and-lists/originals/105__2141508524.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "105",
+    "problem_url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/"
+  },
+  {
+    "source_id": "2141508275",
+    "problem": "105. Construct Binary Tree from Preorder and Inorder Traversal",
+    "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508275/",
+    "sha256": "6e05d07a31a76120275c0d66357fda336c97cffe99b166215d977d9508b6403b",
+    "path": "topics/trees-and-lists/originals/105__2141508275.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "105",
+    "problem_url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/"
+  },
+  {
+    "source_id": "2140593789",
+    "problem": "110. Balanced Binary Tree",
+    "url": "https://leetcode.com/problems/balanced-binary-tree/submissions/2140593789/",
+    "sha256": "909c87bead55b9d20665c7c095d954bc1ecf92701dd1d07c9762618b4b0a3aca",
+    "path": "topics/trees-and-lists/originals/110__2140593789.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "110",
+    "problem_url": "https://leetcode.com/problems/balanced-binary-tree/"
+  },
+  {
+    "source_id": "2153370936",
+    "problem": "124. Binary Tree Maximum Path Sum",
+    "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2153370936/",
+    "sha256": "409e1c9f18a7da1b4f22413d37fd0f19c34f2895aad849aa0ac4b8e9fdb75027",
+    "path": "topics/trees-and-lists/originals/124__2153370936.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "124",
+    "problem_url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/"
+  },
+  {
+    "source_id": "2141514512",
+    "problem": "124. Binary Tree Maximum Path Sum",
+    "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2141514512/",
+    "sha256": "1828a6b0b54bc6af5bdf1e306d593fc27bc1eee201a812939c83cf77f31afdc0",
+    "path": "topics/trees-and-lists/originals/124__2141514512.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "124",
+    "problem_url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/"
+  },
+  {
+    "source_id": "2143802245",
+    "problem": "138. Copy List with Random Pointer",
+    "url": "https://leetcode.com/problems/copy-list-with-random-pointer/submissions/2143802245/",
+    "sha256": "1e129d20ed320d59de526d0fc03da0fcc92bd04a5b9dbfd64cc267b1f322dd45",
+    "path": "topics/trees-and-lists/originals/138__2143802245.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "138",
+    "problem_url": "https://leetcode.com/problems/copy-list-with-random-pointer/"
+  },
+  {
+    "source_id": "2143629142",
+    "problem": "141. Linked List Cycle",
+    "url": "https://leetcode.com/problems/linked-list-cycle/submissions/2143629142/",
+    "sha256": "8ddcaa253d758abf9a4ceefd76372995ddbb12c7285f103b6f40986edf281311",
+    "path": "topics/trees-and-lists/originals/141__2143629142.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "141",
+    "problem_url": "https://leetcode.com/problems/linked-list-cycle/"
+  },
+  {
+    "source_id": "2143673583",
+    "problem": "143. Reorder List",
+    "url": "https://leetcode.com/problems/reorder-list/submissions/2143673583/",
+    "sha256": "4c944b93ffdb9dbf50d8d864cda9688874631dd5b66f85379e75902c27188aae",
+    "path": "topics/trees-and-lists/originals/143__2143673583.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "143",
+    "problem_url": "https://leetcode.com/problems/reorder-list/"
+  },
+  {
+    "source_id": "2143663379",
+    "problem": "143. Reorder List",
+    "url": "https://leetcode.com/problems/reorder-list/submissions/2143663379/",
+    "sha256": "e207a8ec1b24bc4bbd45b3b3c4dc53676312f57b83f931b893181f76cc07f649",
+    "path": "topics/trees-and-lists/originals/143__2143663379.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "143",
+    "problem_url": "https://leetcode.com/problems/reorder-list/"
+  },
+  {
+    "source_id": "1211639660",
+    "problem": "143. Reorder List",
+    "url": "https://leetcode.com/problems/reorder-list/submissions/1211639660/",
+    "sha256": "a28b274762433403ced055dfb6592f0b7805979f06b1e351cea33770e530834a",
+    "path": "topics/trees-and-lists/originals/143__1211639660.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "143",
+    "problem_url": "https://leetcode.com/problems/reorder-list/"
+  },
+  {
+    "source_id": "2140707899",
+    "problem": "199. Binary Tree Right Side View",
+    "url": "https://leetcode.com/problems/binary-tree-right-side-view/submissions/2140707899/",
+    "sha256": "aa2141bd399d6606db41ef0a416954ee912ab0db53f10fb73248b049644c51de",
+    "path": "topics/trees-and-lists/originals/199__2140707899.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "199",
+    "problem_url": "https://leetcode.com/problems/binary-tree-right-side-view/"
+  },
+  {
+    "source_id": "2143560010",
+    "problem": "206. Reverse Linked List",
+    "url": "https://leetcode.com/problems/reverse-linked-list/submissions/2143560010/",
+    "sha256": "f25bd4bb56c9eaec78f1914b04e6d32e317711dba65267b5b7ed9ea48dccda7e",
+    "path": "topics/trees-and-lists/originals/206__2143560010.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "206",
+    "problem_url": "https://leetcode.com/problems/reverse-linked-list/"
+  },
+  {
+    "source_id": "2126014226",
+    "problem": "206. Reverse Linked List",
+    "url": "https://leetcode.com/problems/reverse-linked-list/submissions/2126014226/",
+    "sha256": "55a8bf178f866d7b707acfb038f24b600d3464db3c981c5e5bc1f671e4967778",
+    "path": "topics/trees-and-lists/originals/206__2126014226.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "206",
+    "problem_url": "https://leetcode.com/problems/reverse-linked-list/"
+  },
+  {
+    "source_id": "2140574036",
+    "problem": "226. Invert Binary Tree",
+    "url": "https://leetcode.com/problems/invert-binary-tree/submissions/2140574036/",
+    "sha256": "98a3ba0fbca1244fefc37896689ebb50bf80986939418ab179ed7c6bd9ca262c",
+    "path": "topics/trees-and-lists/originals/226__2140574036.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "226",
+    "problem_url": "https://leetcode.com/problems/invert-binary-tree/"
+  },
+  {
+    "source_id": "2140766874",
+    "problem": "230. Kth Smallest Element in a BST",
+    "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/submissions/2140766874/",
+    "sha256": "2284641ea1197a29103bee9a0cbf139895e6ef210d81a35cabf2e539cf4fe0ab",
+    "path": "topics/trees-and-lists/originals/230__2140766874.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "230",
+    "problem_url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/"
+  },
+  {
+    "source_id": "2126051007",
+    "problem": "234. Palindrome Linked List",
+    "url": "https://leetcode.com/problems/palindrome-linked-list/submissions/2126051007/",
+    "sha256": "149aaa9b10c639347d15d8215a5479ab7f323400007cc80701900f12bda0da2f",
+    "path": "topics/trees-and-lists/originals/234__2126051007.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "234",
+    "problem_url": "https://leetcode.com/problems/palindrome-linked-list/",
+    "capture_file": "originals/208_234_2126051007.cpp"
+  },
+  {
+    "source_id": "2140699724",
+    "problem": "235. Lowest Common Ancestor of a Binary Search Tree",
+    "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/submissions/2140699724/",
+    "sha256": "598213e260f76fd52cf87c92dfabd0758852f165748e3917b478775f8a6360ef",
+    "path": "topics/trees-and-lists/originals/235__2140699724.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "235",
+    "problem_url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/"
+  },
+  {
+    "source_id": "2153777400",
+    "problem": "297. Serialize and Deserialize Binary Tree",
+    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2153777400/",
+    "sha256": "a5d1cbb0232b6e52bc7b19654b9a944d6057d9d007548d86ff1142d59479e0c3",
+    "path": "topics/trees-and-lists/originals/297__2153777400.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "297",
+    "problem_url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
+  },
+  {
+    "source_id": "2141912475",
+    "problem": "297. Serialize and Deserialize Binary Tree",
+    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141912475/",
+    "sha256": "e6faa4a9b95f01ef0b38db4b3f9e79e760bbdc24d01a930488462e0e3275b8c3",
+    "path": "topics/trees-and-lists/originals/297__2141912475.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "297",
+    "problem_url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
+  },
+  {
+    "source_id": "2141671426",
+    "problem": "297. Serialize and Deserialize Binary Tree",
+    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141671426/",
+    "sha256": "31fca9c844930f966683d65bf803406fd5b29871bf1c8cad678d89a993cb6485",
+    "path": "topics/trees-and-lists/originals/297__2141671426.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "297",
+    "problem_url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
+  },
+  {
+    "source_id": "2140582704",
+    "problem": "543. Diameter of Binary Tree",
+    "url": "https://leetcode.com/problems/diameter-of-binary-tree/submissions/2140582704/",
+    "sha256": "4c27e737f2abf52b329e0dc9c2b5c76d2742e1d2459a975a0d29aba3494c351b",
+    "path": "topics/trees-and-lists/originals/543__2140582704.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "543",
+    "problem_url": "https://leetcode.com/problems/diameter-of-binary-tree/"
+  },
+  {
+    "source_id": "2140623050",
+    "problem": "572. Subtree of Another Tree",
+    "url": "https://leetcode.com/problems/subtree-of-another-tree/submissions/2140623050/",
+    "sha256": "e3fb47062e24a751b8b661bee236ca1b6b01694a15d969c2657f734d399a511d",
+    "path": "topics/trees-and-lists/originals/572__2140623050.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "572",
+    "problem_url": "https://leetcode.com/problems/subtree-of-another-tree/"
+  },
+  {
+    "source_id": "765344670",
+    "problem": "876. Middle of the Linked List",
+    "url": "https://leetcode.com/problems/middle-of-the-linked-list/submissions/765344670/",
+    "sha256": "8c48989d35a441d6800e26eeb8d9ae5bc33a5d85541eec2307ce6b2dff1e627e",
+    "path": "topics/trees-and-lists/originals/876__765344670.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "876",
+    "problem_url": "https://leetcode.com/problems/middle-of-the-linked-list/",
+    "capture_file": "sources/289-765344670.cpp"
+  },
+  {
+    "source_id": "2155106387",
+    "problem": "968. Binary Tree Cameras",
+    "url": "https://leetcode.com/problems/binary-tree-cameras/submissions/2155106387/",
+    "sha256": "3d24cf9f75a3b09267f38c585bbe0e050eab2a0da84d8728319e9814c574ae7c",
+    "path": "topics/trees-and-lists/originals/968__2155106387.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "968",
+    "problem_url": "https://leetcode.com/problems/binary-tree-cameras/"
+  },
+  {
+    "source_id": "2140724204",
+    "problem": "1448. Count Good Nodes in Binary Tree",
+    "url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/submissions/2140724204/",
+    "sha256": "52fca821c049b7e8f42bc0b2dbc26ee62f436b9d99f17e802d0acb06876e2971",
+    "path": "topics/trees-and-lists/originals/1448__2140724204.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "1448",
+    "problem_url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/"
+  },
+  {
+    "source_id": "2137363284",
+    "problem": "2265. Count Nodes Equal to Average of Subtree",
+    "url": "https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/submissions/2137363284/",
+    "sha256": "4e353a182485f3fdd8710ee29ff2efc1d773b5d6fc4fe5cb75d29cbb52097844",
+    "path": "topics/trees-and-lists/originals/2265__2137363284.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "2265",
+    "problem_url": "https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/"
+  },
+  {
+    "source_id": "2160263536",
+    "problem": "22. Generate Parentheses",
+    "url": "https://leetcode.com/problems/generate-parentheses/submissions/2160263536/",
+    "sha256": "41a1756eeac1d5e4b7947e73166ca9e136b6b869a5efa4a21c36bcbc4528c7a7",
+    "path": "topics/dp-and-backtracking/originals/22__2160263536.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "22",
+    "problem_url": "https://leetcode.com/problems/generate-parentheses/",
+    "capture_file": "recovered-025-050/030-22-2160263536.cpp"
+  },
+  {
+    "source_id": "2164710608",
+    "problem": "37. Sudoku Solver",
+    "url": "https://leetcode.com/problems/sudoku-solver/submissions/2164710608/",
+    "sha256": "a6b4592098020bf3232202ccb98b0a39a7f377f2b0736e7c9b146e5a8be163f2",
+    "path": "topics/dp-and-backtracking/originals/37__2164710608.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "37",
+    "problem_url": "https://leetcode.com/problems/sudoku-solver/"
+  },
+  {
+    "source_id": "2164697200",
+    "problem": "51. N-Queens",
+    "url": "https://leetcode.com/problems/n-queens/submissions/2164697200/",
+    "sha256": "9b9cf4caa5ae6ef29ccf62d557d846211cf58242a2e7d2d0e764ae9ea3ff9930",
+    "path": "topics/dp-and-backtracking/originals/51__2164697200.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "51",
+    "problem_url": "https://leetcode.com/problems/n-queens/"
+  },
+  {
+    "source_id": "2000625681",
+    "problem": "53. Maximum Subarray",
+    "url": "https://leetcode.com/problems/maximum-subarray/submissions/2000625681/",
+    "sha256": "29cb5c090b4bdbe44db3819622a96931a210c7e03b8133af1754cb2ce7a5671c",
+    "path": "topics/dp-and-backtracking/originals/53__2000625681.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "53",
+    "problem_url": "https://leetcode.com/problems/maximum-subarray/",
+    "capture_file": "sources/235-2000625681.cpp"
+  },
+  {
+    "source_id": "2126173167",
+    "problem": "64. Minimum Path Sum",
+    "url": "https://leetcode.com/problems/minimum-path-sum/submissions/2126173167/",
+    "sha256": "6c5ef154e79d9b70bf8f23c5dbc17e7a6be19a00cd6a9c67a8ad3349658a3ded",
+    "path": "topics/dp-and-backtracking/originals/64__2126173167.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "64",
+    "problem_url": "https://leetcode.com/problems/minimum-path-sum/"
+  },
+  {
+    "source_id": "2126172428",
+    "problem": "64. Minimum Path Sum",
+    "url": "https://leetcode.com/problems/minimum-path-sum/submissions/2126172428",
+    "sha256": "6c5ef154e79d9b70bf8f23c5dbc17e7a6be19a00cd6a9c67a8ad3349658a3ded",
+    "path": "topics/dp-and-backtracking/originals/64__2126172428.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "64",
+    "problem_url": "https://leetcode.com/problems/minimum-path-sum/"
+  },
+  {
+    "source_id": "2168591618",
+    "problem": "79. Word Search",
+    "url": "https://leetcode.com/submissions/detail/2168591618/",
+    "sha256": "f4b34b37154ea351f4d808a9102394449c67e2e3568b0a8158836d04684f28f8",
+    "path": "topics/dp-and-backtracking/originals/79__2168591618.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "79",
+    "problem_url": "https://leetcode.com/problems/word-search/",
+    "capture_file": "sources/79-2168591618.cpp"
+  },
+  {
+    "source_id": "2133267031",
+    "problem": "115. Distinct Subsequences",
+    "url": "https://leetcode.com/problems/distinct-subsequences/submissions/2133267031/",
+    "sha256": "61c5a79a9e17faec462f8602408472c3609ec35cb5ebd638910cfb62fb5045d9",
+    "path": "topics/dp-and-backtracking/originals/115__2133267031.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "115",
+    "problem_url": "https://leetcode.com/problems/distinct-subsequences/"
+  },
+  {
+    "source_id": "2116229650",
+    "problem": "118. Pascal's Triangle",
+    "url": "https://leetcode.com/problems/pascals-triangle/submissions/2116229650/",
+    "sha256": "939af9fa04fd3cc38ac0f55f18155176a621565f93bd5262c1e2d406f56fe475",
+    "path": "topics/dp-and-backtracking/originals/118__2116229650.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "118",
+    "problem_url": "https://leetcode.com/problems/pascals-triangle/",
+    "capture_file": "originals/216_118_2116229650.cpp"
+  },
+  {
+    "source_id": "791480396",
+    "problem": "118. Pascal's Triangle",
+    "url": "https://leetcode.com/problems/pascals-triangle/submissions/791480396/",
+    "sha256": "1841eb52e5cc17477d91048a96c7cbe95c9298e9a114f3b47c43d95eeaea58d4",
+    "path": "topics/dp-and-backtracking/originals/118__791480396.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "118",
+    "problem_url": "https://leetcode.com/problems/pascals-triangle/",
+    "capture_file": "originals/216_118_791480396.cpp"
+  },
+  {
+    "source_id": "791476688",
+    "problem": "118. Pascal's Triangle",
+    "url": "https://leetcode.com/problems/pascals-triangle/submissions/791476688/",
+    "sha256": "715da11dceafc62475d6160cec465ad1d9b099c2c56da3c84fc8d8e89b6d5d82",
+    "path": "topics/dp-and-backtracking/originals/118__791476688.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "118",
+    "problem_url": "https://leetcode.com/problems/pascals-triangle/",
+    "capture_file": "originals/216_118_791476688.cpp"
+  },
+  {
+    "source_id": "2165701086",
+    "problem": "132. Palindrome Partitioning II",
+    "url": "https://leetcode.com/problems/palindrome-partitioning-ii/submissions/2165701086/",
+    "sha256": "330c5df4a66f466e9911dbaa3cb19b36a7d753b38e35044fc11c824661a0f889",
+    "path": "topics/dp-and-backtracking/originals/132__2165701086.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "132",
+    "problem_url": "https://leetcode.com/problems/palindrome-partitioning-ii/"
+  },
+  {
+    "source_id": "2000724011",
+    "problem": "152. Maximum Product Subarray",
+    "url": "https://leetcode.com/problems/maximum-product-subarray/submissions/2000724011/",
+    "sha256": "4fce749e5633a4d36ac38dfd19f27e47a45cd28b33e94df8c6d665b80e45e22c",
+    "path": "topics/dp-and-backtracking/originals/152__2000724011.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "152",
+    "problem_url": "https://leetcode.com/problems/maximum-product-subarray/",
+    "capture_file": "sources/232-2000724011.cpp"
+  },
+  {
+    "source_id": "2024438590",
+    "problem": "198. House Robber",
+    "url": "https://leetcode.com/problems/house-robber/submissions/2024438590/",
+    "sha256": "8887bd7185a04c5890bd227506084fc8b3706b135a213a1fe31cd85b67827bd8",
+    "path": "topics/dp-and-backtracking/originals/198__2024438590.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "198",
+    "problem_url": "https://leetcode.com/problems/house-robber/",
+    "capture_file": "sources/222-2024438590.cpp"
+  },
+  {
+    "source_id": "2165615628",
+    "problem": "301. Remove Invalid Parentheses",
+    "url": "https://leetcode.com/problems/remove-invalid-parentheses/submissions/2165615628/",
+    "sha256": "bc7da82aa59a36b3945d6bcb0013031bf33bac4475fe86cb7937911cc4c9769b",
+    "path": "topics/dp-and-backtracking/originals/301__2165615628.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "301",
+    "problem_url": "https://leetcode.com/problems/remove-invalid-parentheses/"
+  },
+  {
+    "source_id": "2139455187",
+    "problem": "329. Longest Increasing Path in a Matrix",
+    "url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/submissions/2139455187/",
+    "sha256": "ff7fa71bde4b67bb5a8a9461ac0efee00ac384009ab9a8ca064b09ad01dddddd",
+    "path": "topics/dp-and-backtracking/originals/329__2139455187.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "329",
+    "problem_url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/"
+  },
+  {
+    "source_id": "1780534196",
+    "problem": "376. Wiggle Subsequence",
+    "url": "https://leetcode.com/problems/wiggle-subsequence/submissions/1780534196/",
+    "sha256": "286c4aa5e1c0580702c94dc597845dc9bd3067d4dafe01807561e3f57f35117a",
+    "path": "topics/dp-and-backtracking/originals/376__1780534196.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "376",
+    "problem_url": "https://leetcode.com/problems/wiggle-subsequence/",
+    "capture_file": "sources/250-1780534196.cpp"
+  },
+  {
+    "source_id": "1778334407",
+    "problem": "376. Wiggle Subsequence",
+    "url": "https://leetcode.com/problems/wiggle-subsequence/submissions/1778334407/",
+    "sha256": "cb033603f0f150949dc4a92d862f32b108708f51acfb95483300a57f5d0f9287",
+    "path": "topics/dp-and-backtracking/originals/376__1778334407.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "376",
+    "problem_url": "https://leetcode.com/problems/wiggle-subsequence/",
+    "capture_file": "sources/250-1778334407.cpp"
+  },
+  {
+    "source_id": "791461494",
+    "problem": "509. Fibonacci Number",
+    "url": "https://leetcode.com/problems/fibonacci-number/submissions/791461494/",
+    "sha256": "31827fbe223e34939165897dc702830bad4b9e65fbcfe71367196053031d3ecf",
+    "path": "topics/dp-and-backtracking/originals/509__791461494.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "509",
+    "problem_url": "https://leetcode.com/problems/fibonacci-number/",
+    "capture_file": "sources/439-791461494.cpp"
+  },
+  {
+    "source_id": "791453355",
+    "problem": "509. Fibonacci Number",
+    "url": "https://leetcode.com/problems/fibonacci-number/submissions/791453355/",
+    "sha256": "7854393cff162f2a9d7fbf5646bd0d95f8debcaba466778602f7013f740f9bd5",
+    "path": "topics/dp-and-backtracking/originals/509__791453355.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "509",
+    "problem_url": "https://leetcode.com/problems/fibonacci-number/",
+    "capture_file": "sources/439-791453355.cpp"
+  },
+  {
+    "source_id": "2133936040",
+    "problem": "940. Distinct Subsequences II",
+    "url": "https://leetcode.com/problems/distinct-subsequences-ii/submissions/2133936040/",
+    "sha256": "a2bd57b47113413dddbb1d11e6b31a7b0bba31867e31361e4ee1d0fac5c9a25e",
+    "path": "topics/dp-and-backtracking/originals/940__2133936040.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "940",
+    "problem_url": "https://leetcode.com/problems/distinct-subsequences-ii/"
+  },
+  {
+    "source_id": "2000663939",
+    "problem": "978. Longest Turbulent Subarray",
+    "url": "https://leetcode.com/problems/longest-turbulent-subarray/submissions/2000663939/",
+    "sha256": "811d9374974e6201470f2b41757e27b3a98335fc726a4b8e097a4a2cdfd7085b",
+    "path": "topics/dp-and-backtracking/originals/978__2000663939.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "978",
+    "problem_url": "https://leetcode.com/problems/longest-turbulent-subarray/",
+    "capture_file": "sources/234-2000663939.cpp"
+  },
+  {
+    "source_id": "2000663816",
+    "problem": "978. Longest Turbulent Subarray",
+    "url": "https://leetcode.com/problems/longest-turbulent-subarray/submissions/2000663816/",
+    "sha256": "811d9374974e6201470f2b41757e27b3a98335fc726a4b8e097a4a2cdfd7085b",
+    "path": "topics/dp-and-backtracking/originals/978__2000663816.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "978",
+    "problem_url": "https://leetcode.com/problems/longest-turbulent-subarray/",
+    "capture_file": "sources/234-2000663816.cpp"
+  },
+  {
+    "source_id": "2144058402",
+    "problem": "1621. Number of Sets of K Non-Overlapping Line Segments",
+    "url": "https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/submissions/2144058402/",
+    "sha256": "5a5a8d59accd6c7e2a982226171a0ea870daa8ff6104e9845b8183ecf3f4f4fd",
+    "path": "topics/dp-and-backtracking/originals/1621__2144058402.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "1621",
+    "problem_url": "https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/"
+  },
+  {
+    "source_id": "2157018872",
+    "problem": "2267.  Check if There Is a Valid Parentheses String Path",
+    "url": "https://leetcode.com/problems/check-if-there-is-a-valid-parentheses-string-path/submissions/2157018872/",
+    "sha256": "3655b6078b2c498c10015ca80c3d5e0055eef0b7ad200b85788cb88e559835cf",
+    "path": "topics/dp-and-backtracking/originals/2267__2157018872.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "2267",
+    "problem_url": "https://leetcode.com/problems/check-if-there-is-a-valid-parentheses-string-path/",
+    "capture_file": "recovered-025-050/045-2267-2157018872.cpp"
+  },
+  {
+    "source_id": "2000622350",
+    "problem": "2606. Find the Substring With Maximum Cost",
+    "url": "https://leetcode.com/problems/find-the-substring-with-maximum-cost/submissions/2000622350/",
+    "sha256": "ee9665f7c56ef5ae6abf20754d8d2ad6211494acbfea2c553f3f0a9f6b170c64",
+    "path": "topics/dp-and-backtracking/originals/2606__2000622350.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "2606",
+    "problem_url": "https://leetcode.com/problems/find-the-substring-with-maximum-cost/",
+    "capture_file": "sources/236-2000622350.cpp"
+  },
+  {
+    "source_id": "2148463117",
+    "problem": "3524. Find X Value of Array I",
+    "url": "https://leetcode.com/problems/find-x-value-of-array-i/submissions/2148463117/",
+    "sha256": "c3dfa58e04497694a0edd382422f192c9bb1a831b3c0152dea4c47d4e9198bd9",
+    "path": "topics/dp-and-backtracking/originals/3524__2148463117.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "3524",
+    "problem_url": "https://leetcode.com/problems/find-x-value-of-array-i/"
+  },
+  {
+    "source_id": "2161116179",
+    "problem": "3742. Maximum Path Score in a Grid",
+    "url": "https://leetcode.com/problems/maximum-path-score-in-a-grid/submissions/2161116179/",
+    "sha256": "02ecfb6b4acaca22dceee7cd47a7830a487b3ff8c8e4dd1f597d205f869e6444",
+    "path": "topics/dp-and-backtracking/originals/3742__2161116179.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "3742",
+    "problem_url": "https://leetcode.com/problems/maximum-path-score-in-a-grid/",
+    "capture_file": "recovered-025-050/028-3742-2161116179.cpp"
+  },
+  {
+    "source_id": "2161115436",
+    "problem": "3742. Maximum Path Score in a Grid",
+    "url": "https://leetcode.com/problems/maximum-path-score-in-a-grid/submissions/2161115436/",
+    "sha256": "8f26e76526e48864a6cff763a78c11bb59ee98899178a6ff884235b441f1ec2c",
+    "path": "topics/dp-and-backtracking/originals/3742__2161115436.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "3742",
+    "problem_url": "https://leetcode.com/problems/maximum-path-score-in-a-grid/",
+    "capture_file": "recovered-025-050/028-3742-2161115436.cpp"
+  },
+  {
+    "source_id": "2161089125",
+    "problem": "3742. Maximum Path Score in a Grid",
+    "url": "https://leetcode.com/problems/maximum-path-score-in-a-grid/submissions/2161089125/",
+    "sha256": "a09769574a4cb78c1dda9312c1c711f3e596c6303e990809e5dc79feb36e1a32",
+    "path": "topics/dp-and-backtracking/originals/3742__2161089125.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "3742",
+    "problem_url": "https://leetcode.com/problems/maximum-path-score-in-a-grid/",
+    "capture_file": "recovered-025-050/028-3742-2161089125.cpp"
+  },
+  {
+    "source_id": "2147436566",
+    "problem": "4058. Maximum Pulse Value After One Subarray Rotation",
+    "url": "https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/submissions/2147436566/",
+    "sha256": "5a13f1c2d4fb4204ba36bdab82ce63b668746f1ef8bb033434fe6f6078bdb3bf",
+    "path": "topics/dp-and-backtracking/originals/4058__2147436566.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "4058",
+    "problem_url": "https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/"
+  },
+  {
+    "source_id": "2027316499",
+    "problem": "3. Longest Substring Without Repeating Characters",
+    "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/2027316499/",
+    "sha256": "fab3fc31469b54cbc979af48f934487634c0705e22d6f02ad1d70cff083a8d43",
+    "path": "topics/windows-and-prefixes/originals/3__2027316499.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "3",
+    "problem_url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+    "capture_file": "sources/217-2027316499.cpp"
   },
   {
     "source_id": "2153818347",
@@ -1538,6 +3060,17 @@
     "topic": "windows-and-prefixes",
     "problem_id": "424",
     "problem_url": "https://leetcode.com/problems/longest-repeating-character-replacement/"
+  },
+  {
+    "source_id": "2025506346",
+    "problem": "438. Find All Anagrams in a String",
+    "url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/submissions/2025506346/",
+    "sha256": "5ba77b686d0b7d4e0af55f6f499163f18a584e596fd650f3f24d18e2a58f9c0c",
+    "path": "topics/windows-and-prefixes/originals/438__2025506346.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "438",
+    "problem_url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/",
+    "capture_file": "sources/219-2025506346.cpp"
   },
   {
     "source_id": "2130713437",
@@ -1620,6 +3153,17 @@
     "problem_url": "https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/"
   },
   {
+    "source_id": "2000684155",
+    "problem": "1749. Maximum Absolute Sum of Any Subarray",
+    "url": "https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/submissions/2000684155/",
+    "sha256": "812ee5c433d0e7781ca478c040d6897278ba705ba7d38c49827afcc29455c9c6",
+    "path": "topics/windows-and-prefixes/originals/1749__2000684155.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "1749",
+    "problem_url": "https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/",
+    "capture_file": "sources/233-2000684155.cpp"
+  },
+  {
     "source_id": "2153831199",
     "problem": "2444. Count Subarrays With Fixed Bounds",
     "url": "https://leetcode.com/problems/count-subarrays-with-fixed-bounds/submissions/2153831199/",
@@ -1628,6 +3172,17 @@
     "topic": "windows-and-prefixes",
     "problem_id": "2444",
     "problem_url": "https://leetcode.com/problems/count-subarrays-with-fixed-bounds/"
+  },
+  {
+    "source_id": "2119740763",
+    "problem": "3355. Zero Array Transformation I",
+    "url": "https://leetcode.com/problems/zero-array-transformation-i/submissions/2119740763/",
+    "sha256": "bc586ff3b367facf9e7d1e1f8b7749f5d490124b074b09fa98daabe6fa2f6734",
+    "path": "topics/windows-and-prefixes/originals/3355__2119740763.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "3355",
+    "problem_url": "https://leetcode.com/problems/zero-array-transformation-i/",
+    "capture_file": "originals/211_3355_2119740763.cpp"
   },
   {
     "source_id": "2130500850",
@@ -1650,354 +3205,37 @@
     "problem_url": "https://leetcode.com/problems/smallest-stable-index-ii/"
   },
   {
-    "source_id": "2126227733",
-    "problem": "8. String to Integer (atoi)",
-    "url": "https://leetcode.com/problems/string-to-integer-atoi/submissions/2126227733/",
-    "sha256": "50476e780b8c8345e94223fe66d5e03df368fb321f668f098b1d58e498f68cef",
-    "path": "topics/strings-and-tries/originals/8__2126227733.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "8",
-    "problem_url": "https://leetcode.com/problems/string-to-integer-atoi/"
+    "source_id": "2147803818",
+    "problem": "11. Container With Most Water",
+    "url": "https://leetcode.com/problems/container-with-most-water/submissions/2147803818/",
+    "sha256": "137809454764fdc28f9bbe524a0ec4992326fd2aa7b541cf5e8fbaf22e57e9ae",
+    "path": "topics/greedy-and-intervals/originals/11__2147803818.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "11",
+    "problem_url": "https://leetcode.com/problems/container-with-most-water/",
+    "capture_file": "originals/092_11_2147803818.cpp"
   },
   {
-    "source_id": "2163524870",
-    "problem": "28. Find the Index of the First Occurrence in a String",
-    "url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/submissions/2163524870/",
-    "sha256": "79038ad6eab58fd1aa8bf32e2d3e568b6f2669fdf3ec0dec4fdb05657c908b17",
-    "path": "topics/strings-and-tries/originals/28__2163524870.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "28",
-    "problem_url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/"
+    "source_id": "2126025093",
+    "problem": "11. Container With Most Water",
+    "url": "https://leetcode.com/problems/container-with-most-water/submissions/2126025093/",
+    "sha256": "073190826211800509296382ed5a762fa856982c1b151fb358abbb626ca166b6",
+    "path": "topics/greedy-and-intervals/originals/11__2126025093.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "11",
+    "problem_url": "https://leetcode.com/problems/container-with-most-water/",
+    "capture_file": "originals/092_11_2126025093.cpp"
   },
   {
-    "source_id": "2127402160",
-    "problem": "49. Group Anagrams",
-    "url": "https://leetcode.com/problems/group-anagrams/submissions/2127402160/",
-    "sha256": "62fa4a0925e08cc8383c7a3e0bb3e21461a8d655f35c222a91e5d6bde4f98801",
-    "path": "topics/strings-and-tries/originals/49__2127402160.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "49",
-    "problem_url": "https://leetcode.com/problems/group-anagrams/"
-  },
-  {
-    "source_id": "2146563687",
-    "problem": "71. Simplify Path",
-    "url": "https://leetcode.com/problems/simplify-path/submissions/2146563687/",
-    "sha256": "bd6c51cdfd23c69e55a217e13bf666a383989ec4314470d0ebdf15faf53aff26",
-    "path": "topics/strings-and-tries/originals/71__2146563687.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "71",
-    "problem_url": "https://leetcode.com/problems/simplify-path/"
-  },
-  {
-    "source_id": "2149102883",
-    "problem": "76. Minimum Window Substring",
-    "url": "https://leetcode.com/problems/minimum-window-substring/submissions/2149102883/",
-    "sha256": "c886a6633ff15dbbd8ce6886b4fbd779eb3edc3e1f4b4dc2c8ddf6961cb50734",
-    "path": "topics/strings-and-tries/originals/76__2149102883.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "76",
-    "problem_url": "https://leetcode.com/problems/minimum-window-substring/"
-  },
-  {
-    "source_id": "2131820578",
-    "problem": "76. Minimum Window Substring",
-    "url": "https://leetcode.com/problems/minimum-window-substring/submissions/2131820578/",
-    "sha256": "1c01f3b960ee7ca3561a2b5ba8e94562d14c7a81d02838f8486f3b87dd53c140",
-    "path": "topics/strings-and-tries/originals/76__2131820578.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "76",
-    "problem_url": "https://leetcode.com/problems/minimum-window-substring/"
-  },
-  {
-    "source_id": "2147738982",
-    "problem": "125. Valid Palindrome",
-    "url": "https://leetcode.com/problems/valid-palindrome/submissions/2147738982/",
-    "sha256": "dd1ab01f8014eb936f29ae6df81bb4f5b15669b54c248dd46867f85c388225e5",
-    "path": "topics/strings-and-tries/originals/125__2147738982.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "125",
-    "problem_url": "https://leetcode.com/problems/valid-palindrome/"
-  },
-  {
-    "source_id": "2167350538",
-    "problem": "208. Implement Trie (Prefix Tree)",
-    "url": "https://leetcode.com/problems/implement-trie-prefix-tree/submissions/2167350538/",
-    "sha256": "da342beac2a3d8f32cd3bf7419f29e6270992028de0e55911128723b11ac92d1",
-    "path": "topics/strings-and-tries/originals/208__2167350538.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "208",
-    "problem_url": "https://leetcode.com/problems/implement-trie-prefix-tree/"
-  },
-  {
-    "source_id": "2163593115",
-    "problem": "214. Shortest Palindrome",
-    "url": "https://leetcode.com/problems/shortest-palindrome/submissions/2163593115/",
-    "sha256": "e689af470bfd33d9317a529c0727e0ae7d7bb80af812b505f9b0758da4481080",
-    "path": "topics/strings-and-tries/originals/214__2163593115.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "214",
-    "problem_url": "https://leetcode.com/problems/shortest-palindrome/"
-  },
-  {
-    "source_id": "2130658997",
-    "problem": "242. Valid Anagram",
-    "url": "https://leetcode.com/problems/valid-anagram/submissions/2130658997/",
-    "sha256": "bedad5777fc357843f52deef03c3a8a5875e5f2e0af1230eb844e414e6720806",
-    "path": "topics/strings-and-tries/originals/242__2130658997.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "242",
-    "problem_url": "https://leetcode.com/problems/valid-anagram/"
-  },
-  {
-    "source_id": "2146593107",
-    "problem": "394. Decode String",
-    "url": "https://leetcode.com/problems/decode-string/submissions/2146593107/",
-    "sha256": "90960242c7d3f2e12b2ee05a16cf13db68bdf5ff8ff24e6e259835973c582b28",
-    "path": "topics/strings-and-tries/originals/394__2146593107.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "394",
-    "problem_url": "https://leetcode.com/problems/decode-string/"
-  },
-  {
-    "source_id": "2163579090",
-    "problem": "459. Repeated Substring Pattern",
-    "url": "https://leetcode.com/problems/repeated-substring-pattern/submissions/2163579090/",
-    "sha256": "b60dce121693bd1c0b19680785e8298e63d3c701c72eff2fcf2a3c5db1402af9",
-    "path": "topics/strings-and-tries/originals/459__2163579090.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "459",
-    "problem_url": "https://leetcode.com/problems/repeated-substring-pattern/"
-  },
-  {
-    "source_id": "2163561881",
-    "problem": "686. Repeated String Match",
-    "url": "https://leetcode.com/problems/repeated-string-match/submissions/2163561881/",
-    "sha256": "3bca4407f28a15ffd19421459d8fff49b69063bc6c849bc4db96978c567f3282",
-    "path": "topics/strings-and-tries/originals/686__2163561881.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "686",
-    "problem_url": "https://leetcode.com/problems/repeated-string-match/"
-  },
-  {
-    "source_id": "2164622907",
-    "problem": "745. Prefix and Suffix Search",
-    "url": "https://leetcode.com/problems/prefix-and-suffix-search/submissions/2164622907/",
-    "sha256": "a85aa54e39b028e30887549e14e0347eb88f8198145495e79468584822440d71",
-    "path": "topics/strings-and-tries/originals/745__2164622907.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "745",
-    "problem_url": "https://leetcode.com/problems/prefix-and-suffix-search/"
-  },
-  {
-    "source_id": "2162881009",
-    "problem": "856. Score of Parentheses",
-    "url": "https://leetcode.com/problems/score-of-parentheses/submissions/2162881009/",
-    "sha256": "a5d3256519c6aeae96020a56a4e997869c447eb88246eb89a1028f4a247ef6a1",
-    "path": "topics/strings-and-tries/originals/856__2162881009.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "856",
-    "problem_url": "https://leetcode.com/problems/score-of-parentheses/"
-  },
-  {
-    "source_id": "2164607113",
-    "problem": "921. Minimum Add to Make Parentheses Valid",
-    "url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/submissions/2164607113/",
-    "sha256": "065b1bb3a9772f64ab29b560910740c7fa62a7bd5ed7d7b1c3df2cea81d7380a",
-    "path": "topics/strings-and-tries/originals/921__2164607113.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "921",
-    "problem_url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/"
-  },
-  {
-    "source_id": "2155353571",
-    "problem": "953. Verifying an Alien Dictionary",
-    "url": "https://leetcode.com/problems/verifying-an-alien-dictionary/submissions/2155353571/",
-    "sha256": "5c73702982361fca6f1691e8c515b7053fef6167ea0afcef8cc1e8ba6210b654",
-    "path": "topics/strings-and-tries/originals/953__2155353571.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "953",
-    "problem_url": "https://leetcode.com/problems/verifying-an-alien-dictionary/"
-  },
-  {
-    "source_id": "2166675238",
-    "problem": "1021. Remove Outermost Parentheses",
-    "url": "https://leetcode.com/problems/remove-outermost-parentheses/submissions/2166675238/",
-    "sha256": "101847946f05197de82e9edd5e7593055a5a7cf2a64608f5169b0c32fea807cb",
-    "path": "topics/strings-and-tries/originals/1021__2166675238.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "1021",
-    "problem_url": "https://leetcode.com/problems/remove-outermost-parentheses/"
-  },
-  {
-    "source_id": "2153362638",
-    "problem": "1096. Brace Expansion II",
-    "url": "https://leetcode.com/problems/brace-expansion-ii/submissions/2153362638/",
-    "sha256": "5a40bdf5b40a2206cffab192799c6823631bc0d304d36faa99dc1a38ffeafcc5",
-    "path": "topics/strings-and-tries/originals/1096__2153362638.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "1096",
-    "problem_url": "https://leetcode.com/problems/brace-expansion-ii/"
-  },
-  {
-    "source_id": "2154897406",
-    "problem": "1190. Reverse Substrings Between Each Pair of Parentheses",
-    "url": "https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/submissions/2154897406/",
-    "sha256": "8201d126a1027c58b3c430a52eabc2621d3b6ab52466141038a40b9cb79a1c20",
-    "path": "topics/strings-and-tries/originals/1190__2154897406.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "1190",
-    "problem_url": "https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/"
-  },
-  {
-    "source_id": "2167345569",
-    "problem": "1541. Minimum Insertions to Balance a Parentheses String",
-    "url": "https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/submissions/2167345569/",
-    "sha256": "a582a59261d4b3c2e6c439cbcc0f122d35c5bd38a0e35becaa87ffdccab30037",
-    "path": "topics/strings-and-tries/originals/1541__2167345569.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "1541",
-    "problem_url": "https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/"
-  },
-  {
-    "source_id": "2155954786",
-    "problem": "1614. Maximum Nesting Depth of the Parentheses",
-    "url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/submissions/2155954786/",
-    "sha256": "74dbafa6b7318f12c837397baec63ace877bd50f42de7b68cbe01c21f9161257",
-    "path": "topics/strings-and-tries/originals/1614__2155954786.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "1614",
-    "problem_url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/"
-  },
-  {
-    "source_id": "2154370092",
-    "problem": "1807. Evaluate the Bracket Pairs of a String",
-    "url": "https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/submissions/2154370092/",
-    "sha256": "5c56b810b378a094d278919fdd301bb8c418aae81ded46eb6ee1a31264b2de45",
-    "path": "topics/strings-and-tries/originals/1807__2154370092.cpp",
-    "topic": "strings-and-tries",
-    "problem_id": "1807",
-    "problem_url": "https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/"
-  },
-  {
-    "source_id": "2164710608",
-    "problem": "37. Sudoku Solver",
-    "url": "https://leetcode.com/problems/sudoku-solver/submissions/2164710608/",
-    "sha256": "a6b4592098020bf3232202ccb98b0a39a7f377f2b0736e7c9b146e5a8be163f2",
-    "path": "topics/dp-and-backtracking/originals/37__2164710608.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "37",
-    "problem_url": "https://leetcode.com/problems/sudoku-solver/"
-  },
-  {
-    "source_id": "2164697200",
-    "problem": "51. N-Queens",
-    "url": "https://leetcode.com/problems/n-queens/submissions/2164697200/",
-    "sha256": "9b9cf4caa5ae6ef29ccf62d557d846211cf58242a2e7d2d0e764ae9ea3ff9930",
-    "path": "topics/dp-and-backtracking/originals/51__2164697200.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "51",
-    "problem_url": "https://leetcode.com/problems/n-queens/"
-  },
-  {
-    "source_id": "2126173167",
-    "problem": "64. Minimum Path Sum",
-    "url": "https://leetcode.com/problems/minimum-path-sum/submissions/2126173167/",
-    "sha256": "6c5ef154e79d9b70bf8f23c5dbc17e7a6be19a00cd6a9c67a8ad3349658a3ded",
-    "path": "topics/dp-and-backtracking/originals/64__2126173167.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "64",
-    "problem_url": "https://leetcode.com/problems/minimum-path-sum/"
-  },
-  {
-    "source_id": "2126172428",
-    "problem": "64. Minimum Path Sum",
-    "url": "https://leetcode.com/problems/minimum-path-sum/submissions/2126172428",
-    "sha256": "6c5ef154e79d9b70bf8f23c5dbc17e7a6be19a00cd6a9c67a8ad3349658a3ded",
-    "path": "topics/dp-and-backtracking/originals/64__2126172428.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "64",
-    "problem_url": "https://leetcode.com/problems/minimum-path-sum/"
-  },
-  {
-    "source_id": "2133267031",
-    "problem": "115. Distinct Subsequences",
-    "url": "https://leetcode.com/problems/distinct-subsequences/submissions/2133267031/",
-    "sha256": "61c5a79a9e17faec462f8602408472c3609ec35cb5ebd638910cfb62fb5045d9",
-    "path": "topics/dp-and-backtracking/originals/115__2133267031.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "115",
-    "problem_url": "https://leetcode.com/problems/distinct-subsequences/"
-  },
-  {
-    "source_id": "2165701086",
-    "problem": "132. Palindrome Partitioning II",
-    "url": "https://leetcode.com/problems/palindrome-partitioning-ii/submissions/2165701086/",
-    "sha256": "330c5df4a66f466e9911dbaa3cb19b36a7d753b38e35044fc11c824661a0f889",
-    "path": "topics/dp-and-backtracking/originals/132__2165701086.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "132",
-    "problem_url": "https://leetcode.com/problems/palindrome-partitioning-ii/"
-  },
-  {
-    "source_id": "2165615628",
-    "problem": "301. Remove Invalid Parentheses",
-    "url": "https://leetcode.com/problems/remove-invalid-parentheses/submissions/2165615628/",
-    "sha256": "bc7da82aa59a36b3945d6bcb0013031bf33bac4475fe86cb7937911cc4c9769b",
-    "path": "topics/dp-and-backtracking/originals/301__2165615628.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "301",
-    "problem_url": "https://leetcode.com/problems/remove-invalid-parentheses/"
-  },
-  {
-    "source_id": "2139455187",
-    "problem": "329. Longest Increasing Path in a Matrix",
-    "url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/submissions/2139455187/",
-    "sha256": "ff7fa71bde4b67bb5a8a9461ac0efee00ac384009ab9a8ca064b09ad01dddddd",
-    "path": "topics/dp-and-backtracking/originals/329__2139455187.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "329",
-    "problem_url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/"
-  },
-  {
-    "source_id": "2133936040",
-    "problem": "940. Distinct Subsequences II",
-    "url": "https://leetcode.com/problems/distinct-subsequences-ii/submissions/2133936040/",
-    "sha256": "a2bd57b47113413dddbb1d11e6b31a7b0bba31867e31361e4ee1d0fac5c9a25e",
-    "path": "topics/dp-and-backtracking/originals/940__2133936040.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "940",
-    "problem_url": "https://leetcode.com/problems/distinct-subsequences-ii/"
-  },
-  {
-    "source_id": "2144058402",
-    "problem": "1621. Number of Sets of K Non-Overlapping Line Segments",
-    "url": "https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/submissions/2144058402/",
-    "sha256": "5a5a8d59accd6c7e2a982226171a0ea870daa8ff6104e9845b8183ecf3f4f4fd",
-    "path": "topics/dp-and-backtracking/originals/1621__2144058402.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "1621",
-    "problem_url": "https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/"
-  },
-  {
-    "source_id": "2148463117",
-    "problem": "3524. Find X Value of Array I",
-    "url": "https://leetcode.com/problems/find-x-value-of-array-i/submissions/2148463117/",
-    "sha256": "c3dfa58e04497694a0edd382422f192c9bb1a831b3c0152dea4c47d4e9198bd9",
-    "path": "topics/dp-and-backtracking/originals/3524__2148463117.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "3524",
-    "problem_url": "https://leetcode.com/problems/find-x-value-of-array-i/"
-  },
-  {
-    "source_id": "2147436566",
-    "problem": "4058. Maximum Pulse Value After One Subarray Rotation",
-    "url": "https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/submissions/2147436566/",
-    "sha256": "5a13f1c2d4fb4204ba36bdab82ce63b668746f1ef8bb033434fe6f6078bdb3bf",
-    "path": "topics/dp-and-backtracking/originals/4058__2147436566.cpp",
-    "topic": "dp-and-backtracking",
-    "problem_id": "4058",
-    "problem_url": "https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/"
+    "source_id": "2024244275",
+    "problem": "11. Container With Most Water",
+    "url": "https://leetcode.com/problems/container-with-most-water/submissions/2024244275/",
+    "sha256": "04db8f193a3d194f596a2ef2562d99e18e353f6db5a58bf0dacc9992309ecb6c",
+    "path": "topics/greedy-and-intervals/originals/11__2024244275.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "11",
+    "problem_url": "https://leetcode.com/problems/container-with-most-water/",
+    "capture_file": "originals/092_11_2024244275.cpp"
   },
   {
     "source_id": "2167385466",
@@ -2100,6 +3338,61 @@
     "problem_url": "https://leetcode.com/problems/my-calendar-i/"
   },
   {
+    "source_id": "1284774909",
+    "problem": "849. Maximize Distance to Closest Person",
+    "url": "https://leetcode.com/problems/maximize-distance-to-closest-person/submissions/1284774909/",
+    "sha256": "81680177a317a9bf8f98e265f53e5e070d9d8c5132bdff4b58071c24be662ad0",
+    "path": "topics/greedy-and-intervals/originals/849__1284774909.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "849",
+    "problem_url": "https://leetcode.com/problems/maximize-distance-to-closest-person/",
+    "capture_file": "sources/251-1284774909.cpp"
+  },
+  {
+    "source_id": "2147809080",
+    "problem": "881. Boats to Save People",
+    "url": "https://leetcode.com/problems/boats-to-save-people/submissions/2147809080/",
+    "sha256": "50936d3f9a119c753e3828a4b55f87919ab1e7a6c4fe99ec94f9e96b9068e82d",
+    "path": "topics/greedy-and-intervals/originals/881__2147809080.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "881",
+    "problem_url": "https://leetcode.com/problems/boats-to-save-people/",
+    "capture_file": "originals/091_881_2147809080.cpp"
+  },
+  {
+    "source_id": "2140480045",
+    "problem": "881. Boats to Save People",
+    "url": "https://leetcode.com/problems/boats-to-save-people/submissions/2140480045/",
+    "sha256": "4b79ae8b91b463fffe31b28074969214ce5209a13aa9a057f8aeeab57e56444c",
+    "path": "topics/greedy-and-intervals/originals/881__2140480045.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "881",
+    "problem_url": "https://leetcode.com/problems/boats-to-save-people/",
+    "capture_file": "originals/091_881_2140480045.cpp"
+  },
+  {
+    "source_id": "2140479869",
+    "problem": "881. Boats to Save People",
+    "url": "https://leetcode.com/problems/boats-to-save-people/submissions/2140479869/",
+    "sha256": "788f35f4fac54218655eced84854fdc6789af317fdd9fe5236da7e115964ed20",
+    "path": "topics/greedy-and-intervals/originals/881__2140479869.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "881",
+    "problem_url": "https://leetcode.com/problems/boats-to-save-people/",
+    "capture_file": "originals/091_881_2140479869.cpp"
+  },
+  {
+    "source_id": "2157541300",
+    "problem": "1007. Minimum Domino Rotations For Equal Row",
+    "url": "https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/submissions/2157541300/",
+    "sha256": "dfd74b268332894f9e248aecbc4cee98f870b3e401c14cdce9e70c4416ee191a",
+    "path": "topics/greedy-and-intervals/originals/1007__2157541300.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "1007",
+    "problem_url": "https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/",
+    "capture_file": "recovered-025-050/043-1007-2157541300.cpp"
+  },
+  {
     "source_id": "2146064854",
     "problem": "1520. Maximum Number of Non-Overlapping Substrings",
     "url": "https://leetcode.com/problems/maximum-number-of-non-overlapping-substrings/submissions/2146064854/",
@@ -2108,6 +3401,17 @@
     "topic": "greedy-and-intervals",
     "problem_id": "1520",
     "problem_url": "https://leetcode.com/problems/maximum-number-of-non-overlapping-substrings/"
+  },
+  {
+    "source_id": "2119475867",
+    "problem": "1710. Maximum Units on a Truck",
+    "url": "https://leetcode.com/problems/maximum-units-on-a-truck/submissions/2119475867/",
+    "sha256": "1b66e406355d45edbc863fb568e56993d834bb72028c8465277a72f3ed6e3ee9",
+    "path": "topics/greedy-and-intervals/originals/1710__2119475867.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "1710",
+    "problem_url": "https://leetcode.com/problems/maximum-units-on-a-truck/",
+    "capture_file": "originals/215_1710_2119475867.cpp"
   },
   {
     "source_id": "2140491975",
@@ -2138,6 +3442,17 @@
     "topic": "greedy-and-intervals",
     "problem_id": "1877",
     "problem_url": "https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/"
+  },
+  {
+    "source_id": "2119511298",
+    "problem": "2279. Maximum Bags With Full Capacity of Rocks",
+    "url": "https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/submissions/2119511298/",
+    "sha256": "55e042d6e614d2d474dc8a30657ae7ca7db44dd1e1b961c6bef0fb8711c0356e",
+    "path": "topics/greedy-and-intervals/originals/2279__2119511298.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "2279",
+    "problem_url": "https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/",
+    "capture_file": "originals/214_2279_2119511298.cpp"
   },
   {
     "source_id": "2168486798",
@@ -2190,164 +3505,59 @@
     "problem_url": "https://leetcode.com/problems/lexicographically-largest-power-array/"
   },
   {
-    "source_id": "2143986850",
-    "problem": "146. LRU Cache",
-    "url": "https://leetcode.com/problems/lru-cache/submissions/2143986850/",
-    "sha256": "a088815afe4aca6b60b2eff60d76e125ac2c0283559d0a071be8b276f1b11dcb",
-    "path": "topics/design-structures/originals/146__2143986850.cpp",
-    "topic": "design-structures",
-    "problem_id": "146",
-    "problem_url": "https://leetcode.com/problems/lru-cache/"
+    "source_id": "2126054933",
+    "problem": "9. Palindrome Number",
+    "url": "https://leetcode.com/problems/palindrome-number/submissions/2126054933/",
+    "sha256": "c8d54fc44499d57f6b8003b1d1f9a2d3f1148c42c2a5eafc8d46038fd15ab83d",
+    "path": "topics/math-and-bits/originals/9__2126054933.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "9",
+    "problem_url": "https://leetcode.com/problems/palindrome-number/",
+    "capture_file": "originals/207_9_2126054933.cpp"
   },
   {
-    "source_id": "2146465049",
-    "problem": "150. Evaluate Reverse Polish Notation",
-    "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/2146465049/",
-    "sha256": "c4befddd4180e566d1ce8a1cf7f2d2ba582d285e16c130fe35946e9d278c666f",
-    "path": "topics/design-structures/originals/150__2146465049.cpp",
-    "topic": "design-structures",
-    "problem_id": "150",
-    "problem_url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/"
+    "source_id": "791450580",
+    "problem": "338. Counting Bits",
+    "url": "https://leetcode.com/problems/counting-bits/submissions/791450580/",
+    "sha256": "7575137df18acb4d4b3eeb98db5cab493310c9a0e574f441ad93d37b73407e7f",
+    "path": "topics/math-and-bits/originals/338__791450580.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "338",
+    "problem_url": "https://leetcode.com/problems/counting-bits/",
+    "capture_file": "sources/525-791450580.cpp"
   },
   {
-    "source_id": "2025562806",
-    "problem": "150. Evaluate Reverse Polish Notation",
-    "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/2025562806/",
-    "sha256": "4b7a418f54b313103f6424281be6a93946d116aa37c50838ecf21c91e26d7b1d",
-    "path": "topics/design-structures/originals/150__2025562806.cpp",
-    "topic": "design-structures",
-    "problem_id": "150",
-    "problem_url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/"
+    "source_id": "791441445",
+    "problem": "338. Counting Bits",
+    "url": "https://leetcode.com/problems/counting-bits/submissions/791441445/",
+    "sha256": "e771de5935663414129c8c9f6811912061df32c4cd8822bf669742d95043550b",
+    "path": "topics/math-and-bits/originals/338__791441445.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "338",
+    "problem_url": "https://leetcode.com/problems/counting-bits/",
+    "capture_file": "sources/525-791441445.cpp"
   },
   {
-    "source_id": "2146461553",
-    "problem": "155. Min Stack",
-    "url": "https://leetcode.com/problems/min-stack/submissions/2146461553/",
-    "sha256": "3489126bf1f634b5cbcea0df613b83e899ef03b6b81f323072a626480a46cfad",
-    "path": "topics/design-structures/originals/155__2146461553.cpp",
-    "topic": "design-structures",
-    "problem_id": "155",
-    "problem_url": "https://leetcode.com/problems/min-stack/"
+    "source_id": "2025540323",
+    "problem": "454. 4Sum II",
+    "url": "https://leetcode.com/problems/4sum-ii/submissions/2025540323/",
+    "sha256": "6ee237074b847c430ccaf4621668b8886280987062d934d440b085a3f9c4fd63",
+    "path": "topics/math-and-bits/originals/454__2025540323.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "454",
+    "problem_url": "https://leetcode.com/problems/4sum-ii/",
+    "capture_file": "sources/218-2025540323.cpp"
   },
   {
-    "source_id": "2025573166",
-    "problem": "155. Min Stack",
-    "url": "https://leetcode.com/problems/min-stack/submissions/2025573166/",
-    "sha256": "80e2e033e7767f7a2255230ee5dcb211ed21a333fea26189149dd16fcebde596",
-    "path": "topics/design-structures/originals/155__2025573166.cpp",
-    "topic": "design-structures",
-    "problem_id": "155",
-    "problem_url": "https://leetcode.com/problems/min-stack/"
-  },
-  {
-    "source_id": "2146459626",
-    "problem": "225. Implement Stack using Queues",
-    "url": "https://leetcode.com/problems/implement-stack-using-queues/submissions/2146459626/",
-    "sha256": "6679634a075eec66accf0937fbc0bfd103793a214ac2c699b3fdf2e856d5c74f",
-    "path": "topics/design-structures/originals/225__2146459626.cpp",
-    "topic": "design-structures",
-    "problem_id": "225",
-    "problem_url": "https://leetcode.com/problems/implement-stack-using-queues/"
-  },
-  {
-    "source_id": "2146457265",
-    "problem": "232. Implement Queue using Stacks",
-    "url": "https://leetcode.com/problems/implement-queue-using-stacks/submissions/2146457265/",
-    "sha256": "be486f00da46368b29d09b22f7c752b5baa63e67404e8b277746676a7c3aed4c",
-    "path": "topics/design-structures/originals/232__2146457265.cpp",
-    "topic": "design-structures",
-    "problem_id": "232",
-    "problem_url": "https://leetcode.com/problems/implement-queue-using-stacks/"
-  },
-  {
-    "source_id": "2144760383",
-    "problem": "355. Design Twitter",
-    "url": "https://leetcode.com/problems/design-twitter/submissions/2144760383/",
-    "sha256": "0d122ce430b252f0821965c283ea3508bee1f55dfee501d1d6305bfafa3e1c79",
-    "path": "topics/design-structures/originals/355__2144760383.cpp",
-    "topic": "design-structures",
-    "problem_id": "355",
-    "problem_url": "https://leetcode.com/problems/design-twitter/"
-  },
-  {
-    "source_id": "2144968388",
-    "problem": "460. LFU Cache",
-    "url": "https://leetcode.com/problems/lfu-cache/submissions/2144968388/",
-    "sha256": "94f8aa6553370ea6988a2a643cd131a744c822a698689fed99da185e1e2af59a",
-    "path": "topics/design-structures/originals/460__2144968388.cpp",
-    "topic": "design-structures",
-    "problem_id": "460",
-    "problem_url": "https://leetcode.com/problems/lfu-cache/"
-  },
-  {
-    "source_id": "2144919830",
-    "problem": "460. LFU Cache",
-    "url": "https://leetcode.com/problems/lfu-cache/submissions/2144919830/",
-    "sha256": "573af2b62ab3b97e13115d8be59450171ebc3539c05cbfdcd10be70496058e44",
-    "path": "topics/design-structures/originals/460__2144919830.cpp",
-    "topic": "design-structures",
-    "problem_id": "460",
-    "problem_url": "https://leetcode.com/problems/lfu-cache/"
-  },
-  {
-    "source_id": "2145817863",
-    "problem": "682. Baseball Game",
-    "url": "https://leetcode.com/problems/baseball-game/submissions/2145817863/",
-    "sha256": "c47c28ade98dfd66d039290410c370b40572d9565d1217be0443006986fca44e",
-    "path": "topics/design-structures/originals/682__2145817863.cpp",
-    "topic": "design-structures",
-    "problem_id": "682",
-    "problem_url": "https://leetcode.com/problems/baseball-game/"
-  },
-  {
-    "source_id": "2144621524",
-    "problem": "706. Design HashMap",
-    "url": "https://leetcode.com/problems/design-hashmap/submissions/2144621524/",
-    "sha256": "b66575f825ef2857358840142c983b0f374ffdaac1550c6deb692a9f98f3cc23",
-    "path": "topics/design-structures/originals/706__2144621524.cpp",
-    "topic": "design-structures",
-    "problem_id": "706",
-    "problem_url": "https://leetcode.com/problems/design-hashmap/"
-  },
-  {
-    "source_id": "2146639743",
-    "problem": "895. Maximum Frequency Stack",
-    "url": "https://leetcode.com/problems/maximum-frequency-stack/submissions/2146639743/",
-    "sha256": "c812274e4f775624ad91035457bd9e7ee94b5767e54e02b6691214344855d6b0",
-    "path": "topics/design-structures/originals/895__2146639743.cpp",
-    "topic": "design-structures",
-    "problem_id": "895",
-    "problem_url": "https://leetcode.com/problems/maximum-frequency-stack/"
-  },
-  {
-    "source_id": "2146625292",
-    "problem": "895. Maximum Frequency Stack",
-    "url": "https://leetcode.com/problems/maximum-frequency-stack/submissions/2146625292/",
-    "sha256": "e6b0d520b859a4de2d99492d792d8f27df32ecaba88c948b5a2f277488a659f7",
-    "path": "topics/design-structures/originals/895__2146625292.cpp",
-    "topic": "design-structures",
-    "problem_id": "895",
-    "problem_url": "https://leetcode.com/problems/maximum-frequency-stack/"
-  },
-  {
-    "source_id": "2146746974",
-    "problem": "981. Time Based Key-Value Store",
-    "url": "https://leetcode.com/problems/time-based-key-value-store/submissions/2146746974/",
-    "sha256": "98628e843e23f668d6e7b73ce250d7415d54519490d0e02c25e857973227e5e5",
-    "path": "topics/design-structures/originals/981__2146746974.cpp",
-    "topic": "design-structures",
-    "problem_id": "981",
-    "problem_url": "https://leetcode.com/problems/time-based-key-value-store/"
-  },
-  {
-    "source_id": "2024512612",
-    "problem": "981. Time Based Key-Value Store",
-    "url": "https://leetcode.com/problems/time-based-key-value-store/submissions/2024512612/",
-    "sha256": "952886f80e17c18ee256e509175e765799d8612ad69aa409d283478d7dfc511b",
-    "path": "topics/design-structures/originals/981__2024512612.cpp",
-    "topic": "design-structures",
-    "problem_id": "981",
-    "problem_url": "https://leetcode.com/problems/time-based-key-value-store/"
+    "source_id": "2022700280",
+    "problem": "532. K-diff Pairs in an Array",
+    "url": "https://leetcode.com/problems/k-diff-pairs-in-an-array/submissions/2022700280/",
+    "sha256": "6b27ff528f068ea66b9d74d719f78a93211edd8b5840c84af23b6a147e55db7b",
+    "path": "topics/math-and-bits/originals/532__2022700280.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "532",
+    "problem_url": "https://leetcode.com/problems/k-diff-pairs-in-an-array/",
+    "capture_file": "sources/225-2022700280.cpp"
   },
   {
     "source_id": "2166697803",
@@ -2410,6 +3620,28 @@
     "problem_url": "https://leetcode.com/problems/3sum-with-multiplicity/"
   },
   {
+    "source_id": "2168564891",
+    "problem": "982. Triples with Bitwise AND Equal To Zero",
+    "url": "https://leetcode.com/submissions/detail/2168564891/",
+    "sha256": "6785f9966e5e0ee0842ce230c055dc94776af183eaa896630fb7217028e9fb40",
+    "path": "topics/math-and-bits/originals/982__2168564891.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "982",
+    "problem_url": "https://leetcode.com/problems/triples-with-bitwise-and-equal-to-zero/",
+    "capture_file": "sources/982-2168564891.cpp"
+  },
+  {
+    "source_id": "792418394",
+    "problem": "1025. Divisor Game",
+    "url": "https://leetcode.com/problems/divisor-game/submissions/792418394/",
+    "sha256": "e8918f8da5188eabd74767b013d62be62c9556918908a337bbf9c56821080a04",
+    "path": "topics/math-and-bits/originals/1025__792418394.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "1025",
+    "problem_url": "https://leetcode.com/problems/divisor-game/",
+    "capture_file": "sources/524-792418394.cpp"
+  },
+  {
     "source_id": "2146448826",
     "problem": "1401. Circle and Rectangle Overlapping",
     "url": "https://leetcode.com/problems/circle-and-rectangle-overlapping/submissions/2146448826/",
@@ -2440,6 +3672,28 @@
     "problem_url": "https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/"
   },
   {
+    "source_id": "2000541813",
+    "problem": "2553. Separate the Digits in an Array",
+    "url": "https://leetcode.com/problems/separate-the-digits-in-an-array/submissions/2000541813/",
+    "sha256": "2727eb400213a1bcdcc744f0dea83e1da157961d3ef535375283020a7f8a33a5",
+    "path": "topics/math-and-bits/originals/2553__2000541813.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "2553",
+    "problem_url": "https://leetcode.com/problems/separate-the-digits-in-an-array/",
+    "capture_file": "sources/237-2000541813.cpp"
+  },
+  {
+    "source_id": "1197606254",
+    "problem": "3005. Count Elements With Maximum Frequency",
+    "url": "https://leetcode.com/problems/count-elements-with-maximum-frequency/submissions/1197606254/",
+    "sha256": "8a89778534d62487af74559fad0e5ba407b4e5df990e269a14118d9b94eab4a5",
+    "path": "topics/math-and-bits/originals/3005__1197606254.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "3005",
+    "problem_url": "https://leetcode.com/problems/count-elements-with-maximum-frequency/",
+    "capture_file": "sources/288-1197606254.cpp"
+  },
+  {
     "source_id": "2138479064",
     "problem": "3483. Unique 3-Digit Even Numbers",
     "url": "https://leetcode.com/problems/unique-3-digit-even-numbers/submissions/2138479064/",
@@ -2468,6 +3722,39 @@
     "topic": "math-and-bits",
     "problem_id": "3498",
     "problem_url": "https://leetcode.com/problems/reverse-degree-of-a-string/"
+  },
+  {
+    "source_id": "2152359464",
+    "problem": "3550. Smallest Index With Digit Sum Equal to Index",
+    "url": "https://leetcode.com/problems/smallest-index-with-digit-sum-equal-to-index/submissions/2152359464/",
+    "sha256": "61f76488b7bb59c80a255d30467e907a6a528d9056d81252a943c0697672e68e",
+    "path": "topics/math-and-bits/originals/3550__2152359464.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "3550",
+    "problem_url": "https://leetcode.com/problems/smallest-index-with-digit-sum-equal-to-index/",
+    "capture_file": "originals/079_3550_2152359464.cpp"
+  },
+  {
+    "source_id": "2119524038",
+    "problem": "3718. Smallest Missing Multiple of K",
+    "url": "https://leetcode.com/problems/smallest-missing-multiple-of-k/submissions/2119524038/",
+    "sha256": "b90c55311b87f5cde2d2c636e74e8ac83a95a77f43848b48f27f1876cd7e117c",
+    "path": "topics/math-and-bits/originals/3718__2119524038.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "3718",
+    "problem_url": "https://leetcode.com/problems/smallest-missing-multiple-of-k/",
+    "capture_file": "originals/213_3718_2119524038.cpp"
+  },
+  {
+    "source_id": "2022675769",
+    "problem": "3751. Total Waviness of Numbers in Range I",
+    "url": "https://leetcode.com/problems/total-waviness-of-numbers-in-range-i/submissions/2022675769/",
+    "sha256": "1f1876a8b91051d435a8abf918efbc4784a7163d1da8b484bb912848d52823b4",
+    "path": "topics/math-and-bits/originals/3751__2022675769.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "3751",
+    "problem_url": "https://leetcode.com/problems/total-waviness-of-numbers-in-range-i/",
+    "capture_file": "sources/227-2022675769.cpp"
   },
   {
     "source_id": "2134960323",

@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**17 captured problems · 34 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**18 captured problems · 37 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Pattern reminders
 
@@ -221,6 +221,20 @@ Pop minimum indices and multiply value by left choices and right choices; final 
 **Captured variants:** One observed approach.
 
 - [Original 2132055030](originals/907__2132055030.cpp) · [LeetCode submission](https://leetcode.com/problems/sum-of-subarray-minimums/submissions/2132055030/)
+
+### 973. K Closest Points to Origin
+
+[Problem](https://leetcode.com/problems/k-closest-points-to-origin/) · Tags: Bounded max-heap, Top-k
+
+Maintain max-heap of {squared distance,x,y}, removing farthest when size exceeds k.
+
+**Original-code context:** Default priority_queue and explicit less<> variants are equivalent. int distance is safe for this problem bounds but cast after multiplication would not prevent overflow for wider coordinates.
+
+**Captured variants:** 3 accepted C++ submissions retained; distinctions are described above.
+
+- [Original 2157563441](originals/973__2157563441.cpp) · [LeetCode submission](https://leetcode.com/problems/k-closest-points-to-origin/submissions/2157563441/)
+- [Original 2157563214](originals/973__2157563214.cpp) · [LeetCode submission](https://leetcode.com/problems/k-closest-points-to-origin/submissions/2157563214/)
+- [Original 2144675588](originals/973__2144675588.cpp) · [LeetCode submission](https://leetcode.com/problems/k-closest-points-to-origin/submissions/2144675588/)
 
 ### 1046. Last Stone Weight
 

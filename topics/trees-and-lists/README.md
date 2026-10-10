@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**26 captured problems · 34 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**28 captured problems · 36 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Pattern reminders
 
@@ -241,6 +241,18 @@ Inorder traversal increments count and records kth visited value.
 
 - [Original 2140766874](originals/230__2140766874.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-smallest-element-in-a-bst/submissions/2140766874/)
 
+### 234. Palindrome Linked List
+
+[Problem](https://leetcode.com/problems/palindrome-linked-list/) · Tags: Linked lists, Midpoint, Reversal
+
+Slow/fast midpoint, reverse second half, compare opposing halves.
+
+**Original-code context:** O(n), O(1); modifies list and never restores reversed links.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2126051007](originals/234__2126051007.cpp) · [LeetCode submission](https://leetcode.com/problems/palindrome-linked-list/submissions/2126051007/)
+
 ### 235. Lowest Common Ancestor of a Binary Search Tree
 
 [Problem](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) · Tags: Trees, BST, Search
@@ -282,6 +294,18 @@ At every root candidate, recursively test structural equality; recurse through h
 **Captured variants:** One observed approach.
 
 - [Original 2140623050](originals/572__2140623050.cpp) · [LeetCode submission](https://leetcode.com/problems/subtree-of-another-tree/submissions/2140623050/)
+
+### 876. Middle of the Linked List
+
+[Problem](https://leetcode.com/problems/middle-of-the-linked-list/) · Tags: List length, Two passes
+
+Traverses the list to get length, resets tmp=head, then advances length/2 nodes and returns tmp.
+
+**Original-code context:** Actual original is not fast/slow pointers. It writes values into fixed int array[100] even though the values are never read; original constraints bound the list size. The source includes commented-out earlier length handling, preserved unchanged.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 765344670](originals/876__765344670.cpp) · [LeetCode submission](https://leetcode.com/problems/middle-of-the-linked-list/submissions/765344670/)
 
 ### 968. Binary Tree Cameras
 

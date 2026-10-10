@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**22 captured problems · 23 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**34 captured problems · 40 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Pattern reminders
 
@@ -55,6 +55,20 @@ Skip spaces, parse optional sign, accumulate digits while checking against sign-
 
 - [Original 2126227733](originals/8__2126227733.cpp) · [LeetCode submission](https://leetcode.com/problems/string-to-integer-atoi/submissions/2126227733/)
 
+### 20. Valid Parentheses
+
+[Problem](https://leetcode.com/problems/valid-parentheses/) · Tags: Bracket matching, Stack
+
+Deque of opening characters plus a mapping of three bracket pairs; closing symbol must match the top and final stack must be empty.
+
+**Original-code context:** The two newest captured code texts are byte-identical. The older source uses deque.front rather than deque.back as the stack end. Each bracket check scans only the three fixed bracket mappings.
+
+**Captured variants:** 3 accepted C++ submissions retained; distinctions are described above.
+
+- [Original 2159229559](originals/20__2159229559.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-parentheses/submissions/2159229559/)
+- [Original 2145824156](originals/20__2145824156.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-parentheses/submissions/2145824156/)
+- [Original 2130619573](originals/20__2130619573.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-parentheses/submissions/2130619573/)
+
 ### 28. Find the Index of the First Occurrence in a String
 
 [Problem](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/) · Tags: String matching, KMP
@@ -64,6 +78,19 @@ Inline prefix-function build then fallback-driven linear first-match scan.
 **Captured variants:** One observed approach.
 
 - [Original 2163524870](originals/28__2163524870.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/submissions/2163524870/)
+
+### 32. Longest Valid Parentheses
+
+[Problem](https://leetcode.com/problems/longest-valid-parentheses/) · Tags: Parentheses, Index stack
+
+Index stack with initial sentinel -1. Pop on close; if stack empties reset base to current index, otherwise use i-stack.top.
+
+**Original-code context:** Both accepted implementations use the same algorithm, with deque/back and stack/top wrappers.
+
+**Captured variants:** 2 accepted C++ submissions retained; distinctions are described above.
+
+- [Original 2161065445](originals/32__2161065445.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-valid-parentheses/submissions/2161065445/)
+- [Original 1780529411](originals/32__1780529411.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-valid-parentheses/submissions/1780529411/)
 
 ### 49. Group Anagrams
 
@@ -106,6 +133,19 @@ Skip nonalphanumeric symbols at both ends and compare normalized characters.
 
 - [Original 2147738982](originals/125__2147738982.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-palindrome/submissions/2147738982/)
 
+### 205. Isomorphic Strings
+
+[Problem](https://leetcode.com/problems/isomorphic-strings/) · Tags: Strings, Bijection, Hash maps
+
+Two character maps enforce bijection in both directions.
+
+**Original-code context:** Same method in both sources; O(n), bounded alphabet space; contains() requires C++20.
+
+**Captured variants:** 2 accepted C++ submissions captured; all original versions are retained.
+
+- [Original 2125913880](originals/205__2125913880.cpp) · [LeetCode submission](https://leetcode.com/problems/isomorphic-strings/submissions/2125913880/)
+- [Original 2116280947](originals/205__2116280947.cpp) · [LeetCode submission](https://leetcode.com/problems/isomorphic-strings/submissions/2116280947/)
+
 ### 208. Implement Trie (Prefix Tree)
 
 [Problem](https://leetcode.com/problems/implement-trie-prefix-tree/) · Tags: Trie, Strings
@@ -136,6 +176,18 @@ Count both strings and compare every key/count in both directions.
 
 - [Original 2130658997](originals/242__2130658997.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-anagram/submissions/2130658997/)
 
+### 392. Is Subsequence
+
+[Problem](https://leetcode.com/problems/is-subsequence/) · Tags: Subsequence, Pointer scan
+
+Scans t and advances j into s on equality; returns whether j reached s length.
+
+**Original-code context:** There is no explicit j<s_length guard inside the loop. When j==s.size(), reading through string::operator[] accesses the null terminator; the original lowercase-letter contract prevents another match. This original behavior is preserved.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 792424958](originals/392__792424958.cpp) · [LeetCode submission](https://leetcode.com/problems/is-subsequence/submissions/792424958/)
+
 ### 394. Decode String
 
 [Problem](https://leetcode.com/problems/decode-string/) · Tags: Stacks, Parsing
@@ -146,6 +198,19 @@ Save outer partial string and multiplier at [, expand current substring at ].
 
 - [Original 2146593107](originals/394__2146593107.cpp) · [LeetCode submission](https://leetcode.com/problems/decode-string/submissions/2146593107/)
 
+### 443. String Compression
+
+[Problem](https://leetcode.com/problems/string-compression/) · Tags: Run-length encoding, Strings
+
+Run-length accumulation with pointer to current character; append character and decimal count to separate result vector; move result into input.
+
+**Original-code context:** Both original versions allocate O(n) auxiliary storage and replace the input with that result vector. Historical judge acceptance does not establish constant-extra-space behavior.
+
+**Captured variants:** 2 accepted C++ submissions captured; all original versions are retained.
+
+- [Original 2126086544](originals/443__2126086544.cpp) · [LeetCode submission](https://leetcode.com/problems/string-compression/submissions/2126086544/)
+- [Original 2119558730](originals/443__2119558730.cpp) · [LeetCode submission](https://leetcode.com/problems/string-compression/submissions/2119558730/)
+
 ### 459. Repeated Substring Pattern
 
 [Problem](https://leetcode.com/problems/repeated-substring-pattern/) · Tags: String matching, KMP
@@ -155,6 +220,42 @@ A nonzero final border length and divisibility by n-border detect repeating peri
 **Captured variants:** Same LPS family as 214/686/28.
 
 - [Original 2163579090](originals/459__2163579090.cpp) · [LeetCode submission](https://leetcode.com/problems/repeated-substring-pattern/submissions/2163579090/)
+
+### 522. Longest Uncommon Subsequence II
+
+[Problem](https://leetcode.com/problems/longest-uncommon-subsequence-ii/) · Tags: Subsequence scan, Length sorting
+
+Counts duplicate strings, sorts by descending length, skips duplicates, and checks whether each unique string is a subsequence of any other string.
+
+**Original-code context:** Returns the first valid candidate after length sorting. The helper advances the source-string pointer only on a match.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2022687848](originals/522__2022687848.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-uncommon-subsequence-ii/submissions/2022687848/)
+
+### 678. Valid Parenthesis String
+
+[Problem](https://leetcode.com/problems/valid-parenthesis-string/) · Tags: Parentheses, Greedy, Directional balance
+
+Simultaneous left-to-right and right-to-left balance feasibility checks, treating * as whichever opening/closing symbol the directional test needs.
+
+**Original-code context:** Reject as soon as either directional balance is negative.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2161909813](originals/678__2161909813.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-parenthesis-string/submissions/2161909813/)
+
+### 680. Valid Palindrome II
+
+[Problem](https://leetcode.com/problems/valid-palindrome-ii/) · Tags: Palindrome, Two pointers
+
+Two-pointer scan; at first mismatch test either left deletion or right deletion with helper.
+
+**Original-code context:** Bitwise boolean OR evaluates both helper calls rather than short-circuiting; unused deleted variable; still O(n).
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2147742976](originals/680__2147742976.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-palindrome-ii/submissions/2147742976/)
 
 ### 686. Repeated String Match
 
@@ -226,6 +327,18 @@ Grammar item handles letter or brace group, term concatenates Cartesian products
 
 - [Original 2153362638](originals/1096__2153362638.cpp) · [LeetCode submission](https://leetcode.com/problems/brace-expansion-ii/submissions/2153362638/)
 
+### 1111. Maximum Nesting Depth of Two Valid Parentheses Strings
+
+[Problem](https://leetcode.com/problems/maximum-nesting-depth-of-two-valid-parentheses-strings/) · Tags: Parentheses, Depth parity
+
+Assign both ends of each pair to depth%2; increment before assigning opening and decrement after assigning closing.
+
+**Original-code context:** Consistent before/after order is what puts matching parentheses in the same group.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2158097081](originals/1111__2158097081.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-nesting-depth-of-two-valid-parentheses-strings/submissions/2158097081/)
+
 ### 1190. Reverse Substrings Between Each Pair of Parentheses
 
 [Problem](https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/) · Tags: Strings, Stack
@@ -256,6 +369,18 @@ Single depth counter and running maximum; stack contents are unnecessary.
 
 - [Original 2155954786](originals/1614__2155954786.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/submissions/2155954786/)
 
+### 1768. Merge Strings Alternately
+
+[Problem](https://leetcode.com/problems/merge-strings-alternately/) · Tags: Strings, Two indexes
+
+Advance two indexes, stream alternating characters, then stream each remaining suffix.
+
+**Original-code context:** Uses ostringstream and output storage.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2147744998](originals/1768__2147744998.cpp) · [LeetCode submission](https://leetcode.com/problems/merge-strings-alternately/submissions/2147744998/)
+
 ### 1807. Evaluate the Bracket Pairs of a String
 
 [Problem](https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/) · Tags: Strings, Hash maps, Views
@@ -265,3 +390,27 @@ Map knowledge to nonowning string_views; scan bracket key spans and substitute v
 **Captured variants:** One observed approach.
 
 - [Original 2154370092](originals/1807__2154370092.cpp) · [LeetCode submission](https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/submissions/2154370092/)
+
+### 2108. Find First Palindromic String in the Array
+
+[Problem](https://leetcode.com/problems/find-first-palindromic-string-in-the-array/) · Tags: Palindrome, Mirror comparison
+
+Scans words in order, checking symmetric characters up to half the string length, and returns the first palindrome.
+
+**Original-code context:** Uses an is_found flag and returns words[i-1] after the loop.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 765352591](originals/2108__765352591.cpp) · [LeetCode submission](https://leetcode.com/problems/find-first-palindromic-string-in-the-array/submissions/765352591/)
+
+### 3043. Find the Length of the Longest Common Prefix
+
+[Problem](https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix/) · Tags: Decimal prefixes, Hash sets
+
+Generates all positive decimal prefixes by repeated division by 10, stores sets for both arrays, intersects them, and compares digit counts.
+
+**Original-code context:** Actual code uses unordered_set<int> and log10 digit counting, not a trie. getPrefixes omits zero; the original problem has positive numbers.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2011710588](originals/3043__2011710588.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix/submissions/2011710588/)

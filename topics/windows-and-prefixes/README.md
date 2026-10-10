@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**13 captured problems · 17 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**17 captured problems · 21 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Pattern reminders
 
@@ -37,6 +37,18 @@
 ## Complete problem and variant index
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
+
+### 3. Longest Substring Without Repeating Characters
+
+[Problem](https://leetcode.com/problems/longest-substring-without-repeating-characters/) · Tags: Sliding window, Last-seen indexes
+
+Stores the last index per character in unordered_map<char,int>. On a repeat, left=max(left,last+1); updates the best right-left+1.
+
+**Original-code context:** Use of max prevents the left boundary moving backward.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2027316499](originals/3__2027316499.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/2027316499/)
 
 ### 30. Substring with Concatenation of All Words
 
@@ -79,6 +91,18 @@ Maintain maximum character count seen while expanding; shift left once when wind
 - [Original 2131743704](originals/424__2131743704.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131743704/)
 - [Original 2131736709](originals/424__2131736709.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131736709/)
 - [Original 2027329669](originals/424__2027329669.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2027329669/)
+
+### 438. Find All Anagrams in a String
+
+[Problem](https://leetcode.com/problems/find-all-anagrams-in-a-string/) · Tags: Fixed-size window, Frequency matching
+
+Maintains orig/current unordered_map<char,int> and a count of characters whose frequencies match. Updates matches on each entering and leaving character.
+
+**Original-code context:** Preserve both equality-crossing cases when incrementing and decrementing frequencies.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2025506346](originals/438__2025506346.cpp) · [LeetCode submission](https://leetcode.com/problems/find-all-anagrams-in-a-string/submissions/2025506346/)
 
 ### 560. Subarray Sum Equals K
 
@@ -142,6 +166,18 @@ Removing prefix and suffix becomes keeping longest middle subarray of sum total-
 
 - [Original 2150943873](originals/1658__2150943873.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/submissions/2150943873/)
 
+### 1749. Maximum Absolute Sum of Any Subarray
+
+[Problem](https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/) · Tags: Prefix-sum extrema
+
+Tracks the minimum and maximum prefix sum starting from zero; returns their difference.
+
+**Original-code context:** This particular implementation uses prefix extrema rather than two separate Kadane runs.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2000684155](originals/1749__2000684155.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/submissions/2000684155/)
+
 ### 2444. Count Subarrays With Fixed Bounds
 
 [Problem](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/) · Tags: Sliding windows, Last-seen indices, Counting
@@ -151,6 +187,18 @@ For each right endpoint, count starts after last invalid value and no later than
 **Captured variants:** One observed approach.
 
 - [Original 2153831199](originals/2444__2153831199.cpp) · [LeetCode submission](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/submissions/2153831199/)
+
+### 3355. Zero Array Transformation I
+
+[Problem](https://leetcode.com/problems/zero-array-transformation-i/) · Tags: Difference array, Prefix sums
+
+Range-difference array, prefix-sum available decrement coverage, require coverage>=nums[i].
+
+**Original-code context:** O(n+q), O(n); this is capacity comparison, not applying every query decrement compulsorily.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2119740763](originals/3355__2119740763.cpp) · [LeetCode submission](https://leetcode.com/problems/zero-array-transformation-i/submissions/2119740763/)
 
 ### 3903. Smallest Stable Index I
 

@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**11 captured problems · 16 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**12 captured problems · 18 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Pattern reminders
 
@@ -106,6 +106,19 @@ Store append-only posts by user; scan followed and own posts into size-10 min he
 **Captured variants:** One observed approach.
 
 - [Original 2144760383](originals/355__2144760383.cpp) · [LeetCode submission](https://leetcode.com/problems/design-twitter/submissions/2144760383/)
+
+### 380. Insert Delete GetRandom O(1)
+
+[Problem](https://leetcode.com/problems/insert-delete-getrandom-o1/) · Tags: Hash map, Dense vector, Randomized set
+
+Unordered value→index map plus dense vector; deletion replaces/switches with tail and updates map; random index via rand()%size.
+
+**Original-code context:** Average O(1) map operations; modulo RNG can be biased; assumes getRandom on nonempty set under task guarantee; contains() requires C++20.
+
+**Captured variants:** 2 accepted C++ submissions captured; all original versions are retained.
+
+- [Original 2125968160](originals/380__2125968160.cpp) · [LeetCode submission](https://leetcode.com/problems/insert-delete-getrandom-o1/submissions/2125968160/)
+- [Original 2116321400](originals/380__2116321400.cpp) · [LeetCode submission](https://leetcode.com/problems/insert-delete-getrandom-o1/submissions/2116321400/)
 
 ### 460. LFU Cache
 

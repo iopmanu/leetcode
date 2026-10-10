@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**6 captured problems · 7 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**7 captured problems · 8 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Pattern reminders
 
@@ -40,6 +40,12 @@
 - **Idea and invariant:** 3525 stores a segment product and counts of prefix-product remainders. A merged prefix either stays in the left segment or contains all of the left plus a prefix of the right. Left and right cannot be swapped. The captured array has six slots and uses slot k for the full product.
 - **Cost in these sources:** O(nk) build, O(k log n) per update/query, and O(nk) storage; the source problem bounds k by 5.
 - **Read the originals:** [3525. Find X Value of Array II — 2150176033](originals/3525__2150176033.cpp).
+
+### Lazy range-chmin and point coverage queries
+
+- **Cue:** Every interval offers a candidate cost to all points it contains; later queries ask for the cheapest covering interval.
+- **Idea and invariant:** [1851](originals/1851__2168532079.cpp) composes pending bounds with min. Each interval updates its inclusive coordinate range with its length, and a point query returns the cheapest covering length or INT_MAX.
+- **Cost in this source:** The coordinate capacity is M=maxEnd+1. Allocation/initialization costs O(M) time and space; I interval updates and Q point queries add O((I+Q) log M) time. The original deliberately retains its raw-coordinate arrays and custom lazy helpers.
 
 ## Complete problem and variant index
 
@@ -95,6 +101,18 @@ Range assignment and range maximum over compressed elementary x-intervals; landi
 **Captured variants:** One observed approach.
 
 - [Original 2155079538](originals/699__2155079538.cpp) · [LeetCode submission](https://leetcode.com/problems/falling-squares/submissions/2155079538/)
+
+### 1851. Minimum Interval to Include Each Query
+
+[Problem](https://leetcode.com/problems/minimum-interval-to-include-each-query/) · Tags: Lazy segment tree, Range chmin, Point queries
+
+Build a segment tree over raw coordinates from 0 through the largest interval endpoint. Each interval applies its inclusive length as a range-chmin update. A query reads the minimum stored length at one coordinate and converts INT_MAX to -1.
+
+**Original-code context:** This source uses neither coordinate compression nor a heap. With M=maxEnd+1, initialization and storage are O(M), and I interval updates plus Q point queries cost O((I+Q) log M). It assumes a nonempty interval list and retains int coordinate arithmetic. INT_MAX is both the no-result and no-pending-update sentinel.
+
+**Captured variants:** One captured custom lazy segment-tree implementation.
+
+- [Original 2168532079](originals/1851__2168532079.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2168532079/)
 
 ### 3525. Find X Value of Array II
 

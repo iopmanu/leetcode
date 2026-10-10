@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**13 captured problems · 19 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**19 captured problems · 29 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Pattern reminders
 
@@ -44,6 +44,20 @@
 ## Complete problem and variant index
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
+
+### 11. Container With Most Water
+
+[Problem](https://leetcode.com/problems/container-with-most-water/) · Tags: Greedy, Two pointers
+
+Two end pointers, update area, advance the shorter boundary.
+
+**Original-code context:** O(n) time, O(1) auxiliary space; variants differ only in pointer types/tie direction.
+
+**Captured variants:** 3 accepted C++ submissions captured; all original versions are retained.
+
+- [Original 2147803818](originals/11__2147803818.cpp) · [LeetCode submission](https://leetcode.com/problems/container-with-most-water/submissions/2147803818/)
+- [Original 2126025093](originals/11__2126025093.cpp) · [LeetCode submission](https://leetcode.com/problems/container-with-most-water/submissions/2126025093/)
+- [Original 2024244275](originals/11__2024244275.cpp) · [LeetCode submission](https://leetcode.com/problems/container-with-most-water/submissions/2024244275/)
 
 ### 56. Merge Intervals
 
@@ -118,6 +132,44 @@ Disjoint interval map by start; lower_bound identifies successor, predecessor ch
 
 - [Original 2152937765](originals/729__2152937765.cpp) · [LeetCode submission](https://leetcode.com/problems/my-calendar-i/submissions/2152937765/)
 
+### 849. Maximize Distance to Closest Person
+
+[Problem](https://leetcode.com/problems/maximize-distance-to-closest-person/) · Tags: Gap scan, Boundary cases
+
+Tracks the previous occupied seat, uses full lengths for leading/trailing empty stretches, and half the distance for interior gaps.
+
+**Original-code context:** Uses size_t left=-1 as an unsigned sentinel; this is intentional source behavior that should not be silently normalized.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 1284774909](originals/849__1284774909.cpp) · [LeetCode submission](https://leetcode.com/problems/maximize-distance-to-closest-person/submissions/1284774909/)
+
+### 881. Boats to Save People
+
+[Problem](https://leetcode.com/problems/boats-to-save-people/) · Tags: Greedy, Sorting, Two pointers
+
+Sort; lightest/heaviest pointers; pair if feasible, otherwise consume heaviest alone.
+
+**Original-code context:** All three versions implement the same greedy idea; sorting mutates input; O(n log n).
+
+**Captured variants:** 3 accepted C++ submissions captured; all original versions are retained.
+
+- [Original 2147809080](originals/881__2147809080.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2147809080/)
+- [Original 2140480045](originals/881__2140480045.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2140480045/)
+- [Original 2140479869](originals/881__2140479869.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2140479869/)
+
+### 1007. Minimum Domino Rotations For Equal Row
+
+[Problem](https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/) · Tags: Candidate restriction, Greedy
+
+Only tops[0] and bottoms[0] can be the common value; test each candidate, reject if a domino has neither, and minimize rotation counts.
+
+**Original-code context:** Counters named topRotation/bottomRotation count target matches on corresponding side rather than rotations of that side; min of the two remains correct.
+
+**Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
+
+- [Original 2157541300](originals/1007__2157541300.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/submissions/2157541300/)
+
 ### 1520. Maximum Number of Non-Overlapping Substrings
 
 [Problem](https://leetcode.com/problems/maximum-number-of-non-overlapping-substrings/) · Tags: Greedy, Intervals, Character spans
@@ -127,6 +179,18 @@ Collect each character first/last/count in first-appearance order; deque suffix 
 **Captured variants:** One observed approach.
 
 - [Original 2146064854](originals/1520__2146064854.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-number-of-non-overlapping-substrings/submissions/2146064854/)
+
+### 1710. Maximum Units on a Truck
+
+[Problem](https://leetcode.com/problems/maximum-units-on-a-truck/) · Tags: Greedy, Sorting
+
+Sort by units per box ascending, traverse descending, take min(capacity, box count).
+
+**Original-code context:** O(n log n). Subtracts full box count from remaining capacity even for final partial type; can become negative but loop immediately ends, so this does not affect result.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2119475867](originals/1710__2119475867.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-units-on-a-truck/submissions/2119475867/)
 
 ### 1877. Minimize Maximum Pair Sum in Array
 
@@ -139,6 +203,18 @@ Pair smallest with largest, maximizing pair sum over pairs.
 - [Original 2140491975](originals/1877__2140491975.cpp) · [LeetCode submission](https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/submissions/2140491975/)
 - [Original 2140491229](originals/1877__2140491229.cpp) · [LeetCode submission](https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/submissions/2140491229)
 - [Original 2140485732](originals/1877__2140485732.cpp) · [LeetCode submission](https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/submissions/2140485732/)
+
+### 2279. Maximum Bags With Full Capacity of Rocks
+
+[Problem](https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/) · Tags: Greedy, Sorting, Capacity deficits
+
+Pair capacity/current rocks; sort by missing capacity; spend on cheapest deficits first.
+
+**Original-code context:** O(n log n), O(n) auxiliary pair vector; zero-deficit bags counted naturally.
+
+**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+
+- [Original 2119511298](originals/2279__2119511298.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/submissions/2119511298/)
 
 ### 2333. Minimum Sum of Squared Difference
 
