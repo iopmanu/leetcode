@@ -1,165 +1,173 @@
 # Windows and prefixes
 
-Your recurring move is to store just enough history: frequency deficits, a last-invalid boundary, or counts of previous prefix sums. All examples below come from your submitted code.
+[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-## Choose the invariant first
+**13 captured problems · 17 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-| Situation | State to keep | Template | Time / extra space |
-|---|---|---|---|
-| Shortest substring containing a multiset | Required counts minus window counts | `minWindow` (76) | O(n+m) / O(256) |
-| Exact multiset in a fixed-size window | Same deficits plus window length | `containsPermutation` (567) | O(n+m) / O(256) |
-| Longest substring with at most k replacements | Frequencies and historical maximum | `longestReplacementWindow` (424) | O(n) / O(256) |
-| At most k zeroes | Count zeroes, shrink until valid | `longestOnes` (1004) | O(n) / O(1) |
-| Delete exactly one element | At most one zero, subtract one | `longestOnesAfterDeletion` (1493) | O(n) / O(1) |
-| Shortest sum at least target, nonnegative values | Current sum; shrink while sufficient | `minSubarrayLength` (209) | O(n) / O(1) |
-| Remove from two ends | Keep the longest middle summing to total−x | `minEndRemovals` (1658) | O(n) / O(1) |
-| Count target sums, including negative values | Counts of earlier prefix sums | `countSubarraysSum` (560) | Expected O(n) / O(n) |
-| Both exact extrema required | Last invalid, last minimum, last maximum | `countFixedBoundSubarrays` (2444) | O(n) / O(1) |
-| Product excluding one index | Exclusive prefix × exclusive suffix | `productExceptSelf` (238) | O(n) / O(n) |
-| Two disjoint target-sum windows | Current positive window + best earlier length | `minTwoTargetLengths` (1477) | O(n) / O(n) |
-| Prefix maximum near suffix minimum | Suffix minima and running maximum | `firstStableIndex` (3903, 3904) | O(n) / O(n) |
-| Concatenation of equal-length words | One frequency window for each word offset | `findWordConcatenations` (30) | Expected O(nw+mw) / O(m) |
+## Pattern reminders
 
-Here n is input length, m is target length/word count as applicable, and w is word length. Word hashing and equality read up to w bytes; `string_view` avoids allocation, not hashing cost. Hash-table complexities are expected, not worst-case guarantees. The word search returns positions grouped by offset, just like your submission; sort the result only if the caller needs global order.
+### Prefix cancellation
 
-## 1. Deficit counts: zero crossings do the work
+- **Cue:** A subarray sum becomes a difference of two prefix values.
+- **Idea and invariant:** 560 counts previous prefixes equal to current minus target before recording the current prefix. The zero prefix is present once, allowing subarrays beginning at index zero. 238 separately accumulates products on each side of an index.
+- **Cost in these sources:** 560: expected O(n) time and O(n) hash-map storage. 238: O(n) time and O(n) prefix/suffix storage in the captured source.
+- **Read the originals:** [560. Subarray Sum Equals K — 2130713437](originals/560__2130713437.cpp); [238. Product of Array Except Self — 2130701387](originals/238__2130701387.cpp).
 
-For LC 76, `counts[ch] = required[ch] − currentWindow[ch]`:
+### Positive-value windows
 
-```text
-positive  -> still missing copies
-zero      -> exactly enough
-negative  -> surplus copies
+- **Cue:** Expanding increases the sum and moving left decreases it.
+- **Idea and invariant:** 209 shrinks while the target is met. 1658 converts removing two ends into keeping the longest middle with sum total minus x. 1477 combines the current target-sum window with the best earlier disjoint one. Positivity supplies the required monotonicity.
+- **Cost in these sources:** O(n) time because each pointer only advances. 209 and 1658 use O(1) window state; 1477 keeps O(n) prefix-best state.
+- **Read the originals:** [209. Minimum Size Subarray Sum — 2130694109](originals/209__2130694109.cpp); [1658. Minimum Operations to Reduce X to Zero — 2150943873](originals/1658__2150943873.cpp); [1477. Find Two Non-overlapping Sub-arrays Each With Target Sum — 2145013796](originals/1477__2145013796.cpp).
 
-enter: --counts[ch] == 0  => one distinct requirement became satisfied
-leave: ++counts[ch] > 0   => a requirement became unsatisfied
-```
+### Character counts and controlled invalidity
 
-Expand right. Once every requirement is satisfied, repeatedly record and shrink left. For LC 567, enforce the pattern's fixed length instead: satisfying every requirement then means an exact permutation, including multiplicities. Empty target is explicitly handled (`""` for minimum cover; `true` for empty permutation), whereas the source relies on a nonempty target.
+- **Cue:** A window has a fixed multiset, a bounded replacement budget, or a bounded number of zeros.
+- **Idea and invariant:** 567 tracks a fixed-length permutation window. 30 scans each word-length offset in whole-word steps. 424 keeps a historical maximum frequency; 1493 and one 1004 variant use single-step lazy shrink, so their current window is not always an ordinary fully valid window.
+- **Cost in these sources:** Character/zero windows are linear time with alphabet-sized or constant state. 30 advances O(n) word steps across offsets, but substring construction and hashing cost O(word length) per step.
+- **Read the originals:** [567. Permutation in String — 2131779135](originals/567__2131779135.cpp); [30. Substring with Concatenation of All Words — 2153818347](originals/30__2153818347.cpp); [424. Longest Repeating Character Replacement — 2131743704](originals/424__2131743704.cpp); [1493. Longest Subarray of 1's After Deleting One Element — 2127345655](originals/1493__2127345655.cpp); [1004. Max Consecutive Ones III — 2127149237](originals/1004__2127149237.cpp).
 
-**When useful:** covering constraints are per-symbol multiplicities. **Pitfall:** do not replace the source's repeated shrinking in minimum-window search with one shrink; that can miss the shortest answer. Counts are case-sensitive bytes, not Unicode code points. The adaptation uses 256 slots and casts to `unsigned char` before indexing. `"A"` and `"a"` differ.
+### Remember the last obstruction
 
-## 2. True windows versus lazy length tracking
+- **Cue:** Count valid starts for every right endpoint without enumerating subarrays.
+- **Idea and invariant:** 2444 keeps the last invalid element and latest occurrences of both required bounds. Valid starts lie after the invalid position and no later than both bound positions. 3903 and 3904 combine prefix maximum with precomputed suffix minimum.
+- **Cost in these sources:** 2444: O(n) time and O(1) state. The stable-index implementations: O(n) time and O(n) suffix storage.
+- **Read the originals:** [2444. Count Subarrays With Fixed Bounds — 2153831199](originals/2444__2153831199.cpp); [3903. Smallest Stable Index I — 2130500850](originals/3903__2130500850.cpp); [3904. Smallest Stable Index II — 2131704501](originals/3904__2131704501.cpp).
 
-LC 1004 has both explicit shrinking and a one-step lazy variant in your history. The template uses the explicit `while (zeroes > k)` form, so the retained window is actually valid. LC 1493 reuses it and subtracts one because deletion is mandatory: `[1,1,1]` returns 2, not 3.
+## Complete problem and variant index
 
-LC 424 deliberately keeps a historical `maxCount`. It may exceed the current window's true maximum after moving left. That is safe for the **maximum achievable length**, because a new larger length is established only when a new sufficient frequency has occurred. It is not a guarantee that the final stored interval itself is a valid witness. Your earlier submission recomputes the current maximum with `max_element`; the later one avoids that scan.
+All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
-```text
-window length − maximum same-character count = replacements needed
-```
+### 30. Substring with Concatenation of All Words
 
-**Pitfalls:** stale-maximum logic is specific to this maximization problem. Do not transplant it into minimum-cover counting or return its final boundaries as an optimal actual substring. Binary helpers require 0/1 values and nonnegative budgets.
+[Problem](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) · Tags: Sliding windows, Strings, Frequency maps, Views
 
-## 3. Positive/nonnegative sum windows and the complement trick
+For every word-length offset, slide in word-sized steps and shrink only when current word count exceeds required count.
 
-For LC 209, adding on the right never decreases the sum; removing on the left never increases it. This monotonicity justifies discarding left endpoints after testing them. LC 1658 changes the question before scanning:
+**Captured variants:** One observed approach.
 
-```text
-removed prefix | longest retained middle | removed suffix
-        removed total x  <=>  middle total = totalSum − x
-answer = n − longestMiddleLength
-```
+- [Original 2153818347](originals/30__2153818347.cpp) · [LeetCode submission](https://leetcode.com/problems/substring-with-concatenation-of-all-words/submissions/2153818347/)
 
-The templates permit nonnegative values for 209/1658 and use `long long` sums. The empty retained middle is valid; zero-filled middles are retained when they improve the answer. `minSubarrayLength` requires a strictly positive target. `minEndRemovals` returns −1 for an impossible removal sum.
+### 209. Minimum Size Subarray Sum
 
-**Negative numbers break these sum windows.** Example `[1,-1,3]`, target 3: shrinking the first valid full window removes 1, drops the sum below target, and misses the length-one `[3]`. Use prefix-based methods appropriate to the question instead. LC 560 below counts exact sums with signed values; it is not a shortest-at-least-target solver.
+[Problem](https://leetcode.com/problems/minimum-size-subarray-sum/) · Tags: Sliding windows
 
-## 4. Prefix counts: query before insertion
+Expand positive-number sum, shrink while reaching target, record shortest.
 
-```text
-P[right+1] − P[left] = target
-P[left] = P[right+1] − target
+**Captured variants:** One observed approach.
 
-counts[0] = 1                 // empty prefix
-answer += counts[current-target]
-++counts[current]             // only after the query
-```
+- [Original 2130694109](originals/209__2130694109.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-size-subarray-sum/submissions/2130694109/)
 
-The map contains only **earlier** prefixes when queried. Inserting first would incorrectly count an empty subarray when target is zero. Duplicate prefixes represent different valid left endpoints, so use counts rather than a set. For `[1,-1,0]`, target 0, the answer is 3. Both keys and answer are widened; 100,000 zeroes have 5,000,050,000 zero-sum subarrays.
+### 238. Product of Array Except Self
 
-## 5. Last-seen indices count valid starts directly
+[Problem](https://leetcode.com/problems/product-of-array-except-self/) · Tags: Prefix/suffix aggregates
 
-LC 2444 needs the last location of each bound and the last value outside the allowed range:
+Build explicit left and right product arrays with identity 1, multiply exclusive prefixes/suffixes.
 
-```text
-            valid starting positions
-lastBad  | (........................] | ... right
-                      min(lastMin,lastMax)
+**Captured variants:** One observed approach.
 
-new subarrays = max(0, min(lastMin,lastMax) − lastBad)
-```
+- [Original 2130701387](originals/238__2130701387.cpp) · [LeetCode submission](https://leetcode.com/problems/product-of-array-except-self/submissions/2130701387/)
 
-Every counted start excludes the bad value and includes at least one occurrence of both extrema. The bounds can be equal; then each all-equal run contributes its triangular number. This is the actual last-seen pattern in the inspected sources; no unrelated distinct-character-window implementation is claimed.
+### 424. Longest Repeating Character Replacement
 
-## 6. Prefix/suffix identities and best-so-far composition
+[Problem](https://leetcode.com/problems/longest-repeating-character-replacement/) · Tags: Sliding windows, Stale maximum
 
-LC 238 uses identity-padded arrays, with `left[i]` the product before i and `right[i+1]` the product after i:
+Maintain maximum character count seen while expanding; shift left once when window-maxCount>k, retain maximal feasible length.
 
-```text
-nums:   a   b   c   d
-              ^ exclude c
-result[2] = (a*b) * d
-```
+**Captured variants:** One observed approach.
 
-No division, so one or several zeroes work. The source stores both arrays explicitly; so does this template. An empty input returns empty; a singleton returns `{1}`. **All intermediate prefix/suffix products, not just final answers, must fit `long long`.** Two zeroes can make every final answer zero while an earlier prefix still overflows.
+- [Original 2131743704](originals/424__2131743704.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131743704/)
+- [Original 2131736709](originals/424__2131736709.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131736709/)
+- [Original 2027329669](originals/424__2027329669.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2027329669/)
 
-LC 1477 stores `best[i]`, the shortest target-sum window wholly inside `[0,i)`. When `[left,right]` hits the target, combine its length with `best[left]`. That exclusive boundary proves nonoverlap. This helper retains the source's **strictly positive** array and target assumptions; zeroes can create multiple target windows ending together, which need different handling.
+### 560. Subarray Sum Equals K
 
-LC 3903/3904 uses `prefixMax([0,i]) − suffixMin([i,n)) <= k`. Notice index i belongs to **both** sides, unlike the exclusive boundaries above. The adaptation handles empty input and widens subtraction; it does not redefine the source condition as an ordinary disjoint split.
+[Problem](https://leetcode.com/problems/subarray-sum-equals-k/) · Tags: Prefix sums, Hash maps, Counting
 
-## 7. Word-sized strides, borrowed views
+Count prior prefixes equal current-k before adding current; zero prefix seeded once.
 
-LC 30 splits the scan into w residue classes:
+**Captured variants:** Two equivalent sources; latest find avoids inserting missing queried sums.
 
-```text
-w=3
-start 0: [0..2] [3..5] [6..8] ...
-start 1:  [1..3] [4..6] [7..9] ...
-start 2:   [2..4] [5..7] [8..10] ...
-```
+- [Original 2130713437](originals/560__2130713437.cpp) · [LeetCode submission](https://leetcode.com/problems/subarray-sum-equals-k/submissions/2130713437/)
+- [Original 2025473825](originals/560__2025473825.cpp) · [LeetCode submission](https://leetcode.com/problems/subarray-sum-equals-k/submissions/2025473825/)
 
-Within one offset, the window contains only known words and never exceeds any word quota after shrinking. An unknown word resets it. On overcounting the entering word, remove words from the left until its quota fits. Count duplicate words, not just distinct types.
+### 567. Permutation in String
 
-The template rejects empty words and unequal lengths, and returns empty for an empty word list. `string_view` keys borrow from text/words only during the call; inputs must remain alive and unchanged for that call, and no views escape. All inputs are read-only.
+[Problem](https://leetcode.com/problems/permutation-in-string/) · Tags: Sliding windows, Frequency deficit
 
-## Adaptation and bounds checklist
+Maintain fixed-length window, decrement requirement deficits on entering, increment on leaving; count distinct requirements that have become satisfied.
 
-- Source techniques remain intact. Changes: explicit headers/namespace, empty-input guards, byte-safe arrays, wide sums/counts/products, nonmutating inputs, and clear contracts. LC 1493 uses the explicit LC 1004 window rather than its original lazy scan.
-- Sizes/indexes must fit `int` with room for `n+1`; numeric totals, `prefix−target`, and every intermediate product must fit `long long`. Widening delays overflow; it does not make arithmetic unbounded.
-- Nonnegative/positive and binary-array assumptions are caller preconditions, not a hidden validation pass.
-- Tests use deterministic examples plus 600 seeded cases against independent quadratic/exhaustive references, including signed sums, duplicates, empty inputs, byte 255, mandatory deletion, word offsets, and wide counts.
+**Captured variants:** One observed approach.
 
-## Compile and verify
+- [Original 2131779135](originals/567__2131779135.cpp) · [LeetCode submission](https://leetcode.com/problems/permutation-in-string/submissions/2131779135/)
 
-From this folder:
+### 1004. Max Consecutive Ones III
 
-```sh
-g++ -std=c++20 -O2 -Wall -Wextra -Werror test.cpp -o /tmp/pattern-test
-/tmp/pattern-test
-g++ -std=c++20 -O1 -g -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer test.cpp -o /tmp/pattern-test-sanitized
-/tmp/pattern-test-sanitized
-```
+[Problem](https://leetcode.com/problems/max-consecutive-ones-iii/) · Tags: Sliding windows
 
-Verification in the build environment used `ASAN_OPTIONS=detect_leaks=0` for the sanitizer run because LeakSanitizer cannot operate under ptrace there. AddressSanitizer and UndefinedBehaviorSanitizer remained enabled; leak checking was not completed. On a normal local environment, try the command above with leak detection left enabled.
+Track zero budget and maintain longest window; explicit shrink variant and single-step lazy-shrink variant.
 
-The tests were written before the implementations. Neutral stubs produced failing behavioral checks; the implementations then passed the same checks. No LeetCode harness, external libraries, or other handbook topics are needed. Helpers are `inline` in namespace `patterns`; include `templates.hpp` and call only the pieces you need.
+**Captured variants:** [2127149237](originals/1004__2127149237.cpp) while shrink plus validity check; [2027338195](originals/1004__2027338195.cpp) mutable budget and single shrink.
 
-## Exact source map
+- [Original 2127149237](originals/1004__2127149237.cpp) · [LeetCode submission](https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2127149237/)
+- [Original 2027338195](originals/1004__2027338195.cpp) · [LeetCode submission](https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2027338195/)
 
-These are the inspected submissions, not algorithms inferred from problem titles. Multiple links show observed variants.
+### 1477. Find Two Non-overlapping Sub-arrays Each With Target Sum
 
-- [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) · inventory row 88 · [submission 2149102883](https://leetcode.com/problems/minimum-window-substring/submissions/2149102883/), [submission 2131820578](https://leetcode.com/problems/minimum-window-substring/submissions/2131820578/)
-- [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) · inventory row 188 · [submission 2131779135](https://leetcode.com/problems/permutation-in-string/submissions/2131779135/)
-- [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) · inventory row 189 · [submission 2131743704](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131743704/), [submission 2131736709](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131736709/), [submission 2027329669](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2027329669/)
-- [1004. Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/) · inventory row 201 · [submission 2127149237](https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2127149237/), [submission 2027338195](https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2027338195/)
-- [1493. Longest Subarray of 1's After Deleting One Element](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) · inventory row 198 · [submission 2127345655](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/submissions/2127345655/)
-- [209. Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/) · inventory row 193 · [submission 2130694109](https://leetcode.com/problems/minimum-size-subarray-sum/submissions/2130694109/)
-- [1658. Minimum Operations to Reduce X to Zero](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) · inventory row 81 · [submission 2150943873](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/submissions/2150943873/)
-- [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) · inventory row 191 · [submission 2130713437](https://leetcode.com/problems/subarray-sum-equals-k/submissions/2130713437/), [submission 2025473825](https://leetcode.com/problems/subarray-sum-equals-k/submissions/2025473825/)
-- [2444. Count Subarrays With Fixed Bounds](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/) · inventory row 69 · [submission 2153831199](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/submissions/2153831199/)
-- [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) · inventory row 192 · [submission 2130701387](https://leetcode.com/problems/product-of-array-except-self/submissions/2130701387/)
-- [1477. Find Two Non-overlapping Sub-arrays Each With Target Sum](https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/) · inventory row 136 · [submission 2145013796](https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/submissions/2145013796/)
-- [3903. Smallest Stable Index I](https://leetcode.com/problems/smallest-stable-index-i/) · inventory row 195 · [submission 2130500850](https://leetcode.com/problems/smallest-stable-index-i/submissions/2130500850/)
-- [3904. Smallest Stable Index II](https://leetcode.com/problems/smallest-stable-index-ii/) · inventory row 190 · [submission 2131704501](https://leetcode.com/problems/smallest-stable-index-ii/submissions/2131704501/)
-- [30. Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) · inventory row 70 · [submission 2153818347](https://leetcode.com/problems/substring-with-concatenation-of-all-words/submissions/2153818347/)
+[Problem](https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/) · Tags: Sliding windows, Dynamic programming, Prefix best
+
+Find target-sum positive windows; dp[prefix] stores shortest prior target window, combine current with dp[left] for nonoverlap.
+
+**Captured variants:** One observed approach.
+
+- [Original 2145013796](originals/1477__2145013796.cpp) · [LeetCode submission](https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/submissions/2145013796/)
+
+### 1493. Longest Subarray of 1's After Deleting One Element
+
+[Problem](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) · Tags: Sliding windows, Lazy shrink
+
+Track at most one zero, shift left once when invalid, record window length minus required deletion.
+
+**Captured variants:** One observed approach.
+
+- [Original 2127345655](originals/1493__2127345655.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/submissions/2127345655/)
+
+### 1658. Minimum Operations to Reduce X to Zero
+
+[Problem](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) · Tags: Sliding windows, Complement transformation
+
+Removing prefix and suffix becomes keeping longest middle subarray of sum total-x; positive-value sliding window finds it.
+
+**Captured variants:** One observed approach.
+
+- [Original 2150943873](originals/1658__2150943873.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/submissions/2150943873/)
+
+### 2444. Count Subarrays With Fixed Bounds
+
+[Problem](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/) · Tags: Sliding windows, Last-seen indices, Counting
+
+For each right endpoint, count starts after last invalid value and no later than both latest min/max occurrences.
+
+**Captured variants:** One observed approach.
+
+- [Original 2153831199](originals/2444__2153831199.cpp) · [LeetCode submission](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/submissions/2153831199/)
+
+### 3903. Smallest Stable Index I
+
+[Problem](https://leetcode.com/problems/smallest-stable-index-i/) · Tags: Prefix/suffix aggregates
+
+Suffix-minimum array plus running prefix maximum tests first stable boundary.
+
+**Captured variants:** Same approach as 3904, different initialization.
+
+- [Original 2130500850](originals/3903__2130500850.cpp) · [LeetCode submission](https://leetcode.com/problems/smallest-stable-index-i/submissions/2130500850/)
+
+### 3904. Smallest Stable Index II
+
+[Problem](https://leetcode.com/problems/smallest-stable-index-ii/) · Tags: Prefix/suffix aggregates
+
+Precompute suffix minima, scan prefix maximum, return first boundary where their gap<=k.
+
+**Captured variants:** Same structural approach as 3903.
+
+- [Original 2131704501](originals/3904__2131704501.cpp) · [LeetCode submission](https://leetcode.com/problems/smallest-stable-index-ii/submissions/2131704501/)

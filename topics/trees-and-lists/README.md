@@ -1,340 +1,314 @@
-# Trees and linked lists
-
-A small set of pointer invariants explains most of these collected solutions:
-keep the untouched suffix reachable, return one useful subtree summary, and keep
-ownership separate from traversal links. The helpers in [templates.hpp](templates.hpp)
-are adaptations of the accepted submissions listed below, not judge wrappers.
-
-## Choose the pattern
-
-| Need | Helper / invariant | Time | Extra space |
-|---|---|---:|---:|
-| Reverse a chain | `reverseList`: reversed prefix + untouched suffix | O(n) | O(1) |
-| Alternate front/back nodes | `reorderList`: split, reverse, weave | O(n) | O(1) |
-| Merge disjoint sorted chains | `mergeSortedLists`: dummy + output tail | O(n + m) | O(1) |
-| Reverse complete blocks | `reverseKGroup`: probe before rewiring | O(n) | O(n/k) stack |
-| Remove from the end | `removeNthFromEnd`: length → forward index | O(n) | O(1) |
-| Clone aliases | `copyRandomList`: identity map, then wire | Expected O(n) | O(n) |
-| Several tree aggregates | `measureTree`: postorder summary | O(n) | O(h) stack |
-| Validate all BST descendants | `isValidBst`: exclusive ancestor bounds | O(n) | O(h) stack |
-| Reconstruct unique-valued tree | `buildTree`: preorder cursor + inorder range | Expected O(n) | O(n) map + O(h) stack |
-| Preserve shape and values | `serializeTree` / `deserializeTree`: preorder + null tokens | O(n) | O(n) text + O(h) stack |
-| Cover a tree with cameras | `minimumCameras`: three coverage states | O(n) | O(h) stack |
-
-Here `n` is nodes, `h` is tree height. Output nodes are excluded from auxiliary
-space. Expected bounds refer to hash tables; pathological collisions can be worse.
-The recursive helpers are intended for ordinary contest-depth inputs. A path-shaped
-tree or huge number of groups can exhaust the C++ call stack.
-
-## 1. Rewire lists without losing nodes
-
-### Reverse: save the edge before overwriting it
-
-```text
-before: prev → reversed prefix    current → next → untouched suffix
-step:   next = current->next; current->next = prev
-then:   prev = current; current = next
-```
-
-The latest source for **206** is the three-pointer, in-place version. Its older
-accepted variant allocates new nodes for most of the reversal; acceptance does not
-make that variant O(1)-space. The handbook deliberately uses the latest approach.
-
-```cpp
-auto* head = new patterns::ListNode(1, new patterns::ListNode(2));
-head = patterns::reverseList(head); // Update the owning head pointer.
-patterns::destroyList(head);
-```
-
-### Reorder: split first, then reverse and weave
-
-Source **143** has both materialized-node/visited-set versions and an in-place
-version. In the in-place version, `slow` ends the first half; that half is at least
-as long as the second half.
-
-```text
-1 → 2 → 3 → 4 → 5
-split:    1 → 2 → 3 → null       4 → 5 → null
-reverse:  1 → 2 → 3 → null       5 → 4 → null
-weave:    1 → 5 → 2 → 4 → 3 → null
-```
-
-Save both next pointers before interleaving. The `slow->next = nullptr` cut is part
-of correctness: omitting it can leave a cycle. No node values are copied.
-
-### Dummy/sentinel: one predecessor even when the head changes
-
-**21** appends the smaller current node after an output tail. A local dummy gives
-both an initially empty output and head replacement the same control flow. The
-source allocates and deletes a dummy dynamically; the reusable helper puts it on
-the stack and drops a dead branch that checked a known-nonnull tail.
-
-**19** actually counts the length, then removes forward index `length - n`; it is
-not a fast/slow two-pointer submission. The adaptation keeps that approach but
-starts at a dummy and deletes the unlinked node. Validate `1 <= n <= length` before
-mutating anything. If a caller uses an arena or external node owner, remove the
-`delete` and transfer responsibility explicitly.
-
-**25** first probes `k` nodes. Only a complete block can be reversed. The old head
-becomes the block's tail, so attach the recursively processed suffix there:
-
-```text
-[a → b → c] → rest    becomes    [c → b → a] → reverseKGroup(rest, k)
-                                            ^ old head is new tail
-```
-
-The source is recursive: its total auxiliary space is O(n/k), not O(1). `k == 1`
-has an early return in the helper to avoid pointless recursion.
-
-### Merge k lists: read the implementation, not the task title
-
-The latest **23** submission pushes **every node** into a heap: O(N log N) time and
-O(N) heap storage. Its older collected variant repeatedly merges two chains using
-a queue: O(N log k) time and O(k) queued heads. The reusable building block here is
-`mergeSortedLists`; there is no misleading “head-only O(log k) heap” attributed to
-the latest submission.
-
-**146** is another useful ownership contrast: the collected LRU uses `std::list`
-and `splice`, not hand-written raw-pointer sentinel nodes. Moving one node within
-a list preserves its iterator. The companion key-to-iterator map is only valid
-for that list instance; ordinary memberwise copying would copy stale iterators.
-Capacity zero also needs a guard before accessing `back()`.
+# Trees and lists
 
-## 2. Clone identity first, relationships second
+[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-Source **138** separates two concerns:
+**26 captured problems · 34 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-1. Allocate exactly one clone per original node; map original address → clone.
-2. Resolve every `next` and `random` pointer through that complete map.
+## Pattern reminders
 
-```text
-original: A → B → C       random: A ↘ C, B ↗ A
-mapping:  A ↔ A'  B ↔ B'  C ↔ C'
-clone:    A'→ B'→ C'      random edges stay entirely inside the clone
-```
+### Rewire a list without losing the suffix
 
-A repeated value is not an identity. Never key the map by `val`. Self-random and
-backward random edges need no special handling once every clone exists.
+- **Cue:** Reverse or rearrange an existing chain of nodes.
+- **Idea and invariant:** 206 saves the next pointer before reversing a link. The newer 143 finds the midpoint, reverses the second half, then alternates the two chains. 25 first verifies a complete k-node block and reconnects the reversed block to a recursively processed suffix.
+- **Cost in these sources:** In-place 206 and the split/reverse 143: O(n) time and O(1) auxiliary state. 25: O(n) time and O(n/k) recursive frames. The other captured list variants have different allocation/container costs.
+- **Read the originals:** [206. Reverse Linked List — 2143560010](originals/206__2143560010.cpp); [143. Reorder List — 2143673583](originals/143__2143673583.cpp); [25. Reverse Nodes in k-Group — 2144552684](originals/25__2144552684.cpp).
 
-The helper explicitly maps `nullptr` to `nullptr`; the source relies on
-`unordered_map::operator[]` inserting a null value. A temporary vector of
-`unique_ptr` owners prevents leaks if allocating or resolving a target throws.
-The `next` chain must be finite and acyclic, and random targets must belong to it
-or be null. An external random target throws `std::out_of_range`.
+### Separate pointer identity from value
 
-`destroyRandomList` follows only `next`. Random links are aliases, not extra
-ownership edges. Deleting through both would double-free nodes.
+- **Cue:** Copies must preserve cross-links or merging must reuse existing nodes.
+- **Idea and invariant:** 138 creates a clone for each original pointer before assigning next/random edges through the mapping. 21 uses a dummy head to splice the smaller current node. 23 has an all-nodes heap version and a pairwise merge-queue version, rather than only a heap of list heads.
+- **Cost in these sources:** 138: expected O(n) time and O(n) mapping/output. 21: O(n+m) time and O(1) auxiliary nodes. The all-nodes heap in 23 takes O(N log N) time and O(N) heap storage. Pairwise queue merging takes O(N log k) time for N nodes in k lists.
+- **Read the originals:** [138. Copy List with Random Pointer — 2143802245](originals/138__2143802245.cpp); [21. Merge Two Sorted Lists — 2143594529](originals/21__2143594529.cpp); [23. Merge k Sorted Lists — 2144522916](originals/23__2144522916.cpp).
 
-## 3. One postorder pass, several summaries
+### Freeze a level or carry an ancestor constraint
 
-The collected **104**, **110**, **543**, **124**, and **2265** all ask children for a
-small summary and combine it at the parent. `measureTree` shows the shared shape:
+- **Cue:** The answer depends on a level boundary, an ancestor maximum, or the BST order.
+- **Idea and invariant:** 102 and 199 freeze the queue length for each level. 98 passes exclusive low/high bounds to every descendant. 1448 passes the largest ancestor value. 235 descends until the two targets split across the current BST node.
+- **Cost in these sources:** Full traversals take O(n) time, with O(width) BFS space or O(height) recursion. BST ancestor search takes O(height) time.
+- **Read the originals:** [102. Binary Tree Level Order Traversal — 2140704978](originals/102__2140704978.cpp); [199. Binary Tree Right Side View — 2140707899](originals/199__2140707899.cpp); [98. Validate Binary Search Tree — 2140737519](originals/98__2140737519.cpp); [1448. Count Good Nodes in Binary Tree — 2140724204](originals/1448__2140724204.cpp); [235. Lowest Common Ancestor of a Binary Search Tree — 2140699724](originals/235__2140699724.cpp).
 
-```text
-       node
-      /    \
-  left      right
-     summaries ↑
- combine locally; return only what the parent needs
-```
+### Return a subtree summary and update a global answer
 
-For child heights `L` and `R`:
+- **Cue:** A parent needs only a small summary, while the best answer may pass through a child or the current node.
+- **Idea and invariant:** 543 returns height and updates diameter with both child heights. 124 returns the best one-branch gain and updates the best complete path using both nonnegative child gains. 2265 returns sum/count. 968 makes camera decisions after visiting children and tracks which nodes are covered.
+- **Cost in these sources:** O(n) time and O(height) recursion for the numerical summaries. The camera source additionally stores up to O(n) covered pointers in a hash set.
+- **Read the originals:** [543. Diameter of Binary Tree — 2140582704](originals/543__2140582704.cpp); [124. Binary Tree Maximum Path Sum — 2153370936](originals/124__2153370936.cpp); [2265. Count Nodes Equal to Average of Subtree — 2137363284](originals/2265__2137363284.cpp); [968. Binary Tree Cameras — 2155106387](originals/968__2155106387.cpp).
 
-- Height: `1 + max(L, R)`, with null height `0`
-- Diameter through this node: `L + R`; take the maximum over all nodes
-- Balanced: both children balanced and `abs(L - R) <= 1`
-- Sum/count: `left + right + current`
+### A traversal must preserve enough shape information
 
-Height counts **nodes**, while diameter counts **edges**. The leaf therefore has
-height `1` and diameter `0`.
+- **Cue:** Rebuild a tree or serialize it so that null structure and boundaries remain unambiguous.
+- **Idea and invariant:** 105 combines preorder order with an inorder value-to-index map, under distinct-value assumptions. The newer 297 writes preorder with explicit null markers; its older format records indexed inorder and preorder. Each format is interpreted by its matching deserializer.
+- **Cost in these sources:** 105: expected O(n) time, O(n) map space, and O(height) recursion. The preorder codec visits O(n) tokens; string construction costs depend on its concatenations, and the serialized representation is O(n) tokens.
+- **Read the originals:** [105. Construct Binary Tree from Preorder and Inorder Traversal — 2141508524](originals/105__2141508524.cpp); [297. Serialize and Deserialize Binary Tree — 2153777400](originals/297__2153777400.cpp).
 
-For maximum path sum (**124**), distinguish a return value from a global candidate:
+## Complete problem and variant index
 
-```cpp
-leftGain = std::max(0LL, left.downwardGain);
-rightGain = std::max(0LL, right.downwardGain);
-through = node->val + leftGain + rightGain; // Can use both children.
-downward = node->val + std::max(leftGain, rightGain); // Parent gets one branch.
-```
+All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
-A returned path cannot fork and then connect to the parent. Clamp child gains,
-not the node value: an all-negative tree's answer is its least-negative node.
-The reusable empty-tree result uses `std::nullopt` for maximum path sum rather
-than pretending that an empty path is a valid node path.
+### 2. Add Two Numbers
 
-For **2265**, `(sum, count)` supports `sum / count == node->val`. The collected
-problem uses nonnegative values. In C++, division of negative integers truncates
-toward zero; it is not mathematical floor. The helper exports sum/count instead
-of silently extending that problem-specific average rule.
+[Problem](https://leetcode.com/problems/add-two-numbers/) · Tags: Linked lists, Arithmetic
 
-`measureTree` fuses independent source summaries and widens sums to `long long`.
-Unlike mutable fields in some submissions, its state is local to each call.
-It computes the whole tree rather than short-circuiting once imbalance is found.
-
-## 4. BST bounds come from every ancestor
-
-Checking only `left->val < node->val < right->val` is insufficient:
-
-```text
-       10
-      /  \
-     5   15
-        /
-       6       locally below 15, but illegally below ancestor 10
-```
-
-Source **98** passes an exclusive interval `(low, high)`:
-
-- Require `low < value < high`
-- Left receives `(low, value)`
-- Right receives `(value, high)`
-
-Duplicates are invalid under this contract. Bounds start one beyond the full
-`int` range, using `long long` arithmetic so `INT_MIN` and `INT_MAX` remain legal
-keys. Do not compute `INT_MIN - 1` in `int` first.
-
-## 5. Reconstruction and serialization encode different assumptions
-
-### Preorder + inorder: source 105
-
-Preorder's next unused value is the root. Its unique position in inorder splits
-that subtree into left and right ranges. Build left before right because that is
-the order the preorder cursor consumes.
-
-```text
-preorder: root | left subtree | right subtree
-inorder:  left subtree | root | right subtree
-```
-
-The helper uses half-open inorder intervals `[start, end)`, validates input size,
-unique inorder keys and pivot membership, and cleans partially built trees on
-failure. Empty traversals return null. It removes the source's unused initial
-`new TreeNode(preorder[0])`, which was leaked and also made empty input unsafe.
-
-### Preorder + null markers: source 297
-
-```text
-     2                encoded: 2 1 # # 3 # #
-    / \
-   1   3              grammar: tree := # | integer tree tree
-```
+Dummy-head output list, add corresponding digits plus carry, process remainders, append final carry.
 
-Null markers encode the shape, so duplicate values are fine. The older collected
-codec encodes both traversals with assigned node IDs, precisely because raw
-values need not be unique. Prefer the shorter collected null-marker approach.
+**Captured variants:** One observed approach.
 
-The helper adds strict integer/token validation and rejects truncated data or
-trailing tokens. `TreeOwner` guards partial results when an exception occurs.
+- [Original 2143813487](originals/2__2143813487.cpp) · [LeetCode submission](https://leetcode.com/problems/add-two-numbers/submissions/2143813487/)
 
-```cpp
-patterns::TreeOwner tree(
-    patterns::buildTree({2, 1, 3}, {1, 2, 3}), patterns::destroyTree);
-auto encoded = patterns::serializeTree(tree.get());
-patterns::TreeOwner copy(patterns::deserializeTree(encoded), patterns::destroyTree);
-```
+### 19. Remove Nth Node From End of List
 
-Do not separately delete an owned child's pointer. Every nonnull node must occur
-under exactly one owning root. These helpers do not accept DAGs or cyclic graphs.
+[Problem](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) · Tags: Linked lists
 
-## 6. Cameras: compress the source's covered set into three states
+Count length then unlink node at length-n, with head special case.
 
-The actual **968** source runs postorder, places a camera if a child is uncovered,
-and tracks coverage in an `unordered_set<TreeNode*>`. Null is pre-covered. At the
-root it also handles the case where the root itself remains uncovered.
+**Captured variants:** One two-pass approach.
 
-The helper's three-state return is an explicit **adaptation**, not the literal
-submitted code:
+- [Original 2143696811](originals/19__2143696811.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-nth-node-from-end-of-list/submissions/2143696811/)
 
-```text
-child needsCamera → put camera here → hasCamera
-otherwise any child hasCamera      → covered
-otherwise                          → needsCamera
-null                               → covered
-```
+### 21. Merge Two Sorted Lists
 
-Why put the camera at an uncovered child's parent? A camera can only reach that
-child from the child, its children, or its parent. Descendants have already been
-settled. Placing it at the parent covers the child and can also cover the parent's
-other child and own parent. Deferring farther upward cannot reach the child.
-After DFS, a `needsCamera` root gets one final camera. This removes O(n) hash-set
-storage while retaining the source's greedy decision.
+[Problem](https://leetcode.com/problems/merge-two-sorted-lists/) · Tags: Linked lists, Merge
 
-## Adaptation ledger
+Dummy-head merge links existing nodes then appends remainder.
 
-- Standalone `ListNode`, `RandomNode`, `TreeNode` and destruction helpers replace
-  judge-provided structures. All ordinary links remain raw, non-owning pointers.
-- **206/143:** select the collected in-place variants; reuse reversal as a helper.
-- **21/19:** stack dummy; remove dead branching; validate removal and delete the
-  detached node. Source **19** did not release it.
-- **25:** validate positive `k`; early return for `k == 1`; retain source recursion.
-- **138:** explicit null entry, checked lookup, exception-safe temporary owners.
-- **104/110/543/124/2265:** combine source postorder summaries; widen arithmetic;
-  define empty maximum-path behavior. No persistent mutable answer fields.
-- **98:** preserve exclusive bounds, remove unreachable code.
-- **105/297:** define malformed/empty input, remove unused allocation, guard partial
-  construction; half-open reconstruction ranges and exact integer parsing.
-- **968:** documented three-state compression of the actual covered-set source.
-- **23/146:** source-specific lessons only; no extra problem wrapper is supplied.
+**Captured variants:** One observed approach.
 
-## Tests and ownership checks
+- [Original 2143594529](originals/21__2143594529.cpp) · [LeetCode submission](https://leetcode.com/problems/merge-two-sorted-lists/submissions/2143594529/)
 
-From this folder:
+### 23. Merge k Sorted Lists
 
-```sh
-g++ -std=c++20 -O2 -Wall -Wextra -Werror test.cpp -o /tmp/trees-test
-/tmp/trees-test
-g++ -std=c++20 -O1 -g -Wall -Wextra -Werror \
-  -fsanitize=address,undefined -fno-omit-frame-pointer test.cpp -o /tmp/trees-asan
-ASAN_OPTIONS=detect_leaks=1 /tmp/trees-asan
-```
+[Problem](https://leetcode.com/problems/merge-k-sorted-lists/) · Tags: Linked lists, Heaps, Pairwise merge
 
-Deterministic cases include empty lists/trees, integer-extreme BST keys, duplicate
-keys, malformed serialization and traversal input, odd reorder, incomplete
-k-groups, and clone alias identity. Seed `0x7ee123` drives 300 list-model trials
-and 140 tree trials. Camera answers are compared with all camera subsets;
-maximum sums with all simple paths; reconstruction and codec with source shapes.
-Every created list/tree is destroyed, including separate clones.
+Latest inserts every node into heap then relinks sorted nodes; older repeatedly dequeues two list heads and enqueues merged list.
 
-Strict compilation and AddressSanitizer/UndefinedBehaviorSanitizer passed in the
-build environment. LeakSanitizer itself cannot run there under ptrace; the
-successful sandbox sanitizer run used `ASAN_OPTIONS=detect_leaks=0`. Run with leak
-detection enabled in an unrestricted local process for an actual leak check.
+**Captured variants:** [2144522916](originals/23__2144522916.cpp) all-nodes heap; [2144097838](originals/23__2144097838.cpp) pairwise merge queue.
 
-## Collected source links
+- [Original 2144522916](originals/23__2144522916.cpp) · [LeetCode submission](https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144522916/)
+- [Original 2144097838](originals/23__2144097838.cpp) · [LeetCode submission](https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144097838/)
 
-These are the accepted code records read for this topic. A link may require the
-LeetCode account that owns the submission.
+### 25. Reverse Nodes in k-Group
 
-- [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) — [submission 2143560010](https://leetcode.com/problems/reverse-linked-list/submissions/2143560010/), [submission 2126014226](https://leetcode.com/problems/reverse-linked-list/submissions/2126014226/).
+[Problem](https://leetcode.com/problems/reverse-nodes-in-k-group/) · Tags: Linked lists, Reversal, Recursion
 
-- [143. Reorder List](https://leetcode.com/problems/reorder-list/) — [submission 2143673583](https://leetcode.com/problems/reorder-list/submissions/2143673583/), [submission 2143663379](https://leetcode.com/problems/reorder-list/submissions/2143663379/), [submission 1211639660](https://leetcode.com/problems/reorder-list/submissions/1211639660/).
+Verify complete k-node group, reverse exactly k links, recursively process suffix and attach via old head.
 
-- [21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/) — [submission 2143594529](https://leetcode.com/problems/merge-two-sorted-lists/submissions/2143594529/).
+**Captured variants:** One observed approach.
 
-- [19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) — [submission 2143696811](https://leetcode.com/problems/remove-nth-node-from-end-of-list/submissions/2143696811/).
+- [Original 2144552684](originals/25__2144552684.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-nodes-in-k-group/submissions/2144552684/)
 
-- [25. Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/) — [submission 2144552684](https://leetcode.com/problems/reverse-nodes-in-k-group/submissions/2144552684/).
+### 98. Validate Binary Search Tree
 
-- [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) — [submission 2144522916](https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144522916/), [submission 2144097838](https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144097838/).
+[Problem](https://leetcode.com/problems/validate-binary-search-tree/) · Tags: Trees, DFS, Bounds
 
-- [146. LRU Cache](https://leetcode.com/problems/lru-cache/) — [submission 2143986850](https://leetcode.com/problems/lru-cache/submissions/2143986850/).
+Carry exclusive low/high bounds recursively to validate every descendant.
 
-- [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) — [submission 2143802245](https://leetcode.com/problems/copy-list-with-random-pointer/submissions/2143802245/).
+**Captured variants:** One observed approach.
 
-- [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) — [submission 2140575615](https://leetcode.com/problems/maximum-depth-of-binary-tree/submissions/2140575615/).
+- [Original 2140737519](originals/98__2140737519.cpp) · [LeetCode submission](https://leetcode.com/problems/validate-binary-search-tree/submissions/2140737519/)
 
-- [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) — [submission 2140593789](https://leetcode.com/problems/balanced-binary-tree/submissions/2140593789/).
+### 100. Same Tree
 
-- [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) — [submission 2140582704](https://leetcode.com/problems/diameter-of-binary-tree/submissions/2140582704/).
+[Problem](https://leetcode.com/problems/same-tree/) · Tags: Trees, DFS
 
-- [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) — [submission 2153370936](https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2153370936/), [submission 2141514512](https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2141514512/).
+Shared result flag checks null mismatch then value equality and both children.
 
-- [2265. Count Nodes Equal to Average of Subtree](https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/) — [submission 2137363284](https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/submissions/2137363284/).
+**Captured variants:** One observed approach.
 
-- [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) — [submission 2140737519](https://leetcode.com/problems/validate-binary-search-tree/submissions/2140737519/).
+- [Original 2140598575](originals/100__2140598575.cpp) · [LeetCode submission](https://leetcode.com/problems/same-tree/submissions/2140598575/)
 
-- [105. Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) — [submission 2141508524](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508524/), [submission 2141508275](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508275/).
+### 102. Binary Tree Level Order Traversal
 
-- [297. Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) — [submission 2153777400](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2153777400/), [submission 2141912475](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141912475/), [submission 2141671426](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141671426/).
+[Problem](https://leetcode.com/problems/binary-tree-level-order-traversal/) · Tags: Trees, BFS
 
-- [968. Binary Tree Cameras](https://leetcode.com/problems/binary-tree-cameras/) — [submission 2155106387](https://leetcode.com/problems/binary-tree-cameras/submissions/2155106387/).
+Freeze queue length, collect one vector per level, enqueue children.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140704978](originals/102__2140704978.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-tree-level-order-traversal/submissions/2140704978/)
+
+### 104. Maximum Depth of Binary Tree
+
+[Problem](https://leetcode.com/problems/maximum-depth-of-binary-tree/) · Tags: Trees, Recursion
+
+Return 1+maximum child height, null=0.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140575615](originals/104__2140575615.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-depth-of-binary-tree/submissions/2140575615/)
+
+### 105. Construct Binary Tree from Preorder and Inorder Traversal
+
+[Problem](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) · Tags: Trees, Recursion, Hash maps
+
+Inorder value-to-index map plus advancing preorder cursor builds left/right subranges.
+
+**Captured variants:** Two equivalent submissions differ only final range size source.
+
+- [Original 2141508524](originals/105__2141508524.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508524/)
+- [Original 2141508275](originals/105__2141508275.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508275/)
+
+### 110. Balanced Binary Tree
+
+[Problem](https://leetcode.com/problems/balanced-binary-tree/) · Tags: Trees, Postorder
+
+Compute heights and shared balanced flag; skip later work once imbalance detected.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140593789](originals/110__2140593789.cpp) · [LeetCode submission](https://leetcode.com/problems/balanced-binary-tree/submissions/2140593789/)
+
+### 124. Binary Tree Maximum Path Sum
+
+[Problem](https://leetcode.com/problems/binary-tree-maximum-path-sum/) · Tags: Trees, Postorder, Dynamic programming
+
+Return best one-branch gain, update best full path through node using both nonnegative child gains.
+
+**Captured variants:** Two equivalent implementations.
+
+- [Original 2153370936](originals/124__2153370936.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2153370936/)
+- [Original 2141514512](originals/124__2141514512.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2141514512/)
+
+### 138. Copy List with Random Pointer
+
+[Problem](https://leetcode.com/problems/copy-list-with-random-pointer/) · Tags: Linked lists, Hash maps, Graph copy
+
+Two passes: allocate clone for every original pointer, then wire next/random through pointer mapping.
+
+**Captured variants:** One observed approach.
+
+- [Original 2143802245](originals/138__2143802245.cpp) · [LeetCode submission](https://leetcode.com/problems/copy-list-with-random-pointer/submissions/2143802245/)
+
+### 141. Linked List Cycle
+
+[Problem](https://leetcode.com/problems/linked-list-cycle/) · Tags: Linked lists, Fast slow pointers
+
+Floyd cycle detection advances 1 and 2 until meet or null.
+
+**Captured variants:** One observed approach.
+
+- [Original 2143629142](originals/141__2143629142.cpp) · [LeetCode submission](https://leetcode.com/problems/linked-list-cycle/submissions/2143629142/)
+
+### 143. Reorder List
+
+[Problem](https://leetcode.com/problems/reorder-list/) · Tags: Linked lists, Fast slow pointers, Reversal
+
+Latest source splits at midpoint, reverses second half, alternates merge; older sources materialize node pointers and track visited.
+
+**Captured variants:** [2143673583](originals/143__2143673583.cpp) O(1) split/reverse/weave; [2143663379](originals/143__2143663379.cpp) deque+set; [1211639660](originals/143__1211639660.cpp) stack+map.
+
+- [Original 2143673583](originals/143__2143673583.cpp) · [LeetCode submission](https://leetcode.com/problems/reorder-list/submissions/2143673583/)
+- [Original 2143663379](originals/143__2143663379.cpp) · [LeetCode submission](https://leetcode.com/problems/reorder-list/submissions/2143663379/)
+- [Original 1211639660](originals/143__1211639660.cpp) · [LeetCode submission](https://leetcode.com/problems/reorder-list/submissions/1211639660/)
+
+### 199. Binary Tree Right Side View
+
+[Problem](https://leetcode.com/problems/binary-tree-right-side-view/) · Tags: Trees, BFS
+
+Queue complete levels left-to-right and take queue.back at level start for rightmost view.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140707899](originals/199__2140707899.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-tree-right-side-view/submissions/2140707899/)
+
+### 206. Reverse Linked List
+
+[Problem](https://leetcode.com/problems/reverse-linked-list/) · Tags: Linked lists, Reversal
+
+Latest source reverses links with prev/current/tmp; older source creates reversed copies after reusing original head.
+
+**Captured variants:** [2143560010](originals/206__2143560010.cpp) in-place; [2126014226](originals/206__2126014226.cpp) allocation-based, materially different.
+
+- [Original 2143560010](originals/206__2143560010.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-linked-list/submissions/2143560010/)
+- [Original 2126014226](originals/206__2126014226.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-linked-list/submissions/2126014226/)
+
+### 226. Invert Binary Tree
+
+[Problem](https://leetcode.com/problems/invert-binary-tree/) · Tags: Trees, Recursion
+
+Swap child pointers then recurse into both.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140574036](originals/226__2140574036.cpp) · [LeetCode submission](https://leetcode.com/problems/invert-binary-tree/submissions/2140574036/)
+
+### 230. Kth Smallest Element in a BST
+
+[Problem](https://leetcode.com/problems/kth-smallest-element-in-a-bst/) · Tags: Trees, DFS, Order statistics
+
+Inorder traversal increments count and records kth visited value.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140766874](originals/230__2140766874.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-smallest-element-in-a-bst/submissions/2140766874/)
+
+### 235. Lowest Common Ancestor of a Binary Search Tree
+
+[Problem](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) · Tags: Trees, BST, Search
+
+Order target values; descend until current value lies between targets.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140699724](originals/235__2140699724.cpp) · [LeetCode submission](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/submissions/2140699724/)
+
+### 297. Serialize and Deserialize Binary Tree
+
+[Problem](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) · Tags: Trees, Serialization, Parsing
+
+Preorder tokens with explicit null markers reconstruct unique shape; older source encodes indexed inorder and preorder.
+
+**Captured variants:** [2153777400](originals/297__2153777400.cpp) and [2141912475](originals/297__2141912475.cpp) same preorder # grammar; [2141671426](originals/297__2141671426.cpp) indexed inorder|preorder representation.
+
+- [Original 2153777400](originals/297__2153777400.cpp) · [LeetCode submission](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2153777400/)
+- [Original 2141912475](originals/297__2141912475.cpp) · [LeetCode submission](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141912475/)
+- [Original 2141671426](originals/297__2141671426.cpp) · [LeetCode submission](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141671426/)
+
+### 543. Diameter of Binary Tree
+
+[Problem](https://leetcode.com/problems/diameter-of-binary-tree/) · Tags: Trees, Postorder, Dynamic programming
+
+Return subtree height while updating best path through current node with left+right heights.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140582704](originals/543__2140582704.cpp) · [LeetCode submission](https://leetcode.com/problems/diameter-of-binary-tree/submissions/2140582704/)
+
+### 572. Subtree of Another Tree
+
+[Problem](https://leetcode.com/problems/subtree-of-another-tree/) · Tags: Trees, DFS
+
+At every root candidate, recursively test structural equality; recurse through host tree otherwise.
+
+**Captured variants:** One observed approach.
+
+- [Original 2140623050](originals/572__2140623050.cpp) · [LeetCode submission](https://leetcode.com/problems/subtree-of-another-tree/submissions/2140623050/)
+
+### 968. Binary Tree Cameras
+
+[Problem](https://leetcode.com/problems/binary-tree-cameras/) · Tags: Trees, Greedy, Postorder
+
+Postorder cameras placed when child uncovered, or root itself uncovered; set tracks covered nodes, with null pre-covered.
+
+**Captured variants:** One observed approach.
+
+- [Original 2155106387](originals/968__2155106387.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-tree-cameras/submissions/2155106387/)
+
+### 1448. Count Good Nodes in Binary Tree
+
+[Problem](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) · Tags: Trees, DFS, Path aggregates
+
+Carry maximum root-to-current value and count node if >= prior max.
+
+**Captured variants:** One source; earlier capture blocked but now code is present.
+
+- [Original 2140724204](originals/1448__2140724204.cpp) · [LeetCode submission](https://leetcode.com/problems/count-good-nodes-in-binary-tree/submissions/2140724204/)
+
+### 2265. Count Nodes Equal to Average of Subtree
+
+[Problem](https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/) · Tags: Trees, Postorder aggregates
+
+Return pair (sum,count) for subtree and count matching integer average.
+
+**Captured variants:** One observed approach.
+
+- [Original 2137363284](originals/2265__2137363284.cpp) · [LeetCode submission](https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/submissions/2137363284/)

@@ -1,223 +1,286 @@
-# Search and sort: decide what can be discarded
+# Search and sort
 
-These templates are derived from your observed Accepted C++ submissions. They retain your `std::` qualification, camelCase names, signed indices, inclusive search intervals, and straightforward loops. This is a reusable adaptation, not a verbatim archive. Exact sources and every material generalization are listed below.
+[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-[Templates](templates.hpp) · [Executable tests](test.cpp) · Namespace: `patterns::search`
+**21 captured problems · 51 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-## Choose the pattern
+## Pattern reminders
 
-| Need | Template | Time | Extra space |
-|---|---|---:|---:|
-| Exact key in sorted data | `binarySearch(nums, target)` | O(log n) | O(1) |
-| First value ≥ / > target | `lowerBound` / `upperBound` | O(log n) | O(1) |
-| Smallest feasible integer | `firstTrue(left, right, check)` | O(log range) predicate calls | O(1) |
-| Distinct rotated sorted array | `searchRotated` | O(log n) | O(1) |
-| Rotated array with duplicates | `searchRotatedWithDuplicates` | O(n) worst case | O(1) |
-| One order statistic | `quickselect` / `kthLargest` | O(n²) worst case; typically linear | O(1) |
-| Full sorted order | `mergeSort` | O(n log n) | O(n) plus O(log n) recursion |
-| Original pairs `i < j`, `a[i] > 2*a[j]` | `countReversePairs` | O(n log n) | O(n) plus O(log n) recursion |
+### Binary-search boundaries
 
-Vector sizes must fit in `int`. Sorted-input APIs assume the stated order; they do not spend O(n) validating it. Search functions do not mutate input. Selection and merge functions do.
+- **Cue:** The answer is a first feasible value, an insertion position, or a location in sorted data.
+- **Idea and invariant:** Each loop preserves a candidate interval and removes only positions whose comparison or feasibility result rules them out. 410 searches a maximum partition sum, 1011 a capacity, and 875 a speed; their feasibility checks scan the input.
+- **Cost in these sources:** Ordinary search is O(log n). Answer search is O(n log R), where R is the searched numeric range. The implementations usually use O(1) auxiliary space.
+- **Read the originals:** [35. Search Insert Position — 2146678224](originals/35__2146678224.cpp); [704. Binary Search — 2146675354](originals/704__2146675354.cpp); [410. Split Array Largest Sum — 2146752727](originals/410__2146752727.cpp); [1011. Capacity To Ship Packages Within D Days — 2146696311](originals/1011__2146696311.cpp); [875. Koko Eating Bananas — 2146691389](originals/875__2146691389.cpp).
 
-## 1. Binary search is an invariant, not a memorized loop
+### Search after identifying structure
 
-### Inclusive exact match
+- **Cue:** A mountain, rotation, or two-array partition exposes a locally monotone decision.
+- **Idea and invariant:** 4 partitions the shorter array and checks the two cross-boundaries. 1095 locates the mountain peak before searching slopes. 33 finds a pivot and searches virtual sorted indices. 81 must shrink equal ambiguous boundaries.
+- **Cost in these sources:** 4 is O(log min(m,n)); the mountain and distinct rotated searches are O(log n). Duplicate-heavy 81 can degrade to O(n).
+- **Read the originals:** [4. Median of Two Sorted Arrays — 2147722433](originals/4__2147722433.cpp); [1095. Find in Mountain Array — 2147557289](originals/1095__2147557289.cpp); [33. Search in Rotated Sorted Array — 2146701709](originals/33__2146701709.cpp); [81. Search in Rotated Sorted Array II — 2146739961](originals/81__2146739961.cpp).
 
-Your #704 loop keeps every possible match inside `[left, right]`. Test `mid`, then discard it along with one impossible side:
+### Selection versus full ordering
 
-```text
-                 candidate interval
-known too small | left ... mid ... right | known too large
-                         /     \
-                  right=mid-1  left=mid+1
-```
+- **Cue:** Only one rank or the top k values are needed.
+- **Idea and invariant:** 215 and 347 include partition-based selection; only the partition containing the target rank is pursued. Other captured variants use a full heap, sorting, or a bounded ordered set, with different operation costs.
+- **Cost in these sources:** Partition selection is O(n) on favorable/average partitions and O(n squared) worst case; these sources use deterministic pivots. Full sort is O(n log n), full heap extraction depends on extracted count, and a bounded size-k set costs O(n log k) after frequency counting.
+- **Read the originals:** [215. Kth Largest Element in an Array — 2144679787](originals/215__2144679787.cpp); [347. Top K Frequent Elements — 2133013441](originals/347__2133013441.cpp); [658. Find K Closest Elements — 2127298849](originals/658__2127298849.cpp).
 
-`left <= right` means a one-element candidate interval still needs testing. Missing keys return `-1`; duplicates may return any matching index.
+### Counting across sorted halves
 
-### Lower and upper bound: preserve the answer after the loop
+- **Cue:** The pair predicate becomes monotone after sorting two halves.
+- **Idea and invariant:** 493 counts cross-half pairs satisfying left > 2 * right with a separate advancing pointer before the ordinary merge. Counting uses widened arithmetic in the captured comparison.
+- **Cost in these sources:** O(n log n) time, O(n) merge storage, and O(log n) recursion depth.
+- **Read the originals:** [493. Reverse Pairs — 2150875619](originals/493__2150875619.cpp).
 
-Your #35 implementation never returns early on equality:
+### Use values as positions
 
-```cpp
-if (nums[mid] < target) left = mid + 1;
-else right = mid - 1;
-// return left;
-```
+- **Cue:** Relevant values are restricted to a small indexable range.
+- **Idea and invariant:** 41 discards out-of-range values and marks seen positions by sign. 287 has a sign-marking solution plus captured set-based alternatives. These original algorithms can mutate the input.
+- **Cost in these sources:** The sign-marking solutions take O(n) time and O(1) auxiliary space; hash-based variants store up to O(n) values.
+- **Read the originals:** [41. First Missing Positive — 2142829718](originals/41__2142829718.cpp); [287. Find the Duplicate Number — 2143946691](originals/287__2143946691.cpp).
 
-The discarded prefix is `< target`; the discarded suffix is `>= target`. When the interval is empty, `left` is the first index in the suffix, possibly `n`.
+## Complete problem and variant index
 
-For upper bound, change exactly one comparison: discard `<= target`. This is an explicitly derived variation of #35, not a separately observed upper-bound submission.
+All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
-```text
-nums = [1, 2, 2, 2, 5], target = 2
-           ^        ^
-       lower=1   upper=4
+### 4. Median of Two Sorted Arrays
 
-count(target) = upperBound(nums,target) - lowerBound(nums,target)
-last <= target = upperBound(nums,target) - 1
-last < target  = lowerBound(nums,target) - 1
-```
+[Problem](https://leetcode.com/problems/median-of-two-sorted-arrays/) · Tags: Binary search, Order statistics
 
-Check `index < n` before dereferencing a bound, and `index >= 0` after subtracting one. Empty input correctly returns 0 for both bounds.
+Partition smaller sorted array so left side has ceil(total/2), enforce maxLeft<=minRight across both arrays.
 
-### Search an answer rather than an index
+**Captured variants:** Three equivalent partition implementations, with names/comments/return fallback changes.
 
-Your #875 and #1011 loops use a different invariant: the answer lies in a **closed feasible bracket**, and `right` itself is feasible.
+- [Original 2147722433](originals/4__2147722433.cpp) · [LeetCode submission](https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/2147722433/)
+- [Original 2147703761](originals/4__2147703761.cpp) · [LeetCode submission](https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/2147703761/)
+- [Original 1621118867](originals/4__1621118867.cpp) · [LeetCode submission](https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/1621118867/)
 
-```text
-false false false | true true true
-                  ^ firstTrue
-if check(mid): right = mid      // mid may be the answer
-else:          left = mid + 1  // mid cannot be the answer
-stop when left == right
-```
+### 33. Search in Rotated Sorted Array
 
-`firstTrue(left, right, check)` extracts that control flow. `check` must be pure and monotone from false to true. The template verifies that the bracket is nonempty and its right endpoint is feasible; it throws `std::invalid_argument` otherwise. It cannot cheaply verify monotonicity.
+[Problem](https://leetcode.com/problems/search-in-rotated-sorted-array/) · Tags: Binary search, Rotated arrays
 
-The index searches retain `left + (right-left)/2`. The generic signed 64-bit answer search uses C++20 `std::midpoint(left,right)` so even `[LLONG_MIN, LLONG_MAX]` is safe. Avoid `left+right` and do not assume `right-left` fits for arbitrary signed endpoints.
+Find rotation pivot, then binary-search virtual sorted indices mapped by modulo.
 
-#### Greedy feasibility (#1011 and #410)
+**Captured variants:** Three pivot-plus-search submissions; two older correct midpoint implementations.
 
-`minLargestGroupSum(nums, groups)` finds the smallest maximum sum for at most `groups` contiguous groups. Start with:
+- [Original 2146701709](originals/33__2146701709.cpp) · [LeetCode submission](https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/2146701709/)
+- [Original 2125939691](originals/33__2125939691.cpp) · [LeetCode submission](https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/2125939691/)
+- [Original 2011698957](originals/33__2011698957.cpp) · [LeetCode submission](https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/2011698957/)
 
-- `left = max(nums)`: every element must fit
-- `right = sum(nums)`: one group always fits
-- Scan left to right, starting another group only when the next value would overflow the candidate capacity
+### 35. Search Insert Position
 
-For nonnegative values, greedily extending each group as far as possible minimizes the number of groups for that capacity. More capacity cannot require more groups, which makes the predicate monotone.
+[Problem](https://leetcode.com/problems/search-insert-position/) · Tags: Binary search, Lower bound
 
-```text
-weights = [7,2,5,10,8], groups = 2
-capacity 17: [7,2,5] [10] [8]   -> false
-capacity 18: [7,2,5] [10,8]     -> true
-```
+Inclusive search eliminates >=target to the right and returns insertion index left.
 
-This covers shipping within days and splitting a nonnegative array. For exactly `k` nonempty groups, equivalence requires `1 <= k <= n`: a feasible group can be split without increasing its sum. The reusable API explicitly says **at most**, permits `groups > n`, and gives empty input capacity 0. Negative inputs or nonpositive group counts throw. Negative values break the greedy proof.
+**Captured variants:** One observed approach.
 
-Your #410 predicate named `canSplit` actually meant “too many breaks.” The adaptation uses a positive feasibility meaning throughout. Do not copy a predicate's name without checking which branch it represents.
+- [Original 2146678224](originals/35__2146678224.cpp) · [LeetCode submission](https://leetcode.com/problems/search-insert-position/submissions/2146678224/)
 
-#### Integer ceilings (#875)
+### 41. First Missing Positive
 
-`minEatingSpeed(piles, hours)` uses:
+[Problem](https://leetcode.com/problems/first-missing-positive/) · Tags: In-place marking, Hash maps
 
-```cpp
-pile / speed + (pile % speed != 0)
-```
+Normalize outside [1,n] to n+1, mark seen values by negating slot value-1, return first positive slot. Older builds membership map and scans positive candidates.
 
-This avoids the potentially overflowing `pile + speed - 1`. Sum hours in `long long`, stop as soon as the budget is exceeded, and establish feasibility before searching. The template supports zero piles, returns 0 for all-zero/empty input, and rejects negative inputs or an impossible hour budget. Complexity: O(n log maxPile), O(1) extra space.
+**Captured variants:** [2142829718](originals/41__2142829718.cpp) bounded sign marking; [2142586270](originals/41__2142586270.cpp)/[1214762629](originals/41__1214762629.cpp) membership map candidate scan.
 
-## 2. Rotation: recover the order or identify the sorted half
+- [Original 2142829718](originals/41__2142829718.cpp) · [LeetCode submission](https://leetcode.com/problems/first-missing-positive/submissions/2142829718/)
+- [Original 2142586270](originals/41__2142586270.cpp) · [LeetCode submission](https://leetcode.com/problems/first-missing-positive/submissions/2142586270/)
+- [Original 1214762629](originals/41__1214762629.cpp) · [LeetCode submission](https://leetcode.com/problems/first-missing-positive/submissions/1214762629/)
 
-### Distinct keys (#33 / #153)
+### 69. Sqrt(x)
 
-Your older correct #33 source first finds the minimum by comparing with `nums.back()`, then searches a virtual sorted array:
+[Problem](https://leetcode.com/problems/sqrtx/) · Tags: Binary search, Integer arithmetic
 
-```text
-physical: [4,5,6,7,0,1,2]  rotation = 4
-virtual:  [0,1,2,4,5,6,7]
-physicalIndex = (virtualIndex + rotation) % n
-```
+Inclusive binary search for floor square root; return last feasible right boundary.
 
-This separates the two jobs cleanly. The returned index is in the original rotated array. The empty case is handled before calling `back()` or taking a modulo.
+**Captured variants:** One observed approach.
 
-Source choice matters: the newer accepted source #2146701709 contains `left + (right - left / 2)`, a malformed midpoint expression. The template deliberately follows #2125939691's correct parentheses. An Accepted badge is evidence of observed acceptance, not a proof that every line is a safe reusable pattern.
+- [Original 2146686635](originals/69__2146686635.cpp) · [LeetCode submission](https://leetcode.com/problems/sqrtx/submissions/2146686635/)
 
-### Duplicates (#81)
+### 74. Search a 2D Matrix
 
-When `nums[left] == nums[mid] == nums[right]`, neither half is identifiable as the useful sorted half. Since equality with the target was already checked, shrink both ends by one. Otherwise, identify the sorted half and retain it only if its value interval contains the target.
+[Problem](https://leetcode.com/problems/search-a-2d-matrix/) · Tags: Binary search, Index mapping
 
-```text
-[1,1,1,1,1,0,1]  cannot consistently discard half from equal boundaries
-```
+Binary search row-major matrix as virtual flat array.
 
-This is why duplicates can degrade the search to O(n). The distinct-key rotation trick is not a drop-in replacement.
+**Captured variants:** Two equivalent submissions.
 
-## 3. Quickselect: Hoare partition with a global target
+- [Original 2146688351](originals/74__2146688351.cpp) · [LeetCode submission](https://leetcode.com/problems/search-a-2d-matrix/submissions/2146688351/)
+- [Original 2127411724](originals/74__2127411724.cpp) · [LeetCode submission](https://leetcode.com/problems/search-a-2d-matrix/submissions/2127411724/)
 
-Your #215 sources use a middle-element pivot and inclusive `[left,right]` bounds. The target is a **global zero-based ascending index**:
+### 81. Search in Rotated Sorted Array II
 
-```text
-kth largest k = 1  -> target n-1
-kth largest k = n  -> target 0
-                     target = n-k
-```
+[Problem](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) · Tags: Binary search, Rotated arrays
 
-The partition scans inward, swaps misplaced values, and advances both indices even when the values equal the pivot:
+Shrink ambiguous equal boundaries; otherwise identify sorted half and retain matching target interval.
 
-```cpp
-while (i <= j) {
-    while (nums[i] < pivot) ++i;
-    while (nums[j] > pivot) --j;
-    if (i <= j) std::swap(nums[i++], nums[j--]);
-}
-```
+**Captured variants:** Two equivalent variants.
 
-After crossing:
+- [Original 2146739961](originals/81__2146739961.cpp) · [LeetCode submission](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/submissions/2146739961/)
+- [Original 2146727441](originals/81__2146727441.cpp) · [LeetCode submission](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/submissions/2146727441/)
 
-```text
-left ... j | possible pivot gap | i ... right
-  <= pivot                        >= pivot
+### 153. Find Minimum in Rotated Sorted Array
 
-k <= j: keep [left,j]
-k >= i: keep [i,right]
-otherwise: nums[k] is already the answer
-```
+[Problem](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) · Tags: Binary search, Rotated arrays
 
-This is a Hoare-style split, **not** a partition that puts a chosen pivot at its final sorted index. Do not recurse around an imagined pivot index or change the target to a local rank midway through this version.
+Find first index on low sorted run by comparing middle with fixed final value or current right value.
 
-`quickselect(nums, k)` takes the zero-based ascending rank. `kthLargest(nums, k)` takes the one-based descending rank. Both reject empty/out-of-range requests with `std::out_of_range`. Both mutate the vector; neither promises the rest is sorted.
+**Captured variants:** [2146698709](originals/153__2146698709.cpp) compares nums.back(); [2024485741](originals/153__2024485741.cpp) compares nums[right].
 
-The iterative adaptation removes recursive stack growth without changing the partition logic. A deterministic middle-value pivot still has O(n²) adversarial worst cases. It does not acquire an expected-linear guarantee just because the pivot sits in the middle index. If adversarial inputs matter, randomization or an introspective selection strategy would be a new, separately justified adaptation.
+- [Original 2146698709](originals/153__2146698709.cpp) · [LeetCode submission](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2146698709/)
+- [Original 2127418311](originals/153__2127418311.cpp) · [LeetCode submission](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2127418311/)
+- [Original 2024485741](originals/153__2024485741.cpp) · [LeetCode submission](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2024485741/)
 
-## 4. Merge sorting and counting before merging (#493)
+### 215. Kth Largest Element in an Array
 
-The recursive return invariant is stronger than “this half is done”:
+[Problem](https://leetcode.com/problems/kth-largest-element-in-an-array/) · Tags: Quickselect, Sorting, Heaps
 
-1. Each half is sorted.
-2. Its internal reverse pairs have already been counted.
-3. Only cross pairs remain, and every index in the left half originally preceded every index in the right half.
+Hoare-style partition around middle element, recurse only partition containing zero-based target n-k; alternatives sort and max heap.
 
-```text
-L = [1,3,5]          R = [1,2]
-     i                    j
-3 > 2*1: every L[i..end] also qualifies -> add 2, move j
-5 > 2*2: every L[i..end] also qualifies -> add 1, move j
-cross contribution = 3
-```
+**Captured variants:** Five quickselect variants differ only base cases/return style; [2132966164](originals/215__2132966164.cpp) full sort; [2132965197](originals/215__2132965197.cpp) full max heap.
 
-The counting pointers move only forward because both halves are sorted. When `L[i] > 2LL * R[j]`, add `leftSize-i`; otherwise advance `i`. Then reset both pointers and run the ordinary merge.
+- [Original 2144679787](originals/215__2144679787.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144679787/)
+- [Original 2144679621](originals/215__2144679621.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144679621/)
+- [Original 2144679073](originals/215__2144679073.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144679073/)
+- [Original 2144678866](originals/215__2144678866.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144678866/)
+- [Original 2132995910](originals/215__2132995910.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132995910/)
+- [Original 2132966164](originals/215__2132966164.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132966164/)
+- [Original 2132965197](originals/215__2132965197.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132965197/)
 
-Do the counting pass **before merging**: interleaving the original halves loses the simple cross-index relation. Ordinary inversions (`L[i] > R[j]`) can be counted during merge; the scaled threshold in #493 deserves its own pass.
+### 287. Find the Duplicate Number
 
-The template uses local returned counts rather than a persistent member `result`, so repeated calls cannot retain prior answers. It returns `long long` and multiplies by `2LL` before comparison. Negative values and `INT_MIN`/`INT_MAX` are tested. `mergeSort` is the explicitly factored ordinary-sort portion of that same source, with counting disabled. It uses the observed temporary left/right arrays, not a claimed original scratch-buffer optimization.
+[Problem](https://leetcode.com/problems/find-the-duplicate-number/) · Tags: In-place marking, Hash sets
 
-For dynamic range counting instead of static cross-pair counting, see [Range queries](../range-queries/README.md).
+Latest marks sign at value-1 to detect repeated value; older uses seen set.
 
-## Sources and adaptation record
+**Captured variants:** [2143946691](originals/287__2143946691.cpp) sign marking; three seen-set variants, two exact duplicates.
 
-| Actual problem | Exact observed submission | What was retained / changed |
-|---|---|---|
-| [704. Binary Search](https://leetcode.com/problems/binary-search/) | [2146675354](https://leetcode.com/problems/binary-search/submissions/2146675354/) | Inclusive exact-match loop; explicit signed size conversion |
-| [35. Search Insert Position](https://leetcode.com/problems/search-insert-position/) | [2146678224](https://leetcode.com/problems/search-insert-position/submissions/2146678224/) | Lower-bound loop; upper bound derived by changing `<` to `<=` |
-| [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | [2146691389](https://leetcode.com/problems/koko-eating-bananas/submissions/2146691389/) | Integer ceiling and first-feasible loop; widened sums, explicit feasibility/empty guards |
-| [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | [2146696311](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/submissions/2146696311/) | Greedy contiguous packing; generalized to capacity for at most groups |
-| [410. Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/) | [2146752727](https://leetcode.com/problems/split-array-largest-sum/submissions/2146752727/) | Same answer-search family; invert confusing infeasibility predicate |
-| [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | [2125939691](https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/2125939691/) | Pivot plus virtual search; empty guard and widened index addition |
-| Same problem, reviewed caution | [2146701709](https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/2146701709/) | Malformed midpoint noted; not used as template baseline |
-| [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | [2146698709](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2146698709/) | Fixed-final-value comparison supports the rotation invariant |
-| [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | [2146739961](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/submissions/2146739961/) | Equal-boundary shrink and sorted-half selection |
-| [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/) | [2144679787](https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144679787/) | Middle pivot, Hoare scans, `n-k`; recursion changed to iteration and input guards added |
-| [493. Reverse Pairs](https://leetcode.com/problems/reverse-pairs/) | [2150875619](https://leetcode.com/problems/reverse-pairs/submissions/2150875619/) | Separate count then merge; per-call 64-bit count and ordinary-sort wrapper |
+- [Original 2143946691](originals/287__2143946691.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-duplicate-number/submissions/2143946691/)
+- [Original 2143814563](originals/287__2143814563.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-duplicate-number/submissions/2143814563/)
+- [Original 2140565463](originals/287__2140565463.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-duplicate-number/submissions/2140565463/)
+- [Original 1212846979](originals/287__1212846979.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-duplicate-number/submissions/1212846979/)
 
-## Run the checks
+### 344. Reverse String
 
-```sh
-g++ -std=c++20 -O2 -Wall -Wextra -Werror test.cpp -o /tmp/search-test
-/tmp/search-test
-g++ -std=c++20 -O1 -g -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer test.cpp -o /tmp/search-sanitized
-ASAN_OPTIONS=detect_leaks=0 /tmp/search-sanitized
-```
+[Problem](https://leetcode.com/problems/reverse-string/) · Tags: Two pointers
 
-The deterministic edge cases and 600 seeded randomized cases compare bounds with the standard library, every selection rank with sorting, rotated search with linear scans, reverse pairs with O(n²) enumeration, and answer searches with brute-force candidates. Boundary tests include empty arrays, duplicates, impossible budgets, repeated calls, and full signed 64-bit answer-search endpoints.
+Swap inward in place.
 
-Sanitizer note: AddressSanitizer and UndefinedBehaviorSanitizer passed with leak detection disabled. LeakSanitizer cannot run under this execution environment’s ptrace setup; this is not a leak-check result. On an ordinary local shell, omit `ASAN_OPTIONS=detect_leaks=0` to attempt leak detection too.
+**Captured variants:** One approach.
+
+- [Original 2147725168](originals/344__2147725168.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-string/submissions/2147725168/)
+
+### 347. Top K Frequent Elements
+
+[Problem](https://leetcode.com/problems/top-k-frequent-elements/) · Tags: Quickselect, Heaps, Ordered sets, Frequency maps
+
+Count values then select top k by frequency; actual alternatives full max heap and bounded ordered set.
+
+**Captured variants:** [2133013441](originals/347__2133013441.cpp) quickselect; [2127429766](originals/347__2127429766.cpp) full max heap; [2025491048](originals/347__2025491048.cpp) bounded size-k set.
+
+- [Original 2133013441](originals/347__2133013441.cpp) · [LeetCode submission](https://leetcode.com/problems/top-k-frequent-elements/submissions/2133013441/)
+- [Original 2127429766](originals/347__2127429766.cpp) · [LeetCode submission](https://leetcode.com/problems/top-k-frequent-elements/submissions/2127429766/)
+- [Original 2025491048](originals/347__2025491048.cpp) · [LeetCode submission](https://leetcode.com/problems/top-k-frequent-elements/submissions/2025491048/)
+
+### 374. Guess Number Higher or Lower
+
+[Problem](https://leetcode.com/problems/guess-number-higher-or-lower/) · Tags: Binary search, Interactive APIs
+
+Inclusive search steered by sign of guess(mid).
+
+**Captured variants:** One observed approach.
+
+- [Original 2146681577](originals/374__2146681577.cpp) · [LeetCode submission](https://leetcode.com/problems/guess-number-higher-or-lower/submissions/2146681577/)
+
+### 410. Split Array Largest Sum
+
+[Problem](https://leetcode.com/problems/split-array-largest-sum/) · Tags: Binary search, Greedy feasibility
+
+First feasible maximum partition sum, using greedy breaks; predicate currently returns true when infeasible.
+
+**Captured variants:** Three equivalent approaches, one extra unused vector.
+
+- [Original 2146752727](originals/410__2146752727.cpp) · [LeetCode submission](https://leetcode.com/problems/split-array-largest-sum/submissions/2146752727/)
+- [Original 2139584888](originals/410__2139584888.cpp) · [LeetCode submission](https://leetcode.com/problems/split-array-largest-sum/submissions/2139584888/)
+- [Original 2139584401](originals/410__2139584401.cpp) · [LeetCode submission](https://leetcode.com/problems/split-array-largest-sum/submissions/2139584401/)
+
+### 493. Reverse Pairs
+
+[Problem](https://leetcode.com/problems/reverse-pairs/) · Tags: Merge sort, Pair counting
+
+Sort halves recursively, count cross pairs with monotone two pointers against 2*right, then ordinary merge.
+
+**Captured variants:** One source; separate counting pass before merge.
+
+- [Original 2150875619](originals/493__2150875619.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-pairs/submissions/2150875619/)
+
+### 658. Find K Closest Elements
+
+[Problem](https://leetcode.com/problems/find-k-closest-elements/) · Tags: Two pointers, Heaps, Selection
+
+Sorted array drops farther endpoint until k remain; older keeps closest k by max heap of (distance,value), then sorts.
+
+**Captured variants:** [2127298849](originals/658__2127298849.cpp) two-pointer trimming; [2127164573](originals/658__2127164573.cpp) bounded max heap.
+
+- [Original 2127298849](originals/658__2127298849.cpp) · [LeetCode submission](https://leetcode.com/problems/find-k-closest-elements/submissions/2127298849/)
+- [Original 2127164573](originals/658__2127164573.cpp) · [LeetCode submission](https://leetcode.com/problems/find-k-closest-elements/submissions/2127164573/)
+
+### 704. Binary Search
+
+[Problem](https://leetcode.com/problems/binary-search/) · Tags: Binary search
+
+Inclusive exact-match search returning -1 when absent.
+
+**Captured variants:** One observed approach.
+
+- [Original 2146675354](originals/704__2146675354.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-search/submissions/2146675354/)
+
+### 852. Peak Index in a Mountain Array
+
+[Problem](https://leetcode.com/problems/peak-index-in-a-mountain-array/) · Tags: Binary search, Unimodal search
+
+Compare midpoint with neighbors to choose mountain slope or identify peak.
+
+**Captured variants:** Two equivalent submissions except unreachable/fallback return.
+
+- [Original 2147513687](originals/852__2147513687.cpp) · [LeetCode submission](https://leetcode.com/problems/peak-index-in-a-mountain-array/submissions/2147513687/)
+- [Original 2147512689](originals/852__2147512689.cpp) · [LeetCode submission](https://leetcode.com/problems/peak-index-in-a-mountain-array/submissions/2147512689/)
+
+### 875. Koko Eating Bananas
+
+[Problem](https://leetcode.com/problems/koko-eating-bananas/) · Tags: Binary search, Integer arithmetic
+
+First feasible speed with sum of integer ceilings.
+
+**Captured variants:** Four equivalent first-true variants; latest includes early false.
+
+- [Original 2146691389](originals/875__2146691389.cpp) · [LeetCode submission](https://leetcode.com/problems/koko-eating-bananas/submissions/2146691389/)
+- [Original 2139503155](originals/875__2139503155.cpp) · [LeetCode submission](https://leetcode.com/problems/koko-eating-bananas/submissions/2139503155/)
+- [Original 2139502841](originals/875__2139502841.cpp) · [LeetCode submission](https://leetcode.com/problems/koko-eating-bananas/submissions/2139502841/)
+- [Original 2024503988](originals/875__2024503988.cpp) · [LeetCode submission](https://leetcode.com/problems/koko-eating-bananas/submissions/2024503988/)
+
+### 1011. Capacity To Ship Packages Within D Days
+
+[Problem](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) · Tags: Binary search, Greedy feasibility
+
+First feasible capacity between maximum weight and total weight; simulate sequential loading.
+
+**Captured variants:** [2146696311](originals/1011__2146696311.cpp) closed first-true while left<right; [2024526301](originals/1011__2024526301.cpp) inclusive elimination while low<=high returns low.
+
+- [Original 2146696311](originals/1011__2146696311.cpp) · [LeetCode submission](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/submissions/2146696311/)
+- [Original 2024526301](originals/1011__2024526301.cpp) · [LeetCode submission](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/submissions/2024526301/)
+
+### 1095. Find in Mountain Array
+
+[Problem](https://leetcode.com/problems/find-in-mountain-array/) · Tags: Binary search, Unimodal search
+
+Find peak, binary-search ascending half first then descending half.
+
+**Captured variants:** [2147557289](originals/1095__2147557289.cpp) binary peak; [2147556354](originals/1095__2147556354.cpp) ternary peak narrowing accepted but has fragile endpoint handling.
+
+- [Original 2147557289](originals/1095__2147557289.cpp) · [LeetCode submission](https://leetcode.com/problems/find-in-mountain-array/submissions/2147557289/)
+- [Original 2147556354](originals/1095__2147556354.cpp) · [LeetCode submission](https://leetcode.com/problems/find-in-mountain-array/submissions/2147556354/)

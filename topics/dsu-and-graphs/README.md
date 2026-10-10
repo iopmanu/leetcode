@@ -1,124 +1,187 @@
 # DSU and graphs
 
-These are extractions from your submitted code, keeping your `std::` usage, camelCase names, small helper structs, and direct loops. The common thread is **assign ownership of a state as soon as you discover it**: a DSU root owns a component, a BFS enqueue owns a vertex's shortest distance, and a flood-fill mark owns a cell.
+[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-## Copy-ready pieces
+**14 captured problems · 22 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-Include `templates.hpp`; all names are in `patterns` and there are no other topic dependencies.
+## Pattern reminders
 
-| Piece | Contract | Time | Extra space |
-|---|---|---|---|
-| `DSU(n)`; `find`, `uni`, `componentSize`, `componentCount` | Dense ids `[0,n)`; `uni` returns whether a merge occurred | Initialization O(n); amortized O(α(n)) per find/union | O(n) |
-| `kruskal(n, edges)` | Undirected edges; returns cost, original edge indices, and `connected` | O(V + E log E + E α(V)) | O(V + E) |
-| `multiSourceBfs(graph, sources)` | Directed or undirected unit edges; unreachable distance is −1 | O(V + E + S), S = number of source entries | O(V) |
-| `topologicalOrder(graph)` | Directed `u → v` means u precedes v; cycle returns `nullopt` | O(V + E) | O(V) |
-| `consumeIsland(grid, row, col)` | Rectangular 0/1 grid; changes this 4-connected island to 0 and returns its area | O(A) for A cells reached | O(A) |
+### Connectivity with DSU
 
-Vertex counts, grid dimensions/area, and distances must fit `int`; ids/endpoints must be valid. Graph routines deliberately avoid repeated bounds checks. DSU rejects negative sizes. The Kruskal cost and every intermediate sum must fit `long long`. A disconnected result is a minimum spanning **forest**, and must not be mistaken for an MST. By convention, the empty graph has a connected empty result; an empty topological order is a valid DAG, distinct from `nullopt`.
+- **Cue:** Repeatedly join components, or undo a sequence of deletions by replaying it backward.
+- **Idea and invariant:** 1970 activates land in reverse order and joins neighboring active cells plus virtual top/bottom nodes. Parent roots identify components; path compression and size-based union maintain the forest. Kruskal accepts an edge only when it joins two roots.
+- **Cost in these sources:** 1970 uses O(rc alpha(rc)) time and O(rc) storage for r by c cells. 1584 explicitly builds O(n squared) edges, so its sort is O(n squared log n). 1489 repeats excluded/forced Kruskal trials, giving O(E squared alpha(V) + E log E).
+- **Read the originals:** [1970. Last Day Where You Can Still Cross — 2168377479](originals/1970__2168377479.cpp); [1584. Min Cost to Connect All Points — 2162051692](originals/1584__2162051692.cpp); [1489. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree — 2162346413](originals/1489__2162346413.cpp).
 
-## 1. DSU: only roots own a current size
+### Breadth-first distance layers
 
-Your [1970. Last Day Where You Can Still Cross](https://leetcode.com/problems/last-day-where-you-can-still-cross/) solution ([submission 2168377479](https://leetcode.com/problems/last-day-where-you-can-still-cross/submissions/2168377479/)) supplies the recurring `parent` / `size` / `find` / `uni` helper.
+- **Cue:** Each move has equal cost, or several starting cells spread simultaneously.
+- **Idea and invariant:** 752 marks configurations on enqueue. 994 seeds every rotten cell, then freezes each queue level before counting another minute. A state is first reached at its shortest unweighted distance.
+- **Cost in these sources:** O(V+E) on an explicit graph. Grid flood/BFS is O(rc) with O(rc) worst-case storage; the lock graph has at most 10,000 configurations.
+- **Read the originals:** [752. Open the Lock — 2156069275](originals/752__2156069275.cpp); [994. Rotting Oranges — 2155965323](originals/994__2155965323.cpp).
 
-```text
-Before find(3):       After find(3):
-3 → 2 → 0            3 ───→ 0
-    1 → 0            2 ───→ 0
-                     1 ───→ 0
-Only size[0] is authoritative for this component.
-```
+### Traversal state and cycles
 
-- `parent[root] == root`; `find` preserves connectivity while shortening paths.
-- Union links the smaller root under the larger root, then adds root sizes.
-- `size[i]` may be stale if i is not a root. Use `componentSize(i)` for a query.
-- Repeated union and self-union do nothing. The boolean merge result removes Kruskal's separate pair of `find` calls.
-- Path compression is inappropriate for an undo/rollback DSU without extra bookkeeping; no rollback template is claimed here.
+- **Cue:** Reachability, components, prerequisite cycles, or cloning a cyclic graph.
+- **Idea and invariant:** 207 offers both residual-indegree Kahn traversal and active-path DFS. 133 registers a clone before following neighbors. Grid traversals mark a cell before recursion; 417 stores one reachability bit per ocean.
+- **Cost in these sources:** O(V+E) time and O(V) state for adjacency-list traversal; grid variants use O(rc) time and worst-case recursion/state.
+- **Read the originals:** [207. Course Schedule — 2156079641](originals/207__2156079641.cpp); [133. Clone Graph — 2155372665](originals/133__2155372665.cpp); [200. Number of Islands — 2155362152](originals/200__2155362152.cpp); [417. Pacific Atlantic Water Flow — 2156035451](originals/417__2156035451.cpp).
 
-**Your reverse-time trick:** deletion is hard for a normal DSU; activation is easy. In 1970, start with all cells inactive, restore `cells[d]`, union active neighbors, and test two virtual nodes.
+### A position is not the whole BFS state
 
-```text
-virtual top = 0
-     │ links to active row-0 cells
-cell id(r,c) = r * cols + c + 1
-     │ links to active last-row cells
-virtual bottom = rows * cols + 1
-```
+- **Cue:** Collected items and remaining energy change what future moves are possible.
+- **Idea and invariant:** 3568 queues position, trash mask, energy, and distance. For the same position/mask, a state reached with no more energy can be discarded. Recharging restores the full energy budget.
+- **Cost in these sources:** A conservative state bound is O(rc * 2^t * e), where t is trash count and e is the energy budget. The best-energy table has O(rc * 2^t) entries; queued improvements can be larger.
+- **Read the originals:** [3568. Minimum Moves to Clean the Classroom — 2131979696](originals/3568__2131979696.cpp).
 
-After restoring `cells[d]`, the grid equals the forward grid after d floods. That is why returning d is correct, rather than d+1. An inactive cell must never connect its neighbors. With N cells the sweep takes O(N α(N)) time and O(N) space, including the activity grid.
+## Complete problem and variant index
 
-**Changes from source:** iterative two-pass compression replaces recursive `find`; `uni` now returns `bool` rather than `void`; `componentSize`/`componentCount` are added; the duplicate `public:` is removed. Public vectors preserve the familiar helper shape, but callers must not modify them.
+All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
-## 2. Kruskal: sort first, merge only different components
+### 130. Surrounded Regions
 
-Your [1584. Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/) ([submission 2162051692](https://leetcode.com/problems/min-cost-to-connect-all-points/submissions/2162051692/)) builds Manhattan edges for `i < j`, sorts them, and stops after V−1 successful merges. The extracted version accepts an edge list rather than rebuilding a problem-specific complete graph.
+[Problem](https://leetcode.com/problems/surrounded-regions/) · Tags: Graphs, Flood fill
 
-```text
-sorted edge   different roots?   action
-(1,2,-1)            yes          add, merge
-(0,2, 2)            yes          add, merge
-(0,1, 4)             no          would form a cycle
-```
+Mark border-connected cells then flip only unmarked interior cells.
 
-**Invariant:** accepted edges form a forest. Each selected edge is a cheapest available connection across some current component cut, so the forest can be extended to an MST of its connected component. Equal weights do not require special handling for finding one MST; their order can change which optimal tree is returned.
+**Captured variants:** One approach.
 
-The helper keeps original edge positions, handles parallel edges, rejects self-loops through `uni`, and supports negative weights. Equal-weight ties use original index for reproducible output. For a complete Manhattan graph, E is Θ(V²): edge generation and storage are quadratic, and sorting costs O(V² log V). Widen coordinates **before** subtraction when generating weights.
+- [Original 2156047108](originals/130__2156047108.cpp) · [LeetCode submission](https://leetcode.com/problems/surrounded-regions/submissions/2156047108/)
 
-Your [1489. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) ([submission 2162346413](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/submissions/2162346413/)) reuses the same sweep:
+### 133. Clone Graph
 
-1. Compute the connected baseline MST cost.
-2. Exclude one edge. If connection becomes impossible or cost increases, it is critical.
-3. Otherwise force that edge first, then finish Kruskal. Equal baseline cost makes it pseudo-critical.
+[Problem](https://leetcode.com/problems/clone-graph/) · Tags: Graphs, DFS, Hash maps
 
-This is an adaptation recipe, not an additional force/exclude API in the header. Preserve original edge ids while sorting; count actual merges; reject a forced self-loop. The source's `force > 0` skip condition should read `force >= 0`: id zero is valid. In the submitted constraints, DSU already rejects re-adding forced edge zero, so this is a clarity/generalization fix, not a claimed wrong answer. The source sorts once, then does O(E) sweeps: O(E log E + E·V + E² α(V)) including each fresh DSU initialization.
+Memoized graph cloning creates clone and registers it before recursive neighbor traversal to terminate cycles.
 
-**Changes from source:** `unify/query` from 1584 become `uni/find`; `WeightedEdge` replaces positional vectors; cost is widened; unused coordinate-packing helper is dropped; explicit connectivity replaces ambiguous zero/sentinel returns. No coordinate-to-id map is used, so equal-position points remain separate vertices.
+**Captured variants:** One observed approach.
 
-## 3. BFS and topological order: a queue has two different meanings
+- [Original 2155372665](originals/133__2155372665.cpp) · [LeetCode submission](https://leetcode.com/problems/clone-graph/submissions/2155372665/)
 
-In [752. Open the Lock](https://leetcode.com/problems/open-the-lock/) ([submission 2156069275](https://leetcode.com/problems/open-the-lock/submissions/2156069275/)), the queue holds states with known shortest distances. In [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) ([submission 2155965323](https://leetcode.com/problems/rotting-oranges/submissions/2155965323/)), many states start at distance zero.
+### 200. Number of Islands
 
-```text
-sources:          A       D       distance 0
-                  ↓       ↓
-next wave:        B ←─────┘       distance 1
-                  ↓
-                  C               distance 2
-```
+[Problem](https://leetcode.com/problems/number-of-islands/) · Tags: Graphs, Flood fill
 
-Set the visited marker/distance **before enqueueing**, including every source. Otherwise two parents can schedule the same vertex. With unit edges, FIFO order processes nondecreasing distances; the first discovery is optimal. Duplicate sources are harmless. With weighted edges, this BFS contract no longer applies.
+Count unvisited land seeds and flood-fill each connected component.
 
-**Changes from source:** one explicit adjacency-list helper replaces lock-string/grid neighbor generation. Distances replace level-sized batches and the source's `time = -1` convention. To recover rotting time, take the maximum reachable fresh-cell distance and reject any unreachable fresh cell. For implicit states, keep the same queue/mark order and generate neighbors on demand.
+**Captured variants:** [2155362152](originals/200__2155362152.cpp) in-place; [2125964378](originals/200__2125964378.cpp) separate visited.
 
-[207. Course Schedule](https://leetcode.com/problems/course-schedule/) ([Kahn submission 2139404121](https://leetcode.com/problems/course-schedule/submissions/2139404121/), [DFS submission 2139396834](https://leetcode.com/problems/course-schedule/submissions/2139396834/)) uses the queue differently: only vertices with **no remaining incoming edges** are ready. For each prerequisite pair `[course, prerequisite]`, add `prerequisite → course`.
+- [Original 2155362152](originals/200__2155362152.cpp) · [LeetCode submission](https://leetcode.com/problems/number-of-islands/submissions/2155362152/)
+- [Original 2125964378](originals/200__2125964378.cpp) · [LeetCode submission](https://leetcode.com/problems/number-of-islands/submissions/2125964378/)
 
-- Decrement an outgoing neighbor's indegree once per stored edge; enqueue only when it reaches zero.
-- If fewer than V vertices are removed, the remainder contains a cycle.
-- Parallel edges work only if indegree construction and decrementing both retain their multiplicity.
-- Kahn does not need level batching for cycle detection. The extracted function returns the ordering, not only a yes/no answer.
-- Your DFS alternative distinguishes active-path (`visiting`) from finished (`visited`). Encountering a finished node is safe; encountering an active node is a directed cycle.
+### 207. Course Schedule
 
-## 4. Grid traversal: mark once, change the direction when useful
+[Problem](https://leetcode.com/problems/course-schedule/) · Tags: Graphs, Topological sort, DFS
 
-`consumeIsland` combines the area accumulation from [695. Max Area of Island](https://leetcode.com/problems/max-area-of-island/) ([submission 2155365320](https://leetcode.com/problems/max-area-of-island/submissions/2155365320/)) with the consume-once rule in [200. Number of Islands](https://leetcode.com/problems/number-of-islands/) ([submission 2155362152](https://leetcode.com/problems/number-of-islands/submissions/2155362152/)). Scan every grid cell and call it on remaining land to obtain component counts or maximum area.
+Kahn indegrees plus queue; separate recursive active-path/done cycle detection.
 
-**Changes from source:** an explicit stack avoids recursive call-stack exhaustion; empty input and out-of-range starts return 0; cells turn to water when scheduled, not when popped. The helper mutates its input. Copy the grid if the original must survive. Rectangular binary input is a precondition; diagonal contact does not connect islands.
+**Captured variants:** [2156079641](originals/207__2156079641.cpp) Kahn residual-indegree check; [2139404121](originals/207__2139404121.cpp) Kahn processed count; [2139396834](originals/207__2139396834.cpp) DFS cycle detection.
 
-Other directly observed adaptations:
+- [Original 2156079641](originals/207__2156079641.cpp) · [LeetCode submission](https://leetcode.com/problems/course-schedule/submissions/2156079641/)
+- [Original 2139404121](originals/207__2139404121.cpp) · [LeetCode submission](https://leetcode.com/problems/course-schedule/submissions/2139404121/)
+- [Original 2139396834](originals/207__2139396834.cpp) · [LeetCode submission](https://leetcode.com/problems/course-schedule/submissions/2139396834/)
 
-- [130. Surrounded Regions](https://leetcode.com/problems/surrounded-regions/) ([submission 2156047108](https://leetcode.com/problems/surrounded-regions/submissions/2156047108/)): flood from the border, preserve reached cells, then flip the rest. The source's temporary `'V'` marker requires an input alphabet that excludes it, and `board[0]` needs an empty-grid guard when generalized.
-- [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) ([submission 2156035451](https://leetcode.com/problems/pacific-atlantic-water-flow/submissions/2156035451/)): start at each ocean and walk **uphill** (`nextHeight >= currentHeight`), reversing the water-flow edges. One bit per origin means each `(cell, ocean)` pair is processed once, for O(rows·cols) time/space.
-- [133. Clone Graph](https://leetcode.com/problems/clone-graph/) ([submission 2155372665](https://leetcode.com/problems/clone-graph/submissions/2155372665/)): insert `oldToNew[current] = clone` **before** recursing through neighbors. Identity is the node pointer, not its value; cycles and shared neighbors then reuse the same clone. A production wrapper should define ownership of allocated nodes. No owning clone API is included here.
+### 417. Pacific Atlantic Water Flow
 
-## Tests and verification
+[Problem](https://leetcode.com/problems/pacific-atlantic-water-flow/) · Tags: Graphs, Reverse reachability, Bitmask states
 
-`test.cpp` checks edge cases and compares against independent oracles: DSU versus component relabeling, 800 small Kruskal graphs versus exhaustive spanning-tree subsets, 500 BFS graphs versus Floyd–Warshall, 500 topological cases versus three-color DFS, and 400 grid cases versus fixed-point reachability. It also verifies chosen edge ids and the exact flood-fill mutation footprint.
+DFS uphill from both oceans; each cell carries one bit per origin; append when both bits first present.
 
-```sh
-g++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic test.cpp -o /tmp/graph-tests
-/tmp/graph-tests
-g++ -std=c++20 -O1 -g -Wall -Wextra -Werror -pedantic \
-  -fsanitize=address,undefined -fno-omit-frame-pointer test.cpp -o /tmp/graph-san
-ASAN_OPTIONS=detect_leaks=0 /tmp/graph-san
-```
+**Captured variants:** One approach.
 
-The sanitizer command checks address/undefined behavior; it does **not** verify leaks. LeakSanitizer cannot run under this execution environment's ptrace arrangement. Tests were written first and each feature group failed against an API stub before implementation.
+- [Original 2156035451](originals/417__2156035451.cpp) · [LeetCode submission](https://leetcode.com/problems/pacific-atlantic-water-flow/submissions/2156035451/)
+
+### 463. Island Perimeter
+
+[Problem](https://leetcode.com/problems/island-perimeter/) · Tags: Graphs, Flood fill, Coordinate packing
+
+DFS land cells and count outgoing edges to water/outside; pack coordinate pair into uint64 key.
+
+**Captured variants:** One observed approach.
+
+- [Original 2155358279](originals/463__2155358279.cpp) · [LeetCode submission](https://leetcode.com/problems/island-perimeter/submissions/2155358279/)
+
+### 695. Max Area of Island
+
+[Problem](https://leetcode.com/problems/max-area-of-island/) · Tags: Graphs, Flood fill
+
+In-place DFS clears visited land and sums recursive component area.
+
+**Captured variants:** One observed approach.
+
+- [Original 2155365320](originals/695__2155365320.cpp) · [LeetCode submission](https://leetcode.com/problems/max-area-of-island/submissions/2155365320/)
+
+### 752. Open the Lock
+
+[Problem](https://leetcode.com/problems/open-the-lock/) · Tags: Graphs, BFS, Implicit state
+
+BFS over four-wheel strings; generate modular +/-1 neighbors; mark visited when enqueuing.
+
+**Captured variants:** One BFS approach.
+
+- [Original 2156069275](originals/752__2156069275.cpp) · [LeetCode submission](https://leetcode.com/problems/open-the-lock/submissions/2156069275/)
+
+### 994. Rotting Oranges
+
+[Problem](https://leetcode.com/problems/rotting-oranges/) · Tags: Graphs, Multi-source BFS
+
+Seed all rotten cells, process queue levels, count fresh cells and return elapsed waves or -1.
+
+**Captured variants:** Two equivalent container/syntax versions.
+
+- [Original 2155965323](originals/994__2155965323.cpp) · [LeetCode submission](https://leetcode.com/problems/rotting-oranges/submissions/2155965323/)
+- [Original 2011741235](originals/994__2011741235.cpp) · [LeetCode submission](https://leetcode.com/problems/rotting-oranges/submissions/2011741235/)
+
+### 997. Find the Town Judge
+
+[Problem](https://leetcode.com/problems/find-the-town-judge/) · Tags: Graphs, Degrees
+
+Store incoming/outgoing trust lists and find incoming n-1 with no outgoing edges.
+
+**Captured variants:** One observed approach.
+
+- [Original 2155347510](originals/997__2155347510.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-town-judge/submissions/2155347510/)
+
+### 1489. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree
+
+[Problem](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) · Tags: DSU, Graphs, Minimum spanning trees
+
+Run Kruskal baseline, then per-edge excluded and forced trials to distinguish critical and pseudo-critical edges.
+
+**Captured variants:** Two near-identical submissions; [2162346068](originals/1489__2162346068.cpp) skips force unconditionally by id; [2162346413](originals/1489__2162346413.cpp) only explicit skip when force>0.
+
+- [Original 2162346413](originals/1489__2162346413.cpp) · [LeetCode submission](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/submissions/2162346413/)
+- [Original 2162346068](originals/1489__2162346068.cpp) · [LeetCode submission](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/submissions/2162346068/)
+
+### 1584. Min Cost to Connect All Points
+
+[Problem](https://leetcode.com/problems/min-cost-to-connect-all-points/) · Tags: Graphs, Minimum spanning trees, DSU
+
+Enumerate complete Manhattan graph, sort weighted edges, Kruskal until n-1 merges.
+
+**Captured variants:** Three same Kruskal approach variants; latest removes coordinate map and duplicate edges.
+
+- [Original 2162051692](originals/1584__2162051692.cpp) · [LeetCode submission](https://leetcode.com/problems/min-cost-to-connect-all-points/submissions/2162051692/)
+- [Original 2162050952](originals/1584__2162050952.cpp) · [LeetCode submission](https://leetcode.com/problems/min-cost-to-connect-all-points/submissions/2162050952/)
+- [Original 2162050421](originals/1584__2162050421.cpp) · [LeetCode submission](https://leetcode.com/problems/min-cost-to-connect-all-points/submissions/2162050421/)
+
+### 1970. Last Day Where You Can Still Cross
+
+[Problem](https://leetcode.com/problems/last-day-where-you-can-still-cross/) · Tags: DSU, Offline queries, Grid graphs
+
+Reverse time turns deletions into activations; connect active neighbors and two virtual boundary nodes.
+
+**Captured variants:** [2168377479](originals/1970__2168377479.cpp) compact DSU; [2168371581](originals/1970__2168371581.cpp) same DSU with redundant initial grid DFS/flood-fill bookkeeping. Not two different asymptotic algorithms.
+
+- [Original 2168377479](originals/1970__2168377479.cpp) · [LeetCode submission](https://leetcode.com/problems/last-day-where-you-can-still-cross/submissions/2168377479/)
+- [Original 2168371581](originals/1970__2168371581.cpp) · [LeetCode submission](https://leetcode.com/problems/last-day-where-you-can-still-cross/submissions/2168371581/)
+
+### 3568. Minimum Moves to Clean the Classroom
+
+[Problem](https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/) · Tags: Graphs, BFS, Bitmask states, Dominance pruning
+
+BFS (row,col,trash_mask,energy,moves); recharge cells restore energy; keep best energy for each position/mask.
+
+**Captured variants:** One observed approach.
+
+- [Original 2131979696](originals/3568__2131979696.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/submissions/2131979696/)

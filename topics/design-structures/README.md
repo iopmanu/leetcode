@@ -1,218 +1,161 @@
-# Design structures: make the eviction rule visible
+# Design structures
 
-These templates come from your observed Accepted C++ implementations of LRU/LFU caches, a chained hash map, a frequency stack, and Twitter. The recurring idea is to separate lookup from ordering: a hash map finds the object, while a list, bucket, set, or heap expresses what should happen next.
+[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-[Templates](templates.hpp) · [Executable tests](test.cpp) · Namespace: `patterns::design`
+**11 captured problems · 16 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-## API and contract
+## Pattern reminders
 
-| Type | Public operations | Policy | Main complexity |
-|---|---|---|---|
-| `LRUCache(capacity)` | `get(key)`, `put(key,value)` | Evict least recently used | Expected O(1) per operation, O(C) state |
-| `LFUCache(capacity)` | `get`, `put` | Lowest frequency, then least recent | Expected O(1) per operation, O(C) state |
-| `LFUCacheOrdered(capacity)` | `get`, `put` | Same policy via ordered tuple | Expected O(log(C+1)) per operation, O(C) state |
-| `MyHashMap` | `get`, `put`, `remove` | Fixed 32 separate chains | O(chain length), O(N) state |
-| `FreqStack` | `push(value)`, `pop()` | Highest frequency, then latest push | Expected/amortized O(1) per operation |
-| `Twitter` | `postTweet`, `follow`, `unfollow`, `getNewsFeed` | Newest relevant posts | Feed scans relevant historical posts |
+### Recency and frequency are explicit order
 
-Hash maps/sets have expected constant-time lookup, not worst-case constant time. Caches normalize nonpositive capacities to 0 and ignore puts. Cache and map `get` return `std::optional<int>` so a stored `-1` is distinguishable from a missing key:
+- **Cue:** Eviction depends on recent access or on frequency with recency as a tie-break.
+- **Idea and invariant:** 146 keeps MRU at the list front and stores key-to-iterator entries. The newer 460 uses one list per frequency plus minFreq; the older 460 uses an ordered set keyed by frequency/time. Moving an item must update its stored location.
+- **Cost in these sources:** 146 has expected O(1) operations and O(capacity) storage. The bucket/list 460 has expected O(1) operations and O(capacity) live entries, but retains empty frequency buckets, so total storage also includes frequency buckets accumulated over time. The ordered-set LFU variant uses O(log capacity) operations and O(capacity) storage.
+- **Read the originals:** [146. LRU Cache — 2143986850](originals/146__2143986850.cpp); [460. LFU Cache — 2144968388](originals/460__2144968388.cpp).
 
-```cpp
-patterns::design::LRUCache cache(2);
-cache.put(7, -1);
-if (auto value = cache.get(7)) {
-    // *value is -1; the key exists.
-}
-```
+### Frequency with last-in tie-breaking
 
-This optional-return API is an explicit generalization of the original LeetCode `-1` sentinel contract.
+- **Cue:** Remove a value of maximum frequency, choosing its latest qualifying push.
+- **Idea and invariant:** The newer 895 records a stack of values for each frequency and pops from the current maximum frequency. Its older source explicitly orders frequency and timestamps in a set.
+- **Cost in these sources:** Frequency-stack variant: expected O(1) push/pop; ordered-set variant: logarithmic ordered operations. The frequency-stack source retains zero-frequency value entries, empty frequency vectors, and allocated vector capacity; total storage is not bounded solely by currently unpopped pushes.
+- **Read the originals:** [895. Maximum Frequency Stack — 2146639743](originals/895__2146639743.cpp).
 
-## 1. LRU: list order is the policy (#146)
+### Ordered history and bounded feeds
 
-Two synchronized structures are enough:
+- **Cue:** Find the latest value no later than a timestamp, or keep only a small result while scanning history.
+- **Idea and invariant:** 981 uses upper_bound and its predecessor in a timestamp map. 355 scans stored posts from the user and followed users into a size-10 heap. Its feed generation does not merge only the newest post from each user.
+- **Cost in these sources:** 981 has O(log m) timestamp operations for m versions of a key. 355 feed generation is O(P log 10) for P scanned posts, plus followed-user traversal, with O(10) heap storage.
+- **Read the originals:** [981. Time Based Key-Value Store — 2146746974](originals/981__2146746974.cpp); [355. Design Twitter — 2144760383](originals/355__2144760383.cpp).
 
-```text
-mapping: key -----------------------> exact list node
+### Adapters preserve an operation invariant
 
-front / most recent                           back / least recent
-     [key,value] <-> [key,value] <-> [key,value]
-         ^                                      ^
-    access moves here                       evict here
-```
+- **Cue:** Build one discipline from another container or retain an extra aggregate per entry.
+- **Idea and invariant:** 225 moves the old queue behind the new element. 232 transfers the input stack only when the output stack is empty. 155 stores the minimum belonging to each stack depth. 150 pops the right operand before the left operand.
+- **Cost in these sources:** 225 has O(n) push and O(1) top/pop. 232 has amortized O(1) operations. 155 uses O(1) operations and O(n) storage. RPN evaluation is O(n) time and O(n) stack storage.
+- **Read the originals:** [225. Implement Stack using Queues — 2146459626](originals/225__2146459626.cpp); [232. Implement Queue using Stacks — 2146457265](originals/232__2146457265.cpp); [155. Min Stack — 2146461553](originals/155__2146461553.cpp); [150. Evaluate Reverse Polish Notation — 2146465049](originals/150__2146465049.cpp).
 
-Invariant: every cached key appears exactly once in the list, and its map entry points to that exact node.
+### Separate chaining with a fixed bucket count
 
-- Successful `get`: splice the node to the front and return its value
-- Updating `put`: replace the value and move the existing node to the front
-- New `put` at capacity: erase the back key from the map, remove its node, then insert the new pair at the front
-- Missing `get`: no recency change
+- **Cue:** Implement map operations by hashing to a list and scanning for a key.
+- **Idea and invariant:** 706 has exactly 32 buckets. Each bucket contains key/value pairs; updates and removals search the chain. The bucket count does not grow with the number of keys.
+- **Cost in these sources:** O(chain length) per operation and O(n) storage. With a fixed 32 buckets, a general worst-case operation is O(n).
+- **Read the originals:** [706. Design HashMap — 2144621524](originals/706__2144621524.cpp).
 
-`std::list::splice` moves a node without rebuilding it and preserves its iterator. The map iterator therefore does not need refreshing after a same-list splice. An erase is different: the erased node's iterator becomes invalid immediately.
+## Complete problem and variant index
 
-Your source's `put` would read `values.back()` at capacity 0. The adaptation adds an early return before that branch. Overwritten keys are updated in place, not inserted as duplicate nodes.
+All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
-## 2. LFU: frequency selects a bucket, recency selects a node (#460)
+### 146. LRU Cache
 
-A successful get and an overwrite both count as an access. New keys enter at frequency 1. When frequencies tie, evict the least recently used key within that frequency.
+[Problem](https://leetcode.com/problems/lru-cache/) · Tags: Design, LRU cache, Linked lists
 
-### Bucket/list version: expected O(1)
+List MRU-front/LRU-back with key->iterator map; splice hit to front, evict back when full.
 
-```text
-mapping[key] -> node {key,value,frequency}
+**Captured variants:** One observed approach.
 
-frequency 1: front [MRU] ... [LRU] back  <- evict here if minFreq=1
-frequency 2: front [MRU] ... [LRU] back
-frequency 5: front [MRU] ... [LRU] back
-```
+- [Original 2143986850](originals/146__2143986850.cpp) · [LeetCode submission](https://leetcode.com/problems/lru-cache/submissions/2143986850/)
 
-On access, copy the node, remove it from bucket `f`, increment its frequency, and push it at the front of bucket `f+1`. Update its iterator mapping.
+### 150. Evaluate Reverse Polish Notation
 
-The subtle `minFreq` update is local:
+[Problem](https://leetcode.com/problems/evaluate-reverse-polish-notation/) · Tags: Stacks, Parsing
 
-- If promotion empties the current minimum bucket `f`, the promoted node itself proves `f+1` exists. Therefore incrementing `minFreq` by one is correct; no scan is needed.
-- If a new key is inserted, reset `minFreq = 1`.
-- Eviction removes the back node of `storage[minFreq]`.
+Push operands, pop right then left for binary operator.
 
-```text
-capacity 2
-put(1,1), put(2,2)   f1: [2,1]
-get(1)              f1: [2]     f2: [1]
-put(3,3)            evict 2;    f1: [3], f2: [1]
-get(3)              f2: [3,1]
-put(4,4)            evict 1: same frequency, older access
-```
+**Captured variants:** Two equivalent evaluator sources.
 
-Your source retains empty frequency lists in its map. The reusable version erases them, keeping stored bucket count bounded by the live cache size. Frequencies use checked 64-bit counters. These are explicit robustness changes, not claimed original details.
+- [Original 2146465049](originals/150__2146465049.cpp) · [LeetCode submission](https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/2146465049/)
+- [Original 2025562806](originals/150__2025562806.cpp) · [LeetCode submission](https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/2025562806/)
 
-### Ordered-set version: O(log C), simpler global ordering
+### 155. Min Stack
 
-Your older #460 source stores entries ordered lexicographically by:
+[Problem](https://leetcode.com/problems/min-stack/) · Tags: Design, Stacks, Prefix aggregates
 
-```text
-(frequency, lastAccessTime, key, value)
-   primary     tie-break       payload
-```
+Store minimum-so-far beside each value or in parallel stack.
 
-The smallest set element is the eviction victim. The hash map stores `key -> set iterator`. On access, erase the old entry and insert the same key with incremented frequency and a fresh timestamp. This directly encodes the policy and avoids `minFreq` bookkeeping, at the cost of logarithmic ordered-set operations.
+**Captured variants:** [2146461553](originals/155__2146461553.cpp) vector<pair<value,min>>; [2025573166](originals/155__2025573166.cpp) two synchronized stacks.
 
-The source uses `std::vector<int>` as an ordered record. `LFUCacheOrdered` adapts it to a fixed-field tuple, checked 64-bit frequency/timestamp counters, and optional results. The ordering and update rule are preserved.
+- [Original 2146461553](originals/155__2146461553.cpp) · [LeetCode submission](https://leetcode.com/problems/min-stack/submissions/2146461553/)
+- [Original 2025573166](originals/155__2025573166.cpp) · [LeetCode submission](https://leetcode.com/problems/min-stack/submissions/2025573166/)
 
-Use the bucket version when constant expected update cost matters; use the ordered version when an explicit sortable policy is easier to audit or change. Do not mix the list version's `minFreq` reasoning with the set version's global ranking.
+### 225. Implement Stack using Queues
 
-## 3. Iterator ownership is a class invariant
+[Problem](https://leetcode.com/problems/implement-stack-using-queues/) · Tags: Design, Queues
 
-LRU, LFU, and ordered LFU all store iterators into another member container. An automatically copied iterator map would still point into the original object's list or set.
+Push into spare queue then move old queue behind it; swap so front is newest.
 
-The handbook disables copy and move operations for these classes. This is a conservative ownership contract. A future copy implementation must rebuild every mapping; a move implementation must deliberately establish and test its container/iterator guarantees.
+**Captured variants:** One observed approach.
 
-Other iterator rules that matter here:
+- [Original 2146459626](originals/225__2146459626.cpp) · [LeetCode submission](https://leetcode.com/problems/implement-stack-using-queues/submissions/2146459626/)
 
-- `list::splice` within the LRU list preserves the moved node's iterator
-- Erasing a list/set node invalidates that node's iterator only
-- After an LFU promotion implemented as erase/reinsert, always replace the cached iterator
-- Rehashing an `unordered_map` invalidates its own iterators; do not retain one across insertions that could rehash that same map
-- Updating an existing mapped value does not insert a new key
+### 232. Implement Queue using Stacks
 
-The templates are single-threaded algorithm building blocks, not production concurrent caches. They do not promise transactional recovery from allocation failure. Counter exhaustion throws rather than silently wrapping and corrupting policy order.
+[Problem](https://leetcode.com/problems/implement-queue-using-stacks/) · Tags: Design, Amortized analysis, Stacks
 
-## 4. Fixed-chain hash map: understand the load factor (#706)
+Input stack for push; transfer all to output stack only when output empty.
 
-Your implementation has 32 buckets, each a list of `(key,value)` pairs:
+**Captured variants:** One observed approach.
 
-```text
-bucket 0:  (0,a) -> (32,b) -> (64,c)
-bucket 1:  (1,d) -> (33,e)
-...
-bucket31:  (-1,f) -> (31,g)
-```
+- [Original 2146457265](originals/232__2146457265.cpp) · [LeetCode submission](https://leetcode.com/problems/implement-queue-using-stacks/submissions/2146457265/)
 
-`put` scans for an existing key before appending; `remove` erases one matching node and returns immediately. Overwrites must not grow a second node with the same key.
+### 355. Design Twitter
 
-The number of buckets is fixed. Even under a uniform key distribution, average chain length is about N/32 and grows with N. Under collisions, one chain can contain every key. Do not advertise this implementation as expected O(1) as the map grows. Resizing and rehashing would be a new algorithmic feature, deliberately not added here.
+[Problem](https://leetcode.com/problems/design-twitter/) · Tags: Design, Heaps, Bounded top-k
 
-The template uses a fixed `std::array` of lists and normalizes the signed remainder:
+Store append-only posts by user; scan followed and own posts into size-10 min heap, reverse output.
 
-```cpp
-int index = key % 32;
-if (index < 0) index += 32;
-```
+**Captured variants:** One observed approach.
 
-This handles negative keys including `INT_MIN`, without `abs(INT_MIN)` overflow. It also avoids relying on implicit signed-to-unsigned conversion from `storage.size()`. Missing values use `std::nullopt`, preserving every `int` value as usable data.
+- [Original 2144760383](originals/355__2144760383.cpp) · [LeetCode submission](https://leetcode.com/problems/design-twitter/submissions/2144760383/)
 
-## 5. Frequency stack: recency is already encoded in the buckets (#895)
+### 460. LFU Cache
 
-Keep:
+[Problem](https://leetcode.com/problems/lfu-cache/) · Tags: Design, LFU cache, Linked lists, Ordered sets
 
-- `route[value]`: its current frequency
-- `freqs[f]`: a stack of values that reached frequency `f`, in push order
-- `maxFreq`: the highest current frequency
+Latest frequency->list buckets and key->iterator map use MRU-front/LRU-back within a frequency, tracking minFreq. Older ordered set sorts (frequency,time,key,value).
 
-```text
-push sequence: 5,7,5,7,4,5
-frequency 1: [5,7,4]
-frequency 2: [5,7]
-frequency 3: [5]       <- pop 5
-then f2 top is 7       <- pop 7
-then f2 top is 5       <- pop 5
-then f1 top is 4       <- pop 4
-```
+**Captured variants:** [2144968388](originals/460__2144968388.cpp) expected O(1) bucket/list; [2144919830](originals/460__2144919830.cpp) O(log capacity) ordered set.
 
-A pop removes the last value in the highest-frequency bucket and decrements that value's frequency. If the bucket empties, decrement `maxFreq` once.
+- [Original 2144968388](originals/460__2144968388.cpp) · [LeetCode submission](https://leetcode.com/problems/lfu-cache/submissions/2144968388/)
+- [Original 2144919830](originals/460__2144919830.cpp) · [LeetCode submission](https://leetcode.com/problems/lfu-cache/submissions/2144919830/)
 
-The entries in lower-frequency buckets are not stale junk: they preserve the previous recency order that becomes relevant after later pops. Removing them when a value moves up would destroy the policy.
+### 682. Baseball Game
 
-The template starts `maxFreq` at 0, throws on empty pop, and cleans up zero-frequency map entries and empty buckets. Logical entries are O(number of live pushes). Vector capacity can retain past high-water allocations, so allocated memory is bounded by push history rather than necessarily the current logical size.
+[Problem](https://leetcode.com/problems/baseball-game/) · Tags: Stacks, Simulation
 
-Your older source uses an ordered set of `(-frequency,-latestTimestamp,value)` and per-value timestamp stacks. That is a valid O(log distinctValues) alternative; the bucket version already exploits the policy enough to avoid the ordered set, so only the preferred bucket API is implemented here.
+Maintain score history with cancel/double/sum-of-last-two commands.
 
-## 6. Twitter: bounded top-k, not k-way merge (#355)
+**Captured variants:** One observed approach.
 
-Your feed algorithm stores append-only posts per author and scans every relevant historical post into a size-10 min-heap. The smallest timestamp is the oldest retained post:
+- [Original 2145817863](originals/682__2145817863.cpp) · [LeetCode submission](https://leetcode.com/problems/baseball-game/submissions/2145817863/)
 
-```text
-scan post -> push (time,tweetId)
-if size > K -> pop oldest retained post
+### 706. Design HashMap
 
-heap now holds the K newest seen posts
-pop all -> oldest first; reverse -> newest first
-```
+[Problem](https://leetcode.com/problems/design-hashmap/) · Tags: Design, Custom hash map, Separate chaining
 
-`getNewsFeed(userId, limit=10)` retains this source algorithm and makes the bound configurable. Let P be the number of posts belonging to the user and followed authors, F the number of followed authors, and K the limit. Time is O(F + P log(K+1)), auxiliary heap/output space O(min(P,K)). With the default K=10, feed work is linear in relevant history. It is not a claim of logarithmic access to each user's newest post.
+Fixed 32 buckets, each list of key/value pairs; scan chain for upsert/get/remove.
 
-Robustness adaptations:
+**Captured variants:** One observed approach.
 
-- `follow(user,user)` is ignored because the feed already scans the user's own posts
-- Repeated follow is idempotent; unfollow of a missing relation is harmless
-- Limit 0 returns an empty feed
-- Queries use `find` so reading an unknown user does not create empty history entries
-- Timestamps are checked 64-bit counters
-- Typed `(timestamp,tweetId)` pairs replace two-element vectors
+- [Original 2144621524](originals/706__2144621524.cpp) · [LeetCode submission](https://leetcode.com/problems/design-hashmap/submissions/2144621524/)
 
-Post storage is still unbounded append-only history. Retention limits, pagination, persistence, concurrent posting, and k-way merge would be new requirements; they are not silently represented as features of your original code.
+### 895. Maximum Frequency Stack
 
-## Sources and adaptation record
+[Problem](https://leetcode.com/problems/maximum-frequency-stack/) · Tags: Design, Frequency buckets, Ordered sets
 
-| Actual problem | Exact observed submission | Pattern used |
-|---|---|---|
-| [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | [2143986850](https://leetcode.com/problems/lru-cache/submissions/2143986850/) | Hash map of list iterators; MRU-front splice, LRU-back eviction |
-| [460. LFU Cache](https://leetcode.com/problems/lfu-cache/) | [2144968388](https://leetcode.com/problems/lfu-cache/submissions/2144968388/) | Frequency-to-list buckets, iterator mapping, minimum frequency |
-| Same problem, older distinct strategy | [2144919830](https://leetcode.com/problems/lfu-cache/submissions/2144919830/) | Ordered `(frequency,time,key,value)` records and key-to-iterator map |
-| [706. Design HashMap](https://leetcode.com/problems/design-hashmap/) | [2144621524](https://leetcode.com/problems/design-hashmap/submissions/2144621524/) | Exactly 32 separate list chains, overwrite before append |
-| [895. Maximum Frequency Stack](https://leetcode.com/problems/maximum-frequency-stack/) | [2146639743](https://leetcode.com/problems/maximum-frequency-stack/submissions/2146639743/) | Stack per frequency plus per-value counts |
-| Same problem, documented alternative | [2146625292](https://leetcode.com/problems/maximum-frequency-stack/submissions/2146625292/) | Ordered set plus timestamp stacks; comparison only, not a second template |
-| [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | [2144760383](https://leetcode.com/problems/design-twitter/submissions/2144760383/) | Scan history into bounded min-heap, reverse extracted output |
+Latest keeps stack per frequency and per-value frequency; pop last value at highest frequency. Older maintains ordered set by (-frequency,-latest_timestamp,value).
 
-All headers add standalone standard-library includes. Optional lookups, input guards, explicit copy/move restrictions, 64-bit counter handling, negative-key normalization, empty-bucket cleanup, and configurable feed limit are handbook adaptations described above.
+**Captured variants:** [2146639743](originals/895__2146639743.cpp) frequency stacks; [2146625292](originals/895__2146625292.cpp) ordered set plus timestamp stacks.
 
-## Run the checks
+- [Original 2146639743](originals/895__2146639743.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-frequency-stack/submissions/2146639743/)
+- [Original 2146625292](originals/895__2146625292.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-frequency-stack/submissions/2146625292/)
 
-```sh
-g++ -std=c++20 -O2 -Wall -Wextra -Werror test.cpp -o /tmp/design-test
-/tmp/design-test
-g++ -std=c++20 -O1 -g -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer test.cpp -o /tmp/design-sanitized
-ASAN_OPTIONS=detect_leaks=0 /tmp/design-sanitized
-```
+### 981. Time Based Key-Value Store
 
-Tests include 90,000 seeded cache operations against a slow timestamp model across negative, zero, and positive capacities, plus 23,000 seeded hash-map/frequency-stack/feed operations. They cover LFU recency ties, overwrites, stored `-1`, all keys colliding, negative/extreme keys, arbitrary frequency-stack histories, self-follow, repeated relations, empty feeds, and varying feed limits. Compile-time assertions protect the iterator-owning classes from accidental copy enablement.
+[Problem](https://leetcode.com/problems/time-based-key-value-store/) · Tags: Ordered maps, Predecessor queries
 
-Sanitizer note: AddressSanitizer and UndefinedBehaviorSanitizer passed with leak detection disabled. LeakSanitizer cannot run under this execution environment’s ptrace setup; this is not a leak-check result. On an ordinary local shell, omit `ASAN_OPTIONS=detect_leaks=0` to attempt leak detection too.
+Key maps to ordered timestamp/value map; upper_bound then predecessor finds most recent <=timestamp.
+
+**Captured variants:** Two same data structure variants with overwrite semantics difference.
+
+- [Original 2146746974](originals/981__2146746974.cpp) · [LeetCode submission](https://leetcode.com/problems/time-based-key-value-store/submissions/2146746974/)
+- [Original 2024512612](originals/981__2024512612.cpp) · [LeetCode submission](https://leetcode.com/problems/time-based-key-value-store/submissions/2024512612/)

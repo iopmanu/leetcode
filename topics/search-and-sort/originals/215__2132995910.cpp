@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        return quickselect(nums, 0, nums.size() - 1, nums.size() - k);
+    }
+
+    int quickselect(vector<int>& nums, int left, int right, int k) {
+        if (left == right) {
+            return nums[left];
+        }
+
+        int i = left; int j = right;
+        int pivot = nums [left + (right - left) / 2];
+
+        while (i <= j) {
+            while (nums[i] < pivot) {
+                i++;
+            }
+
+            while (nums[j] > pivot) {
+                j--;
+            }
+
+            if (i <= j) {
+                std::swap(nums[i++], nums[j--]);
+            }
+        }
+
+        if (k >= i) {
+            return quickselect(nums, i, right, k);
+        }
+
+        if (k <= j) {
+            return quickselect(nums, left, j, k);
+        }
+
+        return nums[k];
+    }
+};

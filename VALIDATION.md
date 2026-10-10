@@ -1,30 +1,38 @@
-# Validation
+# Source-fidelity validation
 
-Verified on 10 October 2026 using GCC 14.2.0.
+Snapshot: **10 October 2026**.
 
-## Aggregate checks
+## What was checked
+
+- **252 original C++ files** preserve the exact UTF-8 bytes of their captured code strings.
+- The originals cover **167 problems**, **11 topic folders**, and **247 distinct code texts**. Equivalent resubmissions and exact duplicates remain separate records.
+- The total original source payload is **243,650 bytes**. No header, wrapper, comment, whitespace, or final newline was added to an original.
+- Each manifest SHA-256 matches its original file and its separately retained captured code record.
+- Each original file is linked from its topic README and the complete source index.
+- **50 key snippets** match literal slices of the original files. Their locations and hashes are recorded in [snippets.json](snippets.json).
+- The source-fidelity checker was exercised with temporary altered copies. It rejected changed bytes, a missing source file, an unlisted extra original, and an omitted manifest record.
+
+## Repeat the checks
+
+From the repository root:
 
 ```bash
-python3 tools/test.py
-ASAN_OPTIONS=detect_leaks=0 python3 tools/test.py --sanitizers
+python3 tools/check_originals.py
+python3 tools/verify_snippets.py
 ```
 
-Both commands passed **all 11 topic suites** and the translation unit including **all 11 headers together**.
+If the separately retained normalized capture is available:
 
-- Language and warnings: `-std=c++20 -Wall -Wextra -Werror -pedantic`.
-- Optimized build: `-O2`.
-- Sanitizer build: `-O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer`.
-- Tests include deterministic boundaries, seeded differential comparisons to simple reference implementations, and randomized cache/collection operations. Read each `test.cpp` for its exact domain and seed.
-- Independent additional checks covered 88,573 small ternary arrays/strings for closed-substring greedy behavior and signed shortest-subarray behavior, plus all quickselect ranks through length eight.
+```bash
+python3 tools/check_originals.py --capture-json /path/to/normalized-records.json
+```
 
-**Leak checking was not verified.** LeakSanitizer cannot operate under the validation environment's ptrace setup. AddressSanitizer and UndefinedBehaviorSanitizer passed with only leak detection disabled. On an ordinary local machine, first try `python3 tools/test.py --sanitizers` without changing `ASAN_OPTIONS`.
+The additional argument compares every file directly with the captured code string, alongside the manifest hash and provenance checks. It is optional; the ordinary checks are self-contained.
 
-## Documentation and provenance
+## What was not checked
 
-- Every local Markdown destination exists.
-- The source index accounts for 167 problems and 252 accepted submission references.
-- Exact submission URLs match the captured source records; no solution is inferred solely from a problem tag.
-- Captured source hashes were checked for consistency. These checks establish provenance, not that every original program is correct outside its task constraints.
-- Generalized code, ownership decisions, supported input domains, and changes from submitted snippets are documented in each chapter.
+These are fidelity and navigation checks, not runtime validation. The originals were not compiled together, rewritten for a standalone harness, or re-tested as a common library. Many files depend on LeetCode-provided includes, types, APIs, compiler settings, and problem constraints.
 
-These checks are strong regression evidence, not a proof over unrestricted inputs. Numeric limits and other preconditions in each API still apply. The collection gaps in [COVERAGE.md](COVERAGE.md) remain open.
+Any prior compiler, unit-test, sanitizer, or AddressSanitizer results for generalized templates do **not** apply to these original files or their literal excerpts. Captured acceptance identifies the historical LeetCode submission; it is not a new correctness or safety claim for broader inputs.
+
+Known collection gaps remain listed in [Coverage and limitations](COVERAGE.md).

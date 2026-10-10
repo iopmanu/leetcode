@@ -1,151 +1,267 @@
 # Strings and tries
 
-Your submissions repeatedly turn a string into a small state machine: a matched-prefix length, a trie node, an unmatched-open count, or a stack of unfinished frames. The extracted header keeps that style: `std::` types, camelCase helpers, straightforward loops, and nested structs rather than a large generic framework.
+[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-## Copy-ready pieces
+**22 captured problems · 23 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-Include `templates.hpp`; everything lives in `patterns`, with no cross-topic dependencies. Strings are **byte sequences**: embedded NULs work, but Unicode grapheme boundaries, normalization, and case folding are outside these contracts.
+## Pattern reminders
 
-| Piece | Meaning | Time | Extra space |
-|---|---|---|---|
-| `Kmp::buildLps(pattern)` | Longest proper border at every position | O(m) | O(m) |
-| `Kmp::searchAll(text, pattern)` | All starting positions, including overlaps | O(n + m + matches) | O(m + matches) |
-| `Kmp::isRepeatedPattern(text)` | At least two copies of one nonempty block | O(n) | O(n) |
-| `Kmp::shortestPalindrome(text)` | Prepend the fewest bytes to make a palindrome | O(n) | O(n) |
-| `Trie::insert/search/startsWith` | Whole-word membership versus prefix membership | Expected O(L) per operation | O(total distinct-prefix nodes) overall |
-| `minAddToMakeValid(text)` | Fewest inserted single parentheses | O(n) | O(1) |
-| `removeOuterParentheses(text)` | Remove the outer pair of each primitive balanced group | O(n) | O(n) output |
-| `scoreParentheses(text)` | `()=1`, `(A)=2A`, concatenation adds | O(n) | O(depth) |
+### Borders and KMP fallback
 
-Empty contracts are explicit: LPS is empty; an empty search pattern matches all n+1 boundaries; empty text is not a repeated nonempty block; the shortest palindrome is empty. A trie initially contains the empty prefix but not the empty word; `insert("")` adds that word. Empty parentheses need zero insertions, produce empty output, and score zero.
+- **Cue:** Reuse already matched prefixes rather than restarting comparisons.
+- **Idea and invariant:** 28 builds the prefix function and falls back to the longest smaller border on mismatch. 214 applies the same border structure to a string/separator/reverse construction, 459 tests periodicity, and 686 scans virtual repetitions.
+- **Cost in these sources:** Prefix-function construction and KMP scan are linear in the built/scanned text length; the prefix table uses linear storage.
+- **Read the originals:** [28. Find the Index of the First Occurrence in a String — 2163524870](originals/28__2163524870.cpp); [214. Shortest Palindrome — 2163593115](originals/214__2163593115.cpp); [459. Repeated Substring Pattern — 2163579090](originals/459__2163579090.cpp); [686. Repeated String Match — 2163561881](originals/686__2163561881.cpp).
 
-## 1. KMP: on mismatch, shorten the candidate without moving the text
+### Trie path state
 
-The construction comes from your [28. Find the Index of the First Occurrence in a String](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/) ([submission 2163524870](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/submissions/2163524870/)) and the extracted `buildLps` in [214. Shortest Palindrome](https://leetcode.com/problems/shortest-palindrome/) ([submission 2163593115](https://leetcode.com/problems/shortest-palindrome/submissions/2163593115/)).
+- **Cue:** Queries share prefixes, or a compound query can be encoded as a single path.
+- **Idea and invariant:** 208 owns children by value in hash maps and marks complete words. 745 inserts suffix + separator + word paths and stores the latest word index on visited nodes; it has a different allocation/ownership structure.
+- **Cost in these sources:** 208 operations are expected O(L) for a word of length L. 745 inserts O(L squared) path characters per word and answers in O(prefix length + suffix length), assuming expected constant-time transitions.
+- **Read the originals:** [208. Implement Trie (Prefix Tree) — 2167350538](originals/208__2167350538.cpp); [745. Prefix and Suffix Search — 2164622907](originals/745__2164622907.cpp).
 
-```text
-index     0 1 2 3 4 5 6
-pattern   a b a b a c a
-lps       0 0 1 2 3 0 1
+### Nested syntax carries a frame or parser position
 
-At a mismatch after matching "ababa":
-matched = 5 → lps[4] = 3 → lps[2] = 1 → lps[0] = 0
-Try each viable border against the SAME current text byte.
-```
+- **Cue:** Parentheses, repeated brackets, or braces change the meaning of a local region.
+- **Idea and invariant:** 394 saves the outer string and repeat count while decoding a bracketed substring. 1096 separates item, concatenated term, and comma union. 856 saves frame scores; 1190 reverses the built suffix on a closing parenthesis.
+- **Cost in these sources:** Materializing expansions costs at least their output size; brace concatenation additionally forms Cartesian products and inserts into ordered sets. Repeated nested reversals in 1190 can take O(n squared).
+- **Read the originals:** [394. Decode String — 2146593107](originals/394__2146593107.cpp); [1096. Brace Expansion II — 2153362638](originals/1096__2153362638.cpp); [856. Score of Parentheses — 2162881009](originals/856__2162881009.cpp); [1190. Reverse Substrings Between Each Pair of Parentheses — 2154897406](originals/1190__2154897406.cpp).
 
-`lps[i]` is the length of the longest **proper** prefix of `pattern[0..i]` that is also its suffix. During search, `matched` is the length of the pattern prefix matching the suffix of the text already consumed. A mismatch discards only lengths ruled out by the border chain. Successful comparisons increase this length; fallback decreases it, which gives linear total work.
+### Depth and unmatched counts
 
-**The all-matches change:** your source returns on the first match. This header records it, then sets `matched = lps[matched - 1]`. Resetting to zero loses overlaps: `aaa` occurs at 0, 1, and 2 in `aaaaa`. Accessing `pattern[matched]` while matched equals its length is also unsafe; fallback must happen before processing the next byte.
+- **Cue:** Only balance or nesting matters, rather than the full stack contents.
+- **Idea and invariant:** 921 counts missing opens and remaining unmatched opens. 1021 emits only symbols inside each primitive outer pair. 1541 consumes closing parentheses in pairs. 1614 tracks the current and maximum depth.
+- **Cost in these sources:** O(n) time and O(1) counting state, excluding any output string.
+- **Read the originals:** [921. Minimum Add to Make Parentheses Valid — 2164607113](originals/921__2164607113.cpp); [1021. Remove Outermost Parentheses — 2166675238](originals/1021__2166675238.cpp); [1541. Minimum Insertions to Balance a Parentheses String — 2167345569](originals/1541__2167345569.cpp); [1614. Maximum Nesting Depth of the Parentheses — 2155954786](originals/1614__2155954786.cpp).
 
-**Changes from source:** shared `buildLps`; `std::size_t` lengths/positions instead of narrowing `int`; `std::string_view` inputs avoid copies; empty-pattern behavior is checked before indexing. The original 28 submission relies on the problem's nonempty needle constraint. The helper's all-boundaries empty result is a deliberate API choice, not a claim about the submitted return convention.
+### Canonical keys and requirement coverage
 
-### Border length also detects a full repeated block
+- **Cue:** Anagrams should share a key, or a substring must cover every requested character count.
+- **Idea and invariant:** 49 sorts each word as its group key. 76 tracks outstanding or satisfied distinct requirements and shrinks only while the full multiset is covered. The two captured window versions use different count conventions.
+- **Cost in these sources:** 49 costs O(sum L_i log L_i) for sorting words. 76 is expected O(n+m) with hash-map counting and storage proportional to the tracked alphabet, plus output.
+- **Read the originals:** [49. Group Anagrams — 2127402160](originals/49__2127402160.cpp); [76. Minimum Window Substring — 2149102883](originals/76__2149102883.cpp).
 
-Your [459. Repeated Substring Pattern](https://leetcode.com/problems/repeated-substring-pattern/) ([submission 2163579090](https://leetcode.com/problems/repeated-substring-pattern/submissions/2163579090/)) uses:
+## Complete problem and variant index
 
-```text
-border = lps[n-1]
-period = n - border
-repetition ⇔ border > 0 and n % period == 0
-```
+All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
-A nonzero border alone is insufficient: `aba` has border `a`, but length 3 is not divisible by candidate period 2. The extracted function drops the unused map and zero-prefix scan, and protects the empty case before `lps.back()`.
+### 8. String to Integer (atoi)
 
-### Palindromic prefixes without a reserved separator
+[Problem](https://leetcode.com/problems/string-to-integer-atoi/) · Tags: Strings, Parsing, Overflow guards
 
-Your 214 solution builds LPS for `s + "#" + reverse(s)`. The last value is the longest palindromic-prefix length because the separator cannot appear inside the problem's lowercase-only input.
+Skip spaces, parse optional sign, accumulate digits while checking against sign-specific integer limit.
 
-The reusable helper instead builds LPS for s and runs its matcher over `reverse(s)`. At the end, a matching prefix of s equals a suffix of `reverse(s)`, which is the reverse of that same prefix. The largest such length is exactly the longest palindromic prefix. Reverse the remaining suffix and prepend it.
+**Captured variants:** One observed approach.
 
-```text
-s = a a c e c a a a
-    └ palindromic ┘ │
-         prefix     suffix
-prepend reverse(suffix) → a a a c e c a a a
-```
+- [Original 2126227733](originals/8__2126227733.cpp) · [LeetCode submission](https://leetcode.com/problems/string-to-integer-atoi/submissions/2126227733/)
 
-**Change from source:** no delimiter is reserved, so `#` and arbitrary bytes are safe. The matcher scans exactly n bytes; a full n-byte match can happen only on its final iteration. This is an adaptation of your KMP palindrome idea, not a verbatim copy.
+### 28. Find the Index of the First Occurrence in a String
 
-### An observed implicit-string extension
+[Problem](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/) · Tags: String matching, KMP
 
-[686. Repeated String Match](https://leetcode.com/problems/repeated-string-match/) ([submission 2163561881](https://leetcode.com/problems/repeated-string-match/submissions/2163561881/)) reads `a[i % a.size()]` rather than allocating repeated copies. Your submitted bound is `2*|a| + |b|`. With nonempty a and b, considering starting offsets `0..|a|-1` only needs `|a|+|b|-1` virtual bytes. Once a match ends at exclusive index i, the required copies are `ceil(i/|a|)`. This remains a documented recipe rather than another header function; any reusable version must define empty a/b behavior before modulo/index operations.
+Inline prefix-function build then fallback-driven linear first-match scan.
 
-## 2. Trie: a path is not necessarily a word
+**Captured variants:** One observed approach.
 
-Your [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) ([submission 2167350538](https://leetcode.com/problems/implement-trie-prefix-tree/submissions/2167350538/)) uses value-owned `unordered_map<char, Node>` children and a terminal `leaf` flag.
+- [Original 2163524870](originals/28__2163524870.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/submissions/2163524870/)
 
-```text
-insert("app"), insert("apple")
-root → a → p → p* → l → e*
-               ↑
-               terminal word
-search("ap") = false; startsWith("ap") = true
-```
+### 49. Group Anagrams
 
-- Insertion creates missing children, then marks **only the final node** as a whole word.
-- Queries must not create missing children. The helper uses `find` in a shared `const getLeaf` walk.
-- Duplicate insertion is idempotent. Empty insertion marks the root terminal.
-- The hash-map alphabet is retained; no lowercase-only array assumption is added.
-- Children are owned by their maps, so no manual `delete` is needed. Extremely deep words can still make recursive value destruction/copying deep; this is a small interview-style trie, not an arena-based storage engine.
+[Problem](https://leetcode.com/problems/group-anagrams/) · Tags: Hash maps, Strings, Canonical keys
 
-**Changes from source:** const queries, nonmutating `find`, shared walking logic, `try_emplace` for insertion, and borrowed `string_view` input. Returned internal pointers are not exposed.
+Sort each string as canonical anagram key and group original strings.
 
-Your [745. Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) ([submission 2164622907](https://leetcode.com/problems/prefix-and-suffix-search/submissions/2164622907/)) layers metadata on the same idea:
+**Captured variants:** One observed approach.
 
-```text
-word "apple": insert each suffix + "{" + "apple"
-query prefix="ap", suffix="le": walk "le{ap"
-each visited node stores the greatest inserted word index
-```
+- [Original 2127402160](originals/49__2127402160.cpp) · [LeetCode submission](https://leetcode.com/problems/group-anagrams/submissions/2127402160/)
 
-That source uses `unique_ptr` children, includes the empty suffix, and writes the index at each traversed node. Inserting words in increasing index order lets later writes implement “largest index wins.” It costs O(Σ L²) preprocessing time and worst-case space, with expected O(prefix length + suffix length) query time. `{` is safe for the source's lowercase alphabet; for arbitrary bytes, encode/escape the separator. The ordinary `Trie` header intentionally does not implement WordFilter metadata.
+### 71. Simplify Path
 
-## 3. Parentheses: counters when structure can be forgotten, frames when it cannot
+[Problem](https://leetcode.com/problems/simplify-path/) · Tags: Stacks, Strings, Views
 
-### Repair a sequence with a counter
+Split path on /, ignore empty/dot, pop for dotdot, join surviving components.
 
-[921. Minimum Add to Make Parentheses Valid](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/) ([submission 2164607113](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/submissions/2164607113/)) tracks unmatched opens and missing opens. A close consumes an open if possible; otherwise that close permanently requires an inserted open. At the end, each remaining open needs a close. This local choice is forced, so no stack of positions is needed.
+**Captured variants:** One observed approach.
 
-Do not blindly reuse the same counter for [1541. Minimum Insertions to Balance a Parentheses String](https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/) ([submission 2167345569](https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/submissions/2167345569/)): there one open requires **two consecutive closes**. Your source consumes a `))` pair together, inserts a missing close when necessary, then matches/inserts its open; leftover opens cost two each. The header implements only ordinary single-close balancing.
+- [Original 2146563687](originals/71__2146563687.cpp) · [LeetCode submission](https://leetcode.com/problems/simplify-path/submissions/2146563687/)
 
-### Remove outer pairs by choosing when to update depth
+### 76. Minimum Window Substring
 
-[1021. Remove Outermost Parentheses](https://leetcode.com/problems/remove-outermost-parentheses/) ([submission 2166675238](https://leetcode.com/problems/remove-outermost-parentheses/submissions/2166675238/)) has a useful ordering trick:
+[Problem](https://leetcode.com/problems/minimum-window-substring/) · Tags: Sliding windows, Frequency deficit
 
-```text
-')' : decrement depth BEFORE deciding whether to emit
-emit only if depth > 0
-'(' : increment depth AFTER deciding whether to emit
-```
+Track distinct unsatisfied/satisfied requirements; shrink while all covered and save minimum boundaries.
 
-The opening byte of a primitive sees depth zero; its closing byte returns depth to zero. Both are suppressed, while all inner bytes survive. The helper uses `std::string` append rather than `ostringstream`.
+**Captured variants:** Two equivalent variants using remaining versus satisfied count.
 
-### Parse nested scores with frames
+- [Original 2149102883](originals/76__2149102883.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-window-substring/submissions/2149102883/)
+- [Original 2131820578](originals/76__2131820578.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-window-substring/submissions/2131820578/)
 
-[856. Score of Parentheses](https://leetcode.com/problems/score-of-parentheses/) ([submission 2162881009](https://leetcode.com/problems/score-of-parentheses/submissions/2162881009/)) starts with a zero-valued outer frame. `(` pushes a new empty frame; `)` pops the inner score and adds `max(1, 2*inside)` to its parent.
+### 125. Valid Palindrome
 
-```text
-(()())
-stack after "(()()": [0, 2]
-final ')' pops 2, contributes 4 → [4]
-```
+[Problem](https://leetcode.com/problems/valid-palindrome/) · Tags: Two pointers, Strings
 
-**Invariant:** each frame is the sum of complete groups inside one still-open pair; the bottom frame accumulates top-level groups. Keeping a frame per nesting level preserves exactly the structure the counter-only algorithms can discard.
+Skip nonalphanumeric symbols at both ends and compare normalized characters.
 
-**Changes from source:** `back() += contribution` replaces pop/re-push of the parent; `std::vector` is the stack; `uint64_t` replaces `int`; multiplication and addition are checked for overflow. All three parentheses helpers reject non-parenthesis bytes. The two balanced-input helpers reject unmatched opens/closes instead of relying on problem constraints. A 65-pair fully nested input exceeds `uint64_t` score and throws `overflow_error`.
+**Captured variants:** One accepted C++ source.
 
-Another observed stack recipe is [1190. Reverse Substrings Between Each Pair of Parentheses](https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/) ([submission 2154897406](https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/submissions/2154897406/)): save output length at `(`, reverse that suffix at `)`. Its repeated reversals can take O(n²) time on nested inputs. Do not label that submitted algorithm linear just because its outer scan is linear; it is documented here without adding a duplicate parser template.
+- [Original 2147738982](originals/125__2147738982.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-palindrome/submissions/2147738982/)
 
-## Tests and verification
+### 208. Implement Trie (Prefix Tree)
 
-`test.cpp` checks 1,500 random LPS arrays against exhaustive borders, 2,500 KMP searches against a naive scan, 1,000 periodicity cases against direct divisors, 1,500 palindromes against prefix enumeration, and 2,000 trie operations against a set/prefix scan. Fixed seeds include embedded NUL and `#` bytes. Exhaustive parentheses strings through length 11/12 check repairs, primitive removal, and recursive-definition scores. Malformed input and both score overflow paths are tested.
+[Problem](https://leetcode.com/problems/implement-trie-prefix-tree/) · Tags: Trie, Strings
 
-```sh
-g++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic test.cpp -o /tmp/string-tests
-/tmp/string-tests
-g++ -std=c++20 -O1 -g -Wall -Wextra -Werror -pedantic \
-  -fsanitize=address,undefined -fno-omit-frame-pointer test.cpp -o /tmp/string-san
-ASAN_OPTIONS=detect_leaks=0 /tmp/string-san
-```
+Walk value-owned hash-map children, set terminal flag only after full insertion.
 
-The sanitizer command checks address/undefined behavior, not leaks. LeakSanitizer cannot run under this execution environment's ptrace arrangement. Tests were written first and each feature group failed against an API stub before implementation.
+**Captured variants:** One observed approach.
+
+- [Original 2167350538](originals/208__2167350538.cpp) · [LeetCode submission](https://leetcode.com/problems/implement-trie-prefix-tree/submissions/2167350538/)
+
+### 214. Shortest Palindrome
+
+[Problem](https://leetcode.com/problems/shortest-palindrome/) · Tags: String matching, KMP, Palindromes
+
+KMP prefix-function on s+separator+reverse(s) gives longest palindromic prefix; prepend reversed leftover suffix.
+
+**Captured variants:** Same LPS family as 459/686/28.
+
+- [Original 2163593115](originals/214__2163593115.cpp) · [LeetCode submission](https://leetcode.com/problems/shortest-palindrome/submissions/2163593115/)
+
+### 242. Valid Anagram
+
+[Problem](https://leetcode.com/problems/valid-anagram/) · Tags: Frequency maps, Strings
+
+Count both strings and compare every key/count in both directions.
+
+**Captured variants:** One observed approach.
+
+- [Original 2130658997](originals/242__2130658997.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-anagram/submissions/2130658997/)
+
+### 394. Decode String
+
+[Problem](https://leetcode.com/problems/decode-string/) · Tags: Stacks, Parsing
+
+Save outer partial string and multiplier at [, expand current substring at ].
+
+**Captured variants:** One observed approach.
+
+- [Original 2146593107](originals/394__2146593107.cpp) · [LeetCode submission](https://leetcode.com/problems/decode-string/submissions/2146593107/)
+
+### 459. Repeated Substring Pattern
+
+[Problem](https://leetcode.com/problems/repeated-substring-pattern/) · Tags: String matching, KMP
+
+A nonzero final border length and divisibility by n-border detect repeating period.
+
+**Captured variants:** Same LPS family as 214/686/28.
+
+- [Original 2163579090](originals/459__2163579090.cpp) · [LeetCode submission](https://leetcode.com/problems/repeated-substring-pattern/submissions/2163579090/)
+
+### 686. Repeated String Match
+
+[Problem](https://leetcode.com/problems/repeated-string-match/) · Tags: String matching, KMP, Circular traversal
+
+Run KMP against virtual repetitions via a[i%n], stopping after finite bound; convert matched end index to repeat count.
+
+**Captured variants:** One KMP source.
+
+- [Original 2163561881](originals/686__2163561881.cpp) · [LeetCode submission](https://leetcode.com/problems/repeated-string-match/submissions/2163561881/)
+
+### 745. Prefix and Suffix Search
+
+[Problem](https://leetcode.com/problems/prefix-and-suffix-search/) · Tags: Trie, Strings, Composite keys
+
+Insert every suffix+separator+word; query suffix+separator+prefix, storing latest index on each visited node.
+
+**Captured variants:** One source; different ownership from 208.
+
+- [Original 2164622907](originals/745__2164622907.cpp) · [LeetCode submission](https://leetcode.com/problems/prefix-and-suffix-search/submissions/2164622907/)
+
+### 856. Score of Parentheses
+
+[Problem](https://leetcode.com/problems/score-of-parentheses/) · Tags: Stacks, Parsing
+
+Stack of partial frame scores; closing frame contributes max(1,2*inside) to parent.
+
+**Captured variants:** One observed approach.
+
+- [Original 2162881009](originals/856__2162881009.cpp) · [LeetCode submission](https://leetcode.com/problems/score-of-parentheses/submissions/2162881009/)
+
+### 921. Minimum Add to Make Parentheses Valid
+
+[Problem](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/) · Tags: Greedy, Strings, Counters
+
+Track unmatched opens and missing openings, then sum them.
+
+**Captured variants:** One observed approach.
+
+- [Original 2164607113](originals/921__2164607113.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/submissions/2164607113/)
+
+### 953. Verifying an Alien Dictionary
+
+[Problem](https://leetcode.com/problems/verifying-an-alien-dictionary/) · Tags: Strings, Custom order
+
+Build character rank and compare adjacent words at first difference, rejecting a longer word preceding its prefix.
+
+**Captured variants:** One observed approach.
+
+- [Original 2155353571](originals/953__2155353571.cpp) · [LeetCode submission](https://leetcode.com/problems/verifying-an-alien-dictionary/submissions/2155353571/)
+
+### 1021. Remove Outermost Parentheses
+
+[Problem](https://leetcode.com/problems/remove-outermost-parentheses/) · Tags: Strings, Counters
+
+Adjust depth before a close and after an open so only inner symbols are emitted.
+
+**Captured variants:** One observed approach.
+
+- [Original 2166675238](originals/1021__2166675238.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-outermost-parentheses/submissions/2166675238/)
+
+### 1096. Brace Expansion II
+
+[Problem](https://leetcode.com/problems/brace-expansion-ii/) · Tags: Parsing, Recursive descent, Sets
+
+Grammar item handles letter or brace group, term concatenates Cartesian products, eval unions comma-separated terms.
+
+**Captured variants:** One observed approach.
+
+- [Original 2153362638](originals/1096__2153362638.cpp) · [LeetCode submission](https://leetcode.com/problems/brace-expansion-ii/submissions/2153362638/)
+
+### 1190. Reverse Substrings Between Each Pair of Parentheses
+
+[Problem](https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/) · Tags: Strings, Stack
+
+Keep output positions of opening parentheses; reverse output suffix at each close.
+
+**Captured variants:** One observed approach.
+
+- [Original 2154897406](originals/1190__2154897406.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/submissions/2154897406/)
+
+### 1541. Minimum Insertions to Balance a Parentheses String
+
+[Problem](https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/) · Tags: Strings, Greedy, Counters
+
+Consume close parentheses in pairs; insert missing close or matching opening; account for remaining opens.
+
+**Captured variants:** One observed approach.
+
+- [Original 2167345569](originals/1541__2167345569.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/submissions/2167345569/)
+
+### 1614. Maximum Nesting Depth of the Parentheses
+
+[Problem](https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/) · Tags: Strings, Counters
+
+Single depth counter and running maximum; stack contents are unnecessary.
+
+**Captured variants:** One approach.
+
+- [Original 2155954786](originals/1614__2155954786.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/submissions/2155954786/)
+
+### 1807. Evaluate the Bracket Pairs of a String
+
+[Problem](https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/) · Tags: Strings, Hash maps, Views
+
+Map knowledge to nonowning string_views; scan bracket key spans and substitute value or ?.
+
+**Captured variants:** One observed approach.
+
+- [Original 2154370092](originals/1807__2154370092.cpp) · [LeetCode submission](https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/submissions/2154370092/)

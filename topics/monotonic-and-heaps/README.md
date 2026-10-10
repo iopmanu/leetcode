@@ -1,200 +1,233 @@
-# Monotonic structures and heaps: keep only useful candidates
+# Monotonic structures and heaps
 
-These are adaptations of your observed Accepted C++ code. In particular, your #239 solution is a heap, your #862 solution uses a reversed deque orientation, and your #480 solution uses indexed multisets. The handbook preserves those choices rather than attributing textbook alternatives to you.
+[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-[Templates](templates.hpp) · [Executable tests](test.cpp) · Namespace: `patterns::monotonic`
+**17 captured problems · 34 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-## Choose by what makes a candidate obsolete
+## Pattern reminders
 
-| Situation | Tool | Why a candidate can leave | Complexity |
-|---|---|---|---|
-| Next strictly greater value | `nextGreaterDistances` | Current value resolves its answer | O(n) time, O(n) space |
-| Largest histogram rectangle | `largestRectangle` | A lower bar closes its right boundary | O(n) time, O(n) space |
-| Online stock span | `StockSpanner` | Current price absorbs its entire span | O(1) amortized per call, O(n) space |
-| Sum of subarray minima | `sumSubarrayMinimums` | A lower value fixes contribution boundaries | O(n) time, O(n) space |
-| Sliding window maximum | `slidingWindowMaximum` | Expired top of a max-heap | O(n log n) time, O(n) space worst case |
-| Shortest subarray reaching a sum | `shortestSubarrayAtLeast` | Candidate is either already used or dominated | O(n) time, O(n) space |
-| Median with insertion only | `StreamMedian` | Rebalance two heaps | O(log n) insertion, O(1) query, O(n) space |
-| Median with deletion by ID | `IndexedMedian` | Remove exact iterator, then rebalance | O(log n) expected update, O(1) query, O(n) space |
+### Monotonic stack boundaries
 
-The two indexed-median maps use expected O(1) hashing; pathological hash collisions can worsen update time. Every vector-index API assumes the size fits in `int`. Invalid windows throw; empty sequence behavior is documented per function.
+- **Cue:** An incoming value settles an earlier next-greater/next-smaller question, or closes a contribution interval.
+- **Idea and invariant:** 84 gives each popped height its maximal span. 907 gives a popped minimum a left-choice count and right-choice count; its strict comparison assigns equal-value ownership consistently. 739 holds unresolved temperatures, and 901 combines spans of popped prices.
+- **Cost in these sources:** Each item enters and leaves once: O(n) total time and O(n) worst-case storage; stock span is amortized O(1) per call.
+- **Read the originals:** [84. Largest Rectangle in Histogram — 2146612938](originals/84__2146612938.cpp); [907. Sum of Subarray Minimums — 2132055030](originals/907__2132055030.cpp); [739. Daily Temperatures — 2146492152](originals/739__2146492152.cpp); [901. Online Stock Span — 2146501827](originals/901__2146501827.cpp).
 
-## 1. The comparison is part of the proof
+### Monotonic prefix candidates
 
-A monotonic stack is a collection of still-useful candidates. Each element is pushed once and popped at most once, giving O(n) total work even with a nested `while` loop.
+- **Cue:** Negative values prevent an ordinary positive-sum sliding window.
+- **Idea and invariant:** 862 uses prefix sums. Its deque orientation is source-specific: newest candidates are at the front, while feasible oldest/minimum starts are removed from the back. Dominated candidates leave from the front. The older accepted sources use a min-heap.
+- **Cost in these sources:** Deque variant: O(n) time and O(n) storage. Heap variants: O(n log n) time and O(n) storage.
+- **Read the originals:** [862. Shortest Subarray with Sum at Least K — 2152907567](originals/862__2152907567.cpp).
 
-| Pattern | Pop while incoming… | Stack after processing | What equality means |
-|---|---|---|---|
-| #739 next greater | `incoming > top` | Nonincreasing values | Equal is not warmer, so keep it |
-| #84 histogram | `incoming < top` | Nondecreasing heights | Equal heights may coexist |
-| #901 stock span | `incoming >= top` | Strictly decreasing prices | Equal prices belong to today's span |
-| #907 minimum contribution | `incoming < top` | Nondecreasing values | Equal minima need one consistent owner |
+### A heap exposes the next relevant extremum
 
-Changing `<` to `<=` is a semantic change, not cosmetic cleanup.
+- **Cue:** Advance the smallest of several list heads, maintain a rank, or expire stale candidates.
+- **Idea and invariant:** 632 keeps one head per list and the current maximum. 703 keeps only k values in a min-heap. 239 removes expired indices only when they reach the heap top, so stale entries below the top may remain.
+- **Cost in these sources:** 632 is O(N log k) for N consumed elements from k lists. 703 is O(log k) per insertion. The captured lazy-expiry 239 is O(n log n) time and O(n) worst-case heap storage, not a size-k deque.
+- **Read the originals:** [632. Smallest Range Covering Elements from K Lists — 2154226064](originals/632__2154226064.cpp); [703. Kth Largest Element in a Stream — 2144654284](originals/703__2144654284.cpp); [239. Sliding Window Maximum — 2149742695](originals/239__2149742695.cpp).
 
-### Next greater distance (#739)
+### Balanced halves for medians
 
-Store indices, not just values: the answer needs `currentIndex - waitingIndex`. The stack contains unresolved values in nonincreasing order.
+- **Cue:** Report a middle value after additions, or after exact indexed deletions.
+- **Idea and invariant:** 295 keeps a max-heap lower half and min-heap upper half. 480 instead uses two multisets of value/index pairs and maps indices to iterators. The lower half has equal size or one extra element, and every lower value precedes every upper value.
+- **Cost in these sources:** 295: O(log n) insertion and O(1) median. 480: O(n log k) total time and O(k) storage for a window of k.
+- **Read the originals:** [295. Find Median from Data Stream — 2150573901](originals/295__2150573901.cpp); [480. Sliding Window Median — 2150661436](originals/480__2150661436.cpp).
 
-```text
-values:  [73,74,75,71,69,72,...]
-waiting before 72: indices [2,3,4] -> values [75,71,69]
-72 resolves 69 at distance 1, then 71 at distance 2
-75 remains unresolved
-```
+### Greedy subsequences and suffix comparison
 
-`nextGreaterDistances` returns 0 where no strictly greater value appears later. The generic name is an adaptation of your temperature-specific API.
+- **Cue:** Choose k digits from two sequences while retaining order and maximizing the merge.
+- **Idea and invariant:** 321 enumerates the split, uses a discard budget to build each maximum subsequence, then compares entire remaining suffixes when merging. Equal leading digits alone cannot decide which side to take.
+- **Cost in these sources:** For s feasible splits, O(s * (m+n+k squared)) is a conservative bound because suffix comparison can rescan up to k digits per merge step. Auxiliary sequence storage is O(m+n+k).
+- **Read the originals:** [321. Create Maximum Number — 2154885660](originals/321__2154885660.cpp).
 
-### Histogram boundaries (#84)
+## Complete problem and variant index
 
-When a shorter bar arrives at `i`, pop `pivot`. After popping, the new stack top is `left`, or `-1` if none:
+All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
-```text
-left | left+1 .... pivot .... i-1 | i
-           valid width = i-left-1
-             area = height[pivot] * width
-```
+### 42. Trapping Rain Water
 
-All intervening bars are at least the popped height. With strict `>` popping, `left` can be an equal-height bar, so this pop need not produce the widest rectangle at that height. The earlier equal bar will eventually capture the wider span. Do not describe `left` as “strictly smaller” for this tie policy.
+[Problem](https://leetcode.com/problems/trapping-rain-water/) · Tags: Two pointers, Monotonic stack
 
-The final iteration `i == n` drains the stack without inserting a sentinel into the input. The short-circuit condition checks `i == n` before reading `heights[i]`. The result and multiplication are 64-bit. Negative heights throw; empty input returns 0.
+Two-pointer boundary maxima accumulate water at lower endpoint; alternate decreasing stack pops basin bottom and computes bounded layer.
 
-### Compressed spans (#901)
+**Captured variants:** Four two-pointer forms including single global limiting max; two stack forms.
 
-Store `(price, span)` rather than individual days. Every popped node represents a whole consecutive block that can be absorbed:
+- [Original 2147811654](originals/42__2147811654.cpp) · [LeetCode submission](https://leetcode.com/problems/trapping-rain-water/submissions/2147811654/)
+- [Original 2143469631](originals/42__2143469631.cpp) · [LeetCode submission](https://leetcode.com/problems/trapping-rain-water/submissions/2143469631/)
+- [Original 2142850361](originals/42__2142850361.cpp) · [LeetCode submission](https://leetcode.com/problems/trapping-rain-water/submissions/2142850361/)
+- [Original 2131909942](originals/42__2131909942.cpp) · [LeetCode submission](https://leetcode.com/problems/trapping-rain-water/submissions/2131909942/)
+- [Original 2131872743](originals/42__2131872743.cpp) · [LeetCode submission](https://leetcode.com/problems/trapping-rain-water/submissions/2131872743/)
+- [Original 2131851296](originals/42__2131851296.cpp) · [LeetCode submission](https://leetcode.com/problems/trapping-rain-water/submissions/2131851296/)
 
-```text
-before price 75: [(100,1), (80,1), (70,2), (60,1)]
-span = 1 + 1 + 2 = 4
- after price 75: [(100,1), (80,1), (75,4)]
-```
+### 84. Largest Rectangle in Histogram
 
-This is a general trick: when popped items form a contiguous region, preserve their aggregate weight. The template keeps your algorithm but removes the unnecessary empty-stack special case and widens span counts to `long long`.
+[Problem](https://leetcode.com/problems/largest-rectangle-in-histogram/) · Tags: Monotonic stack, Range boundaries
 
-## 2. Contribution counting: choose an owner for equal minima (#907)
+Increasing stack of indices; on smaller height, popped bar spans after new stack top through i-1; drain at n.
 
-Instead of enumerating all subarrays and finding their minima, ask how many subarrays belong to each minimum index.
+**Captured variants:** Four equivalent monotonic-index sources.
 
-For a popped index `m`:
+- [Original 2146612938](originals/84__2146612938.cpp) · [LeetCode submission](https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2146612938/)
+- [Original 2143497674](originals/84__2143497674.cpp) · [LeetCode submission](https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2143497674/)
+- [Original 2132956467](originals/84__2132956467.cpp) · [LeetCode submission](https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2132956467/)
+- [Original 2132944465](originals/84__2132944465.cpp) · [LeetCode submission](https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2132944465/)
 
-- `left` is the previous index with value **less than or equal** to `nums[m]`
-- `right` is the next index with value **strictly less** than `nums[m]`
-- Start choices: `m-left`
-- End choices: `right-m`
+### 239. Sliding Window Maximum
 
-```text
-left | possible starts ... m ... possible ends | right
-                     contribution
-          nums[m] * (m-left) * (right-m)
-```
+[Problem](https://leetcode.com/problems/sliding-window-maximum/) · Tags: Heaps, Sliding windows, Lazy removal
 
-With `[2,2]`, the first 2 owns `[0]` and `[0,1]`; the second owns `[1]`. The strict right boundary and non-strict left boundary assign multi-equal subarrays to their leftmost minimum exactly once.
+Max heap of (value,index), discard expired entries only when they reach top.
 
-Using strict boundaries on both sides double-counts equal-minimum subarrays; using non-strict boundaries on both sides misses them. One side must break the tie.
+**Captured variants:** Two heap variants differ tie order.
 
-`sumSubarrayMinimums` returns the sum modulo 1,000,000,007, including for negative values. This extends the original positive-input contract: normalize each value into `[0,mod)`, reduce between multiplications, and keep products in `long long`. Empty input returns 0.
+- [Original 2149742695](originals/239__2149742695.cpp) · [LeetCode submission](https://leetcode.com/problems/sliding-window-maximum/submissions/2149742695/)
+- [Original 2024277288](originals/239__2024277288.cpp) · [LeetCode submission](https://leetcode.com/problems/sliding-window-maximum/submissions/2024277288/)
 
-## 3. Sliding window maximum: your actual lazy heap (#239)
+### 295. Find Median from Data Stream
 
-Your source pushes `(value,index)` into a max-heap and removes expired entries only when they reach the top:
+[Problem](https://leetcode.com/problems/find-median-from-data-stream/) · Tags: Heaps, Median
 
-```cpp
-heap.push(std::make_pair(nums[i], i));
-while (heap.top().second <= i - k) heap.pop();
-```
+Max-heap lower half and min-heap upper half; rebalance size difference to left=right or left=right+1.
 
-The current element is always valid, so the heap cannot become empty during this pruning. After pruning, the maximum remaining valid value is at the top.
+**Captured variants:** Three equivalent implementations; baseline sorted vector exists only as comment, not source algorithm.
 
-The subtle complexity point is retained history. In a strictly increasing array, old smaller values can stay buried forever. Heap size can grow to n, so the bound is O(n log n) time and O(n) extra space, not guaranteed O(n log k)/O(k).
+- [Original 2150573901](originals/295__2150573901.cpp) · [LeetCode submission](https://leetcode.com/problems/find-median-from-data-stream/submissions/2150573901/)
+- [Original 2144767620](originals/295__2144767620.cpp) · [LeetCode submission](https://leetcode.com/problems/find-median-from-data-stream/submissions/2144767620/)
+- [Original 2133767286](originals/295__2133767286.cpp) · [LeetCode submission](https://leetcode.com/problems/find-median-from-data-stream/submissions/2133767286/)
 
-A monotonic deque could produce an O(n)/O(k) solution, but it is **not** the observed #239 implementation. The runnable template deliberately remains heap-based. It requires `1 <= k <= n`; invalid or empty-window requests throw `std::invalid_argument`.
+### 321. Create Maximum Number
 
-## 4. Prefix dominance with negative numbers (#862)
+[Problem](https://leetcode.com/problems/create-maximum-number/) · Tags: Monotonic stack, Greedy, Lexicographic merge
 
-For prefix sums `prefix[i]`, the query is:
+Enumerate split of k across arrays, select max subsequence with discard budget, merge by comparing entire remaining suffixes.
 
-```text
-find smallest i-j > 0 with prefix[i]-prefix[j] >= target
-```
+**Captured variants:** One observed approach.
 
-A normal expand/shrink sum window is unreliable with negative values. The deque tracks candidate prefixes, using your source's orientation:
+- [Original 2154885660](originals/321__2154885660.cpp) · [LeetCode submission](https://leetcode.com/problems/create-maximum-number/submissions/2154885660/)
 
-```text
-front                                     back
-newest / largest prefix -> ... -> oldest / smallest prefix
-     push here                            test feasible here
-```
+### 378. Kth Smallest Element in a Sorted Matrix
 
-At each endpoint `i`, two different deletions are justified:
+[Problem](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) · Tags: Heaps, Order statistics
 
-1. **Pop from back while feasible.** If `prefix[i]-prefix[j] >= target`, record length `i-j`. A future endpoint paired with this same `j` would only be longer. Remove it and test the next candidate.
-2. **Pop from front while dominated.** If the new prefix is no larger than an older prefix, the new index has a better or equal sum baseline and a shorter future distance. The older candidate will never be preferable.
-3. Push `i` at the front.
+Scan every matrix value maintaining k smallest in max heap.
 
-```text
-old j < new i, but prefix[i] <= prefix[j]
-for every future r:
-  prefix[r]-prefix[i] >= prefix[r]-prefix[j]
-  r-i < r-j
-therefore j is dominated
-```
+**Captured variants:** One observed approach.
 
-Both prefixes and differences use `long long`. The function checks prior indices before inserting the current one, so it asks for a **nonempty** subarray even when `target <= 0`. Empty input or no feasible subarray returns `-1`. Reversing the deque ends is fine only if every operation is reversed consistently.
+- [Original 2126186308](originals/378__2126186308.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/submissions/2126186308/)
 
-## 5. Median is an ordering invariant plus a size invariant
+### 480. Sliding Window Median
 
-Both #295 and #480 maintain:
+[Problem](https://leetcode.com/problems/sliding-window-median/) · Tags: Ordered multisets, Median, Iterator indexing
 
-```text
-lower half                        upper half
- ... <= maxLower        <=        minUpper <= ...
- size lower = size upper, or size upper + 1
-```
+Two balanced multisets of (value,index) plus maps index->iterator support insertion, deletion, and median.
 
-Then the median is either `maxLower` or the average of `maxLower` and `minUpper`. Cast **before adding** so `INT_MAX + INT_MAX` cannot overflow an integer expression.
+**Captured variants:** One source; no lazy-deletion heap in actual code.
 
-### Insert-only: two heaps (#295)
+- [Original 2150661436](originals/480__2150661436.cpp) · [LeetCode submission](https://leetcode.com/problems/sliding-window-median/submissions/2150661436/)
 
-`StreamMedian::addNum` inserts into the side selected by `maxLower`, then transfers one boundary element if sizes violate the invariant. One insertion changes the size difference by only one, so one transfer suffices. `findMedian()` throws on an empty stream.
+### 621. Task Scheduler
 
-### Deletion: identity and iterator ownership (#480)
+[Problem](https://leetcode.com/problems/task-scheduler/) · Tags: Heaps, Greedy scheduling
 
-Your source uses two ordered multisets, not removable heaps:
+Consume up to n+1 distinct most-frequent task types per round, reinsert remaining counts, count full round unless terminal.
 
-```text
-(value, uniqueIndex) in descending lower multiset
-(value, uniqueIndex) in ascending upper multiset
-index -> its exact iterator in the owning multiset
-```
+**Captured variants:** One observed approach.
 
-The index disambiguates duplicate values. `push(index,value)` requires a unique live index; a repeated live ID throws. `remove(index)` returns false for a missing ID. An ID can be reused after removal.
+- [Original 2144706913](originals/621__2144706913.cpp) · [LeetCode submission](https://leetcode.com/problems/task-scheduler/submissions/2144706913/)
 
-When moving a boundary element between sets, erase the old iterator mapping and install the new one. Erasing a node invalidates that node's iterator; reading it afterward is not allowed. Copying containers with iterator maps would leave iterators pointing into the original object, so `IndexedMedian` explicitly disables copy and move operations rather than silently promising unsupported ownership semantics.
+### 632. Smallest Range Covering Elements from K Lists
 
-`slidingWindowMedian(nums,k)` composes these operations with array indices as IDs. It uses O(k) live storage and O(n log k) expected time (write O(n log(k+1)) if k=1 must be included algebraically). It validates `1 <= k <= n` and returns one median per complete window.
+[Problem](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/) · Tags: Heaps, K-way merge
 
-## Sources and adaptation record
+Heap holds one head per list and scalar tracks current maximum; advance current minimum list and improve range.
 
-| Actual problem | Exact observed submission | Retained pattern / explicit adaptation |
-|---|---|---|
-| [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | [2146492152](https://leetcode.com/problems/daily-temperatures/submissions/2146492152/) | Strict next-greater indexed stack; generalized API name |
-| [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | [2146612938](https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2146612938/) | Strict-pop indices and final drain; 64-bit area, nonnegative guard, combined drain loop |
-| [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | [2146501827](https://leetcode.com/problems/online-stock-span/submissions/2146501827/) | `(price,span)` compression; widened span and removed redundant branch |
-| [907. Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) | [2132055030](https://leetcode.com/problems/sum-of-subarray-minimums/submissions/2132055030/) | Strict-right/non-strict-left ownership; signed-input modular normalization |
-| [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | [2149742695](https://leetcode.com/problems/sliding-window-maximum/submissions/2149742695/) | Lazy expiration max-heap; unified insertion loop and window validation |
-| [862. Shortest Subarray with Sum at Least K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) | [2152907567](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/submissions/2152907567/) | Reversed deque orientation; widened prefixes/target, nonempty semantics |
-| [295. Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) | [2150573901](https://leetcode.com/problems/find-median-from-data-stream/submissions/2150573901/) | Two heaps and pre-add floating conversion; empty guard |
-| [480. Sliding Window Median](https://leetcode.com/problems/sliding-window-median/) | [2150661436](https://leetcode.com/problems/sliding-window-median/submissions/2150661436/) | Two multisets with iterator maps; unique-ID checks, explicit lifetime restrictions, empty guard |
+**Captured variants:** One observed approach.
 
-## Run the checks
+- [Original 2154226064](originals/632__2154226064.cpp) · [LeetCode submission](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/submissions/2154226064/)
 
-```sh
-g++ -std=c++20 -O2 -Wall -Wextra -Werror test.cpp -o /tmp/monotonic-test
-/tmp/monotonic-test
-g++ -std=c++20 -O1 -g -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer test.cpp -o /tmp/monotonic-sanitized
-ASAN_OPTIONS=detect_leaks=0 /tmp/monotonic-sanitized
-```
+### 703. Kth Largest Element in a Stream
 
-Deterministic edges plus 500 seeded randomized cases check stacks against direct scans, rectangles and subarray contributions against enumeration, shortest subarrays against O(n²) sums, every window size against sorted-window medians/maxima, and arbitrary indexed removals against a sorted live set. Tests include equal values, negative sums, invalid windows, empty medians, and integer extremes.
+[Problem](https://leetcode.com/problems/kth-largest-element-in-a-stream/) · Tags: Heaps, Streaming order statistics
 
-Sanitizer note: AddressSanitizer and UndefinedBehaviorSanitizer passed with leak detection disabled. LeakSanitizer cannot run under this execution environment’s ptrace setup; this is not a leak-check result. On an ordinary local shell, omit `ASAN_OPTIONS=detect_leaks=0` to attempt leak detection too.
+Maintain size-k min heap so root is kth largest seen.
+
+**Captured variants:** One observed approach.
+
+- [Original 2144654284](originals/703__2144654284.cpp) · [LeetCode submission](https://leetcode.com/problems/kth-largest-element-in-a-stream/submissions/2144654284/)
+
+### 735. Asteroid Collision
+
+[Problem](https://leetcode.com/problems/asteroid-collision/) · Tags: Stacks, Simulation
+
+Only right-moving stack top and incoming left-moving item can collide; pop weaker until incoming destroyed or no conflict.
+
+**Captured variants:** Two equivalent collision algorithms with container/initialization differences.
+
+- [Original 2146489128](originals/735__2146489128.cpp) · [LeetCode submission](https://leetcode.com/problems/asteroid-collision/submissions/2146489128/)
+- [Original 2025582812](originals/735__2025582812.cpp) · [LeetCode submission](https://leetcode.com/problems/asteroid-collision/submissions/2025582812/)
+
+### 739. Daily Temperatures
+
+[Problem](https://leetcode.com/problems/daily-temperatures/) · Tags: Monotonic stack, Next greater
+
+Keep unresolved decreasing temperatures by index; warmer incoming value resolves waiting distances.
+
+**Captured variants:** Three equivalent stack implementations.
+
+- [Original 2146492152](originals/739__2146492152.cpp) · [LeetCode submission](https://leetcode.com/problems/daily-temperatures/submissions/2146492152/)
+- [Original 2131986928](originals/739__2131986928.cpp) · [LeetCode submission](https://leetcode.com/problems/daily-temperatures/submissions/2131986928/)
+- [Original 2025552405](originals/739__2025552405.cpp) · [LeetCode submission](https://leetcode.com/problems/daily-temperatures/submissions/2025552405/)
+
+### 853. Car Fleet
+
+[Problem](https://leetcode.com/problems/car-fleet/) · Tags: Monotonic stack, Greedy
+
+Sort cars by position ascending; arrival-time stack pops fleets behind that catch a later slower fleet.
+
+**Captured variants:** Two equivalent variants, storing speed or precomputed time.
+
+- [Original 2146549976](originals/853__2146549976.cpp) · [LeetCode submission](https://leetcode.com/problems/car-fleet/submissions/2146549976/)
+- [Original 2146548870](originals/853__2146548870.cpp) · [LeetCode submission](https://leetcode.com/problems/car-fleet/submissions/2146548870/)
+
+### 862. Shortest Subarray with Sum at Least K
+
+[Problem](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) · Tags: Monotonic deque, Prefix sums, Heaps
+
+Newest deque stores candidate prefixes in reverse orientation: newest at front, oldest/minimum at back; pop feasible starts from back and dominated prefixes from front. Older min-heap pops feasible prior prefixes.
+
+**Captured variants:** [2152907567](originals/862__2152907567.cpp) O(n) monotonic deque; [2152891991](originals/862__2152891991.cpp)/[2152436083](originals/862__2152436083.cpp) O(n log n) prefix-min heap.
+
+- [Original 2152907567](originals/862__2152907567.cpp) · [LeetCode submission](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/submissions/2152907567/)
+- [Original 2152891991](originals/862__2152891991.cpp) · [LeetCode submission](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/submissions/2152891991/)
+- [Original 2152436083](originals/862__2152436083.cpp) · [LeetCode submission](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/submissions/2152436083/)
+
+### 901. Online Stock Span
+
+[Problem](https://leetcode.com/problems/online-stock-span/) · Tags: Monotonic stack, Aggregated spans
+
+Stack holds (price,span); pop <=price and combine spans before pushing new price.
+
+**Captured variants:** One observed approach.
+
+- [Original 2146501827](originals/901__2146501827.cpp) · [LeetCode submission](https://leetcode.com/problems/online-stock-span/submissions/2146501827/)
+
+### 907. Sum of Subarray Minimums
+
+[Problem](https://leetcode.com/problems/sum-of-subarray-minimums/) · Tags: Monotonic stack, Contribution counting
+
+Pop minimum indices and multiply value by left choices and right choices; final i=n drains stack.
+
+**Captured variants:** One observed approach.
+
+- [Original 2132055030](originals/907__2132055030.cpp) · [LeetCode submission](https://leetcode.com/problems/sum-of-subarray-minimums/submissions/2132055030/)
+
+### 1046. Last Stone Weight
+
+[Problem](https://leetcode.com/problems/last-stone-weight/) · Tags: Heaps, Simulation
+
+Repeatedly remove two largest weights and reinsert positive difference.
+
+**Captured variants:** One observed approach.
+
+- [Original 2144668025](originals/1046__2144668025.cpp) · [LeetCode submission](https://leetcode.com/problems/last-stone-weight/submissions/2144668025/)

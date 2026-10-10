@@ -111,12 +111,18 @@ The last row is an observation about the inspected listings, not proof that the 
 
 ## Source fidelity and validation
 
-- Accepted source text establishes that a technique was actually used. It does not prove safety for unrestricted inputs.
-- The reusable templates may add empty-input handling, wider arithmetic, explicit ownership, safer lazy flags, or corrected bounds. Topic pages identify these changes.
-- The runnable tests validate the derived templates, not every original LeetCode program or all possible inputs.
-- Algorithmic variants are separated from cosmetic resubmissions. For example, a heap, quickselect, and ordered-set solution are different approaches; changing one loop spelling is not.
+- All 252 captured source records are preserved as individual original files; they contain 247 exact distinct code texts.
+- Source bytes, including whitespace and original comments, are copied from the captured code strings without edits. The manifest records the captured SHA-256 for each file.
+- No derived framework or rewritten algorithm templates are included. Original wrappers and LeetCode-specific assumptions remain intact.
+- The fidelity checker checks source preservation and index coverage. It does not replace LeetCode's harness, compile all originals, or re-run their algorithmic tests.
+- Topic explanations separate meaningful algorithmic variants from equivalent resubmissions. All variants still have their own source links.
+- No inaccessible source is represented as inspected, and no third-party implementation fills a gap.
 - No login credentials, session cookies, or verification codes are included.
 
-## Repository rebuild
+## Algorithm gaps
 
-The previous tracked files are replaced by the handbook in a normal new commit. The Git commit history is retained, so prior files remain recoverable from older commits.
+Original Dijkstra, Prim, and Yen implementations were not captured. All three captured submissions for 1584 use Kruskal. The missing source list includes shortest-path problems, but an algorithm is not attributed to them without inspecting the code. These original implementations can be added unchanged when supplied or captured.
+
+## Snapshot boundary
+
+These counts describe the captured snapshot dated 10 October 2026. Collection gaps remain open. The original files and their manifest are the evidence boundary for this handbook; newly written explanations do not expand that boundary.

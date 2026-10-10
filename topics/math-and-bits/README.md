@@ -1,156 +1,173 @@
-# Math, bits, counting, and geometry
+# Math and bits
 
-These are the source-backed small ideas that are easy to forget and useful to recognize. The reusable work stays in short functions; task-specific parity facts stay as notes rather than gaining unnecessary classes.
+[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-## Pattern map
+**13 captured problems · 17 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-| Template / source | Invariant | Useful when | Time / extra space |
-|---|---|---|---|
-| XOR + parity / 810 (note) | Zero XOR or even item count is winning under these rules | This normal-play removal game | O(n) / O(1) |
-| `palindromicRoot`, `countSuperPalindromes` / 906 | Generate roots already satisfying the rare structural condition | Palindromic squares with palindromic roots | O(S log R) / O(log R) |
-| `threeSumMultiplicity` / 923 | Each sorted value triple appears once; multiply index choices | Duplicate-heavy 3-sum counts | O(n log n+d²) / O(n+d) including copy |
-| `packSignedPair`, `maximumTranslationOverlap` / 835 | Equal displacement pairs align under one translation | Sparse binary image alignment | Expected O(ab) / O(ab) worst case |
-| `rectanglesOverlap` / 836 | Both axis intersections have positive length | Axis-aligned rectangle area overlap | O(1) / O(1) |
-| `circleRectangleOverlap` / 1401 | Coordinate-wise clamping gives the nearest point | Circle versus closed axis-aligned rectangle | O(1) / O(1) |
+## Pattern reminders
 
-S is the seeds examined (at most 199,998 here), R the numeric bound, d the number of distinct values, and a/b the occupied-point counts. The translation helper takes occupied coordinates; scanning image grids to build those lists is an additional O(number of grid cells). Hash complexity is expected. All helpers avoid mutating caller inputs; 923 sorts a copy.
+### Count multiplicities rather than materializing combinations
 
-## 1. XOR cancellation is useful; the game theorem has rules
+- **Cue:** Several equal values yield the same value-level choice.
+- **Idea and invariant:** 923 sorts and uses occurrence counts with product, choose-two, or choose-three factors. 3483 decrements/restores digit frequencies while enumerating three-digit even numbers. 1498 fixes the minimum and counts subsets of the feasible interior with powers of two.
+- **Cost in these sources:** 923 combines O(n log n) sorting with up to O(d squared) distinct-value pair work. 3483 has O(n) counting plus a bounded digit search. 1498 is O(n log n) including sort and uses O(n) powers.
+- **Read the originals:** [923. 3Sum With Multiplicity — 2140530076](originals/923__2140530076.cpp); [3483. Unique 3-Digit Even Numbers — 2138479064](originals/3483__2138479064.cpp); [1498. Number of Subsequences That Satisfy the Given Sum Condition — 2140461426](originals/1498__2140461426.cpp).
 
-The inspected LC 810 submission is exactly the compact observation:
+### Reduce geometry to coordinates
 
-```cpp
-int x = 0;
-for (int value : nums) { x ^= value; }
-return x == 0 || nums.size() % 2 == 0;
-```
+- **Cue:** Overlap can be tested independently on axes, or identical translations can be counted.
+- **Idea and invariant:** 836 requires strict positive overlap on both axes. 1401 clamps the circle center to the nearest rectangle point and compares squared distance. 835 counts displacement vectors between nonzero pixels.
+- **Cost in these sources:** 836 and 1401: O(1). 835: O(n squared + ab) time for n by n images with a and b nonzero pixels, and up to O(ab) translation-count storage.
+- **Read the originals:** [836. Rectangle Overlap — 2141366410](originals/836__2141366410.cpp); [1401. Circle and Rectangle Overlapping — 2146448826](originals/1401__2146448826.cpp); [835. Image Overlap — 2140447101](originals/835__2140447101.cpp).
 
-Under this task's rules, zero XOR at the start of your turn wins; making it zero by your own erase loses. If a nonzero-XOR position has even size, there is a safe removal: otherwise every element would equal the total XOR, but an even number of identical values has XOR zero. A safe move leaves an odd, nonzero-XOR position. From an odd, nonzero position, every safe move leaves an even, nonzero position for the opponent. This proves the parity criterion inductively.
+### Generate only plausible candidates
 
-**Reusable bit facts:** `a^a=0`, `a^0=a`, and XOR is associative/commutative. **Pitfall:** the winning formula is not a rule for arbitrary XOR games or different erase/win conditions. No unrelated bit-count/lowbit template is attributed to this submission.
+- **Cue:** The target has symmetry or threshold structure.
+- **Idea and invariant:** 906 mirrors a short seed to form odd/even palindromic roots, squares each, and tests the square. 3871 sums contributions of five fixed powers-of-1000 thresholds; 3870 uses its original smaller-range threshold.
+- **Cost in these sources:** 906 examines at most 100,000 seeds in each of two loops, with work proportional to the number of generated digits per candidate. 3871 and 3870 have fixed O(1) arithmetic work under their original bounds.
+- **Read the originals:** [906. Super Palindromes — 2163458920](originals/906__2163458920.cpp); [3871. Count Commas in Range II — 2136687887](originals/3871__2136687887.cpp); [3870. Count Commas in Range — 2134960323](originals/3870__2134960323.cpp).
 
-## 2. Generate palindromic roots, then test their squares
+### Parity or a minimum can determine the answer
 
-LC 906 avoids scanning every integer or every square. Mirror a short seed in two ways:
+- **Cue:** The full arrangement is irrelevant after a small summary is known.
+- **Idea and invariant:** 810 reduces the position to total XOR and length parity. 3876 compares the minimum odd and even values. The captured 3875 implementation always returns true; the file is preserved as written.
+- **Cost in these sources:** 810 and 3876: O(n) time and O(1) state. 3875: O(1).
+- **Read the originals:** [810. Chalkboard XOR Game — 2166697803](originals/810__2166697803.cpp); [3876. Construct Uniform Parity Array II — 2131978781](originals/3876__2131978781.cpp); [3875. Construct Uniform Parity Array I — 2128397234](originals/3875__2128397234.cpp).
 
-```text
-seed = 123
-odd:   123 + reverse(12)  = 12321
-even:  123 + reverse(123) = 123321
-```
+## Complete problem and variant index
 
-Every positive decimal palindrome is generated exactly once by one parity and its leading half. With right≤10^18, roots are at most 10^9, so five-digit seeds cover the required roots. Each parity's roots increase with the seed, enabling an early break.
+All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
-**Explicit overflow-safe boundary:** the template checks `root > right/root` **before** multiplying. This makes the bound obvious and is a useful generalization habit. It is not a demonstrated overflow bug in the original supported domain: with right≤10^18, the even-length loop breaks at root 1,000,000,001 at the latest, whose square still fits `long long`; the odd-length seeds stop at root 999,999,999. If widening the domain or seed generation, re-check those limits rather than relying on the original early break. In this template, every actual square is ≤right≤10^18.
+### 810. Chalkboard XOR Game
 
-The reusable domain is explicitly `0 <= left <= right <= 10^18`. Zero is counted once separately; the positive-task source starts both parity loops at zero, which would double-count it if the domain were extended casually. `palindromicRoot` accepts seeds 0–99,999 and mirrors numerically rather than allocating a reversed string. `decimalPalindrome` compares decimal digits, handling any `long long` without the numeric-reversal overflow that broader inputs could create.
+[Problem](https://leetcode.com/problems/chalkboard-xor-game/) · Tags: Bitwise, Game theory
 
-**When useful:** generate candidates that already satisfy the strongest structural property, then apply the cheaper remaining test. **Pitfall:** the fixed seed bound is derived from the stated range, not a universal palindrome generator.
+XOR all values and return zero-XOR or even parity.
 
-## 3. Value triples and index multiplicities
+**Captured variants:** One observed approach.
 
-LC 923 sorts and skips equal-value groups while running two pointers. The template compresses those groups explicitly, preserving the same value-triple enumeration.
+- [Original 2166697803](originals/810__2166697803.cpp) · [LeetCode submission](https://leetcode.com/problems/chalkboard-xor-game/submissions/2166697803/)
 
-For ordered values a≤b≤c with frequencies A/B/C:
+### 835. Image Overlap
 
-| Equality pattern | Number of index triples |
-|---|---|
-| a<b<c | A×B×C |
-| a=b<c | choose(A,2)×C |
-| a<b=c | A×choose(B,2) |
-| a=b=c | choose(A,3) |
+[Problem](https://leetcode.com/problems/image-overlap/) · Tags: Geometry, Hash maps, Coordinate packing
 
-```text
-choose(q,2) = q(q−1)/2
-choose(q,3) = q(q−1)(q−2)/6
-```
+For every pair of nonzero pixel coordinates, count translation vector; maximum frequency is best overlap.
 
-One copy of a value cannot fill two indices: combinations encode that automatically. The template checks `n<=3000`, retaining the original counting bound, so all pre-modulo products fit `long long`. Values may be any `int`; the three-value sum is widened before addition. The result is modulo 1,000,000,007.
+**Captured variants:** One observed approach.
 
-**Pitfalls:** do integer division before reducing modulo; `/2` or `/6` after `%mod` is not equivalent without modular inverses. Do not multiply in `int` then assign the already-overflowed result to `long long`. If lifting the n bound, redesign the multiplication/combinations or use a safe modular implementation; removing the guard alone is insufficient.
+- [Original 2140447101](originals/835__2140447101.cpp) · [LeetCode submission](https://leetcode.com/problems/image-overlap/submissions/2140447101/)
+- [Original 2140436041](originals/835__2140436041.cpp) · [LeetCode submission](https://leetcode.com/problems/image-overlap/submissions/2140436041)
 
-## 4. Count translations, not moved images
+### 836. Rectangle Overlap
 
-For each occupied pixel p in the first image and q in the second, the only translation aligning them is `q−p`:
+[Problem](https://leetcode.com/problems/rectangle-overlap/) · Tags: Geometry, Intervals
 
-```text
-p=(1,2), q=(4,1)  =>  shift=(+3,−1)
-all pairs with that same shift contribute to the same overlap count
-```
+Positive-area rectangle intersection equals strict overlap on both axes.
 
-Unique occupied coordinates ensure each pair corresponds to one distinct aligned pixel under its shift. Count displacement frequencies and take the maximum. This is especially useful for sparse images. Passing duplicate coordinates would count duplicate pixels, so uniqueness is part of the contract.
+**Captured variants:** One observed approach.
 
-The observed packing trick is retained:
+- [Original 2141366410](originals/836__2141366410.cpp) · [LeetCode submission](https://leetcode.com/problems/rectangle-overlap/submissions/2141366410/)
 
-```cpp
-(std::uint64_t(std::uint32_t(dx)) << 32) | std::uint32_t(dy)
-```
+### 906. Super Palindromes
 
-Each signed value is converted to its 32-bit unsigned representation before being placed into a 64-bit lane. Negative shifts retain distinct bit patterns; shifting a negative signed value is avoided. The helper checks widened coordinate differences fit signed 32-bit lanes before casting. Do not use `dx*100+dy` unless a proven coordinate bound makes it collision-free.
+[Problem](https://leetcode.com/problems/super-palindromes/) · Tags: Palindromes, Enumeration
 
-## 5. Geometry: separate axes, then distinguish contact from area
+Generate odd/even palindromic roots by mirroring half, square them, and test numeric palindrome in target range.
 
-Rectangle overlap (836) is two strict one-dimensional intersections:
+**Captured variants:** One observed approach.
 
-```text
-max(left edges) < min(right edges)
-AND
-max(bottom edges) < min(top edges)
-```
+- [Original 2163458920](originals/906__2163458920.cpp) · [LeetCode submission](https://leetcode.com/problems/super-palindromes/submissions/2163458920/)
 
-Touching along an edge or corner has zero area and returns false. The source's symmetric second call is redundant; the template uses the symmetric expression once and also handles zero-width/height rectangles as zero-area. Corners must be ordered.
+### 923. 3Sum With Multiplicity
 
-For circle/rectangle overlap (1401), clamp the circle center into the rectangle:
+[Problem](https://leetcode.com/problems/3sum-with-multiplicity/) · Tags: Two pointers, Counting, Combinatorics
 
-```text
-        center *
-               | shortest path
-rectangle +----q----+
-          | nearest |
-          +---------+
-q.x = clamp(center.x, x1, x2)
-q.y = clamp(center.y, y1, y2)
-```
+Sort, walk distinct value triples using frequencies, add product/choose2/choose3 multiplicities.
 
-Compare `(center.x−q.x)² + (center.y−q.y)² <= radius²`. Tangency **does** count here. If the center is inside, q equals the center and distance is zero. No square root or separate corner/edge cases are necessary. The newer source removes the older submission's redundant corner scan.
+**Captured variants:** One observed approach.
 
-The template's explicit domain is absolute coordinates≤10^9 and radius 0–10^9. It widens **before subtraction**; squared distance is then at most 8×10^18, within signed 64-bit range. The radius bound is checked; coordinate bounds and ordered corners are caller preconditions. Wider signed-int extremes would require wider arithmetic or a different comparison, so do not silently lift these bounds.
+- [Original 2140530076](originals/923__2140530076.cpp) · [LeetCode submission](https://leetcode.com/problems/3sum-with-multiplicity/submissions/2140530076/)
 
-## Additional observed parity shortcuts
+### 1401. Circle and Rectangle Overlapping
 
-- **3876:** the inspected implementation computes minimum odd and minimum even values and returns “no odd value, or minimum odd < minimum even.” This is a condition for that task's allowed positive-value operations, not a generic uniform-parity test. Its opening comments give the wrong parity table for subtraction. The correct table is: same parity → even; different parity → odd. Do not copy those comments into another solution.
-- **3875:** the actual source simply returns `true`. That is recorded as a problem-specific conclusion; it supplies no reusable transformation algorithm. No missing logic is invented from the title.
+[Problem](https://leetcode.com/problems/circle-and-rectangle-overlapping/) · Tags: Geometry, Clamping
 
-## Tests and safety changes
+Closest rectangle point to circle center obtained by clamping both coordinates; compare squared distance.
 
-Deterministic cases plus 500 seeded cases compare multiplicity counts with explicit index triples, translation counts with all small shifts, generated super-palindromes with integer-root enumeration, rectangle overlap with unit cells, and clamp distance with lattice-point enumeration. Dedicated cases cover the full original 10^18 bound, zero once, negative shifts, 1,681 unique packed pairs, `INT_MAX` value sums, 3,000 equal values, wide squared distances, and tangency.
+**Captured variants:** Latest compact clamp; older redundant corner-distance precheck then identical clamp.
 
-The input contracts are part of the snippets. Helpers are self-contained C++20 and use only standard types; no nonstandard `__int128`, magic grid widths, floating modulus construction, or cross-topic dependency is required.
+- [Original 2146448826](originals/1401__2146448826.cpp) · [LeetCode submission](https://leetcode.com/problems/circle-and-rectangle-overlapping/submissions/2146448826/)
+- [Original 2146448651](originals/1401__2146448651.cpp) · [LeetCode submission](https://leetcode.com/problems/circle-and-rectangle-overlapping/submissions/2146448651/)
 
-## Compile and verify
+### 1498. Number of Subsequences That Satisfy the Given Sum Condition
 
-From this folder:
+[Problem](https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/) · Tags: Two pointers, Combinatorics
 
-```sh
-g++ -std=c++20 -O2 -Wall -Wextra -Werror test.cpp -o /tmp/pattern-test
-/tmp/pattern-test
-g++ -std=c++20 -O1 -g -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer test.cpp -o /tmp/pattern-test-sanitized
-/tmp/pattern-test-sanitized
-```
+Sort; when minimum+maximum fits, all subsets of interior elements yield 2^(right-left) valid subsequences with fixed minimum.
 
-Verification in the build environment used `ASAN_OPTIONS=detect_leaks=0` for the sanitizer run because LeakSanitizer cannot operate under ptrace there. AddressSanitizer and UndefinedBehaviorSanitizer remained enabled; leak checking was not completed. On a normal local environment, try the command above with leak detection left enabled.
+**Captured variants:** One observed approach.
 
-The tests were written before the implementations. Neutral stubs produced failing behavioral checks; the implementations then passed the same checks. No LeetCode harness, external libraries, or other handbook topics are needed. Helpers are `inline` in namespace `patterns`; include `templates.hpp` and call only the pieces you need.
+- [Original 2140461426](originals/1498__2140461426.cpp) · [LeetCode submission](https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/submissions/2140461426/)
 
-## Exact source map
+### 3483. Unique 3-Digit Even Numbers
 
-These are the inspected submissions, not algorithms inferred from problem titles. Multiple links show observed variants.
+[Problem](https://leetcode.com/problems/unique-3-digit-even-numbers/) · Tags: Enumeration, Frequency maps
 
-- [810. Chalkboard XOR Game](https://leetcode.com/problems/chalkboard-xor-game/) · inventory row 8 · [submission 2166697803](https://leetcode.com/problems/chalkboard-xor-game/submissions/2166697803/)
-- [906. Super Palindromes](https://leetcode.com/problems/super-palindromes/) · inventory row 21 · [submission 2163458920](https://leetcode.com/problems/super-palindromes/submissions/2163458920/)
-- [923. 3Sum With Multiplicity](https://leetcode.com/problems/3sum-with-multiplicity/) · inventory row 172 · [submission 2140530076](https://leetcode.com/problems/3sum-with-multiplicity/submissions/2140530076/)
-- [835. Image Overlap](https://leetcode.com/problems/image-overlap/) · inventory row 175 · [submission 2140447101](https://leetcode.com/problems/image-overlap/submissions/2140447101/), [submission 2140436041](https://leetcode.com/problems/image-overlap/submissions/2140436041)
-- [836. Rectangle Overlap](https://leetcode.com/problems/rectangle-overlap/) · inventory row 159 · [submission 2141366410](https://leetcode.com/problems/rectangle-overlap/submissions/2141366410/)
-- [1401. Circle and Rectangle Overlapping](https://leetcode.com/problems/circle-and-rectangle-overlapping/) · inventory row 133 · [submission 2146448826](https://leetcode.com/problems/circle-and-rectangle-overlapping/submissions/2146448826/), [submission 2146448651](https://leetcode.com/problems/circle-and-rectangle-overlapping/submissions/2146448651/)
-- [3876. Construct Uniform Parity Array II](https://leetcode.com/problems/construct-uniform-parity-array-ii/) · inventory row 187 · [submission 2131978781](https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131978781/), [submission 2131975505](https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131975505/)
-- [3875. Construct Uniform Parity Array I](https://leetcode.com/problems/construct-uniform-parity-array-i/) · inventory row 196 · [submission 2128397234](https://leetcode.com/problems/construct-uniform-parity-array-i/submissions/2128397234/)
+Enumerate hundreds,tens,even units using decrement/restore counts, avoiding leading zero and duplicate values.
+
+**Captured variants:** One observed approach.
+
+- [Original 2138479064](originals/3483__2138479064.cpp) · [LeetCode submission](https://leetcode.com/problems/unique-3-digit-even-numbers/submissions/2138479064/)
+
+### 3498. Reverse Degree of a String
+
+[Problem](https://leetcode.com/problems/reverse-degree-of-a-string/) · Tags: Strings, Arithmetic
+
+Map lowercase character to reverse alphabet weight and multiply by one-based index.
+
+**Captured variants:** Two equivalent implementations, one with debug output.
+
+- [Original 2147499756](originals/3498__2147499756.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-degree-of-a-string/submissions/2147499756/)
+- [Original 2147499695](originals/3498__2147499695.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-degree-of-a-string/submissions/2147499695/)
+
+### 3870. Count Commas in Range
+
+[Problem](https://leetcode.com/problems/count-commas-in-range/) · Tags: Counting, Digit thresholds
+
+Counts numbers at first comma threshold under original small range.
+
+**Captured variants:** One observed approach.
+
+- [Original 2134960323](originals/3870__2134960323.cpp) · [LeetCode submission](https://leetcode.com/problems/count-commas-in-range/submissions/2134960323/)
+
+### 3871. Count Commas in Range II
+
+[Problem](https://leetcode.com/problems/count-commas-in-range-ii/) · Tags: Counting, Digit thresholds
+
+Each decimal comma threshold contributes max(0,n-threshold+1); five hardcoded powers of 1000.
+
+**Captured variants:** One observed approach.
+
+- [Original 2136687887](originals/3871__2136687887.cpp) · [LeetCode submission](https://leetcode.com/problems/count-commas-in-range-ii/submissions/2136687887/)
+
+### 3875. Construct Uniform Parity Array I
+
+[Problem](https://leetcode.com/problems/construct-uniform-parity-array-i/) · Tags: Math, Problem-specific invariant
+
+Actual implementation returns true for every input.
+
+**Captured variants:** One constant-result source.
+
+- [Original 2128397234](originals/3875__2128397234.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-uniform-parity-array-i/submissions/2128397234/)
+
+### 3876. Construct Uniform Parity Array II
+
+[Problem](https://leetcode.com/problems/construct-uniform-parity-array-ii/) · Tags: Greedy, Parity
+
+Scan minimum odd and even; return all-even or minimum odd below minimum even.
+
+**Captured variants:** One observed approach.
+
+- [Original 2131978781](originals/3876__2131978781.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131978781/)
+- [Original 2131975505](originals/3876__2131975505.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131975505/)
