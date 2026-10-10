@@ -1,0 +1,3243 @@
+[
+  {
+    "problem": "699. Falling Squares",
+    "problem_url": "https://leetcode.com/problems/falling-squares/",
+    "topic": "range-queries",
+    "pattern": "Range assignment and range maximum over compressed elementary x-intervals; landing height = current max + square side.",
+    "topics": [
+      "Segment tree",
+      "Lazy propagation",
+      "Coordinate compression"
+    ],
+    "adaptation_notes": "Use separate hasLazy flag to allow assigning zero; use appropriate max identity for negatives. Reset Solution mapping/global on repeated calls or make them local. Compress endpoints then query [rank(l),rank(r)-1] to keep touching squares disjoint. Widen x+side/height if generalized.",
+    "submissions": [
+      {
+        "id": "2155079538",
+        "url": "https://leetcode.com/problems/falling-squares/submissions/2155079538/"
+      }
+    ]
+  },
+  {
+    "problem": "327. Count of Range Sum",
+    "problem_url": "https://leetcode.com/problems/count-of-range-sum/",
+    "topic": "range-queries",
+    "pattern": "Preload all prefix sums, remove current prefix, count future prefixes in [current+lower,current+upper] via Fenwick.",
+    "topics": [
+      "Fenwick tree",
+      "Coordinate compression",
+      "Prefix sums"
+    ],
+    "adaptation_notes": "Original sorted coordinates retain duplicates and initialize every slot to one; removal always at lower_bound can make that slot negative while equal-value bucket total remains correct. Prefer deduplicated coordinates with actual frequencies or forward zero-init insertion, explicitly documented adaptation. Long long prefix/candidate bounds already used; widen result/count if unrestricted.",
+    "submissions": [
+      {
+        "id": "2152424852",
+        "url": "https://leetcode.com/problems/count-of-range-sum/submissions/2152424852/"
+      }
+    ]
+  },
+  {
+    "problem": "406. Queue Reconstruction by Height",
+    "problem_url": "https://leetcode.com/problems/queue-reconstruction-by-height/",
+    "topic": "range-queries",
+    "pattern": "Sort by height ascending, equal height k descending; count tree tracks free positions, choose and remove kth free slot.",
+    "topics": [
+      "Segment tree",
+      "Order statistics",
+      "Greedy"
+    ],
+    "adaptation_notes": "k is zero-based, branch left iff leftCount>k. Validate 0<=k<freeCount for reusable selection; empty constructor needs guard. Document destructive select versus query-only kth.",
+    "submissions": [
+      {
+        "id": "2152399602",
+        "url": "https://leetcode.com/problems/queue-reconstruction-by-height/submissions/2152399602/"
+      }
+    ]
+  },
+  {
+    "problem": "307. Range Sum Query - Mutable",
+    "problem_url": "https://leetcode.com/problems/range-sum-query-mutable/",
+    "topic": "range-queries",
+    "pattern": "Fenwick O(n) construction copies values then propagates each tree cell to parent; point assignment converted to delta, inclusive range via two prefixes.",
+    "topics": [
+      "Fenwick tree",
+      "Prefix sums",
+      "Point updates"
+    ],
+    "adaptation_notes": "Preserve zero-based public interface and query(-1)=0. General reusable Fenwick should expose add; assignment wrapper retains arr. Widen delta and tree sum if generalized. Member initialization order differs from declaration but expressions independent.",
+    "submissions": [
+      {
+        "id": "2152356890",
+        "url": "https://leetcode.com/problems/range-sum-query-mutable/submissions/2152356890/"
+      }
+    ]
+  },
+  {
+    "problem": "315. Count of Smaller Numbers After Self",
+    "problem_url": "https://leetcode.com/problems/count-of-smaller-numbers-after-self/",
+    "topic": "range-queries",
+    "pattern": "Each segment-tree node stores merged sorted subarray; range count-less-than uses lower_bound at fully covered nodes.",
+    "topics": [
+      "Merge-sort tree",
+      "Range counting"
+    ],
+    "adaptation_notes": "Prefer older constructor with if(n>0) guard and vector<T> input; latest unconditionally builds empty tree and constructor hardcodes vector<int> despite template. Static data only, O(n log n) space/build, O(log^2 n) query.",
+    "submissions": [
+      {
+        "id": "2150813916",
+        "url": "https://leetcode.com/problems/count-of-smaller-numbers-after-self/submissions/2150813916/"
+      },
+      {
+        "id": "2150760829",
+        "url": "https://leetcode.com/problems/count-of-smaller-numbers-after-self/submissions/2150760829/"
+      }
+    ]
+  },
+  {
+    "problem": "3525. Find X Value of Array II",
+    "problem_url": "https://leetcode.com/problems/find-x-value-of-array-ii/",
+    "topic": "range-queries",
+    "pattern": "Each node stores full product modulo k plus counts of prefix-product remainders; ordered merge keeps left prefixes and extends full left by right prefixes.",
+    "topics": [
+      "Segment tree",
+      "Noncommutative aggregates",
+      "Modular products"
+    ],
+    "adaptation_notes": "Source uses root1/children2o,2o+1, unlike other root0 trees: normalize deliberately. MAXK=6 supports k<=5 because slot k stores product. Prefer explicit struct with product and count array; guard n==0 and avoid floating log2 allocation. Merge order matters, cannot commute.",
+    "submissions": [
+      {
+        "id": "2150176033",
+        "url": "https://leetcode.com/problems/find-x-value-of-array-ii/submissions/2150176033/"
+      }
+    ]
+  },
+  {
+    "problem": "1970. Last Day Where You Can Still Cross",
+    "problem_url": "https://leetcode.com/problems/last-day-where-you-can-still-cross/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Reverse time turns deletions into activations; connect active neighbors and two virtual boundary nodes.",
+    "topics": [
+      "DSU",
+      "Offline queries",
+      "Grid graphs"
+    ],
+    "adaptation_notes": "Use latest compact reverse-only implementation; remove duplicate public label. Keep cell-to-id mapping +1 and virtual ids 0, row*col+1 explicit. Bound recursion or iterative find when generalized.",
+    "submissions": [
+      {
+        "id": "2168377479",
+        "url": "https://leetcode.com/problems/last-day-where-you-can-still-cross/submissions/2168377479/"
+      },
+      {
+        "id": "2168371581",
+        "url": "https://leetcode.com/problems/last-day-where-you-can-still-cross/submissions/2168371581/"
+      }
+    ]
+  },
+  {
+    "problem": "1489. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree",
+    "problem_url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Run Kruskal baseline, then per-edge excluded and forced trials to distinguish critical and pseudo-critical edges.",
+    "topics": [
+      "DSU",
+      "Graphs",
+      "Minimum spanning trees"
+    ],
+    "adaptation_notes": "Reusable DSU could return bool merged to avoid separate find calls; explicitly mark API change. Fix force>0 test to force>=0 for clarity although forced edge 0 is subsequently rejected by DSU cycle check. Count n-1 edges to detect disconnect. Long long cost if generalized.",
+    "submissions": [
+      {
+        "id": "2162346413",
+        "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/submissions/2162346413/"
+      },
+      {
+        "id": "2162346068",
+        "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/submissions/2162346068/"
+      }
+    ]
+  },
+  {
+    "problem": "1584. Min Cost to Connect All Points",
+    "problem_url": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Enumerate complete Manhattan graph, sort weighted edges, Kruskal until n-1 merges.",
+    "topics": [
+      "Graphs",
+      "Minimum spanning trees",
+      "DSU"
+    ],
+    "adaptation_notes": "Standardize DSU API from unify/query to uni/find, noting rename. Latest uses index identity and i<j edge enumeration; remove unused key. Older coordinate-key mapping assumes distinct positions and duplicates directed edges; prefer latest. Widen coordinate subtraction/cost if generalized.",
+    "submissions": [
+      {
+        "id": "2162051692",
+        "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/submissions/2162051692/"
+      },
+      {
+        "id": "2162050952",
+        "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/submissions/2162050952/"
+      },
+      {
+        "id": "2162050421",
+        "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/submissions/2162050421/"
+      }
+    ]
+  },
+  {
+    "problem": "207. Course Schedule",
+    "problem_url": "https://leetcode.com/problems/course-schedule/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Kahn indegrees plus queue; separate recursive active-path/done cycle detection.",
+    "topics": [
+      "Graphs",
+      "Topological sort",
+      "DFS"
+    ],
+    "adaptation_notes": "Prefer count==numCourses Kahn form; level batching unnecessary for cycle existence. DFS uses C++20 abbreviated templates and contains. Use short-circuit early exit or three-color state for reusable version; current &= explores after failure but retains failure.",
+    "submissions": [
+      {
+        "id": "2156079641",
+        "url": "https://leetcode.com/problems/course-schedule/submissions/2156079641/"
+      },
+      {
+        "id": "2139404121",
+        "url": "https://leetcode.com/problems/course-schedule/submissions/2139404121/"
+      },
+      {
+        "id": "2139396834",
+        "url": "https://leetcode.com/problems/course-schedule/submissions/2139396834/"
+      }
+    ]
+  },
+  {
+    "problem": "752. Open the Lock",
+    "problem_url": "https://leetcode.com/problems/open-the-lock/",
+    "topic": "dsu-and-graphs",
+    "pattern": "BFS over four-wheel strings; generate modular +/-1 neighbors; mark visited when enqueuing.",
+    "topics": [
+      "Graphs",
+      "BFS",
+      "Implicit state"
+    ],
+    "adaptation_notes": "Mutate a copied string rather than substr concatenation if making a lean template. Four wheels and decimal alphabet are problem constraints.",
+    "submissions": [
+      {
+        "id": "2156069275",
+        "url": "https://leetcode.com/problems/open-the-lock/submissions/2156069275/"
+      }
+    ]
+  },
+  {
+    "problem": "130. Surrounded Regions",
+    "problem_url": "https://leetcode.com/problems/surrounded-regions/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Mark border-connected cells then flip only unmarked interior cells.",
+    "topics": [
+      "Graphs",
+      "Flood fill"
+    ],
+    "adaptation_notes": "Guard empty grid; recursive DFS can exhaust stack on large grids. In-place V marker assumes input alphabet excludes V.",
+    "submissions": [
+      {
+        "id": "2156047108",
+        "url": "https://leetcode.com/problems/surrounded-regions/submissions/2156047108/"
+      }
+    ]
+  },
+  {
+    "problem": "417. Pacific Atlantic Water Flow",
+    "problem_url": "https://leetcode.com/problems/pacific-atlantic-water-flow/",
+    "topic": "dsu-and-graphs",
+    "pattern": "DFS uphill from both oceans; each cell carries one bit per origin; append when both bits first present.",
+    "topics": [
+      "Graphs",
+      "Reverse reachability",
+      "Bitmask states"
+    ],
+    "adaptation_notes": "Explain reversed inequality >=; each (cell,origin) visited at most once. Recursive stack caveat.",
+    "submissions": [
+      {
+        "id": "2156035451",
+        "url": "https://leetcode.com/problems/pacific-atlantic-water-flow/submissions/2156035451/"
+      }
+    ]
+  },
+  {
+    "problem": "994. Rotting Oranges",
+    "problem_url": "https://leetcode.com/problems/rotting-oranges/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Seed all rotten cells, process queue levels, count fresh cells and return elapsed waves or -1.",
+    "topics": [
+      "Graphs",
+      "Multi-source BFS"
+    ],
+    "adaptation_notes": "Guard empty grid in reusable function. Mark at enqueue time; minutes starts at -1 because initial sources are minute zero.",
+    "submissions": [
+      {
+        "id": "2155965323",
+        "url": "https://leetcode.com/problems/rotting-oranges/submissions/2155965323/"
+      },
+      {
+        "id": "2011741235",
+        "url": "https://leetcode.com/problems/rotting-oranges/submissions/2011741235/"
+      }
+    ]
+  },
+  {
+    "problem": "133. Clone Graph",
+    "problem_url": "https://leetcode.com/problems/clone-graph/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Memoized graph cloning creates clone and registers it before recursive neighbor traversal to terminate cycles.",
+    "topics": [
+      "Graphs",
+      "DFS",
+      "Hash maps"
+    ],
+    "adaptation_notes": "Define ownership of allocated graph. Store clone before visiting neighbors is essential.",
+    "submissions": [
+      {
+        "id": "2155372665",
+        "url": "https://leetcode.com/problems/clone-graph/submissions/2155372665/"
+      }
+    ]
+  },
+  {
+    "problem": "695. Max Area of Island",
+    "problem_url": "https://leetcode.com/problems/max-area-of-island/",
+    "topic": "dsu-and-graphs",
+    "pattern": "In-place DFS clears visited land and sums recursive component area.",
+    "topics": [
+      "Graphs",
+      "Flood fill"
+    ],
+    "adaptation_notes": "Empty-grid guard and recursion-depth limit; initialize result to 0 rather than INT_MIN special case.",
+    "submissions": [
+      {
+        "id": "2155365320",
+        "url": "https://leetcode.com/problems/max-area-of-island/submissions/2155365320/"
+      }
+    ]
+  },
+  {
+    "problem": "200. Number of Islands",
+    "problem_url": "https://leetcode.com/problems/number-of-islands/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Count unvisited land seeds and flood-fill each connected component.",
+    "topics": [
+      "Graphs",
+      "Flood fill"
+    ],
+    "adaptation_notes": "Latest source destroys grid, older preserves it with visited matrix; make mutation contract explicit. Add empty guard to latest.",
+    "submissions": [
+      {
+        "id": "2155362152",
+        "url": "https://leetcode.com/problems/number-of-islands/submissions/2155362152/"
+      },
+      {
+        "id": "2125964378",
+        "url": "https://leetcode.com/problems/number-of-islands/submissions/2125964378/"
+      }
+    ]
+  },
+  {
+    "problem": "463. Island Perimeter",
+    "problem_url": "https://leetcode.com/problems/island-perimeter/",
+    "topic": "dsu-and-graphs",
+    "pattern": "DFS land cells and count outgoing edges to water/outside; pack coordinate pair into uint64 key.",
+    "topics": [
+      "Graphs",
+      "Flood fill",
+      "Coordinate packing"
+    ],
+    "adaptation_notes": "Packed i,j are nonnegative <=32 bits under grid constraints. Single-island assumption; outer break only ends inner loop but visited suppresses duplicate work. Guard empty grid.",
+    "submissions": [
+      {
+        "id": "2155358279",
+        "url": "https://leetcode.com/problems/island-perimeter/submissions/2155358279/"
+      }
+    ]
+  },
+  {
+    "problem": "997. Find the Town Judge",
+    "problem_url": "https://leetcode.com/problems/find-the-town-judge/",
+    "topic": "dsu-and-graphs",
+    "pattern": "Store incoming/outgoing trust lists and find incoming n-1 with no outgoing edges.",
+    "topics": [
+      "Graphs",
+      "Degrees"
+    ],
+    "adaptation_notes": "A generalized lean version may replace lists with degree counts, explicitly noted as cleanup. Assumes distinct non-self trust edges.",
+    "submissions": [
+      {
+        "id": "2155347510",
+        "url": "https://leetcode.com/problems/find-the-town-judge/submissions/2155347510/"
+      }
+    ]
+  },
+  {
+    "problem": "3568. Minimum Moves to Clean the Classroom",
+    "problem_url": "https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/",
+    "topic": "dsu-and-graphs",
+    "pattern": "BFS (row,col,trash_mask,energy,moves); recharge cells restore energy; keep best energy for each position/mask.",
+    "topics": [
+      "Graphs",
+      "BFS",
+      "Bitmask states",
+      "Dominance pruning"
+    ],
+    "adaptation_notes": "Dominance relies on BFS nondecreasing moves: a previously reached same cell/mask with at least energy cannot be worse. Each energy improvement can enqueue again; include energy factor in worst-case bound. 1<<k exponential constraints explicit.",
+    "submissions": [
+      {
+        "id": "2131979696",
+        "url": "https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/submissions/2131979696/"
+      }
+    ]
+  },
+  {
+    "problem": "138. Copy List with Random Pointer",
+    "problem_url": "https://leetcode.com/problems/copy-list-with-random-pointer/",
+    "topic": "trees-and-lists",
+    "pattern": "Two passes: allocate clone for every original pointer, then wire next/random through pointer mapping.",
+    "topics": [
+      "Linked lists",
+      "Hash maps",
+      "Graph copy"
+    ],
+    "adaptation_notes": "mapping[nullptr] value-initializes null pointer, which is used intentionally. Define ownership; use explicit nullptr mapping or lookup helper in reusable code.",
+    "submissions": [
+      {
+        "id": "2143802245",
+        "url": "https://leetcode.com/problems/copy-list-with-random-pointer/submissions/2143802245/"
+      }
+    ]
+  },
+  {
+    "problem": "19. Remove Nth Node From End of List",
+    "problem_url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+    "topic": "trees-and-lists",
+    "pattern": "Count length then unlink node at length-n, with head special case.",
+    "topics": [
+      "Linked lists"
+    ],
+    "adaptation_notes": "Not fast/slow in actual code. Requires valid n and nonempty list; removed node ownership not released.",
+    "submissions": [
+      {
+        "id": "2143696811",
+        "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/submissions/2143696811/"
+      }
+    ]
+  },
+  {
+    "problem": "143. Reorder List",
+    "problem_url": "https://leetcode.com/problems/reorder-list/",
+    "topic": "trees-and-lists",
+    "pattern": "Latest source splits at midpoint, reverses second half, alternates merge; older sources materialize node pointers and track visited.",
+    "topics": [
+      "Linked lists",
+      "Fast slow pointers",
+      "Reversal"
+    ],
+    "adaptation_notes": "Prefer in-place O(1) auxiliary version. Detach halves before reversal to prevent cycles. Older stack version assumes nonempty head.",
+    "submissions": [
+      {
+        "id": "2143673583",
+        "url": "https://leetcode.com/problems/reorder-list/submissions/2143673583/"
+      },
+      {
+        "id": "2143663379",
+        "url": "https://leetcode.com/problems/reorder-list/submissions/2143663379/"
+      },
+      {
+        "id": "1211639660",
+        "url": "https://leetcode.com/problems/reorder-list/submissions/1211639660/"
+      }
+    ]
+  },
+  {
+    "problem": "141. Linked List Cycle",
+    "problem_url": "https://leetcode.com/problems/linked-list-cycle/",
+    "topic": "trees-and-lists",
+    "pattern": "Floyd cycle detection advances 1 and 2 until meet or null.",
+    "topics": [
+      "Linked lists",
+      "Fast slow pointers"
+    ],
+    "adaptation_notes": "Guard fast and fast->next before two-step advance.",
+    "submissions": [
+      {
+        "id": "2143629142",
+        "url": "https://leetcode.com/problems/linked-list-cycle/submissions/2143629142/"
+      }
+    ]
+  },
+  {
+    "problem": "21. Merge Two Sorted Lists",
+    "problem_url": "https://leetcode.com/problems/merge-two-sorted-lists/",
+    "topic": "trees-and-lists",
+    "pattern": "Dummy-head merge links existing nodes then appends remainder.",
+    "topics": [
+      "Linked lists",
+      "Merge"
+    ],
+    "adaptation_notes": "Remove unreachable head==nullptr branch because heap dummy is already allocated; use stack dummy for cleaner ownership.",
+    "submissions": [
+      {
+        "id": "2143594529",
+        "url": "https://leetcode.com/problems/merge-two-sorted-lists/submissions/2143594529/"
+      }
+    ]
+  },
+  {
+    "problem": "206. Reverse Linked List",
+    "problem_url": "https://leetcode.com/problems/reverse-linked-list/",
+    "topic": "trees-and-lists",
+    "pattern": "Latest source reverses links with prev/current/tmp; older source creates reversed copies after reusing original head.",
+    "topics": [
+      "Linked lists",
+      "Reversal"
+    ],
+    "adaptation_notes": "Prefer pointer reversal. Older 2126014226 allocates n-1 nodes and abandons original suffix, so not an O(1)-space reversal despite acceptance.",
+    "submissions": [
+      {
+        "id": "2143560010",
+        "url": "https://leetcode.com/problems/reverse-linked-list/submissions/2143560010/"
+      },
+      {
+        "id": "2126014226",
+        "url": "https://leetcode.com/problems/reverse-linked-list/submissions/2126014226/"
+      }
+    ]
+  },
+  {
+    "problem": "105. Construct Binary Tree from Preorder and Inorder Traversal",
+    "problem_url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+    "topic": "trees-and-lists",
+    "pattern": "Inorder value-to-index map plus advancing preorder cursor builds left/right subranges.",
+    "topics": [
+      "Trees",
+      "Recursion",
+      "Hash maps"
+    ],
+    "adaptation_notes": "Remove unused initial new TreeNode(preorder[0]) leak. Requires unique values and matching traversals; empty input handling before index access.",
+    "submissions": [
+      {
+        "id": "2141508524",
+        "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508524/"
+      },
+      {
+        "id": "2141508275",
+        "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/2141508275/"
+      }
+    ]
+  },
+  {
+    "problem": "230. Kth Smallest Element in a BST",
+    "problem_url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
+    "topic": "trees-and-lists",
+    "pattern": "Inorder traversal increments count and records kth visited value.",
+    "topics": [
+      "Trees",
+      "DFS",
+      "Order statistics"
+    ],
+    "adaptation_notes": "Traversal does not stop after kth; actual runtime O(n), not O(h+k). Add early stop explicitly if generalized. Requires valid k.",
+    "submissions": [
+      {
+        "id": "2140766874",
+        "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/submissions/2140766874/"
+      }
+    ]
+  },
+  {
+    "problem": "98. Validate Binary Search Tree",
+    "problem_url": "https://leetcode.com/problems/validate-binary-search-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Carry exclusive low/high bounds recursively to validate every descendant.",
+    "topics": [
+      "Trees",
+      "DFS",
+      "Bounds"
+    ],
+    "adaptation_notes": "Use long long boundary sentinels beyond int range; remove unreachable return true.",
+    "submissions": [
+      {
+        "id": "2140737519",
+        "url": "https://leetcode.com/problems/validate-binary-search-tree/submissions/2140737519/"
+      }
+    ]
+  },
+  {
+    "problem": "199. Binary Tree Right Side View",
+    "problem_url": "https://leetcode.com/problems/binary-tree-right-side-view/",
+    "topic": "trees-and-lists",
+    "pattern": "Queue complete levels left-to-right and take queue.back at level start for rightmost view.",
+    "topics": [
+      "Trees",
+      "BFS"
+    ],
+    "adaptation_notes": "Queue contents must contain exactly one level at capture.",
+    "submissions": [
+      {
+        "id": "2140707899",
+        "url": "https://leetcode.com/problems/binary-tree-right-side-view/submissions/2140707899/"
+      }
+    ]
+  },
+  {
+    "problem": "102. Binary Tree Level Order Traversal",
+    "problem_url": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
+    "topic": "trees-and-lists",
+    "pattern": "Freeze queue length, collect one vector per level, enqueue children.",
+    "topics": [
+      "Trees",
+      "BFS"
+    ],
+    "adaptation_notes": "Guard root before enqueue for cleaner invariant.",
+    "submissions": [
+      {
+        "id": "2140704978",
+        "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/submissions/2140704978/"
+      }
+    ]
+  },
+  {
+    "problem": "235. Lowest Common Ancestor of a Binary Search Tree",
+    "problem_url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Order target values; descend until current value lies between targets.",
+    "topics": [
+      "Trees",
+      "BST",
+      "Search"
+    ],
+    "adaptation_notes": "Requires both targets in BST; optional iterative conversion is cleanup, not another source algorithm.",
+    "submissions": [
+      {
+        "id": "2140699724",
+        "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/submissions/2140699724/"
+      }
+    ]
+  },
+  {
+    "problem": "572. Subtree of Another Tree",
+    "problem_url": "https://leetcode.com/problems/subtree-of-another-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "At every root candidate, recursively test structural equality; recurse through host tree otherwise.",
+    "topics": [
+      "Trees",
+      "DFS"
+    ],
+    "adaptation_notes": "O(n*m) worst-case; define empty-subtree contract if generalized. Remove unused result.",
+    "submissions": [
+      {
+        "id": "2140623050",
+        "url": "https://leetcode.com/problems/subtree-of-another-tree/submissions/2140623050/"
+      }
+    ]
+  },
+  {
+    "problem": "100. Same Tree",
+    "problem_url": "https://leetcode.com/problems/same-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Shared result flag checks null mismatch then value equality and both children.",
+    "topics": [
+      "Trees",
+      "DFS"
+    ],
+    "adaptation_notes": "Boolean recursive return is a cleaner derivative; source uses capture result and xor of null tests.",
+    "submissions": [
+      {
+        "id": "2140598575",
+        "url": "https://leetcode.com/problems/same-tree/submissions/2140598575/"
+      }
+    ]
+  },
+  {
+    "problem": "543. Diameter of Binary Tree",
+    "problem_url": "https://leetcode.com/problems/diameter-of-binary-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Return subtree height while updating best path through current node with left+right heights.",
+    "topics": [
+      "Trees",
+      "Postorder",
+      "Dynamic programming"
+    ],
+    "adaptation_notes": "Height counts nodes while diameter counts edges; explain null height 0. Recursive stack O(height).",
+    "submissions": [
+      {
+        "id": "2140582704",
+        "url": "https://leetcode.com/problems/diameter-of-binary-tree/submissions/2140582704/"
+      }
+    ]
+  },
+  {
+    "problem": "104. Maximum Depth of Binary Tree",
+    "problem_url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Return 1+maximum child height, null=0.",
+    "topics": [
+      "Trees",
+      "Recursion"
+    ],
+    "adaptation_notes": "Recursion depth O(height).",
+    "submissions": [
+      {
+        "id": "2140575615",
+        "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/submissions/2140575615/"
+      }
+    ]
+  },
+  {
+    "problem": "226. Invert Binary Tree",
+    "problem_url": "https://leetcode.com/problems/invert-binary-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Swap child pointers then recurse into both.",
+    "topics": [
+      "Trees",
+      "Recursion"
+    ],
+    "adaptation_notes": "Mutates tree; replace manual temporary with std::swap as cleanup if desired.",
+    "submissions": [
+      {
+        "id": "2140574036",
+        "url": "https://leetcode.com/problems/invert-binary-tree/submissions/2140574036/"
+      }
+    ]
+  },
+  {
+    "problem": "2265. Count Nodes Equal to Average of Subtree",
+    "problem_url": "https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/",
+    "topic": "trees-and-lists",
+    "pattern": "Return pair (sum,count) for subtree and count matching integer average.",
+    "topics": [
+      "Trees",
+      "Postorder aggregates"
+    ],
+    "adaptation_notes": "Reset result on repeated public calls or local capture; use long long sum if generalized. Integer division is floor only for nonnegative values.",
+    "submissions": [
+      {
+        "id": "2137363284",
+        "url": "https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/submissions/2137363284/"
+      }
+    ]
+  },
+  {
+    "problem": "297. Serialize and Deserialize Binary Tree",
+    "problem_url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Preorder tokens with explicit null markers reconstruct unique shape; older source encodes indexed inorder and preorder.",
+    "topics": [
+      "Trees",
+      "Serialization",
+      "Parsing"
+    ],
+    "adaptation_notes": "Prefer compact null-marker grammar; validate extraction/stoi if consuming untrusted data. Older traversal-pair scheme introduces IDs specifically to handle duplicate values.",
+    "submissions": [
+      {
+        "id": "2153777400",
+        "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2153777400/"
+      },
+      {
+        "id": "2141912475",
+        "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141912475/"
+      },
+      {
+        "id": "2141671426",
+        "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/submissions/2141671426/"
+      }
+    ]
+  },
+  {
+    "problem": "124. Binary Tree Maximum Path Sum",
+    "problem_url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+    "topic": "trees-and-lists",
+    "pattern": "Return best one-branch gain, update best full path through node using both nonnegative child gains.",
+    "topics": [
+      "Trees",
+      "Postorder",
+      "Dynamic programming"
+    ],
+    "adaptation_notes": "Clamp child gains to zero but preserve actual node value so all-negative tree works. Empty tree contract needed; widen sums for expanded bounds.",
+    "submissions": [
+      {
+        "id": "2153370936",
+        "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2153370936/"
+      },
+      {
+        "id": "2141514512",
+        "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/2141514512/"
+      }
+    ]
+  },
+  {
+    "problem": "1448. Count Good Nodes in Binary Tree",
+    "problem_url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Carry maximum root-to-current value and count node if >= prior max.",
+    "topics": [
+      "Trees",
+      "DFS",
+      "Path aggregates"
+    ],
+    "adaptation_notes": "Current max passed by value so branches independent. INT_MIN valid for int node domain.",
+    "submissions": [
+      {
+        "id": "2140724204",
+        "url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/submissions/2140724204/"
+      }
+    ]
+  },
+  {
+    "problem": "110. Balanced Binary Tree",
+    "problem_url": "https://leetcode.com/problems/balanced-binary-tree/",
+    "topic": "trees-and-lists",
+    "pattern": "Compute heights and shared balanced flag; skip later work once imbalance detected.",
+    "topics": [
+      "Trees",
+      "Postorder"
+    ],
+    "adaptation_notes": "Returning sentinel height would be a separate cleanup option; source shared flag prevents repeated subtree scans.",
+    "submissions": [
+      {
+        "id": "2140593789",
+        "url": "https://leetcode.com/problems/balanced-binary-tree/submissions/2140593789/"
+      }
+    ]
+  },
+  {
+    "problem": "25. Reverse Nodes in k-Group",
+    "problem_url": "https://leetcode.com/problems/reverse-nodes-in-k-group/",
+    "topic": "trees-and-lists",
+    "pattern": "Verify complete k-node group, reverse exactly k links, recursively process suffix and attach via old head.",
+    "topics": [
+      "Linked lists",
+      "Reversal",
+      "Recursion"
+    ],
+    "adaptation_notes": "Require k>=1; recursion uses O(n/k) stack, not O(1) total auxiliary space. Incomplete suffix unchanged.",
+    "submissions": [
+      {
+        "id": "2144552684",
+        "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/submissions/2144552684/"
+      }
+    ]
+  },
+  {
+    "problem": "23. Merge k Sorted Lists",
+    "problem_url": "https://leetcode.com/problems/merge-k-sorted-lists/",
+    "topic": "trees-and-lists",
+    "pattern": "Latest inserts every node into heap then relinks sorted nodes; older repeatedly dequeues two list heads and enqueues merged list.",
+    "topics": [
+      "Linked lists",
+      "Heaps",
+      "Pairwise merge"
+    ],
+    "adaptation_notes": "Latest is O(N log N) time/O(N) heap, not O(N log k) head-only merge. If replacing with head-only heap, label as adaptation. Pairwise queue version O(N log k) merge rounds. Use stack dummy cleanup.",
+    "submissions": [
+      {
+        "id": "2144522916",
+        "url": "https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144522916/"
+      },
+      {
+        "id": "2144097838",
+        "url": "https://leetcode.com/problems/merge-k-sorted-lists/submissions/2144097838/"
+      }
+    ]
+  },
+  {
+    "problem": "2. Add Two Numbers",
+    "problem_url": "https://leetcode.com/problems/add-two-numbers/",
+    "topic": "trees-and-lists",
+    "pattern": "Dummy-head output list, add corresponding digits plus carry, process remainders, append final carry.",
+    "topics": [
+      "Linked lists",
+      "Arithmetic"
+    ],
+    "adaptation_notes": "Rename reminder to carry as clear English cleanup. Stack dummy avoids separate allocate/delete. Can unify three loops while either list or carry remains, explicitly note adaptation.",
+    "submissions": [
+      {
+        "id": "2143813487",
+        "url": "https://leetcode.com/problems/add-two-numbers/submissions/2143813487/"
+      }
+    ]
+  },
+  {
+    "problem": "968. Binary Tree Cameras",
+    "problem_url": "https://leetcode.com/problems/binary-tree-cameras/",
+    "topic": "trees-and-lists",
+    "pattern": "Postorder cameras placed when child uncovered, or root itself uncovered; set tracks covered nodes, with null pre-covered.",
+    "topics": [
+      "Trees",
+      "Greedy",
+      "Postorder"
+    ],
+    "adaptation_notes": "Parenthesize mixed &&/|| for clarity. Three-state DFS is a possible adaptation but not actual source; preserve set-based provenance.",
+    "submissions": [
+      {
+        "id": "2155106387",
+        "url": "https://leetcode.com/problems/binary-tree-cameras/submissions/2155106387/"
+      }
+    ]
+  },
+  {
+    "problem": "4. Median of Two Sorted Arrays",
+    "problem_url": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
+    "topic": "search-and-sort",
+    "pattern": "Partition smaller sorted array so left side has ceil(total/2), enforce maxLeft<=minRight across both arrays.",
+    "topics": [
+      "Binary search",
+      "Order statistics"
+    ],
+    "adaptation_notes": "Widen before sum of two middle ints; empty combined input requires contract. Sentinels INT_MIN/MAX are valid for integer ordering.",
+    "submissions": [
+      {
+        "id": "2147722433",
+        "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/2147722433/"
+      },
+      {
+        "id": "2147703761",
+        "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/2147703761/"
+      },
+      {
+        "id": "1621118867",
+        "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/1621118867/"
+      }
+    ]
+  },
+  {
+    "problem": "1095. Find in Mountain Array",
+    "problem_url": "https://leetcode.com/problems/find-in-mountain-array/",
+    "topic": "search-and-sort",
+    "pattern": "Find peak, binary-search ascending half first then descending half.",
+    "topics": [
+      "Binary search",
+      "Unimodal search"
+    ],
+    "adaptation_notes": "Use slope-based binary peak as preferred template; 2147556354 ternary narrowing assigns pivot=left without resolving final candidates, so do not generalize that step. Cache API values only if needed under call constraints.",
+    "submissions": [
+      {
+        "id": "2147557289",
+        "url": "https://leetcode.com/problems/find-in-mountain-array/submissions/2147557289/"
+      },
+      {
+        "id": "2147556354",
+        "url": "https://leetcode.com/problems/find-in-mountain-array/submissions/2147556354/"
+      }
+    ]
+  },
+  {
+    "problem": "852. Peak Index in a Mountain Array",
+    "problem_url": "https://leetcode.com/problems/peak-index-in-a-mountain-array/",
+    "topic": "search-and-sort",
+    "pattern": "Compare midpoint with neighbors to choose mountain slope or identify peak.",
+    "topics": [
+      "Binary search",
+      "Unimodal search"
+    ],
+    "adaptation_notes": "Strict mountain and numeric sentinel bounds are assumptions; reusable form mid versus mid+1 avoids external sentinels.",
+    "submissions": [
+      {
+        "id": "2147513687",
+        "url": "https://leetcode.com/problems/peak-index-in-a-mountain-array/submissions/2147513687/"
+      },
+      {
+        "id": "2147512689",
+        "url": "https://leetcode.com/problems/peak-index-in-a-mountain-array/submissions/2147512689/"
+      }
+    ]
+  },
+  {
+    "problem": "410. Split Array Largest Sum",
+    "problem_url": "https://leetcode.com/problems/split-array-largest-sum/",
+    "topic": "search-and-sort",
+    "pattern": "First feasible maximum partition sum, using greedy breaks; predicate currently returns true when infeasible.",
+    "topics": [
+      "Binary search",
+      "Greedy feasibility"
+    ],
+    "adaptation_notes": "Rename predicate tooManyGroups or invert for clarity. Use nonnegative inputs, long long sums, lower bound max element. groups counts breaks rather than partitions.",
+    "submissions": [
+      {
+        "id": "2146752727",
+        "url": "https://leetcode.com/problems/split-array-largest-sum/submissions/2146752727/"
+      },
+      {
+        "id": "2139584888",
+        "url": "https://leetcode.com/problems/split-array-largest-sum/submissions/2139584888/"
+      },
+      {
+        "id": "2139584401",
+        "url": "https://leetcode.com/problems/split-array-largest-sum/submissions/2139584401/"
+      }
+    ]
+  },
+  {
+    "problem": "81. Search in Rotated Sorted Array II",
+    "problem_url": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/",
+    "topic": "search-and-sort",
+    "pattern": "Shrink ambiguous equal boundaries; otherwise identify sorted half and retain matching target interval.",
+    "topics": [
+      "Binary search",
+      "Rotated arrays"
+    ],
+    "adaptation_notes": "Worst case O(n) with duplicates, not guaranteed O(log n).",
+    "submissions": [
+      {
+        "id": "2146739961",
+        "url": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/submissions/2146739961/"
+      },
+      {
+        "id": "2146727441",
+        "url": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/submissions/2146727441/"
+      }
+    ]
+  },
+  {
+    "problem": "33. Search in Rotated Sorted Array",
+    "problem_url": "https://leetcode.com/problems/search-in-rotated-sorted-array/",
+    "topic": "search-and-sort",
+    "pattern": "Find rotation pivot, then binary-search virtual sorted indices mapped by modulo.",
+    "topics": [
+      "Binary search",
+      "Rotated arrays"
+    ],
+    "adaptation_notes": "Latest 2146701709 has malformed midpoint left+(right-left/2); use older correct left+(right-left)/2. Empty array guard if generalized.",
+    "submissions": [
+      {
+        "id": "2146701709",
+        "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/2146701709/"
+      },
+      {
+        "id": "2125939691",
+        "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/2125939691/"
+      },
+      {
+        "id": "2011698957",
+        "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/2011698957/"
+      }
+    ]
+  },
+  {
+    "problem": "153. Find Minimum in Rotated Sorted Array",
+    "problem_url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
+    "topic": "search-and-sort",
+    "pattern": "Find first index on low sorted run by comparing middle with fixed final value or current right value.",
+    "topics": [
+      "Binary search",
+      "Rotated arrays"
+    ],
+    "adaptation_notes": "Nonempty distinct-value rotation assumed; duplicates require different handling.",
+    "submissions": [
+      {
+        "id": "2146698709",
+        "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2146698709/"
+      },
+      {
+        "id": "2127418311",
+        "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2127418311/"
+      },
+      {
+        "id": "2024485741",
+        "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/submissions/2024485741/"
+      }
+    ]
+  },
+  {
+    "problem": "1011. Capacity To Ship Packages Within D Days",
+    "problem_url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/",
+    "topic": "search-and-sort",
+    "pattern": "First feasible capacity between maximum weight and total weight; simulate sequential loading.",
+    "topics": [
+      "Binary search",
+      "Greedy feasibility"
+    ],
+    "adaptation_notes": "Nonnegative weights and positive days; widen sum/load for generic input.",
+    "submissions": [
+      {
+        "id": "2146696311",
+        "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/submissions/2146696311/"
+      },
+      {
+        "id": "2024526301",
+        "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/submissions/2024526301/"
+      }
+    ]
+  },
+  {
+    "problem": "875. Koko Eating Bananas",
+    "problem_url": "https://leetcode.com/problems/koko-eating-bananas/",
+    "topic": "search-and-sort",
+    "pattern": "First feasible speed with sum of integer ceilings.",
+    "topics": [
+      "Binary search",
+      "Integer arithmetic"
+    ],
+    "adaptation_notes": "Use long long hour sum; older variants accumulate int without early exit. Latest early exit limits practical accumulation under current bounds but long long clearer. Ceiling quotient+remainder avoids x+k-1 overflow.",
+    "submissions": [
+      {
+        "id": "2146691389",
+        "url": "https://leetcode.com/problems/koko-eating-bananas/submissions/2146691389/"
+      },
+      {
+        "id": "2139503155",
+        "url": "https://leetcode.com/problems/koko-eating-bananas/submissions/2139503155/"
+      },
+      {
+        "id": "2139502841",
+        "url": "https://leetcode.com/problems/koko-eating-bananas/submissions/2139502841/"
+      },
+      {
+        "id": "2024503988",
+        "url": "https://leetcode.com/problems/koko-eating-bananas/submissions/2024503988/"
+      }
+    ]
+  },
+  {
+    "problem": "74. Search a 2D Matrix",
+    "problem_url": "https://leetcode.com/problems/search-a-2d-matrix/",
+    "topic": "search-and-sort",
+    "pattern": "Binary search row-major matrix as virtual flat array.",
+    "topics": [
+      "Binary search",
+      "Index mapping"
+    ],
+    "adaptation_notes": "Requires globally row-major sorted matrix, not merely sorted rows/columns; empty grid and dimension-product overflow guards if generalized.",
+    "submissions": [
+      {
+        "id": "2146688351",
+        "url": "https://leetcode.com/problems/search-a-2d-matrix/submissions/2146688351/"
+      },
+      {
+        "id": "2127411724",
+        "url": "https://leetcode.com/problems/search-a-2d-matrix/submissions/2127411724/"
+      }
+    ]
+  },
+  {
+    "problem": "69. Sqrt(x)",
+    "problem_url": "https://leetcode.com/problems/sqrtx/",
+    "topic": "search-and-sort",
+    "pattern": "Inclusive binary search for floor square root; return last feasible right boundary.",
+    "topics": [
+      "Binary search",
+      "Integer arithmetic"
+    ],
+    "adaptation_notes": "Use long long, not platform-dependent long, for mid*mid; division comparison avoids product overflow for wider domain.",
+    "submissions": [
+      {
+        "id": "2146686635",
+        "url": "https://leetcode.com/problems/sqrtx/submissions/2146686635/"
+      }
+    ]
+  },
+  {
+    "problem": "374. Guess Number Higher or Lower",
+    "problem_url": "https://leetcode.com/problems/guess-number-higher-or-lower/",
+    "topic": "search-and-sort",
+    "pattern": "Inclusive search steered by sign of guess(mid).",
+    "topics": [
+      "Binary search",
+      "Interactive APIs"
+    ],
+    "adaptation_notes": "Keep API direction clearly documented.",
+    "submissions": [
+      {
+        "id": "2146681577",
+        "url": "https://leetcode.com/problems/guess-number-higher-or-lower/submissions/2146681577/"
+      }
+    ]
+  },
+  {
+    "problem": "35. Search Insert Position",
+    "problem_url": "https://leetcode.com/problems/search-insert-position/",
+    "topic": "search-and-sort",
+    "pattern": "Inclusive search eliminates >=target to the right and returns insertion index left.",
+    "topics": [
+      "Binary search",
+      "Lower bound"
+    ],
+    "adaptation_notes": "Use signed n before size()-1; duplicates still yield first >=target.",
+    "submissions": [
+      {
+        "id": "2146678224",
+        "url": "https://leetcode.com/problems/search-insert-position/submissions/2146678224/"
+      }
+    ]
+  },
+  {
+    "problem": "704. Binary Search",
+    "problem_url": "https://leetcode.com/problems/binary-search/",
+    "topic": "search-and-sort",
+    "pattern": "Inclusive exact-match search returning -1 when absent.",
+    "topics": [
+      "Binary search"
+    ],
+    "adaptation_notes": "Signed boundaries and safe midpoint.",
+    "submissions": [
+      {
+        "id": "2146675354",
+        "url": "https://leetcode.com/problems/binary-search/submissions/2146675354/"
+      }
+    ]
+  },
+  {
+    "problem": "347. Top K Frequent Elements",
+    "problem_url": "https://leetcode.com/problems/top-k-frequent-elements/",
+    "topic": "search-and-sort",
+    "pattern": "Count values then select top k by frequency; actual alternatives full max heap and bounded ordered set.",
+    "topics": [
+      "Quickselect",
+      "Heaps",
+      "Ordered sets",
+      "Frequency maps"
+    ],
+    "adaptation_notes": "Deterministic last-element pivot has O(m^2) worst case; expected linear requires randomization explicitly marked as adaptation. Handle valid target/nonempty input; pair frequency is comparator key.",
+    "submissions": [
+      {
+        "id": "2133013441",
+        "url": "https://leetcode.com/problems/top-k-frequent-elements/submissions/2133013441/"
+      },
+      {
+        "id": "2127429766",
+        "url": "https://leetcode.com/problems/top-k-frequent-elements/submissions/2127429766/"
+      },
+      {
+        "id": "2025491048",
+        "url": "https://leetcode.com/problems/top-k-frequent-elements/submissions/2025491048/"
+      }
+    ]
+  },
+  {
+    "problem": "215. Kth Largest Element in an Array",
+    "problem_url": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
+    "topic": "search-and-sort",
+    "pattern": "Hoare-style partition around middle element, recurse only partition containing zero-based target n-k; alternatives sort and max heap.",
+    "topics": [
+      "Quickselect",
+      "Sorting",
+      "Heaps"
+    ],
+    "adaptation_notes": "Deterministic middle-value pivot still O(n^2) worst-case; avoid unconditional expected-linear claim without randomized distribution. Use iterative interval narrowing to eliminate recursion if desired, explicitly note cleanup. Mutates input.",
+    "submissions": [
+      {
+        "id": "2144679787",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144679787/"
+      },
+      {
+        "id": "2144679621",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144679621/"
+      },
+      {
+        "id": "2144679073",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144679073/"
+      },
+      {
+        "id": "2144678866",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2144678866/"
+      },
+      {
+        "id": "2132995910",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132995910/"
+      },
+      {
+        "id": "2132966164",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132966164/"
+      },
+      {
+        "id": "2132965197",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/2132965197/"
+      }
+    ]
+  },
+  {
+    "problem": "493. Reverse Pairs",
+    "problem_url": "https://leetcode.com/problems/reverse-pairs/",
+    "topic": "search-and-sort",
+    "pattern": "Sort halves recursively, count cross pairs with monotone two pointers against 2*right, then ordinary merge.",
+    "topics": [
+      "Merge sort",
+      "Pair counting"
+    ],
+    "adaptation_notes": "Reset result for repeated calls; keep 2LL before multiplication. Input becomes sorted. Reuse scratch buffer to avoid per-merge allocations as optional documented cleanup.",
+    "submissions": [
+      {
+        "id": "2150875619",
+        "url": "https://leetcode.com/problems/reverse-pairs/submissions/2150875619/"
+      }
+    ]
+  },
+  {
+    "problem": "658. Find K Closest Elements",
+    "problem_url": "https://leetcode.com/problems/find-k-closest-elements/",
+    "topic": "search-and-sort",
+    "pattern": "Sorted array drops farther endpoint until k remain; older keeps closest k by max heap of (distance,value), then sorts.",
+    "topics": [
+      "Two pointers",
+      "Heaps",
+      "Selection"
+    ],
+    "adaptation_notes": "Tie drops larger right value, preserving smaller preferred values. Widen subtraction/abs before distance. Latest unused heap alias removable.",
+    "submissions": [
+      {
+        "id": "2127298849",
+        "url": "https://leetcode.com/problems/find-k-closest-elements/submissions/2127298849/"
+      },
+      {
+        "id": "2127164573",
+        "url": "https://leetcode.com/problems/find-k-closest-elements/submissions/2127164573/"
+      }
+    ]
+  },
+  {
+    "problem": "41. First Missing Positive",
+    "problem_url": "https://leetcode.com/problems/first-missing-positive/",
+    "topic": "search-and-sort",
+    "pattern": "Normalize outside [1,n] to n+1, mark seen values by negating slot value-1, return first positive slot. Older builds membership map and scans positive candidates.",
+    "topics": [
+      "In-place marking",
+      "Hash maps"
+    ],
+    "adaptation_notes": "Prefer latest O(n) in-place sign method; mutation contract explicit. Older max-element approach assumes nonempty and carries unnecessary min; max+1 int overflow possible in older source.",
+    "submissions": [
+      {
+        "id": "2142829718",
+        "url": "https://leetcode.com/problems/first-missing-positive/submissions/2142829718/"
+      },
+      {
+        "id": "2142586270",
+        "url": "https://leetcode.com/problems/first-missing-positive/submissions/2142586270/"
+      },
+      {
+        "id": "1214762629",
+        "url": "https://leetcode.com/problems/first-missing-positive/submissions/1214762629/"
+      }
+    ]
+  },
+  {
+    "problem": "287. Find the Duplicate Number",
+    "problem_url": "https://leetcode.com/problems/find-the-duplicate-number/",
+    "topic": "search-and-sort",
+    "pattern": "Latest marks sign at value-1 to detect repeated value; older uses seen set.",
+    "topics": [
+      "In-place marking",
+      "Hash sets"
+    ],
+    "adaptation_notes": "Sign-marking mutates nums and relies on positive bounded values. It does not satisfy a nonmutation requirement; do not silently present as Floyd cycle source. Seen-set version O(n) extra.",
+    "submissions": [
+      {
+        "id": "2143946691",
+        "url": "https://leetcode.com/problems/find-the-duplicate-number/submissions/2143946691/"
+      },
+      {
+        "id": "2143814563",
+        "url": "https://leetcode.com/problems/find-the-duplicate-number/submissions/2143814563/"
+      },
+      {
+        "id": "2140565463",
+        "url": "https://leetcode.com/problems/find-the-duplicate-number/submissions/2140565463/"
+      },
+      {
+        "id": "1212846979",
+        "url": "https://leetcode.com/problems/find-the-duplicate-number/submissions/1212846979/"
+      }
+    ]
+  },
+  {
+    "problem": "344. Reverse String",
+    "problem_url": "https://leetcode.com/problems/reverse-string/",
+    "topic": "search-and-sort",
+    "pattern": "Swap inward in place.",
+    "topics": [
+      "Two pointers"
+    ],
+    "adaptation_notes": "Use signed length conversion before size()-1 to avoid unsigned underflow conversion for empty containers.",
+    "submissions": [
+      {
+        "id": "2147725168",
+        "url": "https://leetcode.com/problems/reverse-string/submissions/2147725168/"
+      }
+    ]
+  },
+  {
+    "problem": "321. Create Maximum Number",
+    "problem_url": "https://leetcode.com/problems/create-maximum-number/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Enumerate split of k across arrays, select max subsequence with discard budget, merge by comparing entire remaining suffixes.",
+    "topics": [
+      "Monotonic stack",
+      "Greedy",
+      "Lexicographic merge"
+    ],
+    "adaptation_notes": "Suffix comparison prevents wrong equal-head ties but costs O(k^2) worst-case per merge; do not claim linear merge. C++20 span/three-way compare required. Remove unused accumulator.",
+    "submissions": [
+      {
+        "id": "2154885660",
+        "url": "https://leetcode.com/problems/create-maximum-number/submissions/2154885660/"
+      }
+    ]
+  },
+  {
+    "problem": "84. Largest Rectangle in Histogram",
+    "problem_url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Increasing stack of indices; on smaller height, popped bar spans after new stack top through i-1; drain at n.",
+    "topics": [
+      "Monotonic stack",
+      "Range boundaries"
+    ],
+    "adaptation_notes": "Strict > retains equal heights. Widen height*width for general bounds; no need mutate input with sentinel.",
+    "submissions": [
+      {
+        "id": "2146612938",
+        "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2146612938/"
+      },
+      {
+        "id": "2143497674",
+        "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2143497674/"
+      },
+      {
+        "id": "2132956467",
+        "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2132956467/"
+      },
+      {
+        "id": "2132944465",
+        "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/2132944465/"
+      }
+    ]
+  },
+  {
+    "problem": "853. Car Fleet",
+    "problem_url": "https://leetcode.com/problems/car-fleet/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Sort cars by position ascending; arrival-time stack pops fleets behind that catch a later slower fleet.",
+    "topics": [
+      "Monotonic stack",
+      "Greedy"
+    ],
+    "adaptation_notes": "Equal arrival times merge via <=. Requires positive speed and distinct positions; scalar reverse scan is another adaptation, not actual recorded implementation.",
+    "submissions": [
+      {
+        "id": "2146549976",
+        "url": "https://leetcode.com/problems/car-fleet/submissions/2146549976/"
+      },
+      {
+        "id": "2146548870",
+        "url": "https://leetcode.com/problems/car-fleet/submissions/2146548870/"
+      }
+    ]
+  },
+  {
+    "problem": "907. Sum of Subarray Minimums",
+    "problem_url": "https://leetcode.com/problems/sum-of-subarray-minimums/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Pop minimum indices and multiply value by left choices and right choices; final i=n drains stack.",
+    "topics": [
+      "Monotonic stack",
+      "Contribution counting"
+    ],
+    "adaptation_notes": "Strict arr[i]<arr[top] yields previous <= and next <, assigning equal-minimum subarrays once. Multiplication widened before product.",
+    "submissions": [
+      {
+        "id": "2132055030",
+        "url": "https://leetcode.com/problems/sum-of-subarray-minimums/submissions/2132055030/"
+      }
+    ]
+  },
+  {
+    "problem": "632. Smallest Range Covering Elements from K Lists",
+    "problem_url": "https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Heap holds one head per list and scalar tracks current maximum; advance current minimum list and improve range.",
+    "topics": [
+      "Heaps",
+      "K-way merge"
+    ],
+    "adaptation_notes": "Requires nonempty sorted lists; widen range difference if full int domain. Strict improvement preserves earlier smaller-left range under monotone min traversal.",
+    "submissions": [
+      {
+        "id": "2154226064",
+        "url": "https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/submissions/2154226064/"
+      }
+    ]
+  },
+  {
+    "problem": "862. Shortest Subarray with Sum at Least K",
+    "problem_url": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Newest deque stores candidate prefixes in reverse orientation: newest at front, oldest/minimum at back; pop feasible starts from back and dominated prefixes from front. Older min-heap pops feasible prior prefixes.",
+    "topics": [
+      "Monotonic deque",
+      "Prefix sums",
+      "Heaps"
+    ],
+    "adaptation_notes": "Widen prefix sums and difference to long long. Keep orientation explicit if preserving personal style, or reverse ends consistently as documented cleanup. Works with negatives; ordinary sliding window does not.",
+    "submissions": [
+      {
+        "id": "2152907567",
+        "url": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/submissions/2152907567/"
+      },
+      {
+        "id": "2152891991",
+        "url": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/submissions/2152891991/"
+      },
+      {
+        "id": "2152436083",
+        "url": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/submissions/2152436083/"
+      }
+    ]
+  },
+  {
+    "problem": "901. Online Stock Span",
+    "problem_url": "https://leetcode.com/problems/online-stock-span/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Stack holds (price,span); pop <=price and combine spans before pushing new price.",
+    "topics": [
+      "Monotonic stack",
+      "Aggregated spans"
+    ],
+    "adaptation_notes": "Amortized O(1) per call; empty special branch can be folded into general loop.",
+    "submissions": [
+      {
+        "id": "2146501827",
+        "url": "https://leetcode.com/problems/online-stock-span/submissions/2146501827/"
+      }
+    ]
+  },
+  {
+    "problem": "739. Daily Temperatures",
+    "problem_url": "https://leetcode.com/problems/daily-temperatures/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Keep unresolved decreasing temperatures by index; warmer incoming value resolves waiting distances.",
+    "topics": [
+      "Monotonic stack",
+      "Next greater"
+    ],
+    "adaptation_notes": "Equal temperatures stay pending because query is strictly warmer.",
+    "submissions": [
+      {
+        "id": "2146492152",
+        "url": "https://leetcode.com/problems/daily-temperatures/submissions/2146492152/"
+      },
+      {
+        "id": "2131986928",
+        "url": "https://leetcode.com/problems/daily-temperatures/submissions/2131986928/"
+      },
+      {
+        "id": "2025552405",
+        "url": "https://leetcode.com/problems/daily-temperatures/submissions/2025552405/"
+      }
+    ]
+  },
+  {
+    "problem": "735. Asteroid Collision",
+    "problem_url": "https://leetcode.com/problems/asteroid-collision/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Only right-moving stack top and incoming left-moving item can collide; pop weaker until incoming destroyed or no conflict.",
+    "topics": [
+      "Stacks",
+      "Simulation"
+    ],
+    "adaptation_notes": "Latest seeds asteroids[0], so add empty guard or use older all-items loop. INT_MIN abs/negation needs widening for unrestricted integers.",
+    "submissions": [
+      {
+        "id": "2146489128",
+        "url": "https://leetcode.com/problems/asteroid-collision/submissions/2146489128/"
+      },
+      {
+        "id": "2025582812",
+        "url": "https://leetcode.com/problems/asteroid-collision/submissions/2025582812/"
+      }
+    ]
+  },
+  {
+    "problem": "480. Sliding Window Median",
+    "problem_url": "https://leetcode.com/problems/sliding-window-median/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Two balanced multisets of (value,index) plus maps index->iterator support insertion, deletion, and median.",
+    "topics": [
+      "Ordered multisets",
+      "Median",
+      "Iterator indexing"
+    ],
+    "adaptation_notes": "Stored iterators require thoughtful copy semantics: delete copy or rebuild mapping on copy. Unique index disambiguates duplicate values. Left size is right size or +1; enforce nonempty median.",
+    "submissions": [
+      {
+        "id": "2150661436",
+        "url": "https://leetcode.com/problems/sliding-window-median/submissions/2150661436/"
+      }
+    ]
+  },
+  {
+    "problem": "295. Find Median from Data Stream",
+    "problem_url": "https://leetcode.com/problems/find-median-from-data-stream/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Max-heap lower half and min-heap upper half; rebalance size difference to left=right or left=right+1.",
+    "topics": [
+      "Heaps",
+      "Median"
+    ],
+    "adaptation_notes": "Convert before adding medians to avoid overflow; source already does this. Empty stream median undefined, document/guard.",
+    "submissions": [
+      {
+        "id": "2150573901",
+        "url": "https://leetcode.com/problems/find-median-from-data-stream/submissions/2150573901/"
+      },
+      {
+        "id": "2144767620",
+        "url": "https://leetcode.com/problems/find-median-from-data-stream/submissions/2144767620/"
+      },
+      {
+        "id": "2133767286",
+        "url": "https://leetcode.com/problems/find-median-from-data-stream/submissions/2133767286/"
+      }
+    ]
+  },
+  {
+    "problem": "621. Task Scheduler",
+    "problem_url": "https://leetcode.com/problems/task-scheduler/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Consume up to n+1 distinct most-frequent task types per round, reinsert remaining counts, count full round unless terminal.",
+    "topics": [
+      "Heaps",
+      "Greedy scheduling"
+    ],
+    "adaptation_notes": "Heap simulation, not closed-form frequency formula in source. Round duration n+1 captures cooldown.",
+    "submissions": [
+      {
+        "id": "2144706913",
+        "url": "https://leetcode.com/problems/task-scheduler/submissions/2144706913/"
+      }
+    ]
+  },
+  {
+    "problem": "239. Sliding Window Maximum",
+    "problem_url": "https://leetcode.com/problems/sliding-window-maximum/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Max heap of (value,index), discard expired entries only when they reach top.",
+    "topics": [
+      "Heaps",
+      "Sliding windows",
+      "Lazy removal"
+    ],
+    "adaptation_notes": "This is heap-based, not monotonic deque in actual submissions. Heap can retain O(n) expired non-top entries and cost O(n log n), not O(n log k) guaranteed. Validate 1<=k<=n.",
+    "submissions": [
+      {
+        "id": "2149742695",
+        "url": "https://leetcode.com/problems/sliding-window-maximum/submissions/2149742695/"
+      },
+      {
+        "id": "2024277288",
+        "url": "https://leetcode.com/problems/sliding-window-maximum/submissions/2024277288/"
+      }
+    ]
+  },
+  {
+    "problem": "42. Trapping Rain Water",
+    "problem_url": "https://leetcode.com/problems/trapping-rain-water/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Two-pointer boundary maxima accumulate water at lower endpoint; alternate decreasing stack pops basin bottom and computes bounded layer.",
+    "topics": [
+      "Two pointers",
+      "Monotonic stack"
+    ],
+    "adaptation_notes": "Widen accumulated volume for general bounds. One older two-pointer version indexes first/last before empty check. Keep stack width and bounded height formula together.",
+    "submissions": [
+      {
+        "id": "2147811654",
+        "url": "https://leetcode.com/problems/trapping-rain-water/submissions/2147811654/"
+      },
+      {
+        "id": "2143469631",
+        "url": "https://leetcode.com/problems/trapping-rain-water/submissions/2143469631/"
+      },
+      {
+        "id": "2142850361",
+        "url": "https://leetcode.com/problems/trapping-rain-water/submissions/2142850361/"
+      },
+      {
+        "id": "2131909942",
+        "url": "https://leetcode.com/problems/trapping-rain-water/submissions/2131909942/"
+      },
+      {
+        "id": "2131872743",
+        "url": "https://leetcode.com/problems/trapping-rain-water/submissions/2131872743/"
+      },
+      {
+        "id": "2131851296",
+        "url": "https://leetcode.com/problems/trapping-rain-water/submissions/2131851296/"
+      }
+    ]
+  },
+  {
+    "problem": "1046. Last Stone Weight",
+    "problem_url": "https://leetcode.com/problems/last-stone-weight/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Repeatedly remove two largest weights and reinsert positive difference.",
+    "topics": [
+      "Heaps",
+      "Simulation"
+    ],
+    "adaptation_notes": "One max-heap implementation; no sorting specialization.",
+    "submissions": [
+      {
+        "id": "2144668025",
+        "url": "https://leetcode.com/problems/last-stone-weight/submissions/2144668025/"
+      }
+    ]
+  },
+  {
+    "problem": "703. Kth Largest Element in a Stream",
+    "problem_url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Maintain size-k min heap so root is kth largest seen.",
+    "topics": [
+      "Heaps",
+      "Streaming order statistics"
+    ],
+    "adaptation_notes": "k must be positive; until k items exist return is minimum seen, not a defined kth-largest answer. Constructor calls add but ignores returned value.",
+    "submissions": [
+      {
+        "id": "2144654284",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/submissions/2144654284/"
+      }
+    ]
+  },
+  {
+    "problem": "378. Kth Smallest Element in a Sorted Matrix",
+    "problem_url": "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/",
+    "topic": "monotonic-and-heaps",
+    "pattern": "Scan every matrix value maintaining k smallest in max heap.",
+    "topics": [
+      "Heaps",
+      "Order statistics"
+    ],
+    "adaptation_notes": "Actual source does not exploit sorted matrix beyond task premise; O(rows*cols*log k), O(k) space. Not value-domain binary search or row-head merge.",
+    "submissions": [
+      {
+        "id": "2126186308",
+        "url": "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/submissions/2126186308/"
+      }
+    ]
+  },
+  {
+    "problem": "2444. Count Subarrays With Fixed Bounds",
+    "problem_url": "https://leetcode.com/problems/count-subarrays-with-fixed-bounds/",
+    "topic": "windows-and-prefixes",
+    "pattern": "For each right endpoint, count starts after last invalid value and no later than both latest min/max occurrences.",
+    "topics": [
+      "Sliding windows",
+      "Last-seen indices",
+      "Counting"
+    ],
+    "adaptation_notes": "Use long long rather than platform-dependent long for count; index type should be signed.",
+    "submissions": [
+      {
+        "id": "2153831199",
+        "url": "https://leetcode.com/problems/count-subarrays-with-fixed-bounds/submissions/2153831199/"
+      }
+    ]
+  },
+  {
+    "problem": "30. Substring with Concatenation of All Words",
+    "problem_url": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
+    "topic": "windows-and-prefixes",
+    "pattern": "For every word-length offset, slide in word-sized steps and shrink only when current word count exceeds required count.",
+    "topics": [
+      "Sliding windows",
+      "Strings",
+      "Frequency maps",
+      "Views"
+    ],
+    "adaptation_notes": "Require nonempty equal-length words. Views remain valid because strings unchanged. Remove unused totalWordsSize/offset. Hashing each view is O(word length), not free.",
+    "submissions": [
+      {
+        "id": "2153818347",
+        "url": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/submissions/2153818347/"
+      }
+    ]
+  },
+  {
+    "problem": "567. Permutation in String",
+    "problem_url": "https://leetcode.com/problems/permutation-in-string/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Maintain fixed-length window, decrement requirement deficits on entering, increment on leaving; count distinct requirements that have become satisfied.",
+    "topics": [
+      "Sliding windows",
+      "Frequency deficit"
+    ],
+    "adaptation_notes": "matches is satisfied-at-least counts, not number of exact-zero deficits: overfilled keys remain satisfied until outgoing increment crosses to +1. Fixed length makes full satisfaction equivalent to permutation. Empty pattern requires explicit contract.",
+    "submissions": [
+      {
+        "id": "2131779135",
+        "url": "https://leetcode.com/problems/permutation-in-string/submissions/2131779135/"
+      }
+    ]
+  },
+  {
+    "problem": "424. Longest Repeating Character Replacement",
+    "problem_url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Maintain maximum character count seen while expanding; shift left once when window-maxCount>k, retain maximal feasible length.",
+    "topics": [
+      "Sliding windows",
+      "Stale maximum"
+    ],
+    "adaptation_notes": "Explain stale maxCount invariant: this variant is for maximum length, not enumerating all currently valid windows. Shrinking once suffices because window size grows by at most one.",
+    "submissions": [
+      {
+        "id": "2131743704",
+        "url": "https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131743704/"
+      },
+      {
+        "id": "2131736709",
+        "url": "https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131736709/"
+      },
+      {
+        "id": "2027329669",
+        "url": "https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2027329669/"
+      }
+    ]
+  },
+  {
+    "problem": "3904. Smallest Stable Index II",
+    "problem_url": "https://leetcode.com/problems/smallest-stable-index-ii/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Precompute suffix minima, scan prefix maximum, return first boundary where their gap<=k.",
+    "topics": [
+      "Prefix/suffix aggregates"
+    ],
+    "adaptation_notes": "Widen max-min for expanded integer bounds. Source uses suffix including i and prefix including i; preserve boundary contract.",
+    "submissions": [
+      {
+        "id": "2131704501",
+        "url": "https://leetcode.com/problems/smallest-stable-index-ii/submissions/2131704501/"
+      }
+    ]
+  },
+  {
+    "problem": "560. Subarray Sum Equals K",
+    "problem_url": "https://leetcode.com/problems/subarray-sum-equals-k/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Count prior prefixes equal current-k before adding current; zero prefix seeded once.",
+    "topics": [
+      "Prefix sums",
+      "Hash maps",
+      "Counting"
+    ],
+    "adaptation_notes": "Lookup-before-insert avoids empty subarray when k=0. Wide prefix/counts for general bounds; unordered_map expected O(1).",
+    "submissions": [
+      {
+        "id": "2130713437",
+        "url": "https://leetcode.com/problems/subarray-sum-equals-k/submissions/2130713437/"
+      },
+      {
+        "id": "2025473825",
+        "url": "https://leetcode.com/problems/subarray-sum-equals-k/submissions/2025473825/"
+      }
+    ]
+  },
+  {
+    "problem": "238. Product of Array Except Self",
+    "problem_url": "https://leetcode.com/problems/product-of-array-except-self/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Build explicit left and right product arrays with identity 1, multiply exclusive prefixes/suffixes.",
+    "topics": [
+      "Prefix/suffix aggregates"
+    ],
+    "adaptation_notes": "Actual source uses O(n) extra arrays, not O(1) extra beyond output. Output-as-prefix plus scalar suffix would be documented adaptation. Product fit required.",
+    "submissions": [
+      {
+        "id": "2130701387",
+        "url": "https://leetcode.com/problems/product-of-array-except-self/submissions/2130701387/"
+      }
+    ]
+  },
+  {
+    "problem": "209. Minimum Size Subarray Sum",
+    "problem_url": "https://leetcode.com/problems/minimum-size-subarray-sum/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Expand positive-number sum, shrink while reaching target, record shortest.",
+    "topics": [
+      "Sliding windows"
+    ],
+    "adaptation_notes": "Positivity/monotonicity essential; for negative values use verified 862 prefix/deque pattern instead. target>0 and sum width assumptions.",
+    "submissions": [
+      {
+        "id": "2130694109",
+        "url": "https://leetcode.com/problems/minimum-size-subarray-sum/submissions/2130694109/"
+      }
+    ]
+  },
+  {
+    "problem": "3903. Smallest Stable Index I",
+    "problem_url": "https://leetcode.com/problems/smallest-stable-index-i/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Suffix-minimum array plus running prefix maximum tests first stable boundary.",
+    "topics": [
+      "Prefix/suffix aggregates"
+    ],
+    "adaptation_notes": "Nonempty assumption from min[n-1]; wide difference for expanded bounds.",
+    "submissions": [
+      {
+        "id": "2130500850",
+        "url": "https://leetcode.com/problems/smallest-stable-index-i/submissions/2130500850/"
+      }
+    ]
+  },
+  {
+    "problem": "1658. Minimum Operations to Reduce X to Zero",
+    "problem_url": "https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Removing prefix and suffix becomes keeping longest middle subarray of sum total-x; positive-value sliding window finds it.",
+    "topics": [
+      "Sliding windows",
+      "Complement transformation"
+    ],
+    "adaptation_notes": "Positivity essential; widen sums. Handle total==x as empty kept window explicitly in generic version.",
+    "submissions": [
+      {
+        "id": "2150943873",
+        "url": "https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/submissions/2150943873/"
+      }
+    ]
+  },
+  {
+    "problem": "1477. Find Two Non-overlapping Sub-arrays Each With Target Sum",
+    "problem_url": "https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Find target-sum positive windows; dp[prefix] stores shortest prior target window, combine current with dp[left] for nonoverlap.",
+    "topics": [
+      "Sliding windows",
+      "Dynamic programming",
+      "Prefix best"
+    ],
+    "adaptation_notes": "Requires positive values. dp[left] excludes current window and ensures disjointness; keep boundary indexing explicit. Prefix-hash alternative appears only in comment, not actual code.",
+    "submissions": [
+      {
+        "id": "2145013796",
+        "url": "https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/submissions/2145013796/"
+      }
+    ]
+  },
+  {
+    "problem": "1493. Longest Subarray of 1's After Deleting One Element",
+    "problem_url": "https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Track at most one zero, shift left once when invalid, record window length minus required deletion.",
+    "topics": [
+      "Sliding windows",
+      "Lazy shrink"
+    ],
+    "adaptation_notes": "Single-step shrink may temporarily leave window invalid; source updates result only in valid branch. All-ones case must still delete one, hence right-left rather than +1.",
+    "submissions": [
+      {
+        "id": "2127345655",
+        "url": "https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/submissions/2127345655/"
+      }
+    ]
+  },
+  {
+    "problem": "1004. Max Consecutive Ones III",
+    "problem_url": "https://leetcode.com/problems/max-consecutive-ones-iii/",
+    "topic": "windows-and-prefixes",
+    "pattern": "Track zero budget and maintain longest window; explicit shrink variant and single-step lazy-shrink variant.",
+    "topics": [
+      "Sliding windows"
+    ],
+    "adaptation_notes": "Lazy-shrink form retains maximal length even when intermediate window invalid; do not use it to enumerate only-valid windows. k>=0.",
+    "submissions": [
+      {
+        "id": "2127149237",
+        "url": "https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2127149237/"
+      },
+      {
+        "id": "2027338195",
+        "url": "https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2027338195/"
+      }
+    ]
+  },
+  {
+    "problem": "208. Implement Trie (Prefix Tree)",
+    "problem_url": "https://leetcode.com/problems/implement-trie-prefix-tree/",
+    "topic": "strings-and-tries",
+    "pattern": "Walk value-owned hash-map children, set terminal flag only after full insertion.",
+    "topics": [
+      "Trie",
+      "Strings"
+    ],
+    "adaptation_notes": "Preserve distinction of existing prefix and terminal word. Read operations should use find rather than [] for explicit nonmutation; retain hash-map alphabet flexibility. Value-owned children avoid manual delete.",
+    "submissions": [
+      {
+        "id": "2167350538",
+        "url": "https://leetcode.com/problems/implement-trie-prefix-tree/submissions/2167350538/"
+      }
+    ]
+  },
+  {
+    "problem": "745. Prefix and Suffix Search",
+    "problem_url": "https://leetcode.com/problems/prefix-and-suffix-search/",
+    "topic": "strings-and-tries",
+    "pattern": "Insert every suffix+separator+word; query suffix+separator+prefix, storing latest index on each visited node.",
+    "topics": [
+      "Trie",
+      "Strings",
+      "Composite keys"
+    ],
+    "adaptation_notes": "Separator must be outside word alphabet. Preprocessing O(sum word_length^2) node visits; query O(prefix+suffix). Storing latest idx relies on increasing input order.",
+    "submissions": [
+      {
+        "id": "2164622907",
+        "url": "https://leetcode.com/problems/prefix-and-suffix-search/submissions/2164622907/"
+      }
+    ]
+  },
+  {
+    "problem": "214. Shortest Palindrome",
+    "problem_url": "https://leetcode.com/problems/shortest-palindrome/",
+    "topic": "strings-and-tries",
+    "pattern": "KMP prefix-function on s+separator+reverse(s) gives longest palindromic prefix; prepend reversed leftover suffix.",
+    "topics": [
+      "String matching",
+      "KMP",
+      "Palindromes"
+    ],
+    "adaptation_notes": "Separator must be absent from alphabet. Translate comments to English in generalized version.",
+    "submissions": [
+      {
+        "id": "2163593115",
+        "url": "https://leetcode.com/problems/shortest-palindrome/submissions/2163593115/"
+      }
+    ]
+  },
+  {
+    "problem": "459. Repeated Substring Pattern",
+    "problem_url": "https://leetcode.com/problems/repeated-substring-pattern/",
+    "topic": "strings-and-tries",
+    "pattern": "A nonzero final border length and divisibility by n-border detect repeating period.",
+    "topics": [
+      "String matching",
+      "KMP"
+    ],
+    "adaptation_notes": "Remove unused counts and initial zero scan; define empty-string contract before lps.back().",
+    "submissions": [
+      {
+        "id": "2163579090",
+        "url": "https://leetcode.com/problems/repeated-substring-pattern/submissions/2163579090/"
+      }
+    ]
+  },
+  {
+    "problem": "686. Repeated String Match",
+    "problem_url": "https://leetcode.com/problems/repeated-string-match/",
+    "topic": "strings-and-tries",
+    "pattern": "Run KMP against virtual repetitions via a[i%n], stopping after finite bound; convert matched end index to repeat count.",
+    "topics": [
+      "String matching",
+      "KMP",
+      "Circular traversal"
+    ],
+    "adaptation_notes": "Guard empty pattern/text in reusable matcher. Standardize buildLps capitalization; n*2+m scan bound is source choice.",
+    "submissions": [
+      {
+        "id": "2163561881",
+        "url": "https://leetcode.com/problems/repeated-string-match/submissions/2163561881/"
+      }
+    ]
+  },
+  {
+    "problem": "28. Find the Index of the First Occurrence in a String",
+    "problem_url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/",
+    "topic": "strings-and-tries",
+    "pattern": "Inline prefix-function build then fallback-driven linear first-match scan.",
+    "topics": [
+      "String matching",
+      "KMP"
+    ],
+    "adaptation_notes": "Return 0 for empty needle before needle[j]; interface constraints currently exclude it. Extract same verified buildLps helper.",
+    "submissions": [
+      {
+        "id": "2163524870",
+        "url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/submissions/2163524870/"
+      }
+    ]
+  },
+  {
+    "problem": "125. Valid Palindrome",
+    "problem_url": "https://leetcode.com/problems/valid-palindrome/",
+    "topic": "strings-and-tries",
+    "pattern": "Skip nonalphanumeric symbols at both ends and compare normalized characters.",
+    "topics": [
+      "Two pointers",
+      "Strings"
+    ],
+    "adaptation_notes": "Fix helper to test A<=a && a<=Z; current digit mapping is incidental, even though equal digits still compare equal. Cast to unsigned char before cctype calls for arbitrary bytes; ASCII-only contract should be explicit.",
+    "submissions": [
+      {
+        "id": "2147738982",
+        "url": "https://leetcode.com/problems/valid-palindrome/submissions/2147738982/"
+      }
+    ]
+  },
+  {
+    "problem": "1541. Minimum Insertions to Balance a Parentheses String",
+    "problem_url": "https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/",
+    "topic": "strings-and-tries",
+    "pattern": "Consume close parentheses in pairs; insert missing close or matching opening; account for remaining opens.",
+    "topics": [
+      "Strings",
+      "Greedy",
+      "Counters"
+    ],
+    "adaptation_notes": "Only the specific grammar of two closing parentheses per opening is covered; not a generic parentheses counter.",
+    "submissions": [
+      {
+        "id": "2167345569",
+        "url": "https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/submissions/2167345569/"
+      }
+    ]
+  },
+  {
+    "problem": "1021. Remove Outermost Parentheses",
+    "problem_url": "https://leetcode.com/problems/remove-outermost-parentheses/",
+    "topic": "strings-and-tries",
+    "pattern": "Adjust depth before a close and after an open so only inner symbols are emitted.",
+    "topics": [
+      "Strings",
+      "Counters"
+    ],
+    "adaptation_notes": "Assumes valid parentheses string; this ordering is the reusable trick.",
+    "submissions": [
+      {
+        "id": "2166675238",
+        "url": "https://leetcode.com/problems/remove-outermost-parentheses/submissions/2166675238/"
+      }
+    ]
+  },
+  {
+    "problem": "921. Minimum Add to Make Parentheses Valid",
+    "problem_url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/",
+    "topic": "strings-and-tries",
+    "pattern": "Track unmatched opens and missing openings, then sum them.",
+    "topics": [
+      "Greedy",
+      "Strings",
+      "Counters"
+    ],
+    "adaptation_notes": "Input alphabet only parentheses.",
+    "submissions": [
+      {
+        "id": "2164607113",
+        "url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/submissions/2164607113/"
+      }
+    ]
+  },
+  {
+    "problem": "1614. Maximum Nesting Depth of the Parentheses",
+    "problem_url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/",
+    "topic": "strings-and-tries",
+    "pattern": "Single depth counter and running maximum; stack contents are unnecessary.",
+    "topics": [
+      "Strings",
+      "Counters"
+    ],
+    "adaptation_notes": "Valid balanced-parentheses input assumed; general parser needs validation.",
+    "submissions": [
+      {
+        "id": "2155954786",
+        "url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/submissions/2155954786/"
+      }
+    ]
+  },
+  {
+    "problem": "856. Score of Parentheses",
+    "problem_url": "https://leetcode.com/problems/score-of-parentheses/",
+    "topic": "strings-and-tries",
+    "pattern": "Stack of partial frame scores; closing frame contributes max(1,2*inside) to parent.",
+    "topics": [
+      "Stacks",
+      "Parsing"
+    ],
+    "adaptation_notes": "Balanced input and score fit assumptions; simplify repeated pop/push of parent to back() += contribution.",
+    "submissions": [
+      {
+        "id": "2162881009",
+        "url": "https://leetcode.com/problems/score-of-parentheses/submissions/2162881009/"
+      }
+    ]
+  },
+  {
+    "problem": "1807. Evaluate the Bracket Pairs of a String",
+    "problem_url": "https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/",
+    "topic": "strings-and-tries",
+    "pattern": "Map knowledge to nonowning string_views; scan bracket key spans and substitute value or ?.",
+    "topics": [
+      "Strings",
+      "Hash maps",
+      "Views"
+    ],
+    "adaptation_notes": "Views borrow knowledge and s storage; safe only while backing strings remain alive and unchanged. Validate balanced brackets for general parser.",
+    "submissions": [
+      {
+        "id": "2154370092",
+        "url": "https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/submissions/2154370092/"
+      }
+    ]
+  },
+  {
+    "problem": "953. Verifying an Alien Dictionary",
+    "problem_url": "https://leetcode.com/problems/verifying-an-alien-dictionary/",
+    "topic": "strings-and-tries",
+    "pattern": "Build character rank and compare adjacent words at first difference, rejecting a longer word preceding its prefix.",
+    "topics": [
+      "Strings",
+      "Custom order"
+    ],
+    "adaptation_notes": "Use signed size or i+1<size to avoid size()-1 underflow. Alphabet must contain every character.",
+    "submissions": [
+      {
+        "id": "2155353571",
+        "url": "https://leetcode.com/problems/verifying-an-alien-dictionary/submissions/2155353571/"
+      }
+    ]
+  },
+  {
+    "problem": "1096. Brace Expansion II",
+    "problem_url": "https://leetcode.com/problems/brace-expansion-ii/",
+    "topic": "strings-and-tries",
+    "pattern": "Grammar item handles letter or brace group, term concatenates Cartesian products, eval unions comma-separated terms.",
+    "topics": [
+      "Parsing",
+      "Recursive descent",
+      "Sets"
+    ],
+    "adaptation_notes": "Assumes valid grammar; output-size exponential. std::set deduplicates and lexicographically orders automatically. Reset idx per entry call already done.",
+    "submissions": [
+      {
+        "id": "2153362638",
+        "url": "https://leetcode.com/problems/brace-expansion-ii/submissions/2153362638/"
+      }
+    ]
+  },
+  {
+    "problem": "394. Decode String",
+    "problem_url": "https://leetcode.com/problems/decode-string/",
+    "topic": "strings-and-tries",
+    "pattern": "Save outer partial string and multiplier at [, expand current substring at ].",
+    "topics": [
+      "Stacks",
+      "Parsing"
+    ],
+    "adaptation_notes": "Output size governs runtime/memory, possibly large; validate balanced grammar if general parser. Remove unused ostringstream.",
+    "submissions": [
+      {
+        "id": "2146593107",
+        "url": "https://leetcode.com/problems/decode-string/submissions/2146593107/"
+      }
+    ]
+  },
+  {
+    "problem": "71. Simplify Path",
+    "problem_url": "https://leetcode.com/problems/simplify-path/",
+    "topic": "strings-and-tries",
+    "pattern": "Split path on /, ignore empty/dot, pop for dotdot, join surviving components.",
+    "topics": [
+      "Stacks",
+      "Strings",
+      "Views"
+    ],
+    "adaptation_notes": "Views borrow local path until output finished. std::string_view(token) range constructor is C++23; choose C++23 or explicit contiguous iterators for C++20. Duplicate ./ branch impossible after split, remove it. Absolute-path lexical simplification only, not filesystem resolution.",
+    "submissions": [
+      {
+        "id": "2146563687",
+        "url": "https://leetcode.com/problems/simplify-path/submissions/2146563687/"
+      }
+    ]
+  },
+  {
+    "problem": "242. Valid Anagram",
+    "problem_url": "https://leetcode.com/problems/valid-anagram/",
+    "topic": "strings-and-tries",
+    "pattern": "Count both strings and compare every key/count in both directions.",
+    "topics": [
+      "Frequency maps",
+      "Strings"
+    ],
+    "adaptation_notes": "Can compare maps directly or one difference map as cleanup; byte chars not Unicode grapheme semantics.",
+    "submissions": [
+      {
+        "id": "2130658997",
+        "url": "https://leetcode.com/problems/valid-anagram/submissions/2130658997/"
+      }
+    ]
+  },
+  {
+    "problem": "49. Group Anagrams",
+    "problem_url": "https://leetcode.com/problems/group-anagrams/",
+    "topic": "strings-and-tries",
+    "pattern": "Sort each string as canonical anagram key and group original strings.",
+    "topics": [
+      "Hash maps",
+      "Strings",
+      "Canonical keys"
+    ],
+    "adaptation_notes": "Per-string sorting O(length log length); count-vector key would be new adaptation.",
+    "submissions": [
+      {
+        "id": "2127402160",
+        "url": "https://leetcode.com/problems/group-anagrams/submissions/2127402160/"
+      }
+    ]
+  },
+  {
+    "problem": "76. Minimum Window Substring",
+    "problem_url": "https://leetcode.com/problems/minimum-window-substring/",
+    "topic": "strings-and-tries",
+    "pattern": "Track distinct unsatisfied/satisfied requirements; shrink while all covered and save minimum boundaries.",
+    "topics": [
+      "Sliding windows",
+      "Frequency deficit"
+    ],
+    "adaptation_notes": "Handle empty t before shrinking loop. Byte-character keys; surplus counts may be negative. Same deficit-transition family as 567.",
+    "submissions": [
+      {
+        "id": "2149102883",
+        "url": "https://leetcode.com/problems/minimum-window-substring/submissions/2149102883/"
+      },
+      {
+        "id": "2131820578",
+        "url": "https://leetcode.com/problems/minimum-window-substring/submissions/2131820578/"
+      }
+    ]
+  },
+  {
+    "problem": "8. String to Integer (atoi)",
+    "problem_url": "https://leetcode.com/problems/string-to-integer-atoi/",
+    "topic": "strings-and-tries",
+    "pattern": "Skip spaces, parse optional sign, accumulate digits while checking against sign-specific integer limit.",
+    "topics": [
+      "Strings",
+      "Parsing",
+      "Overflow guards"
+    ],
+    "adaptation_notes": "Preserve pre-multiply guard; avoids overflow even on arbitrarily long digit strings. Only ASCII space skipped per problem.",
+    "submissions": [
+      {
+        "id": "2126227733",
+        "url": "https://leetcode.com/problems/string-to-integer-atoi/submissions/2126227733/"
+      }
+    ]
+  },
+  {
+    "problem": "1190. Reverse Substrings Between Each Pair of Parentheses",
+    "problem_url": "https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/",
+    "topic": "strings-and-tries",
+    "pattern": "Keep output positions of opening parentheses; reverse output suffix at each close.",
+    "topics": [
+      "Strings",
+      "Stack"
+    ],
+    "adaptation_notes": "Repeated reversals can be quadratic in nested case; do not label linear. Input assumed balanced.",
+    "submissions": [
+      {
+        "id": "2154897406",
+        "url": "https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/submissions/2154897406/"
+      }
+    ]
+  },
+  {
+    "problem": "132. Palindrome Partitioning II",
+    "problem_url": "https://leetcode.com/problems/palindrome-partitioning-ii/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Build palindrome table, then memoize minimum cuts from each suffix with terminal -1 to cancel last separator.",
+    "topics": [
+      "Dynamic programming",
+      "Palindromes"
+    ],
+    "adaptation_notes": "Separate uncomputed marker if a generalized state can legitimately evaluate to -1. Empty string returns -1 currently; define empty result explicitly. O(n^2) time/space plus recursion stack.",
+    "submissions": [
+      {
+        "id": "2165701086",
+        "url": "https://leetcode.com/problems/palindrome-partitioning-ii/submissions/2165701086/"
+      }
+    ]
+  },
+  {
+    "problem": "301. Remove Invalid Parentheses",
+    "problem_url": "https://leetcode.com/problems/remove-invalid-parentheses/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Memoized (index,open balance) generates unique valid suffixes; longest remaining strings minimize removals.",
+    "topics": [
+      "Dynamic programming",
+      "Backtracking",
+      "Strings"
+    ],
+    "adaptation_notes": "Empty set cannot distinguish uncomputed from computed-impossible; add visited state. This is output-heavy enumeration, not polynomial-time numeric DP; generating all valid subsequences can be exponential.",
+    "submissions": [
+      {
+        "id": "2165615628",
+        "url": "https://leetcode.com/problems/remove-invalid-parentheses/submissions/2165615628/"
+      }
+    ]
+  },
+  {
+    "problem": "37. Sudoku Solver",
+    "problem_url": "https://leetcode.com/problems/sudoku-solver/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Track used digits per row/column/box; place, recurse, erase on failure.",
+    "topics": [
+      "Backtracking",
+      "Constraint tracking"
+    ],
+    "adaptation_notes": "9x9 and 3x3 fixed; early successful return intentionally keeps placements. Remove unused result local.",
+    "submissions": [
+      {
+        "id": "2164710608",
+        "url": "https://leetcode.com/problems/sudoku-solver/submissions/2164710608/"
+      }
+    ]
+  },
+  {
+    "problem": "51. N-Queens",
+    "problem_url": "https://leetcode.com/problems/n-queens/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Place one queen per row; scan three upward attack directions; undo after recursive visit.",
+    "topics": [
+      "Backtracking"
+    ],
+    "adaptation_notes": "Change upward-right condition col<=n to col<n; source reads terminator when col==n. Second recursive parameter unused, simplify to row only; sets/bitmasks would be new adaptations rather than this source style.",
+    "submissions": [
+      {
+        "id": "2164697200",
+        "url": "https://leetcode.com/problems/n-queens/submissions/2164697200/"
+      }
+    ]
+  },
+  {
+    "problem": "940. Distinct Subsequences II",
+    "problem_url": "https://leetcode.com/problems/distinct-subsequences-ii/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Count subsequences including empty by doubling previous count, subtracting count before previous occurrence; subtract empty at end.",
+    "topics": [
+      "Dynamic programming",
+      "Subsequences",
+      "Duplicate correction"
+    ],
+    "adaptation_notes": "Use integer constexpr modulus rather than pow; alphabet fixed lowercase. Iterative derivative avoids recursion depth; original memo recurrence is actual evidence.",
+    "submissions": [
+      {
+        "id": "2133936040",
+        "url": "https://leetcode.com/problems/distinct-subsequences-ii/submissions/2133936040/"
+      }
+    ]
+  },
+  {
+    "problem": "115. Distinct Subsequences",
+    "problem_url": "https://leetcode.com/problems/distinct-subsequences/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Memoize matching target prefix inside source prefix; choose skip or consume matching character.",
+    "topics": [
+      "Dynamic programming",
+      "Subsequences",
+      "Coordinate packing"
+    ],
+    "adaptation_notes": "Clear member memoization per call or localize it; keys encode only indices, not input strings. Intermediate counts can exceed answer bounds: use wide type/contract. Base j<0=1, i<0=0.",
+    "submissions": [
+      {
+        "id": "2133267031",
+        "url": "https://leetcode.com/problems/distinct-subsequences/submissions/2133267031/"
+      }
+    ]
+  },
+  {
+    "problem": "329. Longest Increasing Path in a Matrix",
+    "problem_url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Memoize longest increasing path from each cell; strictly increasing values provide acyclic dependency.",
+    "topics": [
+      "Graphs",
+      "DAG",
+      "Memoized DFS"
+    ],
+    "adaptation_notes": "Initial prev=-1 restricts values to >=0. General template should compare neighbors directly instead of fake sentinel. visited path set unnecessary because strict increase prevents cycles; reset dp with assign on each public call, resize can retain old states.",
+    "submissions": [
+      {
+        "id": "2139455187",
+        "url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/submissions/2139455187/"
+      }
+    ]
+  },
+  {
+    "problem": "3524. Find X Value of Array I",
+    "problem_url": "https://leetcode.com/problems/find-x-value-of-array-i/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Rolling remainder counts for all subarrays ending at current position; add singleton then extend prior endings and accumulate totals.",
+    "topics": [
+      "Dynamic programming",
+      "Modular products"
+    ],
+    "adaptation_notes": "k>0 and nonnegative values under source contract. O(nk) time and O(k) state; 64-bit counts already used.",
+    "submissions": [
+      {
+        "id": "2148463117",
+        "url": "https://leetcode.com/problems/find-x-value-of-array-i/submissions/2148463117/"
+      }
+    ]
+  },
+  {
+    "problem": "64. Minimum Path Sum",
+    "problem_url": "https://leetcode.com/problems/minimum-path-sum/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Initialize first row/column; each cell cost plus min(top,left).",
+    "topics": [
+      "Dynamic programming",
+      "Grid paths"
+    ],
+    "adaptation_notes": "Nonempty rectangular grid assumption; widen path sum for expanded values. Rolling row is optional documented space optimization, source stores full table.",
+    "submissions": [
+      {
+        "id": "2126173167",
+        "url": "https://leetcode.com/problems/minimum-path-sum/submissions/2126173167/"
+      },
+      {
+        "id": "2126172428",
+        "url": "https://leetcode.com/problems/minimum-path-sum/submissions/2126172428"
+      }
+    ]
+  },
+  {
+    "problem": "1621. Number of Sets of K Non-Overlapping Line Segments",
+    "problem_url": "https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Memoize point index, remaining segment count, and whether a segment is open; close at same point to permit shared endpoints.",
+    "topics": [
+      "Dynamic programming",
+      "State machines"
+    ],
+    "adaptation_notes": "Fixed huge member array and recursion depth should become dynamically sized or rolling state in generalized code. k==0 base represents all requested segments completed. Modulo constant use integer literal.",
+    "submissions": [
+      {
+        "id": "2144058402",
+        "url": "https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/submissions/2144058402/"
+      }
+    ]
+  },
+  {
+    "problem": "4058. Maximum Pulse Value After One Subarray Rotation",
+    "problem_url": "https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/",
+    "topic": "dp-and-backtracking",
+    "pattern": "Alternating base sum plus best nonnegative segment gain over each adjacent-pair parity.",
+    "topics": [
+      "Greedy",
+      "Dynamic programming",
+      "Kadane"
+    ],
+    "adaptation_notes": "This is problem-specific gain derivation; generalized template is Kadane over transformed pair gains. Preserve 2LL widening.",
+    "submissions": [
+      {
+        "id": "2147436566",
+        "url": "https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/submissions/2147436566/"
+      }
+    ]
+  },
+  {
+    "problem": "2333. Minimum Sum of Squared Difference",
+    "problem_url": "https://leetcode.com/problems/minimum-sum-of-squared-difference/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Frequency buckets lowered from largest difference to zero; batches identical greedy moves.",
+    "topics": [
+      "Greedy",
+      "Counting"
+    ],
+    "adaptation_notes": "Use 1LL*k1+k2 before addition if bounds expand; difference subtraction and abs also need widening for unrestricted ints. Runtime O(n+maxDiff), not O(n log n).",
+    "submissions": [
+      {
+        "id": "2168486798",
+        "url": "https://leetcode.com/problems/minimum-sum-of-squared-difference/submissions/2168486798/"
+      }
+    ]
+  },
+  {
+    "problem": "435. Non-overlapping Intervals",
+    "problem_url": "https://leetcode.com/problems/non-overlapping-intervals/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Sort by end, retain earliest finishing compatible interval and count removals.",
+    "topics": [
+      "Greedy",
+      "Intervals"
+    ],
+    "adaptation_notes": "Replace auto& last = intervals[0] with scalar lastEnd or value to avoid mutating intervals[0]. Guard empty input in reusable helper. Sorting mutates input unless copied.",
+    "submissions": [
+      {
+        "id": "2167400289",
+        "url": "https://leetcode.com/problems/non-overlapping-intervals/submissions/2167400289/"
+      },
+      {
+        "id": "2139752268",
+        "url": "https://leetcode.com/problems/non-overlapping-intervals/submissions/2139752268/"
+      }
+    ]
+  },
+  {
+    "problem": "56. Merge Intervals",
+    "problem_url": "https://leetcode.com/problems/merge-intervals/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Sort then fold into result.back(), extending overlapping intervals.",
+    "topics": [
+      "Intervals",
+      "Sorting"
+    ],
+    "adaptation_notes": "State endpoint semantics: touching endpoints merge. Input sorted in place.",
+    "submissions": [
+      {
+        "id": "2167385466",
+        "url": "https://leetcode.com/problems/merge-intervals/submissions/2167385466/"
+      },
+      {
+        "id": "2126107082",
+        "url": "https://leetcode.com/problems/merge-intervals/submissions/2126107082/"
+      }
+    ]
+  },
+  {
+    "problem": "57. Insert Interval",
+    "problem_url": "https://leetcode.com/problems/insert-interval/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Find overlapping block with lower_bound on interval ends and upper_bound on interval starts; erase and insert merged interval.",
+    "topics": [
+      "Intervals",
+      "Binary search"
+    ],
+    "adaptation_notes": "Requires sorted disjoint intervals so endpoints are monotone. Vector erase/insert remains O(n), despite O(log n) searches. Mutates both intervals and newInterval; value-copy new interval for a reusable nonmutating interface.",
+    "submissions": [
+      {
+        "id": "2167382205",
+        "url": "https://leetcode.com/problems/insert-interval/submissions/2167382205/"
+      },
+      {
+        "id": "2167379680",
+        "url": "https://leetcode.com/problems/insert-interval/submissions/2167379680/"
+      }
+    ]
+  },
+  {
+    "problem": "135. Candy",
+    "problem_url": "https://leetcode.com/problems/candy/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Initialize all ones, enforce increasing-neighbor constraints left-to-right and right-to-left with max.",
+    "topics": [
+      "Greedy",
+      "Two passes"
+    ],
+    "adaptation_notes": "Use signed n before n-2; widen total if bounds expand. Explain independent directional lower bounds.",
+    "submissions": [
+      {
+        "id": "2163599188",
+        "url": "https://leetcode.com/problems/candy/submissions/2163599188/"
+      }
+    ]
+  },
+  {
+    "problem": "4059. Lexicographically Largest Power Array",
+    "problem_url": "https://leetcode.com/problems/lexicographically-largest-power-array/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Process bits from high to low; refine active prefix groups into ones then zeros, freezing groups after first zero block.",
+    "topics": [
+      "Greedy",
+      "Bitwise",
+      "Partition refinement"
+    ],
+    "adaptation_notes": "15-bit nonnegative input bound is hard-coded. Preserve as a specialized pattern, not an unrestricted sorting theorem without proof from problem contract.",
+    "submissions": [
+      {
+        "id": "2147456833",
+        "url": "https://leetcode.com/problems/lexicographically-largest-power-array/submissions/2147456833/"
+      },
+      {
+        "id": "2147456124",
+        "url": "https://leetcode.com/problems/lexicographically-largest-power-array/submissions/2147456124/"
+      }
+    ]
+  },
+  {
+    "problem": "2472. Maximum Number of Non-overlapping Palindrome Substrings",
+    "problem_url": "https://leetcode.com/problems/maximum-number-of-non-overlapping-palindrome-substrings/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Scan left-to-right checking only length k and k+1 palindromes, take first qualifying block, jump past it.",
+    "topics": [
+      "Greedy",
+      "Palindromes"
+    ],
+    "adaptation_notes": "Cast string size before subtracting k; unsigned s.size()-k can underflow when k>n. Explain why longer palindromes can be reduced to k or k+1 and why earliest finish is safe.",
+    "submissions": [
+      {
+        "id": "2143088360",
+        "url": "https://leetcode.com/problems/maximum-number-of-non-overlapping-palindrome-substrings/submissions/2143088360/"
+      }
+    ]
+  },
+  {
+    "problem": "3414. Maximum Score of Non-overlapping Intervals",
+    "problem_url": "https://leetcode.com/problems/maximum-score-of-non-overlapping-intervals/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Sort intervals by end; precompute last strictly compatible predecessor; DP over allowed count<=4 and prefix, preserving score and lexicographically smallest original-index path.",
+    "topics": [
+      "Dynamic programming",
+      "Weighted intervals",
+      "Binary search",
+      "Tie breaking"
+    ],
+    "adaptation_notes": "Input is mutated by appending index and sorting; use copy for reusable API. Generalize K explicitly and account for path-copy/sort cost as K grows. Strict nonoverlap differs from touching-allowed scheduling.",
+    "submissions": [
+      {
+        "id": "2139370298",
+        "url": "https://leetcode.com/problems/maximum-score-of-non-overlapping-intervals/submissions/2139370298/"
+      }
+    ]
+  },
+  {
+    "problem": "1520. Maximum Number of Non-Overlapping Substrings",
+    "problem_url": "https://leetcode.com/problems/maximum-number-of-non-overlapping-substrings/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Collect each character first/last/count in first-appearance order; deque suffix aggregation checks whether contained character counts exactly fill its bounding interval, emits then clears.",
+    "topics": [
+      "Greedy",
+      "Intervals",
+      "Character spans"
+    ],
+    "adaptation_notes": "Specialized nonstandard greedy implementation; requires a proof or differential tests before promoting as a generic interval-closure template. Alphabet limited to lowercase and q bounded by 26. Do not substitute standard closure algorithm while claiming exact source.",
+    "submissions": [
+      {
+        "id": "2146064854",
+        "url": "https://leetcode.com/problems/maximum-number-of-non-overlapping-substrings/submissions/2146064854/"
+      }
+    ]
+  },
+  {
+    "problem": "729. My Calendar I",
+    "problem_url": "https://leetcode.com/problems/my-calendar-i/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Disjoint interval map by start; lower_bound identifies successor, predecessor checks other possible conflict.",
+    "topics": [
+      "Intervals",
+      "Ordered map"
+    ],
+    "adaptation_notes": "Half-open intervals [start,end), so touching allowed. Require start<end. O(log n) insertion/query.",
+    "submissions": [
+      {
+        "id": "2152937765",
+        "url": "https://leetcode.com/problems/my-calendar-i/submissions/2152937765/"
+      }
+    ]
+  },
+  {
+    "problem": "218. The Skyline Problem",
+    "problem_url": "https://leetcode.com/problems/the-skyline-problem/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Encode start positive and end negative, order same-x events descending signed height, maintain max active height, emit changes.",
+    "topics": [
+      "Sweep line",
+      "Ordered multiset"
+    ],
+    "adaptation_notes": "Erase one found iterator, not all equal heights. Explain event tie order: taller starts before shorter, shorter ends before taller, starts before ends.",
+    "submissions": [
+      {
+        "id": "2153355270",
+        "url": "https://leetcode.com/problems/the-skyline-problem/submissions/2153355270/"
+      }
+    ]
+  },
+  {
+    "problem": "121. Best Time to Buy and Sell Stock",
+    "problem_url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Track lowest price so far and best sell-minus-minimum profit.",
+    "topics": [
+      "Greedy",
+      "Prefix minima"
+    ],
+    "adaptation_notes": "Single transaction, later-or-same sale; widened difference for expanded bounds.",
+    "submissions": [
+      {
+        "id": "2127314016",
+        "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/submissions/2127314016/"
+      }
+    ]
+  },
+  {
+    "problem": "1877. Minimize Maximum Pair Sum in Array",
+    "problem_url": "https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/",
+    "topic": "greedy-and-intervals",
+    "pattern": "Pair smallest with largest, maximizing pair sum over pairs.",
+    "topics": [
+      "Greedy",
+      "Two pointers",
+      "Counting"
+    ],
+    "adaptation_notes": "Bucket-map version scans entire numeric range O(n+max-min), not O(n). Nonnegative assumptions affect initial result=0; even length required.",
+    "submissions": [
+      {
+        "id": "2140491975",
+        "url": "https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/submissions/2140491975/"
+      },
+      {
+        "id": "2140491229",
+        "url": "https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/submissions/2140491229"
+      },
+      {
+        "id": "2140485732",
+        "url": "https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/submissions/2140485732/"
+      }
+    ]
+  },
+  {
+    "problem": "981. Time Based Key-Value Store",
+    "problem_url": "https://leetcode.com/problems/time-based-key-value-store/",
+    "topic": "design-structures",
+    "pattern": "Key maps to ordered timestamp/value map; upper_bound then predecessor finds most recent <=timestamp.",
+    "topics": [
+      "Ordered maps",
+      "Predecessor queries"
+    ],
+    "adaptation_notes": "Read get inserts missing outer key via []; use find for const semantics. Older insert keeps existing timestamp, latest assignment overwrites; document chosen contract.",
+    "submissions": [
+      {
+        "id": "2146746974",
+        "url": "https://leetcode.com/problems/time-based-key-value-store/submissions/2146746974/"
+      },
+      {
+        "id": "2024512612",
+        "url": "https://leetcode.com/problems/time-based-key-value-store/submissions/2024512612/"
+      }
+    ]
+  },
+  {
+    "problem": "895. Maximum Frequency Stack",
+    "problem_url": "https://leetcode.com/problems/maximum-frequency-stack/",
+    "topic": "design-structures",
+    "pattern": "Latest keeps stack per frequency and per-value frequency; pop last value at highest frequency. Older maintains ordered set by (-frequency,-latest_timestamp,value).",
+    "topics": [
+      "Design",
+      "Frequency buckets",
+      "Ordered sets"
+    ],
+    "adaptation_notes": "Preferred bucket form expected O(1), ordered-set form O(log distinct). pop requires nonempty. Keep historical lower-frequency entries; they encode recency after pops, not stale entries to remove.",
+    "submissions": [
+      {
+        "id": "2146639743",
+        "url": "https://leetcode.com/problems/maximum-frequency-stack/submissions/2146639743/"
+      },
+      {
+        "id": "2146625292",
+        "url": "https://leetcode.com/problems/maximum-frequency-stack/submissions/2146625292/"
+      }
+    ]
+  },
+  {
+    "problem": "150. Evaluate Reverse Polish Notation",
+    "problem_url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+    "topic": "design-structures",
+    "pattern": "Push operands, pop right then left for binary operator.",
+    "topics": [
+      "Stacks",
+      "Parsing"
+    ],
+    "adaptation_notes": "Operand order matters for subtraction/division. Valid expression/nonzero divisor assumed; stoi offers better failure visibility than atoi.",
+    "submissions": [
+      {
+        "id": "2146465049",
+        "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/2146465049/"
+      },
+      {
+        "id": "2025562806",
+        "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/2025562806/"
+      }
+    ]
+  },
+  {
+    "problem": "155. Min Stack",
+    "problem_url": "https://leetcode.com/problems/min-stack/",
+    "topic": "design-structures",
+    "pattern": "Store minimum-so-far beside each value or in parallel stack.",
+    "topics": [
+      "Design",
+      "Stacks",
+      "Prefix aggregates"
+    ],
+    "adaptation_notes": "All read/pop operations require nonempty; paired-vector form keeps correlated state together.",
+    "submissions": [
+      {
+        "id": "2146461553",
+        "url": "https://leetcode.com/problems/min-stack/submissions/2146461553/"
+      },
+      {
+        "id": "2025573166",
+        "url": "https://leetcode.com/problems/min-stack/submissions/2025573166/"
+      }
+    ]
+  },
+  {
+    "problem": "225. Implement Stack using Queues",
+    "problem_url": "https://leetcode.com/problems/implement-stack-using-queues/",
+    "topic": "design-structures",
+    "pattern": "Push into spare queue then move old queue behind it; swap so front is newest.",
+    "topics": [
+      "Design",
+      "Queues"
+    ],
+    "adaptation_notes": "Push O(n), pop/top O(1); empty precondition on pop/top.",
+    "submissions": [
+      {
+        "id": "2146459626",
+        "url": "https://leetcode.com/problems/implement-stack-using-queues/submissions/2146459626/"
+      }
+    ]
+  },
+  {
+    "problem": "232. Implement Queue using Stacks",
+    "problem_url": "https://leetcode.com/problems/implement-queue-using-stacks/",
+    "topic": "design-structures",
+    "pattern": "Input stack for push; transfer all to output stack only when output empty.",
+    "topics": [
+      "Design",
+      "Amortized analysis",
+      "Stacks"
+    ],
+    "adaptation_notes": "Amortized O(1), individual transfer O(n); peek/pop require nonempty queue.",
+    "submissions": [
+      {
+        "id": "2146457265",
+        "url": "https://leetcode.com/problems/implement-queue-using-stacks/submissions/2146457265/"
+      }
+    ]
+  },
+  {
+    "problem": "682. Baseball Game",
+    "problem_url": "https://leetcode.com/problems/baseball-game/",
+    "topic": "design-structures",
+    "pattern": "Maintain score history with cancel/double/sum-of-last-two commands.",
+    "topics": [
+      "Stacks",
+      "Simulation"
+    ],
+    "adaptation_notes": "Valid-operation preconditions; use indexed back entries instead of temporary pop if cleaning code. Final sum can avoid destructive drain.",
+    "submissions": [
+      {
+        "id": "2145817863",
+        "url": "https://leetcode.com/problems/baseball-game/submissions/2145817863/"
+      }
+    ]
+  },
+  {
+    "problem": "460. LFU Cache",
+    "problem_url": "https://leetcode.com/problems/lfu-cache/",
+    "topic": "design-structures",
+    "pattern": "Latest frequency->list buckets and key->iterator map use MRU-front/LRU-back within a frequency, tracking minFreq. Older ordered set sorts (frequency,time,key,value).",
+    "topics": [
+      "Design",
+      "LFU cache",
+      "Linked lists",
+      "Ordered sets"
+    ],
+    "adaptation_notes": "Zero capacity handled. Copying object with iterator maps requires deleted copy or correct rebuild; prefer list::splice for node promotion as optional adaptation, source erase/copy is valid. minFreq increments when emptied minimum bucket during promotion; reset to1 on insertion.",
+    "submissions": [
+      {
+        "id": "2144968388",
+        "url": "https://leetcode.com/problems/lfu-cache/submissions/2144968388/"
+      },
+      {
+        "id": "2144919830",
+        "url": "https://leetcode.com/problems/lfu-cache/submissions/2144919830/"
+      }
+    ]
+  },
+  {
+    "problem": "355. Design Twitter",
+    "problem_url": "https://leetcode.com/problems/design-twitter/",
+    "topic": "design-structures",
+    "pattern": "Store append-only posts by user; scan followed and own posts into size-10 min heap, reverse output.",
+    "topics": [
+      "Design",
+      "Heaps",
+      "Bounded top-k"
+    ],
+    "adaptation_notes": "Actual feed retrieval scans all relevant historical posts; not k-way merge. Prevent or ignore self-follow to avoid duplicating own posts if generic API permits it. Long-lived counter width and bounded retention need explicit new requirements.",
+    "submissions": [
+      {
+        "id": "2144760383",
+        "url": "https://leetcode.com/problems/design-twitter/submissions/2144760383/"
+      }
+    ]
+  },
+  {
+    "problem": "706. Design HashMap",
+    "problem_url": "https://leetcode.com/problems/design-hashmap/",
+    "topic": "design-structures",
+    "pattern": "Fixed 32 buckets, each list of key/value pairs; scan chain for upsert/get/remove.",
+    "topics": [
+      "Design",
+      "Custom hash map",
+      "Separate chaining"
+    ],
+    "adaptation_notes": "Fixed bucket count means operations degrade to O(n); do not advertise expected O(1) under growth. Keep bounded educational template or add rehash/load factor as explicitly new adaptation. Positive-key assumption; size_t conversion of negative key is not signed mathematical modulo. Missing sentinel -1 cannot represent arbitrary values unambiguously.",
+    "submissions": [
+      {
+        "id": "2144621524",
+        "url": "https://leetcode.com/problems/design-hashmap/submissions/2144621524/"
+      }
+    ]
+  },
+  {
+    "problem": "146. LRU Cache",
+    "problem_url": "https://leetcode.com/problems/lru-cache/",
+    "topic": "design-structures",
+    "pattern": "List MRU-front/LRU-back with key->iterator map; splice hit to front, evict back when full.",
+    "topics": [
+      "Design",
+      "LRU cache",
+      "Linked lists"
+    ],
+    "adaptation_notes": "Add capacity==0 guard: source back() on empty otherwise. Iterator-bearing object needs deleted copy or custom rebuilt copy. Splice within list preserves iterator.",
+    "submissions": [
+      {
+        "id": "2143986850",
+        "url": "https://leetcode.com/problems/lru-cache/submissions/2143986850/"
+      }
+    ]
+  },
+  {
+    "problem": "810. Chalkboard XOR Game",
+    "problem_url": "https://leetcode.com/problems/chalkboard-xor-game/",
+    "topic": "math-and-bits",
+    "pattern": "XOR all values and return zero-XOR or even parity.",
+    "topics": [
+      "Bitwise",
+      "Game theory"
+    ],
+    "adaptation_notes": "Handbook must include the game invariant proof; no simulation or DP in code.",
+    "submissions": [
+      {
+        "id": "2166697803",
+        "url": "https://leetcode.com/problems/chalkboard-xor-game/submissions/2166697803/"
+      }
+    ]
+  },
+  {
+    "problem": "3498. Reverse Degree of a String",
+    "problem_url": "https://leetcode.com/problems/reverse-degree-of-a-string/",
+    "topic": "math-and-bits",
+    "pattern": "Map lowercase character to reverse alphabet weight and multiply by one-based index.",
+    "topics": [
+      "Strings",
+      "Arithmetic"
+    ],
+    "adaptation_notes": "Remove debug cout from older source; fixed lowercase alphabet.",
+    "submissions": [
+      {
+        "id": "2147499756",
+        "url": "https://leetcode.com/problems/reverse-degree-of-a-string/submissions/2147499756/"
+      },
+      {
+        "id": "2147499695",
+        "url": "https://leetcode.com/problems/reverse-degree-of-a-string/submissions/2147499695/"
+      }
+    ]
+  },
+  {
+    "problem": "836. Rectangle Overlap",
+    "problem_url": "https://leetcode.com/problems/rectangle-overlap/",
+    "topic": "math-and-bits",
+    "pattern": "Positive-area rectangle intersection equals strict overlap on both axes.",
+    "topics": [
+      "Geometry",
+      "Intervals"
+    ],
+    "adaptation_notes": "Symmetric second call is redundant; use logical && and one check. Assumes normalized rectangle coordinates.",
+    "submissions": [
+      {
+        "id": "2141366410",
+        "url": "https://leetcode.com/problems/rectangle-overlap/submissions/2141366410/"
+      }
+    ]
+  },
+  {
+    "problem": "1401. Circle and Rectangle Overlapping",
+    "problem_url": "https://leetcode.com/problems/circle-and-rectangle-overlapping/",
+    "topic": "math-and-bits",
+    "pattern": "Closest rectangle point to circle center obtained by clamping both coordinates; compare squared distance.",
+    "topics": [
+      "Geometry",
+      "Clamping"
+    ],
+    "adaptation_notes": "Widen differences and products before squaring. Boundaries inclusive, touching counts.",
+    "submissions": [
+      {
+        "id": "2146448826",
+        "url": "https://leetcode.com/problems/circle-and-rectangle-overlapping/submissions/2146448826/"
+      },
+      {
+        "id": "2146448651",
+        "url": "https://leetcode.com/problems/circle-and-rectangle-overlapping/submissions/2146448651/"
+      }
+    ]
+  },
+  {
+    "problem": "835. Image Overlap",
+    "problem_url": "https://leetcode.com/problems/image-overlap/",
+    "topic": "math-and-bits",
+    "pattern": "For every pair of nonzero pixel coordinates, count translation vector; maximum frequency is best overlap.",
+    "topics": [
+      "Geometry",
+      "Hash maps",
+      "Coordinate packing"
+    ],
+    "adaptation_notes": "Cast both signed differences through uint32_t before packing; this safely preserves 32-bit bit patterns. Complexity O(number_of_ones_A * number_of_ones_B).",
+    "submissions": [
+      {
+        "id": "2140447101",
+        "url": "https://leetcode.com/problems/image-overlap/submissions/2140447101/"
+      },
+      {
+        "id": "2140436041",
+        "url": "https://leetcode.com/problems/image-overlap/submissions/2140436041"
+      }
+    ]
+  },
+  {
+    "problem": "923. 3Sum With Multiplicity",
+    "problem_url": "https://leetcode.com/problems/3sum-with-multiplicity/",
+    "topic": "math-and-bits",
+    "pattern": "Sort, walk distinct value triples using frequencies, add product/choose2/choose3 multiplicities.",
+    "topics": [
+      "Two pointers",
+      "Counting",
+      "Combinatorics"
+    ],
+    "adaptation_notes": "State distinct-index versus distinct-value distinction. Products need wide type before multiplication; sorted input mutated.",
+    "submissions": [
+      {
+        "id": "2140530076",
+        "url": "https://leetcode.com/problems/3sum-with-multiplicity/submissions/2140530076/"
+      }
+    ]
+  },
+  {
+    "problem": "1498. Number of Subsequences That Satisfy the Given Sum Condition",
+    "problem_url": "https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/",
+    "topic": "math-and-bits",
+    "pattern": "Sort; when minimum+maximum fits, all subsets of interior elements yield 2^(right-left) valid subsequences with fixed minimum.",
+    "topics": [
+      "Two pointers",
+      "Combinatorics"
+    ],
+    "adaptation_notes": "Use constexpr integer modulus rather than pow; widen min+max for arbitrary ints. Explain indices distinguish duplicate values.",
+    "submissions": [
+      {
+        "id": "2140461426",
+        "url": "https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/submissions/2140461426/"
+      }
+    ]
+  },
+  {
+    "problem": "3483. Unique 3-Digit Even Numbers",
+    "problem_url": "https://leetcode.com/problems/unique-3-digit-even-numbers/",
+    "topic": "math-and-bits",
+    "pattern": "Enumerate hundreds,tens,even units using decrement/restore counts, avoiding leading zero and duplicate values.",
+    "topics": [
+      "Enumeration",
+      "Frequency maps"
+    ],
+    "adaptation_notes": "Fixed 3-digit universe, not a generic permutation generator.",
+    "submissions": [
+      {
+        "id": "2138479064",
+        "url": "https://leetcode.com/problems/unique-3-digit-even-numbers/submissions/2138479064/"
+      }
+    ]
+  },
+  {
+    "problem": "3871. Count Commas in Range II",
+    "problem_url": "https://leetcode.com/problems/count-commas-in-range-ii/",
+    "topic": "math-and-bits",
+    "pattern": "Each decimal comma threshold contributes max(0,n-threshold+1); five hardcoded powers of 1000.",
+    "topics": [
+      "Counting",
+      "Digit thresholds"
+    ],
+    "adaptation_notes": "Finite hardcoded thresholds depend on problem range; general loop needs overflow-safe multiplication.",
+    "submissions": [
+      {
+        "id": "2136687887",
+        "url": "https://leetcode.com/problems/count-commas-in-range-ii/submissions/2136687887/"
+      }
+    ]
+  },
+  {
+    "problem": "3870. Count Commas in Range",
+    "problem_url": "https://leetcode.com/problems/count-commas-in-range/",
+    "topic": "math-and-bits",
+    "pattern": "Counts numbers at first comma threshold under original small range.",
+    "topics": [
+      "Counting",
+      "Digit thresholds"
+    ],
+    "adaptation_notes": "Loop also divides n while multiplying i, so it is not a correct unrestricted multicomma-range template. Use verified threshold formula from 3871 if generalizing.",
+    "submissions": [
+      {
+        "id": "2134960323",
+        "url": "https://leetcode.com/problems/count-commas-in-range/submissions/2134960323/"
+      }
+    ]
+  },
+  {
+    "problem": "3876. Construct Uniform Parity Array II",
+    "problem_url": "https://leetcode.com/problems/construct-uniform-parity-array-ii/",
+    "topic": "math-and-bits",
+    "pattern": "Scan minimum odd and even; return all-even or minimum odd below minimum even.",
+    "topics": [
+      "Greedy",
+      "Parity"
+    ],
+    "adaptation_notes": "Source comments give incorrect parity arithmetic and must not be copied; without task-specific operation proof this is a specialized observation, not a general parity transformation rule.",
+    "submissions": [
+      {
+        "id": "2131978781",
+        "url": "https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131978781/"
+      },
+      {
+        "id": "2131975505",
+        "url": "https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131975505/"
+      }
+    ]
+  },
+  {
+    "problem": "3875. Construct Uniform Parity Array I",
+    "problem_url": "https://leetcode.com/problems/construct-uniform-parity-array-i/",
+    "topic": "math-and-bits",
+    "pattern": "Actual implementation returns true for every input.",
+    "topics": [
+      "Math",
+      "Problem-specific invariant"
+    ],
+    "adaptation_notes": "No reusable code beyond the problem theorem; do not invent a generic parity algorithm from this source.",
+    "submissions": [
+      {
+        "id": "2128397234",
+        "url": "https://leetcode.com/problems/construct-uniform-parity-array-i/submissions/2128397234/"
+      }
+    ]
+  },
+  {
+    "problem": "906. Super Palindromes",
+    "problem_url": "https://leetcode.com/problems/super-palindromes/",
+    "topic": "math-and-bits",
+    "pattern": "Generate odd/even palindromic roots by mirroring half, square them, and test numeric palindrome in target range.",
+    "topics": [
+      "Palindromes",
+      "Enumeration"
+    ],
+    "adaptation_notes": "Half-bound 1e5 is problem-specific. Multiplication can overflow for larger root bounds; guard via division or wider type. Zero would be generated twice if range permitted zero.",
+    "submissions": [
+      {
+        "id": "2163458920",
+        "url": "https://leetcode.com/problems/super-palindromes/submissions/2163458920/"
+      }
+    ]
+  }
+]
