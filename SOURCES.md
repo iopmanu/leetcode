@@ -1,6 +1,6 @@
 # Source index
 
-Every implementation here is an unchanged local copy of a captured accepted C++ submission. The [manifest](sources.json) records its SHA-256; the [coverage page](COVERAGE.md) describes missing source history. Problem and submission links point back to LeetCode.
+Every implementation here is an unchanged local copy of a captured accepted C++ submission. The [manifest](sources.json) records its SHA-256; the [coverage page](COVERAGE.md) documents aggregate history-verification results and unresolved count differences. Problem and submission links point back to LeetCode.
 
 369 submission records · 249 problems · 359 distinct code texts.
 

@@ -55,7 +55,7 @@ Examples: the custom hash map has 32 fixed buckets; quickselect has a determinis
 ## Source and provenance appendix
 
 - [Complete source index](SOURCES.md): all problems and every retained submission, including duplicates.
-- [Coverage and limitations](COVERAGE.md): inspected inventory and known collection gaps.
+- [Coverage and limitations](COVERAGE.md): aggregate history-verification results, methodology, and unresolved count differences.
 - [Validation](VALIDATION.md): byte-fidelity checks and their limits.
 - [Source manifest](sources.json): submission IDs, URLs, SHA-256 values, local paths.
 - [Snippet manifest](snippets.json): exact byte/line ranges and hashes.

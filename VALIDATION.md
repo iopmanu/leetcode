@@ -35,4 +35,4 @@ These are fidelity and navigation checks, not runtime validation. The originals 
 
 Any prior compiler, unit-test, sanitizer, or AddressSanitizer results for generalized templates do **not** apply to these original files or their literal excerpts. Captured acceptance identifies the historical LeetCode submission; it is not a new correctness or safety claim for broader inputs.
 
-Known collection gaps remain listed in [Coverage and limitations](COVERAGE.md).
+Aggregate history-verification results, methodology, and unresolved count differences are documented in [Coverage and limitations](COVERAGE.md).

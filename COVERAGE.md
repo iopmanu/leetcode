@@ -1,55 +1,62 @@
 # Coverage and limitations
 
-Snapshot: **10 October 2026**. This is a source-backed handbook with known collection gaps, not a complete export of the account.
+Snapshot: **10 October 2026**. The submission histories exposed by all **527 inventoried solved problems** have been checked completely. Every Accepted C++ submission found in those histories has a preserved original in this handbook. The profile's C++ aggregate still differs by one problem, so this is not a claim that every account-level metric or inaccessible historical record has been reconciled.
 
-## What was inspected
+## Verified coverage
 
-- 525 solved-problem entries were inventoried initially. 2 additional solved problems were observed during recovery, bringing the documented inventory to **527 problems**.
-- Actual C++ code was captured for **249 distinct problems**.
-- Those problems supplied **369 accepted C++ submission records**, or **359 exact distinct code texts**. These are different measurements; distinct code texts are not a solved-problem count.
-- The problem-level index maps every captured problem to an observed pattern.
-- Existing GitHub solutions were not used as a substitute for inaccessible LeetCode code.
-
-## Collection status
-
-Collection resumed after the earlier access interruption. Newly recovered source pages are now represented by exact code files and provenance; any remaining entries below still lack captured code.
-
-| Evidence status | Problems |
+| Measurement | Count |
 | --- | ---: |
-| Actual accepted C++ source captured | 249 |
-| Recent inventory entry, source not collected | 0 |
-| Accepted C++ source link observed, source not collected | 0 |
-| Older accepted C++ listing observed, no code collected | 0 |
-| No accepted C++ found in the inspected older listing | 278 |
+| Inventoried solved problems | 527 |
+| Complete exposed submission histories checked | 527 |
+| Attempt rows checked, across all languages and statuses | 1,397 |
+| Problems with an Accepted C++ submission in those histories | 249 |
+| Accepted C++ submission IDs found and preserved | 369 |
+| Exact distinct C++ code texts | 359 |
+| Histories with no Accepted C++ submission observed | 278 |
+| Observed Accepted C++ submissions without captured source | 0 |
 
-The last row is an observation about the inspected listings, not proof that the account never used C++ for those tasks. The previously incomplete histories for **3. Longest Substring Without Repeating Characters** and **300. Longest Increasing Subsequence** were completed during recovery: 27 and 13 attempts were inspected, respectively. The first had one accepted C++ source, now captured; the second had none in the inspected history. These observations do not establish an exhaustive export of the account.
+The initial inventory had 525 problems. Two newly observed solved problems brought it to 527. Newly observed Accepted C++ submissions were included in the captured corpus before this final verification.
 
-## Profile count reconciliation
+The final history audit found no additional Accepted C++ IDs beyond the 369 already captured. Submission count, distinct code-text count, and distinct problem count are separate measurements.
 
-At **19:26:25 UTC on 10 October 2026**, the [LeetCode profile](https://leetcode.com/u/VanyushaDoronin/) displayed **250 C++ problems solved** and **527 total problems solved**. This handbook has actual accepted C++ source for **249 problems**, leaving a **one-problem difference** from that language aggregate. The bounded reconciliation recovered the three newly observed C++ solutions, verified the expanded 527-problem inventory, and checked the new Word Search attempts; its other new attempt was Time Limit Exceeded, not another accepted source. The remaining historical language-count discrepancy is unresolved: no additional accepted C++ source was identified. This is **not a complete account or C++ export**, and the 278 no-C++-observed rows above must not be treated as proof that no historical C++ solution exists for them.
+## How completeness was checked
 
-## Remaining recent source pages
+History verification was completed on **10 October 2026**.
 
-Every entry in this previously identified group now has captured source code.
+1. Open each inventoried problem's submission history with all statuses and languages available. Other-language rows were inspected as history metadata so that older C++ attempts could not be hidden behind a newer submission in another language. No Python or other-language source code was collected for this handbook.
+2. Read every exposed history chunk, including lazy-loaded rows. Independently parse the saved rows and require every attempt ordinal from **1 through the largest observed ordinal** exactly once, without gaps or duplicates. Verify all 527 distinct problem URLs against the solved-problem inventory.
+3. Derive Accepted C++ IDs from the actual row status and language. Match the complete ID set and each problem URL against the captured corpus and [source manifest](sources.json).
+4. Recompute SHA-256 from every captured source string and compare it with the manifest and the bytes of all 369 original files. No mismatches or missing originals were found.
 
-## Older C++ listings awaiting source inspection
+These are aggregate findings from the complete exposed-history verification. Source provenance remains in the original-file manifest. Completeness is scoped to the UI histories available during the snapshot; it does not certify unseen, deleted, or otherwise inaccessible records.
 
-Every entry in this previously identified group now has captured source code.
+## Unresolved aggregate differences
+
+### Profile language count
+
+At **19:26:25 UTC on 10 October 2026**, the [LeetCode profile](https://leetcode.com/u/VanyushaDoronin/) displayed **250 C++ problems solved** and **527 total problems solved**. The exhaustive check of the 527 exposed problem histories identifies Accepted C++ submissions for **249 problems**.
+
+That **one-problem difference remains unresolved**. No missing Accepted C++ ID was found in these histories, and no explanation for the profile's different count has been established. The 278 histories without an observed Accepted C++ submission should not be used to assert that no unavailable historical C++ record could exist.
+
+### Inventory attempt count
+
+The progress inventory totals **1,396 attempts**, while the complete history rows total **1,397**. One inventory row reports one fewer attempt than its fully inspected history. Every exposed history ordinal was checked, including the extra row. No counting-rule explanation has been established. This difference does not add an Accepted C++ source or leave a history ordinal unchecked.
 
 ## Source fidelity and validation
 
-- All 369 captured source records are preserved as individual original files; they contain 359 exact distinct code texts.
-- Source bytes, including whitespace and original comments, are copied from the captured code strings without edits. The manifest records the captured SHA-256 for each file.
+- All 369 captured source records remain separate original files, including equivalent resubmissions; they contain 359 exact distinct code texts.
+- Source bytes, whitespace, and original comments are preserved without edits. All 69 snippets remain exact excerpts of those originals.
 - No derived framework or rewritten algorithm templates are included. Original wrappers and LeetCode-specific assumptions remain intact.
-- The fidelity checker checks source preservation and index coverage. It does not replace LeetCode's harness, compile all originals, or re-run their algorithmic tests.
-- Topic explanations separate meaningful algorithmic variants from equivalent resubmissions. All variants still have their own source links.
-- No inaccessible source is represented as inspected, and no third-party implementation fills a gap.
+- The fidelity checker validates source preservation, snippet provenance, and index coverage. It does not compile all originals, replace LeetCode's harness, or re-run their algorithmic tests.
+- Topic explanations organize source-backed ideas and meaningful variants. Explanatory prose does not expand the source evidence.
+- No inaccessible implementation is represented as inspected, and no existing GitHub or third-party implementation fills a gap.
 - No login credentials, session cookies, or verification codes are included.
 
 ## Requested graph algorithms
 
 Dijkstra is now backed by the original [743 min-heap implementation](topics/dsu-and-graphs/originals/743__2158089044.cpp) and the [778 minimax variant](topics/dsu-and-graphs/originals/778__2159581294.cpp). Their unchanged [additive](topics/dsu-and-graphs/snippets/dijkstra-network-delay.cpp) and [minimax](topics/dsu-and-graphs/snippets/dijkstra-minimax-grid.cpp) excerpts are available directly. The recovered [2045 implementation](topics/dsu-and-graphs/originals/2045__2158128996.cpp) tracks two distinct arrival times with a deque; it is not Yen’s simple-path algorithm. No original Prim or Yen implementation has been verified in the captured code. The three captured 1584 variants and the sorted-edge 778 variant use Kruskal/DSU. Uncaptured implementations are not replaced by newly written code.
 
+
 ## Snapshot boundary
 
-These counts describe the captured snapshot dated 10 October 2026. The original files and their manifest are the evidence boundary for this handbook; newly written explanations do not expand that boundary. Captured sources are not an exhaustive history of every accepted attempt.
+Coverage is complete for the **Accepted C++ rows exposed in the 527 audited solved-problem histories during the 10 October 2026 snapshot**. The source files and manifest preserve every such observed submission. The audit is not an export of other-language code, failed C++ source, future submissions, or records the UI does not expose. The unresolved profile aggregate is stated separately above.
