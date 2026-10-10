@@ -4,44 +4,88 @@
 
 **18 captured problems · 37 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-## Pattern reminders
+## Main algorithms and structures
 
-### Monotonic stack boundaries
+Use a monotonic structure when a new item permanently dominates or resolves old candidates; use a heap when only the next extremum must be exposed. `n` is input length, `k` a retained/window size, `a` the number of task types, and `N` the total number of elements across lists. Space excludes returned output; persistent structures include their retained contents. Hash-map operations below are expected-time.
 
-- **Cue:** An incoming value settles an earlier next-greater/next-smaller question, or closes a contribution interval.
-- **Idea and invariant:** 84 gives each popped height its maximal span. 907 gives a popped minimum a left-choice count and right-choice count; its strict comparison assigns equal-value ownership consistently. 739 holds unresolved temperatures, and 901 combines spans of popped prices.
-- **Cost in these sources:** Each item enters and leaves once: O(n) total time and O(n) worst-case storage; stock span is amortized O(1) per call.
-- **Read the originals:** [84. Largest Rectangle in Histogram — 2146612938](originals/84__2146612938.cpp); [907. Sum of Subarray Minimums — 2132055030](originals/907__2132055030.cpp); [739. Daily Temperatures — 2146492152](originals/739__2146492152.cpp); [901. Online Stock Span — 2146501827](originals/901__2146501827.cpp).
+| Algorithm / structure | What it maintains | Time in these implementations | Auxiliary space | Direct implementation |
+| --- | --- | --- | --- | --- |
+| Monotonic index stack | Unresolved next-greater indices or nondecreasing candidate heights | O(n) total; each index pushes/pops once | O(n) | [Next warmer value](originals/739__2146492152.cpp), [histogram spans](originals/84__2146612938.cpp) |
+| Stack contribution counting | A popped minimum owns a left-choice × right-choice rectangle of subarrays | O(n) | O(n) | [Sum of minima](originals/907__2132055030.cpp) |
+| Compressed monotonic stack | Each price stores the consecutive span it represents | Amortized O(1) per call, O(n) for one worst-case call; O(n) over n calls | O(n) persistent | [Online stock span](originals/901__2146501827.cpp) |
+| Prefix sums + monotonic deque | Later, no-larger prefixes dominate earlier starts | O(n) | O(n) explicit prefix array + deque | [Shortest qualifying subarray](originals/862__2152907567.cpp) |
+| Prefix sums + min-heap | Repeatedly expose the smallest previous prefix that now qualifies | O(n log n) | O(n) | [Heap alternative](originals/862__2152891991.cpp) |
+| Bounded heap for top k | The root is the worst of the retained k candidates | O(n log(k+1)) batch; O(log(k+1)) stream insertion | O(k) | [Streaming kth largest](originals/703__2144654284.cpp), [closest points](originals/973__2157563441.cpp), [matrix rank](originals/378__2126186308.cpp) |
+| Heap with lazy expiry | The root is the best currently unexpired indexed value | O(n log n) worst case | O(n), because stale non-root entries remain | [Window maximum](originals/239__2149742695.cpp) |
+| Two heaps for a running median | Lower max-heap and upper min-heap have ordered contents and balanced sizes | O(log n) insertion, O(1) median | O(n) persistent | [Insertion-only median](originals/295__2150573901.cpp) |
+| Two ordered multisets + iterator maps | Same ordered halves, with exact indexed deletion | Expected O(n log(k+1)) total, O(1) median; pathological hash maps can add O(nk) | O(k) trees + maps, plus O(n−k+1) output | [Sliding median](originals/480__2150661436.cpp) |
+| One min-heap head per sorted list | Current minimum head and separately tracked maximum cover every list | O(N log(k+1)) worst case for k lists | O(k) | [Smallest covering range](originals/632__2154226064.cpp) |
+| Extremum-driven simulation | Repeatedly consume the largest remaining quantities | Stone merging O(n log n); scheduling O(n log(a+1)) with fixed alphabet a≤26 | O(n) stones; O(a) task counts, heap, and batch | [Stone collisions](originals/1046__2144668025.cpp), [cooldown batches](originals/621__2144706913.cpp) |
+| Stack of surviving interactions | Only the newest surviving right-moving asteroid can meet the incoming left-moving one | O(n) | O(n), plus O(n) copied output | [Collision stack](originals/735__2146489128.cpp) |
+| Sorted positions + monotonic arrival times | Dominated arrival times collapse into the fleet ahead | O(n log n), including sort | O(n) pair copy + stack | [Fleet aggregation](originals/853__2146549976.cpp) |
+| Two boundary maxima / basin stack | Settle water at a limiting boundary, or close a bounded basin | O(n) in either variant | O(1) two pointers; O(n) stack | [Boundary maxima](originals/42__2147811654.cpp), [basin stack](originals/42__2131872743.cpp) |
+| Greedy subsequence + suffix merge | Spend a discard budget, then merge by entire remaining suffix order | For s splits and input lengths m,n: O(s(m+n+k²)) worst case | O(m+n+k) temporary sequences | [Maximum-number composition](originals/321__2154885660.cpp) |
 
-### Monotonic prefix candidates
+## Combinations and tricks
 
-- **Cue:** Negative values prevent an ordinary positive-sum sliding window.
-- **Idea and invariant:** 862 uses prefix sums. Its deque orientation is source-specific: newest candidates are at the front, while feasible oldest/minimum starts are removed from the back. Dominated candidates leave from the front. The older accepted sources use a min-heap.
-- **Cost in these sources:** Deque variant: O(n) time and O(n) storage. Heap variants: O(n log n) time and O(n) storage.
-- **Read the originals:** [862. Shortest Subarray with Sum at Least K — 2152907567](originals/862__2152907567.cpp).
+### Turn a pop into the final answer for that candidate
 
-### A heap exposes the next relevant extremum
+- **Recognize:** A new value supplies the first boundary that makes an old candidate stop being useful.
+- **Compose:** Monotonic indices + pop-time accounting in [histogram spans](originals/84__2146612938.cpp), [warmer-day distances](originals/739__2146492152.cpp), and [subarray-minimum contributions](originals/907__2132055030.cpp).
+- **Invariant:** After popping index p, the new stack top is its surviving left boundary and the current index is its first qualifying right boundary. Each index can be charged only once.
+- **Tradeoff / trap:** Equality decides ownership. The minimum-sum source pops on strictly smaller values, so the previous boundary is less-or-equal and the next boundary is strictly less; equal minima must not all claim the same subarrays. The histogram explicitly drains at n; the contribution code uses a guarded virtual end position without reading `arr[n]`.
 
-- **Cue:** Advance the smallest of several list heads, maintain a rank, or expire stale candidates.
-- **Idea and invariant:** 632 keeps one head per list and the current maximum. 703 keeps only k values in a min-heap. 239 removes expired indices only when they reach the heap top, so stale entries below the top may remain.
-- **Cost in these sources:** 632 is O(N log k) for N consumed elements from k lists. 703 is O(log k) per insertion. The captured lazy-expiry 239 is O(n log n) time and O(n) worst-case heap storage, not a size-k deque.
-- **Read the originals:** [632. Smallest Range Covering Elements from K Lists — 2154226064](originals/632__2154226064.cpp); [703. Kth Largest Element in a Stream — 2144654284](originals/703__2144654284.cpp); [239. Sliding Window Maximum — 2149742695](originals/239__2149742695.cpp).
+### Store aggregate work on the monotonic stack
 
-### Balanced halves for medians
+- **Recognize:** A popped value represents a whole block, not just one earlier index.
+- **Compose:** A decreasing price stack + counts in [stock span](originals/901__2146501827.cpp).
+- **Invariant:** `(price,span)` summarizes consecutive days already absorbed. Popping a price no greater than today's adds its entire span; those days never need individual reconsideration.
+- **Tradeoff / trap:** Constant cost is amortized across calls. One new maximum can pop the entire stack, and a decreasing stream retains O(n) entries.
 
-- **Cue:** Report a middle value after additions, or after exact indexed deletions.
-- **Idea and invariant:** 295 keeps a max-heap lower half and min-heap upper half. 480 instead uses two multisets of value/index pairs and maps indices to iterators. The lower half has equal size or one extra element, and every lower value precedes every upper value.
-- **Cost in these sources:** 295: O(log n) insertion and O(1) median. 480: O(n log k) total time and O(k) storage for a window of k.
-- **Read the originals:** [295. Find Median from Data Stream — 2150573901](originals/295__2150573901.cpp); [480. Sliding Window Median — 2150661436](originals/480__2150661436.cpp).
+### Replace positive-value windows with prefix dominance
 
-### Greedy subsequences and suffix comparison
+- **Recognize:** Negative values break the rule that removing the leftmost item decreases the window sum.
+- **Compose:** Prefix sums + monotonic candidate deque in [the linear shortest-subarray source](originals/862__2152907567.cpp).
+- **Invariant:** If a later prefix is no larger than an earlier one, it gives at least as large a future sum with a shorter interval. Once a start qualifies, recording its current length and removing it cannot lose a better future length for that start.
+- **Tradeoff / trap:** This deque is reversed from common presentations: newest entries and dominance removal are at the front; oldest/smallest qualifying starts leave at the back. The [heap variant](originals/862__2152891991.cpp) costs O(n log n). Both retained forms use `int` prefix sums; wider numeric domains require a separate widening change, not an assumed property of the originals.
 
-- **Cue:** Choose k digits from two sequences while retaining order and maximizing the merge.
-- **Idea and invariant:** 321 enumerates the split, uses a discard budget to build each maximum subsequence, then compares entire remaining suffixes when merging. Equal leading digits alone cannot decide which side to take.
-- **Cost in these sources:** For s feasible splits, O(s * (m+n+k squared)) is a conservative bound because suffix comparison can rescan up to k digits per merge step. Auxiliary sequence storage is O(m+n+k).
-- **Read the originals:** [321. Create Maximum Number — 2154885660](originals/321__2154885660.cpp).
+### Add deletion identity to a median structure
 
-## Complete problem and variant index
+- **Recognize:** A sliding median must remove a particular occurrence among duplicate values.
+- **Compose:** Balanced lower/upper multisets of `(value,index)` + index-to-iterator hash maps in [the sliding median source](originals/480__2150661436.cpp).
+- **Invariant:** Every lower value precedes every upper value, and lower size equals upper size or exceeds it by one. Whenever rebalancing moves an item, its iterator mapping moves too.
+- **Tradeoff / trap:** These are ordered multisets despite the member names `leftHeap` and `rightHeap`; arbitrary removal is real, not lazy heap deletion. Maps add O(k) storage and expected-time lookup. The [stream median](originals/295__2150573901.cpp) needs only heaps because it never removes old items.
+
+### Distinguish bounded retention from lazy expiry
+
+- **Recognize:** Both problems mention a window or k, but they discard items for different reasons.
+- **Compose:** [Top-k retention](originals/703__2144654284.cpp) pops the worst item immediately; [window maximum](originals/239__2149742695.cpp) attaches indices and pops expired values only at the root.
+- **Invariant:** A bounded heap contains only candidates for the global top k. A lazy-expiry heap guarantees only that its exposed root belongs to the current window.
+- **Tradeoff / trap:** An increasing window stream can leave almost every old, smaller value buried in the heap. The retained window-maximum code therefore has O(n) heap storage and O(n log n) time; an O(k) monotonic window deque would be a different, uncaptured implementation.
+
+### Sweep several sorted lists with one live representative each
+
+- **Recognize:** Need a range covering every list, rather than merely the globally smallest values.
+- **Compose:** A min-heap of `(value,row,column)` + current maximum in [the covering-range source](originals/632__2154226064.cpp).
+- **Invariant:** The heap has one current representative from each list. Only advancing a list that supplies the current minimum can improve the lower endpoint; sortedness makes the tracked maximum monotone.
+- **Tradeoff / trap:** Stop as soon as a list is exhausted. The [matrix-rank source](originals/378__2126186308.cpp) instead visits every matrix cell with a bounded max-heap; it does not implement a sorted-row merge or value-domain binary search.
+
+### Build maximal subsequences before lexicographic merging
+
+- **Recognize:** Choose an ordered subsequence from each of two inputs, but the number taken from each is unknown.
+- **Compose:** Enumerate feasible splits + a monotonic discard-budget selection + suffix comparison in [the maximum-number source](originals/321__2154885660.cpp).
+- **Invariant:** A larger arriving digit can remove smaller earlier digits only while the deletion budget permits. During merge, equal front digits require comparing the complete remaining suffixes.
+- **Tradeoff / trap:** `span` avoids copying those suffixes, but comparing them still takes time: repeated ties can make one merge O(k²). Selection temporarily stores the whole scanned sequence before resizing; claiming O(k) total auxiliary memory would miss those allocations.
+
+### Process independent choices in cooldown-sized batches
+
+- **Recognize:** Several task types compete for execution, and the same type cannot recur within the next cooldown positions.
+- **Compose:** Frequency map + max-heap + a temporary batch in [the scheduler source](originals/621__2144706913.cpp).
+- **Invariant:** Pop each chosen type at most once per batch and reinsert its decremented count only after the batch. A nonfinal batch accounts for the entire cooldown length; the last contributes only its actual task count.
+- **Tradeoff / trap:** The source does not iterate once per idle slot, so large cooldown values do not add that many heap operations. Its O(n log(a+1)) work becomes O(n) for the fixed 26-letter task alphabet.
+
+## Problem and source appendix
+
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 

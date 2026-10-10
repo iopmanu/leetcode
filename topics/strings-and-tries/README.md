@@ -2,46 +2,110 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**34 captured problems · 40 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+## Main algorithms and structures
 
-## Pattern reminders
+Start with the required state, then compose the techniques below. Links open the actual captured implementations. The complete catalog of **34 problems / 40 submissions** is last.
 
-### Borders and KMP fallback
+Here `n,m` are string lengths, `A` the tracked alphabet, `h` nesting depth, `C` total input characters, and `R` output characters. Hash-table bounds are expected. Space includes recursion and temporary storage; output is stated separately. A string passed **by value** can add its full length in entry-copy storage/time for an lvalue caller; this is included below, even when the scan itself needs only counters. Moves can avoid that copy.
 
-- **Cue:** Reuse already matched prefixes rather than restarting comparisons.
-- **Idea and invariant:** 28 builds the prefix function and falls back to the longest smaller border on mismatch. 214 applies the same border structure to a string/separator/reverse construction, 459 tests periodicity, and 686 scans virtual repetitions.
-- **Cost in these sources:** Prefix-function construction and KMP scan are linear in the built/scanned text length; the prefix table uses linear storage.
-- **Read the originals:** [28. Find the Index of the First Occurrence in a String — 2163524870](originals/28__2163524870.cpp); [214. Shortest Palindrome — 2163593115](originals/214__2163593115.cpp); [459. Repeated Substring Pattern — 2163579090](originals/459__2163579090.cpp); [686. Repeated String Match — 2163561881](originals/686__2163561881.cpp).
+| Algorithm / data structure | Recognition trigger | Time in these sources | Space in these sources | Direct implementations |
+|---|---|---|---|---|
+| KMP prefix function + fallback scan | A mismatch should reuse a known border | O(n+m) matching; O(n) border/period test | O(m) LPS + O(n+m) input copies; period test O(n) | [Matching](originals/28__2163524870.cpp), [period test](originals/459__2163579090.cpp) |
+| Separator transform / virtual text + KMP | Palindromic prefix or matching periodic text | O(n) palindrome; O(n+m) virtual scan | O(n) transformed text/LPS/output; virtual scan O(m) LPS + O(n+m) input copies | [Palindrome transform](originals/214__2163593115.cpp), [virtual repetition](originals/686__2163561881.cpp) |
+| Hash-map trie with terminal flag | Many queries share word prefixes | Expected O(L) per insert/search/prefix query | O(total inserted characters) nodes; O(L) by-value query copy | [Value-owned trie](originals/208__2167350538.cpp) |
+| Composite-key trie with node aggregates | Match a prefix and a suffix, choose latest index | Build O(sum (Lᵢ+1)²); query O(P+S+1), expected | O(sum (Lᵢ+1)²) nodes; O(P+S+1) query strings | [All-suffix WordFilter](originals/745__2164622907.cpp) |
+| Decimal-prefix hash sets | Common leading digits of positive integers | Expected O(Nd), N numbers of at most d digits | O(Nd) prefix entries across **two** sets | [Repeated division + intersection](originals/3043__2011710588.cpp) |
+| Sorted canonical string keys | Group words modulo character permutation | Expected O(N+C + sum Lᵢ log Lᵢ), N words | O(N+C) copied keys/groups **and** returned strings | [Anagram grouping](originals/49__2127402160.cpp) |
+| Frequency / two-way character maps | Multiset equality or injective renaming | Expected O(n+m) | O(A) maps + O(n+m) input copies | [Anagram counts](originals/242__2130658997.cpp), [bijection](originals/205__2125913880.cpp) |
+| Deficit map + shrinking window | Shortest substring covering a multiset | Expected O(n+m) | O(A) map + O(n+m) input copies + O(R) output | [Unsatisfied count](originals/76__2149102883.cpp), [satisfied count](originals/76__2131820578.cpp) |
+| Two-pointer mirror comparison | Palindrome, optionally skip one mismatch | O(n); scanning words O(C) | O(1) scan + O(n) parameter copy in 125/680; 2108 O(R) returned word only | [Normalized scan](originals/125__2147738982.cpp), [one deletion](originals/680__2147742976.cpp), [first palindrome](originals/2108__765352591.cpp) |
+| Subsequence pointer + length ordering | Preserve order but allow skipped characters | O(n+m) standalone; O(N²L + N log N) for N words of max length L | Standalone O(n+m) input copies; candidate search O(NL+log N) map/sort storage | [Pointer scan](originals/392__792424958.cpp), [unique longest candidate](originals/522__2022687848.cpp) |
+| Character stack / index stack | Match bracket types or measure valid suffix length | O(n) | O(n) stack and input copy | [Bracket matching](originals/20__2159229559.cpp), [sentinel index stack](originals/32__2161065445.cpp) |
+| Balance, depth, directional feasibility | Types are fixed and only unmatched count matters | O(n) | O(1) counters + O(n) input copy; O(n) output for filtering/splitting | [Missing pairs](originals/921__2164607113.cpp), [paired closes](originals/1541__2167345569.cpp), [wildcards](originals/678__2161909813.cpp), [depth](originals/1614__2155954786.cpp), [strip outer pairs](originals/1021__2166675238.cpp), [depth parity](originals/1111__2158097081.cpp) |
+| Stack of enclosing frames | Nested region contributes to its parent | Score O(n); decode O(n+T), T total characters copied/appended | Score O(h)+O(n) input; decode O(n+R+h) live strings/frames under positive repeat counts | [Frame scores](originals/856__2162881009.cpp), [string repetition](originals/394__2146593107.cpp) |
+| Recursive-descent parser + ordered sets | Union and concatenation have different precedence | O(n + QL log(Q+1)) upper bound, Q intermediate candidate insert/merge attempts, L max candidate length | O(n+h+S), S characters/nodes in simultaneously live sets; final vector also copies output | [Brace grammar and Cartesian products](originals/1096__2153362638.cpp) |
+| Output-position stack + suffix reversal | A closing delimiter reverses its built region | O(n²) worst case | O(n) output/positions/input copy | [Nested reversal](originals/1190__2154897406.cpp) |
+| Nonowning views + token stack / dictionary | Tokens need inspection without substring allocation | Path O(n); substitution expected O(n+K+R), K total knowledge-key characters | Path O(n) views/copy/output; substitution O(q+n+R), q knowledge entries | [Path components](originals/71__2146563687.cpp), [bracket-key lookup](originals/1807__2154370092.cpp) |
+| Bounded decimal accumulator | Parse signed integer without overflowing | O(n) | O(1) numeric state + O(n) input copy | [Sign-specific guard](originals/8__2126227733.cpp) |
+| Run-length scan / alternating emit | Output is built from local runs or two streams | O(n) compression; O(n+m) merge | Compression O(n) **extra vector**; merge O(n+m) input copies and output stream | [Compression](originals/443__2126086544.cpp), [alternating merge](originals/1768__2147744998.cpp) |
+| Rank map + adjacent lexicographic comparison | Alphabet order is supplied by the input | Expected O(C+A) | O(A) rank map/order copy | [Custom alphabet](originals/953__2155353571.cpp) |
 
-### Trie path state
+## Combinations and tricks
 
-- **Cue:** Queries share prefixes, or a compound query can be encoded as a single path.
-- **Idea and invariant:** 208 owns children by value in hash maps and marks complete words. 745 inserts suffix + separator + word paths and stores the latest word index on visited nodes; it has a different allocation/ownership structure.
-- **Cost in these sources:** 208 operations are expected O(L) for a word of length L. 745 inserts O(L squared) path characters per word and answers in O(prefix length + suffix length), assuming expected constant-time transitions.
-- **Read the originals:** [208. Implement Trie (Prefix Tree) — 2167350538](originals/208__2167350538.cpp); [745. Prefix and Suffix Search — 2164622907](originals/745__2164622907.cpp).
+### Border state + a carefully chosen text representation
 
-### Nested syntax carries a frame or parser position
+- **Recognize:** Matching, periodicity, and palindromic prefixes all ask whether a prefix reappears at a boundary.
+- **Compose:** Build LPS once; on mismatch follow `lps[j-1]` without moving the text pointer backward. For a palindrome, apply it to `s + "#" + reverse(s)`; for repetition, scan `a[i % n]` without materializing copies.
+- **Invariant:** LPS records the longest proper prefix that is a suffix of the matched region. A final border `b` gives candidate period `n-b`; require `b>0` and divisibility. The separator prevents a match crossing the original/reversed boundary.
+- **Tradeoff / trap:** The virtual scan still runs up to `2*|a|+|b|` characters; the palindrome version allocates transformed strings and LPS. `#` must be outside the alphabet. The plain matching and period sources rely on nonempty patterns/strings.
+- **Originals:** [Fallback matcher](originals/28__2163524870.cpp), [period condition](originals/459__2163579090.cpp), [palindrome reduction](originals/214__2163593115.cpp), [virtual scan](originals/686__2163561881.cpp).
 
-- **Cue:** Parentheses, repeated brackets, or braces change the meaning of a local region.
-- **Idea and invariant:** 394 saves the outer string and repeat count while decoding a bracketed substring. 1096 separates item, concatenated term, and comma union. 856 saves frame scores; 1190 reverses the built suffix on a closing parenthesis.
-- **Cost in these sources:** Materializing expansions costs at least their output size; brace concatenation additionally forms Cartesian products and inserts into ordered sets. Repeated nested reversals in 1190 can take O(n squared).
-- **Read the originals:** [394. Decode String — 2146593107](originals/394__2146593107.cpp); [1096. Brace Expansion II — 2153362638](originals/1096__2153362638.cpp); [856. Score of Parentheses — 2162881009](originals/856__2162881009.cpp); [1190. Reverse Substrings Between Each Pair of Parentheses — 2154897406](originals/1190__2154897406.cpp).
+### Encode two constraints into one trie path, then cache the answer on that path
 
-### Depth and unmatched counts
+- **Recognize:** Many static words, repeated `(prefix,suffix)` queries, and a maximum-index tie-break.
+- **Compose:** Insert **every suffix, including empty**, followed by `{` and the full word. Query `suffix + "{" + prefix`; overwrite each visited node's index while inserting words in increasing index order.
+- **Invariant:** Reaching the query path proves both constraints, and the last stored index is the largest matching input index. This is a prefix query on an encoded path, so it does not need a terminal-word check.
+- **Tradeoff / trap:** O(L²) construction per word buys O(P+S) queries. Concatenated keys themselves allocate. The ordinary trie has value-owned children and a leaf flag; WordFilter uses `unique_ptr` children and per-node aggregates. These are distinct ownership and query contracts.
+- **Originals:** [Composite trie](originals/745__2164622907.cpp), [ordinary terminal-aware trie](originals/208__2167350538.cpp). For numeric prefixes, [two hash sets](originals/3043__2011710588.cpp) are the captured alternative; there is no numeric trie here.
 
-- **Cue:** Only balance or nesting matters, rather than the full stack contents.
-- **Idea and invariant:** 921 counts missing opens and remaining unmatched opens. 1021 emits only symbols inside each primitive outer pair. 1541 consumes closing parentheses in pairs. 1614 tracks the current and maximum depth.
-- **Cost in these sources:** O(n) time and O(1) counting state, excluding any output string.
-- **Read the originals:** [921. Minimum Add to Make Parentheses Valid — 2164607113](originals/921__2164607113.cpp); [1021. Remove Outermost Parentheses — 2166675238](originals/1021__2166675238.cpp); [1541. Minimum Insertions to Balance a Parentheses String — 2167345569](originals/1541__2167345569.cpp); [1614. Maximum Nesting Depth of the Parentheses — 2155954786](originals/1614__2155954786.cpp).
+### Canonicalize equivalence; count deficits for coverage
 
-### Canonical keys and requirement coverage
+- **Recognize:** “Same letters” can mean an equivalence class or a covering constraint. They need different state.
+- **Compose:** Sort a copy to key anagram groups; use counts for multiset equality; use two maps when a character renaming must be injective. For a covering window, subtract on entry and add on exit while tracking requirement zero-crossings.
+- **Invariant:** A zero unmet-requirement count certifies window validity. Shrink only while valid, recording boundaries before removing the left character; extra copies of a needed character make its deficit negative rather than creating new requirements.
+- **Tradeoff / trap:** Both window versions are linear because each boundary moves only forward, but their `matches` variables mean opposite things. Grouping copies `v` into the result (`emplace_back(v)`), so stored groups and returned strings coexist. Empty target handling is outside the window sources' contract.
+- **Originals:** [Grouping](originals/49__2127402160.cpp), [bijection](originals/205__2125913880.cpp), [remaining deficits](originals/76__2149102883.cpp), [satisfied requirements](originals/76__2131820578.cpp).
 
-- **Cue:** Anagrams should share a key, or a substring must cover every requested character count.
-- **Idea and invariant:** 49 sorts each word as its group key. 76 tracks outstanding or satisfied distinct requirements and shrinks only while the full multiset is covered. The two captured window versions use different count conventions.
-- **Cost in these sources:** 49 costs O(sum L_i log L_i) for sorting words. 76 is expected O(n+m) with hash-map counting and storage proportional to the tracked alphabet, plus output.
-- **Read the originals:** [49. Group Anagrams — 2127402160](originals/49__2127402160.cpp); [76. Minimum Window Substring — 2149102883](originals/76__2149102883.cpp).
+### A stack stores exactly the information a counter would lose
 
-## Complete problem and variant index
+- **Recognize:** Use a counter for depth, a character stack for bracket type, and an index stack when the answer is a length.
+- **Compose:** In the longest-valid scan, initialize the index stack with `-1`, pop on a close, replace an emptied stack with the current invalid index, otherwise measure `i-stack.back()`.
+- **Invariant:** The bottom sentinel is the boundary immediately before a potentially valid suffix; remaining open indexes are unmatched barriers. For score evaluation, each stack frame instead stores the sum of completed children, and a close contributes `max(1,2*inside)` to its parent.
+- **Tradeoff / trap:** Fixed-type balance cannot validate mixed brackets. The bracket matcher scans only three fixed mappings, so that inner loop is constant work. Score input is assumed valid; unmatched closes are not checked.
+- **Originals:** [Typed matching](originals/20__2159229559.cpp), [index sentinel](originals/32__2161065445.cpp), [score frames](originals/856__2162881009.cpp), [depth counter](originals/1614__2155954786.cpp).
+
+### Control the moment when depth changes
+
+- **Recognize:** Drop primitive outer pairs, split nesting evenly, or repair a modified closing rule.
+- **Compose:** Strip an outer pair by decrementing **before** emitting a close and incrementing **after** emitting an open. For depth-parity splitting, increment **before** assigning an open and decrement **after** assigning its close. For double-close grammar, consume `))` as one unit and insert missing partners.
+- **Invariant:** Both ends of a matched pair see the same parity; outer parentheses see zero interior depth. The repair counter represents unmatched opens after consuming complete closing units.
+- **Tradeoff / trap:** Wildcard validity uses two feasibility scans, treating `*` optimistically from opposite ends. Neither scan alone supplies a concrete assignment, and one direction alone misses excess opens or closes.
+- **Originals:** [Strip outer pairs](originals/1021__2166675238.cpp), [depth parity](originals/1111__2158097081.cpp), [double closes](originals/1541__2167345569.cpp), [ordinary repair](originals/921__2164607113.cpp), [two-direction wildcard test](originals/678__2161909813.cpp).
+
+### Parse the grammar before accounting for expansion work
+
+- **Recognize:** Nested expressions mix repetition, union, or adjacent concatenation.
+- **Compose:** The decoder saves outer text and multiplier on `[`, then repeats the inner text on `]`. Brace expansion separates `item` (letter/group), `term` (Cartesian concatenation), and `eval` (comma union); ordered sets deduplicate and order the results.
+- **Invariant:** Each frame owns the result of its completed inner region. The shared brace-parser index always points at the next unconsumed grammar symbol, so concatenation binds before union.
+- **Tradeoff / trap:** A linear number of input tokens does not imply linear time. Decode copies `current` into saved/temporary strings; even nested repeat-count-one wrappers can recopy a large result. Brace expansion forms intermediate strings, including duplicates later discarded by sets, so count intermediate work and string-comparison length, not just final output size.
+- **Originals:** [Stack decoder](originals/394__2146593107.cpp), [recursive grammar](originals/1096__2153362638.cpp). [Suffix-reversal parsing](originals/1190__2154897406.cpp) similarly repeats work on already-built text and can be quadratic.
+
+### Views reduce copying only while their owners remain alive
+
+- **Recognize:** You need token boundaries, not independently owned strings.
+- **Compose:** Keep path components as views in a deque, pop on `..`, then emit once. Map knowledge keys and values as `string_view`; scan a bracketed key span and substitute its value.
+- **Invariant:** Views point into the still-live `path`, `s`, or `knowledge` strings; the deque represents the surviving canonical path prefix. No view escapes either function.
+- **Tradeoff / trap:** View construction is constant-time, but hashing a string view reads its characters, and streaming the answer costs its full length. The functions still copy their by-value input strings. Returning these views, or mutating/reallocating their owners while using them, would change the lifetime contract.
+- **Originals:** [View stack](originals/71__2146563687.cpp), [view-key dictionary](originals/1807__2154370092.cpp).
+
+### Branch only at the first broken invariant
+
+- **Recognize:** A palindrome can spend one deletion; a subsequence can advance only when the next needed character matches.
+- **Compose:** Compare palindrome ends until the first mismatch, then test deleting either end with a no-more-deletions helper. To find the longest uncommon subsequence, reject duplicate words, sort longest-first, and test a unique candidate against the other distinct strings.
+- **Invariant:** Earlier matched palindrome pairs need no reconsideration. The subsequence pointer is the length of the candidate prefix already matched; longest-first order makes the first feasible candidate optimal.
+- **Tradeoff / trap:** The palindrome source uses bitwise `|`, so both helpers execute, though the total remains O(n). The standalone subsequence scan continues reading `s[s.size()]` after all characters match; the null terminator and lowercase-input contract keep it from advancing again. The longer candidate-search helper has an explicit bound.
+- **Originals:** [One-deletion check](originals/680__2147742976.cpp), [candidate ordering](originals/522__2022687848.cpp), [standalone subsequence scan](originals/392__792424958.cpp).
+
+### Preserve the representation contract at conversion boundaries
+
+- **Recognize:** Text is converted into arithmetic state, compressed runs, or an external alphabet order.
+- **Compose:** Check `result > (limit-digit)/10` **before** decimal multiplication, with a sign-specific limit. Flush a run when its character changes and again at the end. Compare adjacent words by the first differing rank, with the shorter-prefix rule as a separate case.
+- **Invariant:** The accumulator never exceeds its permitted magnitude; the run counter belongs to exactly one source character; lexicographic comparison never examines later characters after a decisive difference.
+- **Tradeoff / trap:** Compression builds a separate result vector and moves it back; it is O(n) extra storage, not an in-place write-pointer solution. The palindrome normalization helper is ASCII-specific, and numeric-prefix collection omits zero under the original positive-number contract.
+- **Originals:** [Overflow guard](originals/8__2126227733.cpp), [run flush](originals/443__2126086544.cpp), [rank comparison](originals/953__2155353571.cpp), [ASCII scan](originals/125__2147738982.cpp), [decimal prefixes](originals/3043__2011710588.cpp).
+
+## Problem and source appendix
+
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 

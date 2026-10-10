@@ -4,37 +4,86 @@
 
 **17 captured problems · 21 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-## Pattern reminders
+## Main algorithms and structures
 
-### Prefix cancellation
+Choose a window only when moving its boundaries has the monotonicity the proof needs. Prefix methods handle more general signed data. Here `n` is input length, `m` pattern length, `a` the character alphabet size, `W` word count, `L` word length, `u` distinct words, and `q` range updates. Space excludes returned output, but explicitly notes the captured by-value string parameters: calling them with lvalue strings can add linear copies. Hash bounds are expected-time.
 
-- **Cue:** A subarray sum becomes a difference of two prefix values.
-- **Idea and invariant:** 560 counts previous prefixes equal to current minus target before recording the current prefix. The zero prefix is present once, allowing subarrays beginning at index zero. 238 separately accumulates products on each side of an index.
-- **Cost in these sources:** 560: expected O(n) time and O(n) hash-map storage. 238: O(n) time and O(n) prefix/suffix storage in the captured source.
-- **Read the originals:** [560. Subarray Sum Equals K — 2130713437](originals/560__2130713437.cpp); [238. Product of Array Except Self — 2130701387](originals/238__2130701387.cpp).
+| Algorithm / structure | What it maintains | Time in these implementations | Auxiliary space / copies | Direct implementation |
+| --- | --- | --- | --- | --- |
+| Last-seen index map | Left boundary stays after the latest duplicate inside the window | Expected O(n) | O(a) map; by-value string can add O(n) | [Distinct-character window](originals/3__2027316499.cpp) |
+| Positive-sum shrinking window | Shrink while the target is reached, or while an exact target is exceeded | O(n) | O(1) | [Shortest sum threshold](originals/209__2130694109.cpp), [longest retained middle](originals/1658__2150943873.cpp) |
+| Window + prefix-best DP | Best completed target-sum interval before each boundary | O(n) | O(n) DP | [Two disjoint target intervals](originals/1477__2145013796.cpp) |
+| Fixed-length frequency matching | Count-map equality / zero crossings replace comparing entire windows | Expected O(n+m) | O(a) maps; by-value strings can add O(n+m); anagram output O(n) | [Permutation deficit counts](originals/567__2131779135.cpp), [anagram equality counts](originals/438__2025506346.cpp) |
+| Offset-aligned word windows | Each word-length residue class is scanned in whole-word steps | Expected O((n+W)L), including string-view hashing/equality | O(u) map entries; by-value input string can add O(n), plus result indices | [Word multiset window](originals/30__2153818347.cpp) |
+| Historical-maximum frequency window | Best attainable width, with a nondecreasing frequency upper bound | Expected O(n) | O(a) map; by-value string can add O(n) | [Lazy character replacement](originals/424__2131743704.cpp) |
+| Exact-maximum frequency window | Current maximum frequency is recomputed after changes | Expected O(na) due to map scans; O(n) for the fixed alphabet | O(a) map; by-value string can add O(n) | [Recomputed maximum variant](originals/424__2131736709.cpp) |
+| Zero-budget window | Number of zeros or remaining flips governs boundary movement | O(n) | O(1) | [Fully checked candidate windows](originals/1004__2127149237.cpp), [single-step lazy shrink](originals/1004__2027338195.cpp), [mandatory one deletion](originals/1493__2127345655.cpp) |
+| Prefix-sum frequency map | Count earlier prefixes equal to current prefix minus target | Expected O(n), O(n²) pathological hashing | O(n) | [Lookup then insert](originals/560__2130713437.cpp) |
+| Prefix-sum extrema | Largest absolute subarray sum is the gap between prefix extremes | O(n) | O(1) | [Minimum and maximum prefixes](originals/1749__2000684155.cpp) |
+| Prefix/suffix aggregate arrays | Precompute what is excluded by one index or lies beyond a boundary | O(n) | O(n) temporary arrays; product also returns O(n) output | [Two product arrays](originals/238__2130701387.cpp), [suffix minimum + prefix maximum](originals/3904__2131704501.cpp) |
+| Last-obstruction / last-required indices | Count valid starts ending at each right boundary | O(n) | O(1) | [Fixed-bound subarray count](originals/2444__2153831199.cpp) |
+| Difference array + prefix reconstruction | Two endpoint edits represent each range's available coverage | O(n+q) | O(n) | [Range decrement capacity](originals/3355__2119740763.cpp) |
 
-### Positive-value windows
+## Combinations and tricks
 
-- **Cue:** Expanding increases the sum and moving left decreases it.
-- **Idea and invariant:** 209 shrinks while the target is met. 1658 converts removing two ends into keeping the longest middle with sum total minus x. 1477 combines the current target-sum window with the best earlier disjoint one. Positivity supplies the required monotonicity.
-- **Cost in these sources:** O(n) time because each pointer only advances. 209 and 1658 use O(1) window state; 1477 keeps O(n) prefix-best state.
-- **Read the originals:** [209. Minimum Size Subarray Sum — 2130694109](originals/209__2130694109.cpp); [1658. Minimum Operations to Reduce X to Zero — 2150943873](originals/1658__2150943873.cpp); [1477. Find Two Non-overlapping Sub-arrays Each With Target Sum — 2145013796](originals/1477__2145013796.cpp).
+### Select the window proof before selecting the data structure
 
-### Character counts and controlled invalidity
+- **Recognize:** A contiguous interval must meet a sum target, and you need shortest/longest length rather than all pairs.
+- **Compose:** Running sum + two forward-only pointers in [the shortest-threshold source](originals/209__2130694109.cpp) or [the longest-middle source](originals/1658__2150943873.cpp).
+- **Invariant:** Positive values make expansion increase the sum and shrinking decrease it, so a discarded left endpoint never needs to return.
+- **Tradeoff / trap:** This reasoning does not extend to negative values. For signed exact-sum counting, the actual [prefix-frequency implementation](originals/560__2130713437.cpp) is appropriate; for signed shortest-threshold search, see the captured [prefix deque](../monotonic-and-heaps/originals/862__2152907567.cpp). These solve different objectives, not interchangeable APIs.
 
-- **Cue:** A window has a fixed multiset, a bounded replacement budget, or a bounded number of zeros.
-- **Idea and invariant:** 567 tracks a fixed-length permutation window. 30 scans each word-length offset in whole-word steps. 424 keeps a historical maximum frequency; 1493 and one 1004 variant use single-step lazy shrink, so their current window is not always an ordinary fully valid window.
-- **Cost in these sources:** Character/zero windows are linear time with alphabet-sized or constant state. 30 advances O(n) word steps across offsets, but substring construction and hashing cost O(word length) per step.
-- **Read the originals:** [567. Permutation in String — 2131779135](originals/567__2131779135.cpp); [30. Substring with Concatenation of All Words — 2153818347](originals/30__2153818347.cpp); [424. Longest Repeating Character Replacement — 2131743704](originals/424__2131743704.cpp); [1493. Longest Subarray of 1's After Deleting One Element — 2127345655](originals/1493__2127345655.cpp); [1004. Max Consecutive Ones III — 2127149237](originals/1004__2127149237.cpp).
+### Turn two-ended removal into one retained interval
 
-### Remember the last obstruction
+- **Recognize:** Operations remove a prefix and a suffix; minimizing removed elements is awkward if both ends are considered independently.
+- **Compose:** Total sum − removed target + longest exact-sum middle window in [the end-removal source](originals/1658__2150943873.cpp).
+- **Invariant:** Every allowed removal corresponds to exactly one retained contiguous middle, and minimizing removed length is maximizing retained length.
+- **Tradeoff / trap:** The source handles total below the target by returning −1. A zero retained sum permits an empty middle; do not accidentally exclude that case. The positive-input contract is essential to its window scan.
 
-- **Cue:** Count valid starts for every right endpoint without enumerating subarrays.
-- **Idea and invariant:** 2444 keeps the last invalid element and latest occurrences of both required bounds. Valid starts lie after the invalid position and no later than both bound positions. 3903 and 3904 combine prefix maximum with precomputed suffix minimum.
-- **Cost in these sources:** 2444: O(n) time and O(1) state. The stable-index implementations: O(n) time and O(n) suffix storage.
-- **Read the originals:** [2444. Count Subarrays With Fixed Bounds — 2153831199](originals/2444__2153831199.cpp); [3903. Smallest Stable Index I — 2130500850](originals/3903__2130500850.cpp); [3904. Smallest Stable Index II — 2131704501](originals/3904__2131704501.cpp).
+### Combine a current window with an already finished optimum
 
-## Complete problem and variant index
+- **Recognize:** Need two nonoverlapping target-sum intervals, minimizing their total length.
+- **Compose:** Positive-value exact-sum window + prefix-best lengths in [the two-interval source](originals/1477__2145013796.cpp).
+- **Invariant:** `dp[t]` stores the shortest target interval entirely before boundary t. A current `[left,right]` pairs only with `dp[left]`, which proves disjointness without pair enumeration.
+- **Tradeoff / trap:** Carry `dp[right]` forward before considering the current window, and combine against the earlier boundary rather than the current best. The extra O(n) DP is part of the implementation; it is not a constant-space sliding window.
+
+### Count prefix differences without counting the current prefix twice
+
+- **Recognize:** Count all subarrays with a fixed sum, including with negative entries.
+- **Compose:** Running prefix + frequency map initialized with one zero prefix in [the retained counting source](originals/560__2130713437.cpp).
+- **Invariant:** Before inserting current prefix P, the map contains only earlier endpoints; occurrences of `P−target` correspond one-to-one to valid nonempty intervals ending here.
+- **Tradeoff / trap:** Query before inserting, especially for target zero. The [older variant](originals/560__2025473825.cpp) uses `operator[]` for lookup and therefore creates missing zero-count keys; both variants still use O(n) space. Prefix extremes in [the absolute-sum source](originals/1749__2000684155.cpp) need only two values because they optimize a difference instead of counting every matching prefix.
+
+### Match multisets by boundary crossings, then lift characters to words
+
+- **Recognize:** Order inside a fixed-size window does not matter, but multiplicities do.
+- **Compose:** Count maps + a matched-category counter in [anagrams](originals/438__2025506346.cpp) and [permutation detection](originals/567__2131779135.cpp); whole-word offsets + `string_view` keys in [word concatenation](originals/30__2153818347.cpp).
+- **Invariant:** Entering/leaving a character updates only its equality crossing. For words, only the incoming word can create an excess count; shrink until that excess disappears, and reset at an unknown word.
+- **Tradeoff / trap:** Examine both directions of a count crossing in the anagram source. Word views do not allocate substrings, but hashing/comparing L characters is still O(L); the by-value source string may be copied once. All words must have equal nonzero length, and the referenced strings must stay alive while views are stored.
+
+### Keep a best width even when the current window is temporarily invalid
+
+- **Recognize:** Only the maximum length matters, and a stale upper bound can safely prevent the maintained width from shrinking.
+- **Compose:** Historical maximum count + single-step shrink in [replacement](originals/424__2131743704.cpp), or a lazy zero budget in [the alternative flips source](originals/1004__2027338195.cpp).
+- **Invariant:** The maintained width can grow only when the budget test permits a longer candidate; once an achievable width exists, an invalid extension shifts rather than enlarges it. Historical frequency need not equal the present window's true maximum.
+- **Tradeoff / trap:** Do not use the lazy window as a promised valid answer interval. The [other replacement variant](originals/424__2131736709.cpp) explicitly recomputes the maximum and shrinks fully, costing O(a) per scan. [Mandatory deletion](originals/1493__2127345655.cpp) records `right−left`, not `right−left+1`, so even an all-ones input loses one element.
+
+### Count valid starts using the last obstruction
+
+- **Recognize:** Every valid interval must contain both required values and exclude any value outside their bounds.
+- **Compose:** Last invalid index + last minimum occurrence + last maximum occurrence in [the fixed-bounds source](originals/2444__2153831199.cpp).
+- **Invariant:** For each right endpoint, valid starts lie strictly after the last invalid index and at or before the earlier of the two required occurrences. Add `max(0, min(lastMin,lastMax)−lastInvalid)`.
+- **Tradeoff / trap:** This counts all starts in O(1) work without storing them. The source accumulates in `long`; its wide-count behavior depends on the target platform's `long` width, despite returning `long long`.
+
+### Choose summaries that reconstruct exactly what the query needs
+
+- **Recognize:** Repeated queries need all values except one position, both sides of a split, or total coverage from many ranges.
+- **Compose:** [Exclusive left/right products](originals/238__2130701387.cpp), [prefix maximum + suffix minimum](originals/3904__2131704501.cpp), or [difference endpoints + prefix coverage](originals/3355__2119740763.cpp).
+- **Invariant:** Product identities are 1; the stable-index comparison includes index i in both summaries; a range `[l,r]` contributes +1 at l and −1 at r+1.
+- **Tradeoff / trap:** The product source really allocates two full helper arrays, not just output. Coverage describes available independent decrements, so capacity at least `nums[i]` is sufficient; it does not require applying every query to every covered element. Numeric aggregates remain the integer types shown in the originals.
+
+## Problem and source appendix
+
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
@@ -54,7 +103,7 @@ Stores the last index per character in unordered_map<char,int>. On a repeat, lef
 
 [Problem](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) · Tags: Sliding windows, Strings, Frequency maps, Views
 
-For every word-length offset, slide in word-sized steps and shrink only when current word count exceeds required count.
+For every word-length offset, slide in word-sized steps and shrink only when current word count exceeds required count. Keys are string_view values into existing strings, not allocated substrings; hashing still reads word characters. The by-value input string can add a full copy.
 
 **Captured variants:** One observed approach.
 
@@ -84,9 +133,9 @@ Build explicit left and right product arrays with identity 1, multiply exclusive
 
 [Problem](https://leetcode.com/problems/longest-repeating-character-replacement/) · Tags: Sliding windows, Stale maximum
 
-Maintain maximum character count seen while expanding; shift left once when window-maxCount>k, retain maximal feasible length.
+Historical-maximum variants shift left once when window-maxCount>k and retain maximal feasible length. The 2131736709 variant instead recomputes max_element over the count map and fully shrinks, taking O(na) expected work for alphabet size a rather than O(n) expected map updates.
 
-**Captured variants:** One observed approach.
+**Captured variants:** Two historical-maximum variants and one recomputed-maximum variant.
 
 - [Original 2131743704](originals/424__2131743704.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131743704/)
 - [Original 2131736709](originals/424__2131736709.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-repeating-character-replacement/submissions/2131736709/)

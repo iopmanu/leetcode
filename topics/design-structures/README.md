@@ -2,46 +2,84 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**12 captured problems · 18 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+## Main algorithms and structures
 
-## Pattern reminders
+Start with the operation that must stay cheap and the ordering or lookup invariant it requires. Links point to actual captured code, including its retained storage. Hash costs below are expected, vector append costs are amortized; neither implies worst-case O(1). Let c be cache capacity, d live distinct values, n current entries, H a container's peak size, P total pushes/posts, and B frequency buckets ever created. Space excludes returned results and includes retained capacity where material.
 
-### Recency and frequency are explicit order
+| Structure / recognition trigger | Time in the captured implementation | Stored / auxiliary space | Direct implementation |
+|---|---|---|---|
+| Hash map + doubly linked list: evict least recently used | Expected O(1) get/put | O(c) | [LRU excerpt](snippets/lru-cache.cpp) · [Full source](originals/146__2143986850.cpp) |
+| Key→iterator + frequency→list buckets: LFU with recency ties | Expected O(1) get/put | O(c+B); empty frequency lists remain allocated | [Bucket LFU](snippets/lfu-cache.cpp) · [Full source](originals/460__2144968388.cpp) |
+| Ordered set of (frequency,time,key,value): explicit eviction order | O(log(c+1)) get/put, with expected key-map access | O(c) | [Ordered-set LFU](originals/460__2144919830.cpp) |
+| Frequency→stack plus value→frequency: most frequent, latest push wins | Expected amortized O(1) push/pop | O(P) retained upper bound; zero-frequency keys, empty buckets and vector capacities remain | [Frequency-stack excerpt](snippets/frequency-stack.cpp) · [Full source](originals/895__2146639743.cpp) |
+| Ordered set + per-value timestamp stacks: explicit frequency/recency priority | Expected amortized O(log(d+1)) push/pop | O(P) retained upper bound; O(d) ordered records plus timestamp-vector capacities | [Ordered-set frequency stack](originals/895__2146625292.cpp) |
+| Dense vector + value→index map: random access and unordered deletion | Expected amortized O(1) insert/remove; O(1) getRandom | O(H), retaining vector capacity after removals | [Swap-tail excerpt](snippets/randomized-set-swap-tail.cpp) · [Full source](originals/380__2125968160.cpp) |
+| Key→ordered timestamp map: latest value no later than a query | O(log(m+1)) for m versions of that key, plus key hashing/string copying | O(T+K) records for T timestamps and K keys ever accessed, plus string contents | [Overwrite variant](originals/981__2146746974.cpp) · [Insert-only-at-new-timestamp variant](originals/981__2024512612.cpp) |
+| Append-only histories + bounded min-heap: newest ten items across users | Feed O(F + S log 10) for F followees and S scanned posts; other operations expected amortized O(1) | Feed O(10); persistent O(P+R+U) for posts, follow relations and accessed users | [Full-history scan and bounded heap](originals/355__2144760383.cpp) |
+| Value + prefix minimum at every stack depth | Vector push amortized O(1), other operations O(1); two-stack variant O(1) operations | O(H) vector capacity; O(n) logical two-stack entries | [Paired-vector version](originals/155__2146461553.cpp) · [Two-stack version](originals/155__2025573166.cpp) |
+| Queue/stack adapters: reverse order once at the appropriate boundary | Stack from queues: push O(n), others O(1). Queue from stacks: amortized O(1), individual transfer O(n) | O(n) | [Queues→stack](originals/225__2146459626.cpp) · [Stacks→queue](originals/232__2146457265.cpp) |
+| Stack/history evaluation: commands consume only the newest values | O(t) for t tokens with bounded token length; add parsing cost for longer strings | O(t) | [RPN](originals/150__2146465049.cpp) · [Score history](originals/682__2145817863.cpp) |
+| Fixed-bucket separate chaining: map operations by scanning a chain | O(1+chain length); worst O(n), even with only 32 bucket heads | O(n+32) | [Custom-map excerpt](snippets/custom-hash-map.cpp) · [Full source](originals/706__2144621524.cpp) |
 
-- **Cue:** Eviction depends on recent access or on frequency with recency as a tie-break.
-- **Idea and invariant:** 146 keeps MRU at the list front and stores key-to-iterator entries. The newer 460 uses one list per frequency plus minFreq; the older 460 uses an ordered set keyed by frequency/time. Moving an item must update its stored location.
-- **Cost in these sources:** 146 has expected O(1) operations and O(capacity) storage. The bucket/list 460 has expected O(1) operations and O(capacity) live entries, but retains empty frequency buckets, so total storage also includes frequency buckets accumulated over time. The ordered-set LFU variant uses O(log capacity) operations and O(capacity) storage.
-- **Read the originals:** [146. LRU Cache — 2143986850](originals/146__2143986850.cpp); [460. LFU Cache — 2144968388](originals/460__2144968388.cpp).
+## Combinations and tricks
 
-### Frequency with last-in tie-breaking
+### Lookup + stable location + an eviction order
 
-- **Cue:** Remove a value of maximum frequency, choosing its latest qualifying push.
-- **Idea and invariant:** The newer 895 records a stack of values for each frequency and pops from the current maximum frequency. Its older source explicitly orders frequency and timestamps in a set.
-- **Cost in these sources:** Frequency-stack variant: expected O(1) push/pop; ordered-set variant: logarithmic ordered operations. The frequency-stack source retains zero-frequency value entries, empty frequency vectors, and allocated vector capacity; total storage is not bounded solely by currently unpopped pushes.
-- **Read the originals:** [895. Maximum Frequency Stack — 2146639743](originals/895__2146639743.cpp).
+- **Recognize:** Access is by key, but removal is determined by an order unrelated to key value.
+- **Compose:** Hash keys to list iterators; maintain most-recent at the front and least-recent at the back. LFU adds one such list per frequency and a minimum-frequency marker.
+- **Invariant:** Every resident key's iterator identifies its current node. A hit changes order; a frequency increase moves the node into the next bucket. Evict the back of the minimum-frequency list.
+- **Tradeoff / sources:** [LRU](originals/146__2143986850.cpp) uses splice without invalidating the node iterator and assumes positive capacity. [Bucket LFU](originals/460__2144968388.cpp) handles zero capacity but never erases empty frequency buckets, so memory can grow with accesses even at fixed capacity. [Ordered-set LFU](originals/460__2144919830.cpp) pays O(log c) and keeps only resident records; its timestamp makes the tie-break explicit.
 
-### Ordered history and bounded feeds
+### Frequency levels + recency stacks
 
-- **Cue:** Find the latest value no later than a timestamp, or keep only a small result while scanning history.
-- **Idea and invariant:** 981 uses upper_bound and its predecessor in a timestamp map. 355 scans stored posts from the user and followed users into a size-10 heap. Its feed generation does not merge only the newest post from each user.
-- **Cost in these sources:** 981 has O(log m) timestamp operations for m versions of a key. 355 feed generation is O(P log 10) for P scanned posts, plus followed-user traversal, with O(10) heap storage.
-- **Read the originals:** [981. Time Based Key-Value Store — 2146746974](originals/981__2146746974.cpp); [355. Design Twitter — 2144760383](originals/355__2144760383.cpp).
+- **Recognize:** Pop the most frequent value, breaking ties by the most recent qualifying push.
+- **Compose:** Increment a value's frequency and push it onto that frequency's stack; pop from maxFreq and decrease maxFreq when that stack becomes empty.
+- **Invariant:** The top of a frequency bucket is the latest still-valid push that reached that frequency. Lower-frequency records remain useful when higher-frequency pushes are undone; they are not duplicate records to delete eagerly.
+- **Tradeoff / sources:** [Bucket/stack version](originals/895__2146639743.cpp) is expected amortized O(1), but allocated bucket capacities can outlive the current stack contents. [Set/timestamp version](originals/895__2146625292.cpp) stores one ordered record per live value and all of its unpopped timestamps, removing that value's maps when its frequency becomes zero. Surviving timestamp vectors can still retain their historical capacity.
 
-### Adapters preserve an operation invariant
+### Dense storage + a back-pointer map
 
-- **Cue:** Build one discipline from another container or retain an extra aggregate per entry.
-- **Idea and invariant:** 225 moves the old queue behind the new element. 232 transfers the input stack only when the output stack is empty. 155 stores the minimum belonging to each stack depth. 150 pops the right operand before the left operand.
-- **Cost in these sources:** 225 has O(n) push and O(1) top/pop. 232 has amortized O(1) operations. 155 uses O(1) operations and O(n) storage. RPN evaluation is O(n) time and O(n) stack storage.
-- **Read the originals:** [225. Implement Stack using Queues — 2146459626](originals/225__2146459626.cpp); [232. Implement Queue using Stacks — 2146457265](originals/232__2146457265.cpp); [155. Min Stack — 2146461553](originals/155__2146461553.cpp); [150. Evaluate Reverse Polish Notation — 2146465049](originals/150__2146465049.cpp).
+- **Recognize:** Need random indexed access and deletion, but no promise to preserve item order.
+- **Compose:** Store values densely in a vector; map each value to its index; fill a deleted slot with the tail and repair the tail's map entry before popping it.
+- **Invariant:** For every stored value v, vector[index[v]] == v. No holes remain, so choosing a vector index chooses a current member.
+- **Tradeoff / sources:** [Swap-tail source](originals/380__2125968160.cpp) and [overwrite-tail source](originals/380__2116321400.cpp) implement the same idea. Their rand()%size sampling can be biased, assumes a nonempty set, and is not a stronger randomness guarantee. Stable order would invalidate this constant-time deletion trick.
 
-### Separate chaining with a fixed bucket count
+### Ordered timestamps + predecessor search
 
-- **Cue:** Implement map operations by hashing to a list and scanning for a key.
-- **Idea and invariant:** 706 has exactly 32 buckets. Each bucket contains key/value pairs; updates and removals search the chain. The bucket count does not grow with the number of keys.
-- **Cost in these sources:** O(chain length) per operation and O(n) storage. With a fixed 32 buckets, a general worst-case operation is O(n).
-- **Read the originals:** [706. Design HashMap — 2144621524](originals/706__2144621524.cpp).
+- **Recognize:** A query asks what was true at or before a time, rather than for exact timestamp equality.
+- **Compose:** Hash the key, then use upper_bound(timestamp) in its ordered version map and step back once if possible.
+- **Invariant:** upper_bound is the first version strictly after the query; its predecessor is therefore the latest eligible one. There is no predecessor when the iterator equals begin.
+- **Tradeoff / sources:** [Assignment-based set](originals/981__2146746974.cpp) overwrites a repeated timestamp; [insert-based set](originals/981__2024512612.cpp) preserves the first value. Both get methods use outer-map operator[], so even a missing-key read creates an empty history. The ordered map accepts arbitrary insertion order, with logarithmic cost.
 
-## Complete problem and variant index
+### Scan many histories + retain only top k
+
+- **Recognize:** The answer is small even though the source history is large.
+- **Compose:** Scan posts from each followed user and the requesting user; push each timestamp/post pair into a size-10 min-heap, discard its smallest entry when oversized, then reverse heap extraction.
+- **Invariant:** After each scanned post, the heap contains the newest ten seen so far; its root is the oldest retained candidate.
+- **Tradeoff / source:** [The actual feed implementation](originals/355__2144760383.cpp) scans every relevant stored post on each request. A bounded answer does not make request time independent of history length, and the source does not perform a k-way newest-post merge. Self-follow would scan the user's posts twice; the implementation has no explicit self-follow guard.
+
+### Store just enough history to undo the latest step
+
+- **Recognize:** Operations remove the most recent item, or future answers need an aggregate of the surviving prefix.
+- **Compose:** Pair each stack value with its minimum-so-far, or maintain synchronized value/minimum stacks. For command evaluation, retain operands or scores until a command consumes them.
+- **Invariant:** Popping restores the previous prefix minimum without searching. In RPN, the first popped operand is the right operand, so subtraction and division preserve order. Score cancellation removes exactly the newest score.
+- **Tradeoff / sources:** [Paired minima](originals/155__2146461553.cpp), [parallel minima](originals/155__2025573166.cpp), [RPN](originals/150__2146465049.cpp), and [score history](originals/682__2145817863.cpp) trade linear history storage for local operations and rely on the original valid-operation constraints.
+
+### Put the expensive reversal where it can be amortized
+
+- **Recognize:** Required FIFO/LIFO behavior differs from the available primitive container.
+- **Compose:** [Stack from queues](originals/225__2146459626.cpp) moves the old queue behind each new item. [Queue from stacks](originals/232__2146457265.cpp) transfers all input elements only when the output stack is empty.
+- **Invariant:** The queue-adapter's output top remains the oldest item; later pushes stay in the input stack. Each item crosses stacks at most once before removal.
+- **Tradeoff:** Queue-adapter peek/pop can individually be O(n), despite amortized O(1). The stack-adapter instead pays O(n) on every push and makes top/pop O(1); mixing new input into nonempty output would break FIFO order.
+
+### Audit the load factor before calling a hash map constant-time
+
+- **Recognize:** A custom map hashes into lists but has no growth/rehash path.
+- **Compose:** Compute key modulo bucket count, scan that list, then update/append/remove the matching pair.
+- **Invariant:** All matching keys belong to the same chain; one stored pair per key makes put an upsert.
+- **Tradeoff / source:** [The original fixed-32-bucket map](originals/706__2144621524.cpp) has average chain length n/32 under uniform distribution, so average chain work still grows linearly with n. Adversarial collisions also cost O(n). Standard unordered_map expectations cannot be transferred to this implementation.
+
+## Problem and source appendix
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 

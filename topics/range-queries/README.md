@@ -2,52 +2,64 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**7 captured problems · 8 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+## Main algorithms and structures
 
-## Pattern reminders
+Choose the summary a range must return, then the update it must support. These links open the captured implementation or an unchanged source excerpt; they are not a common replacement API. Here n is the array/event count, k is the modulus, I/Q are interval/query counts, and M is the largest raw endpoint plus one. Space includes the built structure and recursion, excluding returned answers.
 
-### Fenwick prefix sums
+| Structure / recognition trigger | Time in the captured implementation | Extra space | Direct implementation |
+|---|---|---|---|
+| Fenwick tree: additive point changes, prefix/range sums, or a frequency histogram | Mutable-array build O(n), update/prefix/range O(log n); frequency-tree constructor O(n log n), complete compressed counting O(n log n) | O(n) | [Linear build and assignment-to-delta](snippets/fenwick-307.cpp) · [Full mutable array](originals/307__2152356890.cpp) · [Frequency tree](snippets/fenwick-327.cpp) · [Full counting composition](originals/327__2152424852.cpp) |
+| Merge-sort tree: static index range plus a value threshold | Build O(n log n); count query O(log² n); all suffix queries O(n log² n) | O(n log n) | [Sorted-vector nodes](snippets/merge-sort-tree-315.cpp) · [Full source](originals/315__2150760829.cpp) |
+| Count segment tree: select and remove the kth available position | Build O(n); selection/removal O(log n); reconstruction including sort O(n log n) | O(n) | [Rank descent](snippets/order-statistic-segment-tree-406.cpp) · [Full source](originals/406__2152399602.cpp) |
+| Lazy assignment + maximum: overwrite an interval and query its highest point | O(log n) per range operation; compressed event processing O(n log n) including sort | O(n) | [Assignment tree](snippets/lazy-segment-tree-699.cpp) · [Full compression/event loop](originals/699__2155079538.cpp) |
+| Lazy chmin + point query: intervals offer costs to covered coordinates | Initialization O(M); O(log M) per update/in-range point query; total O(M + (I+Q) log M) | O(M), not O(I+Q) | [Range-chmin tree](snippets/segment-tree-range-chmin.cpp) · [Full raw-coordinate source](originals/1851__2168532079.cpp) |
+| Ordered product/prefix-count segment tree: merge a noncommutative summary | Build O(nk); update/query O(k log n), with k ≤ 5 | O(n) actual fixed six-slot arrays; O(log n) query stack | [Ordered merge](snippets/ordered-product-segment-tree-3525.cpp) · [Full source](originals/3525__2150176033.cpp) |
 
-- **Cue:** Point changes and many prefix or inclusive range sums.
-- **Idea and invariant:** Each tree cell aggregates its low-bit block. In 307, assignment is converted to the difference from the saved array value; an inclusive range is the difference of two prefixes. In 327, the tree counts future prefix sums after removing the current one.
-- **Cost in these sources:** 307 builds in O(n), then updates and queries in O(log n), with O(n) storage. 327 includes coordinate sorting and n tree operations: O(n log n) time and O(n) storage.
-- **Read the originals:** [307. Range Sum Query - Mutable — 2152356890](originals/307__2152356890.cpp); [327. Count of Range Sum — 2152424852](originals/327__2152424852.cpp).
+## Combinations and tricks
 
-### Lazy range assignment
+### Prefix differences + a future-only frequency tree
 
-- **Cue:** An interval receives one new height, and later intervals need its maximum.
-- **Idea and invariant:** 699 compresses square endpoints into elementary intervals. A node maximum represents its full covered interval; a pending assignment replaces the entire child interval when pushed. Touching square boundaries do not create overlap.
-- **Cost in these sources:** O(n log n) time for n squares, including compression, and O(n) storage.
-- **Read the originals:** [699. Falling Squares — 2155079538](originals/699__2155079538.cpp).
+- **Recognize:** Count subarrays whose sum lies in a numeric interval, rather than return one range sum.
+- **Compose:** Prefix sums turn a subarray into two endpoints; sorted prefix values turn numeric bounds into ranks; a Fenwick tree counts the eligible later endpoints.
+- **Invariant:** Remove the current prefix before querying [current+lower, current+upper], so only later positions contribute. Use lower_bound at the lower edge and upper_bound at the inclusive upper edge.
+- **Tradeoff / source:** [The captured composition](originals/327__2152424852.cpp) retains duplicate values in the sorted vector and initializes every slot to one. Repeated removals use the first equal slot, which can become negative; the total over an entire equal-value block still represents the remaining multiplicity. It is not a deduplicated-rank frequency template. Prefix arithmetic is long long; the result remains int.
 
-### Order statistics among free positions
+### Greedy order + kth free-slot descent
 
-- **Cue:** Pick the kth currently free location, then occupy it.
-- **Idea and invariant:** 406 stores free counts in children. A zero-based rank goes left when the left count is greater than that rank; otherwise the rank is reduced by the left count. The chosen leaf is removed.
-- **Cost in these sources:** O(n log n) time including sorting and O(n) tree storage.
-- **Read the originals:** [406. Queue Reconstruction by Height — 2152399602](originals/406__2152399602.cpp).
+- **Recognize:** An item's final position is specified by how many qualifying items must precede it.
+- **Compose:** Sort heights ascending, equal-height ranks descending; use a segment tree of free-slot counts to place each person.
+- **Invariant:** A free slot will be occupied by a sufficiently tall person later. At each node, a zero-based rank goes left if leftCount > rank; otherwise subtract leftCount and go right. Decrement counts along that same descent.
+- **Tradeoff / source:** [Sorting and placement together](originals/406__2152399602.cpp) avoid O(n) vector insertion per person, but the tie order is part of the proof, not an interchangeable sort preference.
 
-### A sorted vector at every node
+### Endpoint compression + range maximum + assignment
 
-- **Cue:** Static range queries ask how many elements are below a threshold.
-- **Idea and invariant:** 315 stores the sorted values of each segment. A fully covered node answers with lower_bound; the query combines disjoint covered nodes.
-- **Cost in these sources:** O(n log n) build and storage; O(log squared n) per count query and O(n log squared n) for the full solution.
-- **Read the originals:** [315. Count of Smaller Numbers After Self — 2150813916](originals/315__2150813916.cpp).
+- **Recognize:** Coordinates are large, but changes happen only at known interval boundaries.
+- **Compose:** Sort/deduplicate square endpoints; represent elementary gaps between endpoints; query the landing maximum and assign maximum+side to the footprint.
+- **Invariant:** The footprint is [leftIndex, rightIndex-1]. Two squares that only touch at an endpoint must not stack. Assignment replaces the entire covered height, and newer assignments replace older pending assignments.
+- **Tradeoff / source:** [Falling-square composition](originals/699__2155079538.cpp) uses O(n) coordinate storage rather than storage proportional to coordinate magnitude. Zero is the no-pending-assignment marker, safe for its positive landing heights; the member coordinate map/counter assume the original one-call object lifecycle.
 
-### Ordered aggregate merging
+### Match the lazy tag to its algebra
 
-- **Cue:** A range summary depends on the order of multiplication and on all prefix outcomes.
-- **Idea and invariant:** 3525 stores a segment product and counts of prefix-product remainders. A merged prefix either stays in the left segment or contains all of the left plus a prefix of the right. Left and right cannot be swapped. The captured array has six slots and uses slot k for the full product.
-- **Cost in these sources:** O(nk) build, O(k log n) per update/query, and O(nk) storage; the source problem bounds k by 5.
-- **Read the originals:** [3525. Find X Value of Array II — 2150176033](originals/3525__2150176033.cpp).
+- **Recognize:** Many interval updates can be deferred until a queried path needs them.
+- **Compose:** Choose both the node aggregate and how pending updates combine. [Assignment/max](originals/699__2155079538.cpp) overwrites pending tags; [chmin/point coverage](originals/1851__2168532079.cpp) combines them with min.
+- **Invariant:** Pushing a tag must preserve the same answer as applying its update to every covered point. INT_MAX means both “no covering interval” and “no pending bound” in the chmin source.
+- **Tradeoff:** The interval-coverage implementation allocates two arrays of 4M ints over raw coordinates. Large sparse endpoints are therefore expensive even with few intervals. Its actual source is a lazy tree, with no compression or sweep/heap substitution; an out-of-domain point returns no result.
 
-### Lazy range-chmin and point coverage queries
+### Ordered summaries + a small remainder domain
 
-- **Cue:** Every interval offers a candidate cost to all points it contains; later queries ask for the cheapest covering interval.
-- **Idea and invariant:** [1851](originals/1851__2168532079.cpp) composes pending bounds with min. Each interval updates its inclusive coordinate range with its length, and a point query returns the cheapest covering length or INT_MAX.
-- **Cost in this source:** The coordinate capacity is M=maxEnd+1. Allocation/initialization costs O(M) time and space; I interval updates and Q point queries add O((I+Q) log M) time. The original deliberately retains its raw-coordinate arrays and custom lazy helpers.
+- **Recognize:** A query counts outcomes of prefixes, and joining two ranges changes every right-prefix outcome.
+- **Compose:** Store the full segment product plus counts for each prefix-product remainder; merge left prefixes unchanged and extend each right prefix by the full left product.
+- **Invariant:** Each merged prefix either ends in the left interval or includes all of the left followed by a right prefix. Preserve left-to-right order in both build and query.
+- **Tradeoff / source:** [The actual merge and suffix-query composition](originals/3525__2150176033.cpp) reserve slot k for the full product in an array of length six. Thus k ≤ 5 is structural; supporting an arbitrary modulus would require a different representation. Multiplication alone is commutative, but this richer prefix summary is not.
 
-## Complete problem and variant index
+### Index decomposition + value search
+
+- **Recognize:** Restrict both where an element occurs and how its value compares with a threshold.
+- **Compose:** A segment tree decomposes the index range; each covered node's sorted vector answers the value condition with lower_bound.
+- **Invariant:** Covered nodes partition the requested range, so their counts add without overlap. lower_bound counts strictly smaller values, preserving duplicate semantics.
+- **Tradeoff / source:** [Suffix counting](originals/315__2150813916.cpp) is O(n log² n), not the O(n log n) of a different merge-counting solution. The [other captured variant](originals/315__2150760829.cpp) guards construction of an empty input; the newer constructor relies on the original nonempty constraint.
+
+## Problem and source appendix
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 

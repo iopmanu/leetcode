@@ -4,44 +4,90 @@
 
 **19 captured problems · 29 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
-## Pattern reminders
+## Main algorithms and structures
 
-### Sort by the boundary that determines compatibility
+A greedy choice needs an exchange argument or a dominance invariant; sorted input alone is not the proof. Here `n` is item/interval count, `D` a scanned integer value range, `a` the alphabet size, and `B=15` the captured bit count. Space excludes returned output but includes temporary copies; usual library sorting uses O(log n) stack. Hash-map costs are expected-time.
 
-- **Cue:** Choose non-overlapping intervals or merge intervals that touch or overlap.
-- **Idea and invariant:** 435 keeps the earliest ending compatible interval. 56 extends the most recent merged interval. 57 binary-searches the overlapping block in sorted disjoint intervals, then erases/inserts it. 729 checks neighboring stored intervals around lower_bound.
-- **Cost in these sources:** 435 and 56: O(n log n) including sort. 57 has O(log n) boundary searches but O(n) vector movement, and one variant also sorts. 729: O(log n) per booking in an ordered map.
-- **Read the originals:** [435. Non-overlapping Intervals — 2167400289](originals/435__2167400289.cpp); [56. Merge Intervals — 2167385466](originals/56__2167385466.cpp); [57. Insert Interval — 2167382205](originals/57__2167382205.cpp); [729. My Calendar I — 2152937765](originals/729__2152937765.cpp).
+| Algorithm / structure | What it maintains | Time in these implementations | Auxiliary space / mutation | Direct implementation |
+| --- | --- | --- | --- | --- |
+| Shorter-boundary elimination | A shorter container endpoint cannot improve after width decreases | O(n) | O(1) | [Opposing boundaries](originals/11__2147803818.cpp) |
+| Sorted interval fold | The last result interval is the union of the current overlapping run | O(n log n) | O(log n) sort stack + O(n) output; sorts input | [Merge intervals](originals/56__2167385466.cpp) |
+| Overlap-boundary binary searches | Locate the contiguous block touched by one new interval | O(log n) search + O(n) vector movement; sorting variant O(n log n) | O(1) search state; up to O(n) reallocation and O(n) returned copy; mutates both arguments | [Insert into sorted intervals](originals/57__2167382205.cpp), [variant with extra sort](originals/57__2167379680.cpp) |
+| Earliest-finish interval selection | Keep the compatible interval leaving the earliest next start | O(n log n) | O(log n) sort stack; sorts input and overwrites its first interval | [Minimum interval removals](originals/435__2167400289.cpp) |
+| Ordered interval map | Disjoint bookings ordered by their start times | O(log n) per booking | O(n) persistent map | [Neighbor conflict checks](originals/729__2152937765.cpp) |
+| Sweep events + ordered multiset | Active heights, including duplicate buildings and baseline zero | O(n log n) | O(n) events + active heights, plus O(n) output | [Skyline sweep](originals/218__2153355270.cpp) |
+| Weighted-interval predecessor DP | Best score and lexicographic index path for each prefix and count≤4 | O(n log n), since count/path lengths are bounded by 4 | O(n) predecessor/DP state; appends indices to and sorts input | [Weighted compatible intervals](originals/3414__2139370298.cpp) |
+| Prefix minimum / boundary-gap scan | Best earlier buy price, or previous occupied position | O(n) | O(1) | [Best one-transaction profit](originals/121__2127314016.cpp), [occupied-seat gaps](originals/849__1284774909.cpp) |
+| Two directional constraint passes | Minimum assignment satisfying both neighbor inequalities | O(n) | O(n) assignment array | [Candy counts](originals/135__2163599188.cpp) |
+| Sort + pair extremes | Consume the heaviest item, pairing with the lightest when appropriate | O(n log n) | O(log n) sort stack; mutates input | [Capacity-limited pairs](originals/881__2147809080.cpp), [minimum worst pair sum](originals/1877__2140485732.cpp) |
+| Frequency buckets over a value range | Count remaining values at the smallest/largest current level | Expected O(n+D), with D=max−min+1 | O(D) hash keys in worst case, including inserted zero counts | [Bucket pairing](originals/1877__2140491975.cpp) |
+| Sort by marginal reward / cost | Take highest-value units or cheapest remaining deficits first | O(n log n) | Units: O(log n) sort stack and input mutation; bags: O(n) copied pairs | [Truck units](originals/1710__2119475867.cpp), [fill cheapest deficits](originals/2279__2119511298.cpp) |
+| Batch highest-level reductions | Move all affordable count from a difference level to the next | Expected O(n+D), D=maximum difference | O(D+1) hash keys due to dense level scan | [Squared-difference reduction](originals/2333__2168486798.cpp) |
+| Restrict the candidate set | Any common domino value must occur on the first domino | O(n) for two candidate scans | O(1) | [Two domino candidates](originals/1007__2157541300.cpp) |
+| Earliest short palindrome | Accept the first qualifying block of length k or k+1 | O(nk) worst-case comparisons | O(1) scan state; by-value string can add O(n) | [Direct palindrome tests](originals/2472__2143088360.cpp) |
+| Character-span closure | Counts of selected characters exactly fill their bounding interval | O(n+a²), a≤26, including copied output characters | O(a) summaries/deque; by-value string can add O(n), plus O(n) output | [Closed substring selection](originals/1520__2146064854.cpp) |
+| High-to-low bit partition refinement | Earlier bit-optimal groups constrain later reorderings | O(Bn), B=15 in source | O(n+B) live group copies and result | [Power-array refinement](originals/4059__2147456833.cpp) |
 
-### Local inequalities in both directions
+## Combinations and tricks
 
-- **Cue:** A global assignment is forced by comparisons with neighboring values.
-- **Idea and invariant:** 135 starts each child at one candy, enforces the left-neighbor constraint, then enforces the right-neighbor constraint with max. 121 remembers the cheapest earlier buying price. 1877 pairs opposite extremes, with both sorting and frequency-bucket source variants.
-- **Cost in these sources:** 135: O(n) time and O(n) storage. 121: O(n) time and O(1) state. 1877 sorting: O(n log n); bucket scanning depends on n and the value range.
-- **Read the originals:** [135. Candy — 2163599188](originals/135__2163599188.cpp); [121. Best Time to Buy and Sell Stock — 2127314016](originals/121__2127314016.cpp); [1877. Minimize Maximum Pair Sum in Array — 2140491975](originals/1877__2140491975.cpp).
+### Match the sort key to the decision being proved
 
-### Batch identical greedy moves
+- **Recognize:** Intervals must be merged, selected without overlap, or inserted into an already disjoint sequence.
+- **Compose:** [Sort by start + union fold](originals/56__2167385466.cpp), [sort by end + earliest-finish selection](originals/435__2167400289.cpp), or [binary searches + vector edit](originals/57__2167382205.cpp).
+- **Invariant:** A merged run extends only its final right edge; an earliest-finishing retained interval leaves at least as much room as any alternative; sorted disjoint intervals make overlap endpoints searchable.
+- **Tradeoff / trap:** Boundary semantics differ: merge/insert treat touching closed intervals as connected, while the removal source permits one interval to begin when the previous one ends. Insert's O(log n) searches do not eliminate O(n) erase/insert movement or the returned copy of its reference parameter. The removal source binds `last` to `intervals[0]`, so selecting a new interval also overwrites that first input element.
 
-- **Cue:** The best next operation repeatedly targets the currently largest value.
-- **Idea and invariant:** 2333 stores counts of absolute differences and moves a whole available count down one level before visiting the next level. Lowering the largest difference yields the largest decrease in its square.
-- **Cost in these sources:** O(n+D) expected time for maximum difference D, rather than one iteration per allowed operation; bucket keys can occupy O(D) space in the captured hash-map scan.
-- **Read the originals:** [2333. Minimum Sum of Squared Difference — 2168486798](originals/2333__2168486798.cpp).
+### Reduce online overlap checks to two neighbors
 
-### Active events versus compatible predecessors
+- **Recognize:** Accepted intervals remain disjoint, and one new booking is tested at a time.
+- **Compose:** Ordered map keyed by start + `lower_bound` + predecessor/successor checks in [the calendar source](originals/729__2152937765.cpp).
+- **Invariant:** Only the first existing start at or after the new start, and its predecessor, can conflict; all other intervals are separated by these neighbors.
+- **Tradeoff / trap:** The source uses half-open bookings, so an end equal to another start is allowed. The argument requires the map to remain disjoint after every successful insertion; it is not a general overlap-counting structure.
 
-- **Cue:** The question concerns all active intervals, or weighted choices among compatible earlier intervals.
-- **Idea and invariant:** 218 sweeps signed start/end events and emits changes in the active maximum height. 3414 sorts by end, finds the last strictly compatible predecessor, and retains the best score plus lexicographic index tie-break for up to four chosen intervals.
-- **Cost in these sources:** 218: O(n log n) time and O(n) active/event storage. 3414: O(n log n) including predecessor searches, with O(n) DP state because the chosen-count bound is four.
-- **Read the originals:** [218. The Skyline Problem — 2153355270](originals/218__2153355270.cpp); [3414. Maximum Score of Non-overlapping Intervals — 2139370298](originals/3414__2139370298.cpp).
+### Turn endpoints into events, then maintain the active extremum
 
-### Take the earliest qualifying block
+- **Recognize:** Output changes only at interval starts/ends, and the answer depends on all currently active intervals.
+- **Compose:** Signed events + custom tie ordering + descending multiset in [the skyline source](originals/218__2153355270.cpp).
+- **Invariant:** Start events are positive, end events negative; descending signed height at equal x processes taller starts first and lower ends first. The multiset maximum is the visible height, and an output point is emitted only when it changes.
+- **Tradeoff / trap:** Erase exactly one matching height through an iterator, preserving duplicate buildings. Baseline zero keeps maximum lookup valid after the last real building ends. This source stores all events and all active heights, both O(n).
 
-- **Cue:** Later choices only need the suffix after the chosen block.
-- **Idea and invariant:** 2472 tests palindromes of length k and k+1 and jumps past an accepted block. The source checks palindromes directly; it does not build a palindrome DP table.
-- **Cost in these sources:** O(nk) worst-case character comparisons for direct palindrome tests and O(1) auxiliary state.
-- **Read the originals:** [2472. Maximum Number of Non-overlapping Palindrome Substrings — 2143088360](originals/2472__2143088360.cpp).
+### Add weights and tie-breaking to interval compatibility
 
-## Complete problem and variant index
+- **Recognize:** Maximizing count is insufficient because intervals carry scores, a selection limit, and a deterministic answer tie-break.
+- **Compose:** Sort by end + binary-searched predecessor + bounded-count DP + sorted original-index paths in [the weighted source](originals/3414__2139370298.cpp).
+- **Invariant:** Taking interval i uses the best state strictly before its start; skipping it preserves the previous prefix state. Equal scores compare paths in original-index order, not finishing-time order.
+- **Tradeoff / trap:** Compatibility here is strict `previousEnd < currentStart`, unlike the calendar/removal conventions. O(n) DP space relies on the source's fixed four-interval limit; each cell owns a small vector. Appending original indices and sorting modifies the caller's interval data.
+
+### Satisfy independent directional constraints, then take their maximum
+
+- **Recognize:** Each item needs a minimum assignment depending on both neighbors.
+- **Compose:** Initialize all counts to one + left-to-right propagation + right-to-left maximum in [the candy source](originals/135__2163599188.cpp).
+- **Invariant:** The first pass satisfies left-neighbor increases. The second repairs right-neighbor increases without lowering any requirement already established by the first pass.
+- **Tradeoff / trap:** This is two passes over one O(n) assignment array, not constant auxiliary space. Equal ratings impose no increase; changing strict comparisons changes the problem.
+
+### Pair extremes or consume the cheapest marginal choice
+
+- **Recognize:** Each step removes an extreme, fills one deficit, or buys interchangeable units at a per-unit reward.
+- **Compose:** Sorting + opposing pointers in [boats](originals/881__2147809080.cpp) and [pair sums](originals/1877__2140485732.cpp); sorting by reward/deficit in [truck units](originals/1710__2119475867.cpp) and [bags](originals/2279__2119511298.cpp).
+- **Invariant:** The heaviest boat passenger must go now; if the lightest cannot accompany them, nobody can. Pairing opposite extremes limits the worst pair sum. Cheap deficits maximize the number completed with a budget.
+- **Tradeoff / trap:** The common proof component is an exchange argument, but the objectives differ. Sort variants mutate input, while bags allocate a pair copy. The truck source subtracts a full box count even on its final partial take; remaining capacity may become negative, then the loop ends.
+
+### Batch repeated greedy moves with frequency levels
+
+- **Recognize:** The next move repeatedly targets the largest difference, and many items share its value.
+- **Compose:** Frequency map + descending levels in [squared-difference minimization](originals/2333__2168486798.cpp). The related [pairing source](originals/1877__2140491975.cpp) scans frequencies from both extremes.
+- **Invariant:** Reducing d by one saves `2d−1`, so the largest d is always at least as valuable to reduce. Move `min(remainingBudget,count[d])` items together before advancing a level.
+- **Tradeoff / trap:** These hash maps are used like dense buckets: `operator[]` inserts missing levels while scanning. Time and space depend on the numeric range D, not only on n or the number of initially distinct values. Sparse huge ranges can make sorting or another implementation preferable; no replacement implementation is claimed here.
+
+### Shrink the proof's candidate family before selecting blocks
+
+- **Recognize:** Valid choices are numerous, but every feasible solution contains a small representative candidate or a locally closed block.
+- **Compose:** [Domino candidates from the first pair](originals/1007__2157541300.cpp); [palindrome tests at lengths k and k+1](originals/2472__2143088360.cpp); or [character counts + first/last spans](originals/1520__2146064854.cpp).
+- **Invariant:** A common domino value must be on every domino, including the first. A longer palindrome contains a central palindrome of length k or k+1. For character spans, total occurrence count equal to bounding length certifies a block closed under every selected character's occurrences.
+- **Tradeoff / trap:** The palindrome source checks characters directly rather than building a DP table; its O(1) scan state excludes the potential by-value string copy. The character-span source uses a deque in first-appearance order and clears it after emitting a closed block; preserve that specific construction instead of substituting a generic interval algorithm.
+
+## Problem and source appendix
+
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
@@ -115,7 +161,7 @@ Encode start positive and end negative, order same-x events descending signed he
 
 [Problem](https://leetcode.com/problems/non-overlapping-intervals/) · Tags: Greedy, Intervals
 
-Sort by end, retain earliest finishing compatible interval and count removals.
+Sort by end, retain earliest finishing compatible interval and count removals. The source binds last by reference to intervals[0], then assigns subsequent selected intervals through that reference, additionally overwriting the first input interval.
 
 **Captured variants:** Two equivalent submissions.
 

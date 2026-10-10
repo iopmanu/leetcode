@@ -1,40 +1,83 @@
 # Math and bits
 
-[All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
+## Main algorithms and structures
 
-**24 captured problems · 29 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+[All ideas](../../README.md) · [Quick review](../../QUICK_REVIEW.md) · [Exact snippets](../../SNIPPETS.md)
 
-## Pattern reminders
+`n` is input length, `d` distinct values, `D` distinct pair masks, `b` digit count, and `S` generated palindrome seeds. Hash-table costs are expected; collision worst cases can be worse. Space includes materialized tables and explicitly identified output. Arithmetic assumes the original bounded integer contracts.
 
-### Count multiplicities rather than materializing combinations
+| Algorithm / structure | Time in the linked source | Extra space | Direct implementation |
+| --- | --- | --- | --- |
+| Bit-count DP using the smaller half | O(n); independent per-number division variant O(n log n) | O(n) returned array | [DP](originals/338__791450580.cpp), [division variant](originals/338__791441445.cpp) |
+| Meet-in-the-middle pair-sum frequencies | Expected O(n²) for four length-n arrays | O(n²), including zero-valued complement keys inserted by lookup | [Exact excerpt](snippets/four-sum-pair-frequency.cpp) · [full source](originals/454__2025540323.cpp) |
+| Ordered-pair bitwise-AND frequencies | Expected O(n² + nD), D ≤ min(n², 2^B) for B-bit values | O(D) | [Exact excerpt](snippets/bitwise-and-pair-frequency.cpp) · [full source](originals/982__2168564891.cpp) |
+| Sorted value triples + multiplicity formulas | Expected O(n log n + d²) | O(d + log n), including sort stack | [Exact excerpt](snippets/three-sum-multiplicity-cases.cpp) · [full source](originals/923__2140530076.cpp) |
+| Two pointers + powers of two for bounded subsequences | O(n log n), including sort | O(n) power table | [Implementation](originals/1498__2140461426.cpp) |
+| Frequency map + ordered deduplication set | Expected O(n + d log d) | O(d) | [K-difference pair implementation](originals/532__2022700280.cpp) |
+| Count frequencies, then aggregate the maximum group | Expected O(n) | O(d) | [Implementation](originals/3005__1197606254.cpp) |
+| Bounded digit enumeration with decrement/restore | O(n + 9·10·5) | O(10) | [Implementation](originals/3483__2138479064.cpp) |
+| Translation-vector frequency map | Expected O(N² + ac) for N×N images with a and c nonzero pixels | O(a + c + T), T distinct displacements ≤ ac | [Implementation](originals/835__2140447101.cpp) |
+| Axis overlap / clamped nearest point | O(1) | O(1) | [Rectangle overlap](originals/836__2141366410.cpp), [circle–rectangle](originals/1401__2146448826.cpp) |
+| Palindromic-root generation + square validation | O(Sb), at most two loops of 100,000 seeds each | O(b) temporary strings | [Implementation](originals/906__2163458920.cpp) |
+| Arithmetic digit reversal / digit scan | O(b) per value; O(nb) for an array | O(1) | [Palindrome check](originals/9__2126054933.cpp), [destructive digit sum](originals/3550__2152359464.cpp) |
+| XOR/parity summary | O(n) for total XOR; O(1) for direct parity | O(1) | [XOR game](originals/810__2166697803.cpp), [divisor parity](originals/1025__792418394.cpp) |
+| Threshold contributions instead of range enumeration | O(1), five explicit thresholds | O(1) | [Implementation](originals/3871__2136687887.cpp) |
 
-- **Cue:** Several equal values yield the same value-level choice.
-- **Idea and invariant:** 923 sorts and uses occurrence counts with product, choose-two, or choose-three factors. 3483 decrements/restores digit frequencies while enumerating three-digit even numbers. 1498 fixes the minimum and counts subsets of the feasible interior with powers of two.
-- **Cost in these sources:** 923 combines O(n log n) sorting with up to O(d squared) distinct-value pair work. 3483 has O(n) counting plus a bounded digit search. 1498 is O(n log n) including sort and uses O(n) powers.
-- **Read the originals:** [923. 3Sum With Multiplicity — 2140530076](originals/923__2140530076.cpp); [3483. Unique 3-Digit Even Numbers — 2138479064](originals/3483__2138479064.cpp); [1498. Number of Subsequences That Satisfy the Given Sum Condition — 2140461426](originals/1498__2140461426.cpp).
+## Combinations and tricks
 
-### Reduce geometry to coordinates
+Every composition below is present in a linked original. The reusable part is the reduction and invariant; integer widths, modulo arithmetic, and domain restrictions still belong to the source problem.
 
-- **Cue:** Overlap can be tested independently on axes, or identical translations can be counted.
-- **Idea and invariant:** 836 requires strict positive overlap on both axes. 1401 clamps the circle center to the nearest rectangle point and compares squared distance. 835 counts displacement vectors between nonzero pixels.
-- **Cost in these sources:** 836 and 1401: O(1). 835: O(n squared + ab) time for n by n images with a and b nonzero pixels, and up to O(ab) translation-count storage.
-- **Read the originals:** [836. Rectangle Overlap — 2141366410](originals/836__2141366410.cpp); [1401. Circle and Rectangle Overlapping — 2146448826](originals/1401__2146448826.cpp); [835. Image Overlap — 2140447101](originals/835__2140447101.cpp).
+### Split a tuple into a summary and a compatibility test
 
-### Generate only plausible candidates
+- **Recognize:** A count over triples or quadruples repeats the same intermediate result many times.
+- **Compose:** Pair enumeration + frequency map + a lookup or compatibility scan. [Pair sums](originals/454__2025540323.cpp) query the negative complementary sum. [Pair AND masks](originals/982__2168564891.cpp) scan masks compatible with each third value.
+- **Invariant:** A map frequency counts index choices, not distinct values. Each frequency must contribute in full when its summary satisfies the remaining condition.
+- **Tradeoff:** Sum equality permits one lookup; `(mask & x) == 0` is a relation over many masks and this source scans all D masks. It is not a subset transform. Ordered pairs include equal indexes where the original problem permits them.
 
-- **Cue:** The target has symmetry or threshold structure.
-- **Idea and invariant:** 906 mirrors a short seed to form odd/even palindromic roots, squares each, and tests the square. 3871 sums contributions of five fixed powers-of-1000 thresholds; 3870 uses its original smaller-range threshold.
-- **Cost in these sources:** 906 examines at most 100,000 seeds in each of two loops, with work proportional to the number of generated digits per candidate. 3871 and 3870 have fixed O(1) arithmetic work under their original bounds.
-- **Read the originals:** [906. Super Palindromes — 2163458920](originals/906__2163458920.cpp); [3871. Count Commas in Range II — 2136687887](originals/3871__2136687887.cpp); [3870. Count Commas in Range — 2134960323](originals/3870__2134960323.cpp).
+### Separate value-level search from index-level multiplicity
 
-### Parity or a minimum can determine the answer
+- **Recognize:** Many equal values create the same sum, but their index choices all count.
+- **Compose:** Sorting + frequency map + opposing pointers + choose-two/choose-three arithmetic in [the multiplicity implementation](originals/923__2140530076.cpp).
+- **Invariant:** Visit each ordered-by-value triple once; weight it by `a·b·c`, `a(a−1)b/2`, or `a(a−1)(a−2)/6` according to its equality pattern.
+- **Tradeoff:** Duplicate jumps reduce the search to distinct values, but sorting mutates input. The source promotes products with `1LL` before its final modulo; copying only the formula without that promotion changes overflow behavior.
 
-- **Cue:** The full arrangement is irrelevant after a small summary is known.
-- **Idea and invariant:** 810 reduces the position to total XOR and length parity. 3876 compares the minimum odd and even values. The captured 3875 implementation always returns true; the file is preserved as written.
-- **Cost in these sources:** 810 and 3876: O(n) time and O(1) state. 3875: O(1).
-- **Read the originals:** [810. Chalkboard XOR Game — 2166697803](originals/810__2166697803.cpp); [3876. Construct Uniform Parity Array II — 2131978781](originals/3876__2131978781.cpp); [3875. Construct Uniform Parity Array I — 2128397234](originals/3875__2128397234.cpp).
+### Turn a feasible interval into exponentially many choices
 
-## Complete problem and variant index
+- **Recognize:** Once its minimum is fixed, any subset between that minimum and a feasible maximum satisfies the same bound.
+- **Compose:** Sorted two-pointer frontier + precomputed powers of two in [the bounded-subsequence implementation](originals/1498__2140461426.cpp).
+- **Invariant:** If `nums[left] + nums[right] <= target`, all `2^(right-left)` subsets of the remaining interval are valid with this fixed minimum. Incrementing left assigns every counted subsequence exactly one minimum position.
+- **Tradeoff:** This counts subsequences without generating them, using O(n) precomputation. Sorting preserves value-based feasibility, not original order-sensitive constraints.
+
+### Encode geometry as a hashable equality
+
+- **Recognize:** One translation must align many pairs of points.
+- **Compose:** Sparse coordinate lists + all cross-image point pairs + displacement histogram in [image overlap](originals/835__2140447101.cpp).
+- **Invariant:** Equal displacement vectors describe the same translation; their frequency is its overlap count.
+- **Tradeoff:** Work is quadratic in nonzero counts, not merely image width. The original packs signed differences through two `uint32_t` halves into a `uint64_t`; preserve those casts when reading the key. For a single shape intersection, [axis overlap](originals/836__2141366410.cpp) or [clamping](originals/1401__2146448826.cpp) avoids enumeration entirely.
+
+### Generate constrained objects before testing the remaining property
+
+- **Recognize:** Valid answers have a cheap constructive symmetry or a tiny alphabet.
+- **Compose:** Mirror a seed + square it + numeric palindrome check in [palindromic roots](originals/906__2163458920.cpp); digit frequencies + choose/decrement/restore in [three-digit enumeration](originals/3483__2138479064.cpp).
+- **Invariant:** Mirroring guarantees the root property, leaving only range and square tests. In digit enumeration, remaining counts represent unused copies; candidate digits, rather than source indexes, avoid duplicate numbers.
+- **Tradeoff:** The palindrome source hardcodes seed limits and depends on its positive bounded range; zero would be generated by both loops. Digit counts cap at three because no candidate uses more than three copies. Neither source is a general digit-DP framework.
+
+### Count threshold crossings, not formatted objects
+
+- **Recognize:** Each object contributes one extra unit after each fixed threshold.
+- **Compose:** Five arithmetic tail counts in [comma counting](originals/3871__2136687887.cpp): each reached threshold t contributes `n-t+1`.
+- **Invariant:** A number above several thresholds contributes once for each of them, matching its comma count.
+- **Tradeoff:** The hardcoded thresholds cover the source domain only. [Waviness](originals/3751__2022675769.cpp) actually enumerates every integer and converts it to a string; it has no analogous counting DP in this corpus.
+
+### Replace a game tree with the preserved summary
+
+- **Recognize:** A legal move changes a small invariant predictably enough to characterize winning positions.
+- **Compose:** Total XOR + length parity in [XOR game](originals/810__2166697803.cpp); direct parity in [divisor game](originals/1025__792418394.cpp); odd/even minima in [uniform parity](originals/3876__2131978781.cpp).
+- **Invariant:** The implementation decides from the summary without enumerating future states. The proof must come from the particular move rules; a compact return expression is not itself that proof.
+- **Tradeoff:** The uniform-parity sources retain misleading parity comments. The separate [constant-true source](originals/3875__2128397234.cpp) stays an explicitly problem-specific result, not a reusable parity algorithm.
+
+## Problem and source appendix
+
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 

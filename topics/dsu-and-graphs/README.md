@@ -2,64 +2,129 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**32 captured problems · 49 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+## Main algorithms and structures
 
-## Pattern reminders
+Choose by the information that must survive a traversal: component identity, distance, dependency order, or a cut/path certificate. Links open actual captured implementations or unchanged excerpts. Let V/E be vertices/edges, N = rows×cols, U the number of DSU operations, q query count, and α the inverse Ackermann function. Space includes constructed adjacency and recursion, excluding returned answers. Hash-based bounds are expected; string costs are stated separately where they matter.
 
-### Connectivity with DSU
+| Algorithm / structure | Recognition trigger and actual time | Extra space | Direct implementation |
+|---|---|---|---|
+| DFS with visited state / flood fill | Components, area, perimeter, cloning, or one reachability search: O(V+E); four-neighbor grid O(N) | O(V) traversal state; constructed adjacency or unfinished clone-neighbor buffers can add O(E); grid recursion can be O(N) | [Flood-fill excerpt](snippets/dfs-count-islands.cpp) · [In-place islands](originals/200__2155362152.cpp) · [Separate visited](originals/200__2125964378.cpp) · [Area](originals/695__2155365320.cpp) · [Perimeter](originals/463__2155358279.cpp) · [Clone](originals/133__2155372665.cpp) |
+| FIFO BFS, including multiple sources | Equal-cost moves or simultaneous spread: O(V+E), grid O(N); lock has at most 10,000 constant-length states | O(V), grid O(N), plus an explicit adjacency list if built | [Lock BFS](snippets/bfs-open-lock.cpp) · [Full lock source](originals/752__2156069275.cpp) · [Multi-source BFS](snippets/bfs-multi-source-rotting-oranges.cpp) · [Full grid source](originals/994__2155965323.cpp) |
+| Kahn indegree removal / active-path DFS | Dependency ordering or directed-cycle detection: O(V+E) | O(V+E) | [Kahn excerpt](snippets/topological-sort-kahn.cpp) · [Cycle decision](originals/207__2156079641.cpp) · [Ordering](originals/210__2156096010.cpp) · [Active-path DFS](originals/207__2139396834.cpp) |
+| Leaf-layer peeling | Center of a connected tree: O(V+E) = O(V) | O(V) | [Full tree-center source](originals/310__2157055776.cpp) |
+| DSU with path compression + correct union-by-size | Connectivity under unions: O(V + U α(V)) total | O(V) | [Balanced DSU excerpt](snippets/union-find-struct.cpp) · [Reverse activation](originals/1970__2168377479.cpp) · [Component-size queries](originals/803__2159893078.cpp) |
+| DSU with arbitrary linking / broken size bookkeeping | Same connectivity interface, weaker guarantee: compression-only O((V+U) log(V+1)) conservative total; uncompressed variant O(V+UV) worst case | O(V), including potentially linear recursive find depth | [Compression without balancing](originals/684__2156418430.cpp) · [No compression](originals/684__2156418332.cpp) · [Incorrect size update](originals/721__2156447414.cpp) |
+| Kruskal: sort edges, union distinct roots | MST/threshold connectivity: O(E log E + V + E α(V)); complete point graph creates Θ(V²) edges, hence O(V² log V) | O(V+E); complete point graph O(V²) | [Kruskal excerpt](snippets/kruskal-min-cost-connect-points.cpp) · [Full point graph](originals/1584__2162051692.cpp) · [Grid threshold edges](originals/778__2159591195.cpp) |
+| Heap-finalized Dijkstra, additive or minimax | Nonnegative distances: O((V+E) log(E+1)); grid bottleneck version O(N log(N+1)) | O(V+E), including O(E) queued candidates; grid O(N) | [Additive excerpt](snippets/dijkstra-network-delay.cpp) · [Full network source](originals/743__2158089044.cpp) · [Minimax excerpt](snippets/dijkstra-minimax-grid.cpp) · [Full minimax source](originals/778__2159581294.cpp) |
+| Two distinct arrival labels with FIFO propagation | Second arrival under uniform edge duration and synchronized lights: O(V+E) under those timing rules | O(V+E) | [Two-label excerpt](snippets/two-distinct-arrival-times.cpp) · [Full timing source](originals/2045__2158128996.cpp) |
+| Lowlink DFS: discovery times + earliest reachable ancestor | Single-edge/single-vertex cuts: O(V+E); implicit grid O(N) | O(V+E); grid O(N) including recursion | [Bridge excerpt](snippets/tarjan-bridges.cpp) · [Full bridges](originals/1192__2158532377.cpp) · [Articulation excerpt](snippets/tarjan-articulation-grid.cpp) · [Full grid articulation](originals/1568__2158580259.cpp) |
+| Hierholzer with ordered outgoing edges | Use every ticket exactly once: O(E log E) sort bound + O(E) traversal for fixed-length airport codes | O(E), including adjacency, recursion and path | [Postorder walk excerpt](snippets/hierholzer-itinerary.cpp) · [Full source](originals/332__2157586346.cpp) |
+| Monotone scanned frontier + BFS | Reachable moves cover overlapping index intervals: O(n) total scan, not one full interval scan per pop | O(n) | [Frontier excerpt](snippets/bfs-monotone-jump-frontier.cpp) · [Full source](originals/1871__2012395473.cpp) |
+| Degree statistics + pair correction | Degree-sum thresholds: O(E+V log V+q(V+D)), D distinct endpoint pairs; judge lookup O(V+E) upper bound | O(V+D) for corrected pairs; judge source stores lists, O(V+E) | [Parallel-edge correction](originals/1782__2162018515.cpp) · [Stored in/out lists](originals/997__2155347510.cpp) |
+| Bounded neighbor candidates | Four distinct vertices with additive scores: expected O(V+E) upper bound; at most nine candidate pairs per central edge | O(V), at most three stored neighbors per used vertex | [Top-three candidate source](originals/2242__2161904938.cpp) |
+| Repeated reachability queues without a visited guard | Actual DAG source costs O(V²+E+P+q), P all enqueued path prefixes across starts; P can be exponential | O(V²+E+W), W the largest queue; W can also be exponential | [Unguarded original](originals/1462__2156120061.cpp) |
 
-- **Cue:** Repeatedly join components, or undo a sequence of deletions by replaying it backward.
-- **Idea and invariant:** 1970 activates land in reverse order and joins neighboring active cells plus virtual top/bottom nodes. Parent roots identify components; path compression and size-based union maintain the forest. Kruskal accepts an edge only when it joins two roots.
-- **Cost in these sources:** 1970 uses O(rc alpha(rc)) time and O(rc) storage for r by c cells. 1584 explicitly builds O(n squared) edges, so its sort is O(n squared log n). 1489 repeats excluded/forced Kruskal trials, giving O(E squared alpha(V) + E log E).
-- **Read the originals:** [1970. Last Day Where You Can Still Cross — 2168377479](originals/1970__2168377479.cpp); [1584. Min Cost to Connect All Points — 2162051692](originals/1584__2162051692.cpp); [1489. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree — 2162346413](originals/1489__2162346413.cpp).
+## Combinations and tricks
 
-### Breadth-first distance layers
+### Reverse deletions + DSU + virtual boundary nodes
 
-- **Cue:** Each move has equal cost, or several starting cells spread simultaneously.
-- **Idea and invariant:** 752 marks configurations on enqueue. 994 seeds every rotten cell, then freezes each queue level before counting another minute. A state is first reached at its shortest unweighted distance.
-- **Cost in these sources:** O(V+E) on an explicit graph. Grid flood/BFS is O(rc) with O(rc) worst-case storage; the lock graph has at most 10,000 configurations.
-- **Read the originals:** [752. Open the Lock — 2156069275](originals/752__2156069275.cpp); [994. Rotting Oranges — 2155965323](originals/994__2155965323.cpp).
+- **Recognize:** A sequence removes cells/edges, while the question asks when connectivity disappears or how many items lose support.
+- **Compose:** Apply removals first, replay them backward as additions, and join each restored cell to active neighbors. Virtual nodes represent a whole boundary.
+- **Invariant:** After restoring an event, DSU describes exactly that earlier active grid. Top/bottom root equality answers crossing; the roof component's growth answers restored support.
+- **Tradeoff / sources:** [Crossing](originals/1970__2168377479.cpp) takes O(N α(N)); its [older source](originals/1970__2168371581.cpp) adds flood-fill bookkeeping. [Brick restoration](originals/803__2159893078.cpp) takes O((N+H) α(N)) for H hits and O(N) auxiliary space, subtracts the restored brick itself from roof-size growth, and clamps at zero. It relies on distinct hit positions and skips originally empty cells. This is offline processing, not general online deletion support.
 
-### Traversal state and cycles
+### Sorted edges + connectivity, then optional counterfactual trials
 
-- **Cue:** Reachability, components, prerequisite cycles, or cloning a cyclic graph.
-- **Idea and invariant:** 207 offers both residual-indegree Kahn traversal and active-path DFS. 133 registers a clone before following neighbors. Grid traversals mark a cell before recursion; 417 stores one reachability bit per ocean.
-- **Cost in these sources:** O(V+E) time and O(V) state for adjacency-list traversal; grid variants use O(rc) time and worst-case recursion/state.
-- **Read the originals:** [207. Course Schedule — 2156079641](originals/207__2156079641.cpp); [133. Clone Graph — 2155372665](originals/133__2155372665.cpp); [200. Number of Islands — 2155362152](originals/200__2155362152.cpp); [417. Pacific Atlantic Water Flow — 2156035451](originals/417__2156035451.cpp).
+- **Recognize:** Find a cheapest spanning structure, the first threshold connecting two endpoints, or whether an edge belongs to every/some optimal structure.
+- **Compose:** Sort weighted edges and union different roots. For classification, compute a baseline MST and repeat with one edge forbidden or forced.
+- **Invariant:** DSU is the forest of accepted edges. The first threshold joining the grid corners is the minimum possible bottleneck. Excluding an edge tests necessity; forcing it tests compatibility with the optimum.
+- **Tradeoff / sources:** [Complete Manhattan graph](originals/1584__2162051692.cpp) explicitly pays Θ(V²) edge storage. [Grid threshold/Kruskal](originals/778__2159591195.cpp) has only O(N) edges. [Excluded/forced trials](originals/1489__2162346413.cpp) cost O(E(V+E α(V))+E log E), simplified to O(E² α(V)+E log E) for the connected input, with O(V+E) space; this is repeated Kruskal rather than a linear-time edge-classification method. The [other trial variant](originals/1489__2162346068.cpp) explicitly skips every forced edge by ID.
 
-### A position is not the whole BFS state
+### Component identities + metadata, with deduplication at the join
 
-- **Cue:** Collected items and remaining energy change what future moves are possible.
-- **Idea and invariant:** 3568 queues position, trash mask, energy, and distance. For the same position/mask, a state reached with no more energy can be discarded. Recharging restores the full energy budget.
-- **Cost in these sources:** A conservative state bound is O(rc * 2^t * e), where t is trash count and e is the energy budget. The best-energy table has O(rc * 2^t) entries; queued improvements can be larger.
-- **Read the originals:** [3568. Minimum Moves to Clean the Classroom — 2131979696](originals/3568__2131979696.cpp).
+- **Recognize:** Several references describe the same entity/component, or one change touches multiple neighboring components.
+- **Compose:** Map emails/cells to IDs, union known connections, then group by root or aggregate neighboring root sizes.
+- **Invariant:** Connectivity belongs to roots; component size must be updated on the winning root. A candidate cell adds each distinct neighboring component once, even if several sides touch it.
+- **Tradeoff / sources:** [Largest-island aggregation](originals/827__2158599452.cpp) uses a four-neighbor root set, O(N α(N)) time and O(N) space. Both [account source A](originals/721__2156447414.cpp) and [source B](originals/721__2156444531.cpp) update size on the losing root: connectivity still works, but the intended balancing guarantee does not. Account merging also sorts grouped addresses, and its string_view metadata depends on the unchanged input strings. The [cycle-edge source](originals/684__2156418430.cpp) has compression but no balancing at all.
 
-### Finalize a weighted or minimax path when its heap entry wins
+### Mark on discovery + implicit neighbors + distance layers
 
-- **Cue:** Nonnegative edge weights, or a path cost defined by its largest height.
-- **Idea and invariant:** [743](originals/743__2158089044.cpp) finalizes a vertex on its first minimum-heap pop and skips later entries for the same vertex. [778](originals/778__2159581294.cpp) uses the same minimum-first structure with max(currentTime, nextHeight) instead of additive edge cost.
-- **Cost in these sources:** The network-delay source has no tentative-distance table and can queue O(E) candidates: O((V+E) log(E+1)) time and O(V+E) storage, assuming expected constant-time hashing. The grid minimax source uses O(rc log(rc)) time and O(rc) storage.
-- **Original-code context:** Both use C++20 contains. Network-delay distances remain int. The minimax visited key is i*r+j, preserving the square-grid contract.
+- **Recognize:** Equal-cost moves form a large implicit graph, or multiple initial sources spread at the same speed.
+- **Compose:** Generate neighbors only when a state is processed; mark them when enqueued; seed all sources at distance zero and freeze each current layer when measuring time.
+- **Invariant:** The first enqueue fixes the shortest unweighted distance. Registering a visited state before following edges also prevents cyclic DFS/clone recursion from repeating it.
+- **Tradeoff / sources:** [Lock BFS](originals/752__2156069275.cpp) and [simultaneous grid spread](originals/994__2155965323.cpp) maintain this invariant. [Word mutation](originals/127__2157580907.cpp) erases dictionary entries on enqueue and costs expected O(wL²) for w length-L words and a fixed alphabet, counting O(L) string hashing; storage is O(wL). The [older word source](originals/127__2157579775.cpp) inserts absent generated strings through operator[] and allows duplicate queued states. [Graph cloning](originals/133__2155372665.cpp) registers each new clone before recursing.
 
-### Distinct arrival labels and synchronized waiting
+### Expand BFS state, then discard dominated resource labels
 
-- **Cue:** A second distinct arrival time is required, with one travel duration for every edge and synchronized traffic lights.
-- **Idea and invariant:** [2045](originals/2045__2158128996.cpp) stores two distinct arrival labels per vertex, waits through a red phase before traversing the next edge, and enqueues improved labels. The deque exploits the original uniform timing rules; it is not a general weighted-graph priority queue.
-- **Original-code context:** Walks may revisit vertices. This implementation is not Yen: it does not enumerate simple paths, build root/spur deviations, or exclude path prefixes. INT_MAX remains the original missing-label sentinel.
+- **Recognize:** Reaching the same cell with different collected items or remaining energy changes the legal future.
+- **Compose:** Queue (cell, item mask, energy, moves); recharge on designated cells; store best energy for each (cell, mask).
+- **Invariant:** FIFO traversal considers no-later arrivals first. An already reached equal cell/mask with at least as much energy dominates a candidate; a later higher-energy arrival may still need exploration.
+- **Tradeoff / source:** [The classroom implementation](originals/3568__2131979696.cpp) has O(N·2^t·(e+1)) conservative time and queue-space bounds for t items and energy e. The best-energy table alone is O(N·2^t), but it can admit multiple improvements and the code does not remove already queued stale states. Position-only visited state would be incorrect.
 
-### Lowlink separates bridges from articulation points
+### Reverse the reachability question toward the boundary
 
-- **Cue:** Which single edge or vertex disconnects an undirected component?
-- **Idea and invariant:** [1192](originals/1192__2158532377.cpp) marks a tree edge as a bridge when low[child]>disc[parent]. [1568](originals/1568__2158580259.cpp) uses low[child]>=disc[parent] for a non-root articulation point and more than one DFS child for a root.
-- **Cost and context:** O(V+E) time and O(V+E) adjacency/traversal storage for the graph source; O(rc) grid work/state for the island source. Recursion depth can be linear. Original member-state initialization assumes one call per object; the graph source skips parent vertices and assumes no parallel edges.
+- **Recognize:** Many interior cells ask whether they can reach a small set of exits or an exterior region.
+- **Compose:** Traverse from boundary seeds through reversed legal moves; use one bit per destination class when several answers must be intersected.
+- **Invariant:** [Ocean reachability](originals/417__2156035451.cpp) moves uphill in reverse and visits each cell once per ocean bit; a cell enters the answer when both bits are present. [Surrounded-region marking](originals/130__2156047108.cpp) preserves every border-connected region before flipping the rest.
+- **Tradeoff:** Both are O(N) time and O(N) worst-case auxiliary space including recursion. Reversing the movement inequality is essential; running a forward search separately from every cell would discard the shared-work advantage.
 
-### Consume edges, then reverse the finished walk
+### Distinguish dependency removal, active paths, and unrestricted revisits
 
-- **Cue:** An itinerary must use every directed ticket exactly once with lexicographically smallest choices.
-- **Idea and invariant:** [332](originals/332__2157586346.cpp) reverse-sorts each destination list, removes its smallest remaining endpoint from the back, and appends vertices after exhausting outgoing edges. Reversing the postorder path produces the itinerary.
-- **Cost and context:** O(E log E) sorting bound and O(E) traversal, plus the original string/hash costs. Recursion and adjacency storage are O(E). The source fixes JFK as the start and relies on the promised Eulerian itinerary.
+- **Recognize:** A directed graph may contain cycles, or queries repeatedly ask for reachability.
+- **Compose:** [Kahn](originals/207__2156079641.cpp) removes zero-indegree vertices; [ordering](originals/210__2156096010.cpp) records that removal order; [DFS cycle detection](originals/207__2139396834.cpp) distinguishes active recursion from finished nodes.
+- **Invariant:** Kahn can finish all vertices exactly when no dependency cycle remains. A back edge to an active DFS node certifies a cycle; an edge to a finished node does not.
+- **Tradeoff:** Queue layers are unnecessary for topological order. [Repeated reachability](originals/1462__2156120061.cpp) writes a reachability matrix but never uses it to suppress enqueue, so it revisits once per path on a DAG and can fail to terminate on a cycle. Its time is not O(V(V+E)). By contrast, [ratio-product DFS](originals/399__2156998589.cpp) uses a fresh visited set per query: O(q(V+E)) graph work and O(V+E) space, plus string hashing/copying.
 
-## Complete problem and variant index
+### Change the path aggregate, keep minimum-first finalization
+
+- **Recognize:** Minimize either a nonnegative sum or the largest obstacle on a route.
+- **Compose:** A min-heap orders candidate labels; extend an additive path with distance+weight, or a bottleneck path with max(current, nextHeight).
+- **Invariant:** The first minimum-label pop of an unvisited vertex finalizes its optimum under the corresponding monotone path extension. Later entries for that vertex are skipped.
+- **Tradeoff / sources:** [Network delay](originals/743__2158089044.cpp) has no tentative-distance array and can retain O(E) candidates, so use its O((V+E) log(E+1)) bound. [Grid minimax](originals/778__2159581294.cpp) uses the square-grid key i*rows+j; it is not a rectangular-grid flattening convention. Both retain int arithmetic and C++20 contains. The [sorted-edge alternative](originals/778__2159591195.cpp) solves the same bottleneck goal via connectivity.
+
+### Two distinct labels + synchronized departure waiting
+
+- **Recognize:** Need the second distinct arrival time, allowing revisits, with one edge duration and globally synchronized lights.
+- **Compose:** Store the two smallest distinct arrivals per vertex; before extending a label, advance through a red phase, then add the common edge duration.
+- **Invariant:** Equal times never create a second label. Under these rules, the arrival time depends on walk length and increases with each step, so FIFO processing admits at most two useful labels per vertex.
+- **Tradeoff / source:** [The captured two-label algorithm](originals/2045__2158128996.cpp) is O(V+E) time/space under that timing model. Its deque is not valid for arbitrary weighted edges; it finds walks, not second-best simple paths, and contains no Yen root/spur decomposition. INT_MAX remains the missing-label sentinel.
+
+### Lowlink + the correct edge/vertex separation test
+
+- **Recognize:** Determine whether removing one edge or one vertex disconnects an undirected graph.
+- **Compose:** DFS discovery times, parent links, and the lowest discovery time reachable through descendants and a back edge.
+- **Invariant:** A tree edge is a bridge when low[child] > disc[parent]. A non-root vertex is an articulation point when low[child] ≥ disc[parent] for some child; the DFS root instead needs more than one DFS child.
+- **Tradeoff / sources:** [Bridge source](originals/1192__2158532377.cpp) skips the parent by vertex and assumes no parallel edges. [Grid articulation source](originals/1568__2158580259.cpp) also counts components and handles at most two land cells separately. Their recursion may be linear, and their member state is not reset for independent reuse of one object.
+
+### Consume edges + append on completion
+
+- **Recognize:** Every directed edge must be used exactly once, with lexical preference among valid itineraries.
+- **Compose:** Reverse-sort each outgoing list, consume its smallest destination from the back, append a vertex only after its outgoing edges are exhausted, then reverse the whole path.
+- **Invariant:** The algorithm consumes tickets rather than marking vertices visited. Postorder lets a locally exhausted detour be spliced into the final Eulerian walk.
+- **Tradeoff / source:** [The itinerary implementation](originals/332__2157586346.cpp) fixes JFK as the start and relies on the promised valid itinerary; it does not check general Eulerian feasibility. Sorting dominates at O(E log E), and recursion/path/adjacency need O(E) space.
+
+### Process a frontier only once
+
+- **Recognize:** Newly reachable positions offer overlapping ranges, or a tree's next outer layer appears while processing its current one.
+- **Compose:** [Interval-jump BFS](originals/1871__2012395473.cpp) scans only beyond farthest, the already-scanned endpoint. [Tree-center peeling](originals/310__2157055776.cpp) snapshots the current leaf count before adding newly exposed leaves.
+- **Invariant:** Jump indexes never need to be tested twice; a frozen leaf layer removes equal distance from every tree boundary. These are different uses of a monotone frontier, not weighted shortest paths.
+- **Tradeoff:** The jump source is O(n) time/O(n) space despite large allowed jump intervals. Leaf peeling is O(V) on the connected-tree contract and stops at one or two centers; applying it to an arbitrary cyclic graph would not preserve that guarantee.
+
+### Count with a simple statistic, then repair only its overcount
+
+- **Recognize:** A degree sum almost answers a pair query, except shared edges contribute twice.
+- **Compose:** Sort degrees and count above-threshold sums with two pointers; keep multiplicity per distinct endpoint pair and subtract only false positives.
+- **Invariant:** Correct pair coverage is degree[u]+degree[v]-sharedCount. Subtract when the raw sum exceeds q but the corrected sum does not; already-invalid pairs are left alone.
+- **Tradeoff / source:** [The captured correction](originals/1782__2162018515.cpp) scans all distinct shared pairs for every query, giving O(E+V log V+q(V+D)) time and O(V+D) auxiliary space. Collapsing parallel edges to mere adjacency would lose required counts.
+
+### Fix the middle, bound the endpoint candidates
+
+- **Recognize:** A short fixed-length sequence has additive endpoint scores and only a few distinctness exclusions.
+- **Compose:** Fix each central edge b–c; retain the three highest-scoring neighbors of each vertex; test at most 3×3 choices for endpoints a and d.
+- **Invariant:** For an endpoint choice, at most two neighbors can be forbidden by the other selected vertices, so three candidates suffice. Check a != c, d != b, and a != d explicitly.
+- **Tradeoff / source:** [The bounded-candidate implementation](originals/2242__2161904938.cpp) sorts at most four entries on each neighbor insertion, so preprocessing and edge enumeration are expected linear, not full adjacency sorting. The cap of three depends on this four-vertex problem; it is not a general longest-path method.
+
+## Problem and source appendix
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
 
