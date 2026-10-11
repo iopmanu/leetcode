@@ -22,6 +22,11 @@ Cover the invariant column, explain why the composition works, then open the ori
 | Two string constraints must be indexed together | Encode suffix + separator + prefix in a trie | A single trie path represents both constraints and the latest matching index | [Prefix/suffix trie](topics/strings-and-tries/snippets/prefix-suffix-trie.cpp) |
 | Lookup and order require different operations | Hash lookup + stable list nodes | Every live key maps to the iterator for its current node | [LRU](topics/design-structures/snippets/lru-cache.cpp) |
 | Counting choices dominates generating answers | Aggregate pair summaries / value multiplicities | Preserve the number of index choices after collapsing equal values | [Pair-sum counts](topics/math-and-bits/snippets/four-sum-pair-frequency.cpp), [multiplicity cases](topics/math-and-bits/snippets/three-sum-multiplicity-cases.cpp) |
+| Positive products admit every suffix of a valid window | Shrink product + count endings | After restoration, every start in the window qualifies; count right-left+1 | [Product window](topics/windows-and-prefixes/snippets/positive-product-window.cpp) |
+| Fixed-length candidates need distinct values and a best sum | Frequency map + running sum | Erasing zero counts makes map size equal the number of live values | [Distinct-window sum](topics/windows-and-prefixes/snippets/fixed-window-distinct-sum.cpp) |
+| One sorted pair makes many index pairs feasible | Fix largest side + bulk count | Every left index up to right-1 has at least the tested left value | [Triangle count](topics/search-and-sort/snippets/triangle-two-pointer-count.cpp) |
+| One item can occupy each nonnegative value | Dense counts + upward surplus carry | Every excess item must pay once to leave a full slot | [Duplicate carry](topics/greedy-and-intervals/snippets/dense-bucket-duplicate-carry.cpp) |
+| Return every partition using a reused validity predicate | Palindrome table + push/recurse/pop | The current pieces concatenate to exactly the processed prefix | [Partition paths](topics/dp-and-backtracking/snippets/palindrome-table-partition-enumeration.cpp) |
 
 ## Before adapting an original
 
@@ -39,5 +44,9 @@ Cover the invariant column, explain why the composition works, then open the ori
 - [Fixed-bucket hash map](topics/design-structures/snippets/custom-hash-map.cpp) does not resize; [LRU](topics/design-structures/snippets/lru-cache.cpp) assumes positive capacity.
 - [Word search](topics/dp-and-backtracking/snippets/word-search-mark-restore.cpp) uses bitwise OR, so every branch is evaluated even after a match.
 - [KMP palindrome encoding](topics/strings-and-tries/snippets/shortest-palindrome-kmp.cpp) requires its delimiter to be outside the input alphabet.
+
+- [Palindrome partitioning](topics/dp-and-backtracking/snippets/palindrome-table-partition-enumeration.cpp) keeps the literal inclusive `l <= s.size()` loop; its terminator comparison depends on non-NUL input.
+- [Duplicate buckets](topics/greedy-and-intervals/snippets/dense-bucket-duplicate-carry.cpp) allocate by maximum value plus input length, not just the number of distinct values.
+- [Closest triple](topics/search-and-sort/snippets/three-sum-closest-frontier.cpp) retains an `int` sentinel and `int` differences; its bounded source contract matters.
 
 For all retained variants and their context, use the final appendix in each [topic chapter](README.md#topics). No original has been silently repaired or replaced with a new template.

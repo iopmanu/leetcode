@@ -22,6 +22,7 @@
 | Arithmetic digit reversal / digit scan | O(b) per value; O(nb) for an array | O(1) | [Palindrome check](originals/9__2126054933.cpp), [destructive digit sum](originals/3550__2152359464.cpp) |
 | XOR/parity summary | O(n) for total XOR; O(1) for direct parity | O(1) | [XOR game](originals/810__2166697803.cpp), [divisor parity](originals/1025__792418394.cpp) |
 | Threshold contributions instead of range enumeration | O(1), five explicit thresholds | O(1) | [Implementation](originals/3871__2136687887.cpp) |
+| Position-divisibility filter + square accumulation | O(n), scanning all positions | O(1) | [Exact excerpt](snippets/divisor-position-square-sum.cpp) · [full source](originals/2778__2169299910.cpp) |
 
 ## Combinations and tricks
 
@@ -75,6 +76,14 @@ Every composition below is present in a linked original. The reusable part is th
 - **Compose:** Total XOR + length parity in [XOR game](originals/810__2166697803.cpp); direct parity in [divisor game](originals/1025__792418394.cpp); odd/even minima in [uniform parity](originals/3876__2131978781.cpp).
 - **Invariant:** The implementation decides from the summary without enumerating future states. The proof must come from the particular move rules; a compact return expression is not itself that proof.
 - **Tradeoff:** The uniform-parity sources retain misleading parity comments. The separate [constant-true source](originals/3875__2128397234.cpp) stays an explicitly problem-specific result, not a reusable parity algorithm.
+
+### Separate the position predicate from the value contribution
+
+- **Recognize:** Eligibility is a property of an item's one-based index, while the accumulated contribution depends on its value.
+- **Compose:** A linear position scan + divisibility test + square accumulation in [the special-element source](originals/2778__2169299910.cpp).
+- **Invariant:** The partial result contains exactly the squares at processed positions dividing the total length. Convert zero-based `i` to `i+1` before testing; the array value itself is not the divisor.
+- **Tradeoff / trap:** This implementation checks all n positions, not only divisor pairs, so it is O(n) time and O(1) space. Its multiplication and accumulator stay `int` under the original constraints.
+- **Exact code:** [Literal filtered-accumulation method](snippets/divisor-position-square-sum.cpp).
 
 ## Problem and source appendix
 
@@ -237,6 +246,18 @@ Extracts decimal digits with %10 into a deque, then pops from the back to restor
 **Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
 
 - [Original 2000541813](originals/2553__2000541813.cpp) · [LeetCode submission](https://leetcode.com/problems/separate-the-digits-in-an-array/submissions/2000541813/)
+
+### 2778. Sum of Squares of Special Elements
+
+[Problem](https://leetcode.com/problems/sum-of-squares-of-special-elements/) · Tags: Divisibility, One-based positions, Filtered accumulation
+
+Scan all positions and add nums[i] squared exactly when the one-based position i+1 divides the array length.
+
+**Original-code context:** O(n) time and O(1) auxiliary space. This scans every position rather than enumerating divisor pairs. Values are selected by their positions, not by whether the values divide n. Products and the result remain int under the source bounds.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169299910](originals/2778__2169299910.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169299910/)
 
 ### 3005. Count Elements With Maximum Frequency
 

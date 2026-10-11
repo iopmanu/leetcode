@@ -2,7 +2,9 @@
 
 Start with an algorithm or a reusable trick, learn how its state composes with another structure, then open the exact implementation. Problems are examples and source references, collected at the end of each chapter.
 
-All implementation links lead to **VanyushaDoronin's unchanged captured LeetCode code**: **369 accepted submission records, 249 problems, 69 literal snippets, 11 topics**. Explanations organize the originals; no new algorithm implementations are supplied.
+All implementation links lead to **VanyushaDoronin's unchanged captured LeetCode code**: **382 accepted submission records, 261 problems, 80 literal snippets, 11 topics**. Explanations organize the originals; no new algorithm implementations are supplied.
+
+Latest incremental source update: **11 October 2026**. The last complete exposed-history audit remains **10 October 2026**; [coverage](COVERAGE.md) keeps those scopes separate.
 
 ## Start here
 
@@ -85,4 +87,4 @@ For an additional byte-for-byte comparison with the separately retained normaliz
 python3 tools/check_originals.py --capture-json /path/to/normalized-records.json
 ```
 
-The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 69 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.
+The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 80 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.

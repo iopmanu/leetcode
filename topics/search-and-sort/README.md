@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**35 captured problems · 71 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**39 captured problems · 76 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -26,6 +26,10 @@ Pick the invariant first, then open a representative original. Here `n` is input
 | Read/write pointers and reversal | A processed prefix is compacted, merged, or reversed without a second array | O(n), or O(m+n) for merge | O(1); mutates input | [Deduplicate](originals/26__2147762984.cpp), [stable compaction](originals/283__2126091678.cpp), [backward merge](originals/88__2147757984.cpp), [three reversals](originals/189__2147800911.cpp) |
 | Sorted endpoint elimination | Discard the farther endpoint until exactly k candidates remain | O(n−k) elimination + O(k) output = O(n) | O(1) apart from returned O(k) values | [Closest contiguous block](originals/658__2127298849.cpp) |
 | Lexicographic frequency comparator | Compare team counts place by place, then use the character tie-break | For v votes and t teams: expected O(vt + t² log t) | O(t²) count maps + O(log t) sort stack | [Rank vectors of vote counts](originals/1366__2119622834.cpp) |
+| Fixed largest side + bulk pair count | Every left index in a sorted interval satisfies the same strict inequality | O(n²), including sort | O(log n) sort stack; mutates input | [Triangle count](originals/611__2169562141.cpp) · [exact excerpt](snippets/triangle-two-pointer-count.cpp) |
+| Sorted triple + closest objective | Record absolute error before moving the pair frontier | O(n²), including sort | O(log n) sort stack; mutates input | [Closest triple](originals/16__2169549656.cpp) |
+| Two-pass value partition | Completed zero prefix, then completed one prefix | O(n) | O(1); mutates input | [Zero-then-one compaction](originals/75__2169541356.cpp) |
+| Output-prefix multiplicity cap | Compare the incoming value with the item two output positions back | O(n) | O(1); mutates input | [Keep at most two](originals/80__2169317874.cpp) |
 
 ## Combinations and tricks
 
@@ -78,6 +82,22 @@ Pick the invariant first, then open a representative original. Here `n` is input
 - **Invariant:** A farther extreme cannot beat all remaining values; equal distances discard the right endpoint, preserving the smaller-value tie-break.
 - **Tradeoff / trap:** This code is O(n), not a binary search over block starts. It does not sort the input and relies on the input already being sorted.
 
+### Replace one successful pair with an entire interval of successful choices
+
+- **Recognize:** Sortedness makes a pair predicate true for every larger left candidate while one right candidate stays fixed.
+- **Compose:** Fix the largest side, then use opposing pointers in [triangle counting](originals/611__2169562141.cpp). When the smallest current pair already exceeds that side, add `right-left` and move the right pointer; otherwise move the left pointer.
+- **Invariant:** Every counted left index has a value at least as large as the tested left value. Fixing the largest index and then the right index gives each index triple one owner, including repeated values.
+- **Tradeoff / trap:** The inequality is strict. Bulk counting differs from emitting unique value triples in 3Sum. For [3Sum Closest](originals/16__2169549656.cpp), the same sorted pair movement instead updates an absolute-error objective before discarding a frontier; equal error keeps the earlier answer. Its `INT_MAX - 100000` sentinel and `int` differences are safe only within the original bounded contract.
+- **Exact code:** [Bulk triangle count](snippets/triangle-two-pointer-count.cpp), [closest-sum frontier](snippets/three-sum-closest-frontier.cpp).
+
+### State precisely what the write frontier has already accepted
+
+- **Recognize:** A scan writes a valid prefix in place, but acceptance can depend on a category or a multiplicity limit.
+- **Compose:** [Sort Colors](originals/75__2169541356.cpp) first swaps zeros into the prefix, then scans only the remaining suffix for ones. [Keep-at-most-two compaction](originals/80__2169317874.cpp) compares each input with the value two places behind the output frontier.
+- **Invariant:** At each pass boundary, all earlier category positions are settled. In the sorted duplicate filter, the accepted prefix remains sorted, so equality with `nums[k-2]` means two copies are already present. The write frontier never overtakes the read position.
+- **Tradeoff / trap:** The color source is two passes, not a single-pass three-way partition. Multiplicity filtering relies on sorted input and defines only the returned prefix; the tail is unspecified. The added [ordinary deduplication submission](originals/26__2169320670.cpp) repeats the existing one-copy idea and adds provenance without another theory section.
+- **Exact code:** [Two-pass color partition](snippets/two-pass-color-compaction.cpp), [output-prefix multiplicity cap](snippets/at-most-two-compaction.cpp).
+
 ## Problem and source appendix
 
 
@@ -108,6 +128,18 @@ Sort, fix one index, opposite-pointer scan. Older version inserts triples in a s
 - [Original 2147771319](originals/15__2147771319.cpp) · [LeetCode submission](https://leetcode.com/problems/3sum/submissions/2147771319/)
 - [Original 2131829341](originals/15__2131829341.cpp) · [LeetCode submission](https://leetcode.com/problems/3sum/submissions/2131829341/)
 
+### 16. 3Sum Closest
+
+[Problem](https://leetcode.com/problems/3sum-closest/) · Tags: Sorting, Two pointers, Closest objective
+
+Fix one sorted value, scan the remaining pair with opposing pointers, and keep a sum whenever its absolute error strictly improves.
+
+**Original-code context:** O(n squared) time including sorting and O(log n) usual sort stack; mutates input. result starts at INT_MAX - 100000 rather than a real triple. Sums, subtraction, and abs use int, so the sentinel relies on the original small target/value bounds. Requires at least three elements. Equal-error candidates do not replace the current result; an exact match does not stop the outer search.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169549656](originals/16__2169549656.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169549656/)
+
 ### 18. 4Sum
 
 [Problem](https://leetcode.com/problems/4sum/) · Tags: Sorting, Two pointers, Deduplication
@@ -131,9 +163,10 @@ Read index and write frontier; copy each new distinct value.
 
 **Original-code context:** O(n), O(1); returns 1 on an empty vector, which lies outside official nonempty constraint.
 
-**Captured variants:** 1 accepted C++ submission captured; all original versions are retained.
+**Captured variants:** 2 accepted C++ submissions captured; both use the same read/write compaction, with naming and formatting differences.
 
 - [Original 2147762984](originals/26__2147762984.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-duplicates-from-sorted-array/submissions/2147762984/)
+- [Original 2169320670](originals/26__2169320670.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169320670/)
 
 ### 33. Search in Rotated Sorted Array
 
@@ -191,6 +224,30 @@ Binary search row-major matrix as virtual flat array.
 
 - [Original 2146688351](originals/74__2146688351.cpp) · [LeetCode submission](https://leetcode.com/problems/search-a-2d-matrix/submissions/2146688351/)
 - [Original 2127411724](originals/74__2127411724.cpp) · [LeetCode submission](https://leetcode.com/problems/search-a-2d-matrix/submissions/2127411724/)
+
+### 75. Sort Colors
+
+[Problem](https://leetcode.com/problems/sort-colors/) · Tags: Two-pass partition, Read/write frontier
+
+Move zeros to the front by swapping with a write frontier; then scan the remaining suffix and move ones immediately after the zeros.
+
+**Original-code context:** O(n) total time in two passes and O(1) auxiliary space. This captured implementation is zero-then-one compaction, not the single-pass Dutch-national-flag algorithm. It assumes values are 0, 1, or 2 and mutates the input.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169541356](originals/75__2169541356.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169541356/)
+
+### 80. Remove Duplicates from Sorted Array II
+
+[Problem](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) · Tags: Sorted arrays, Read/write pointers, Multiplicity cap
+
+Keep a value when fewer than two items have been written or it differs from the value two places behind the write frontier.
+
+**Original-code context:** O(n) time and O(1) auxiliary space. Sortedness makes equal values consecutive; nums[k-2] belongs to the already accepted output prefix. The returned length identifies the meaningful prefix; tail values are unspecified. Empty input returns zero.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169317874](originals/80__2169317874.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169317874/)
 
 ### 81. Search in Rotated Sorted Array II
 
@@ -370,6 +427,18 @@ Sort halves recursively, count cross pairs with monotone two pointers against 2*
 **Captured variants:** One source; separate counting pass before merge.
 
 - [Original 2150875619](originals/493__2150875619.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-pairs/submissions/2150875619/)
+
+### 611. Valid Triangle Number
+
+[Problem](https://leetcode.com/problems/valid-triangle-number/) · Tags: Sorting, Two pointers, Bulk counting
+
+Fix the largest sorted side. If the left and right candidates make a triangle, all left positions through right-1 work with that right side, so add right-left at once.
+
+**Original-code context:** O(n squared) time including sorting, O(log n) usual sort stack, and input mutation. The strict inequality excludes degenerate triangles; index choices remain distinct even when values repeat. Sums and counts remain int under the original bounds.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169562141](originals/611__2169562141.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169562141/)
 
 ### 658. Find K Closest Elements
 

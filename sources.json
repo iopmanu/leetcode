@@ -3805,5 +3805,135 @@
     "topic": "math-and-bits",
     "problem_id": "3876",
     "problem_url": "https://leetcode.com/problems/construct-uniform-parity-array-ii/"
+  },
+  {
+    "source_id": "2169623873",
+    "problem": "713. Subarray Product Less Than K",
+    "url": "https://leetcode.com/submissions/detail/2169623873/",
+    "sha256": "006ee0be00deb0df164d52dec3786086414704f331e7ff244f9827903090b54d",
+    "path": "topics/windows-and-prefixes/originals/713__2169623873.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "713",
+    "problem_url": "https://leetcode.com/problems/subarray-product-less-than-k/"
+  },
+  {
+    "source_id": "2169620244",
+    "problem": "2461. Maximum Sum of Distinct Subarrays With Length K",
+    "url": "https://leetcode.com/submissions/detail/2169620244/",
+    "sha256": "9839e31b85b2596d2c8096d32b99e3a1f2166df7d9bba639ba67f09cfea6201a",
+    "path": "topics/windows-and-prefixes/originals/2461__2169620244.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "2461",
+    "problem_url": "https://leetcode.com/problems/maximum-sum-of-distinct-subarrays-with-length-k/"
+  },
+  {
+    "source_id": "2169572072",
+    "problem": "1456. Maximum Number of Vowels in a Substring of Given Length",
+    "url": "https://leetcode.com/submissions/detail/2169572072/",
+    "sha256": "03de4458d11dfdf05fe1e4606970aec2c0c4dd6c0259fee7546b40a78e032079",
+    "path": "topics/windows-and-prefixes/originals/1456__2169572072.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "1456",
+    "problem_url": "https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/"
+  },
+  {
+    "source_id": "2169562141",
+    "problem": "611. Valid Triangle Number",
+    "url": "https://leetcode.com/submissions/detail/2169562141/",
+    "sha256": "ca6952bec6f0a6523bbc53aa83782a2fa14bc9c00f9ad31e5574c420a901ee50",
+    "path": "topics/search-and-sort/originals/611__2169562141.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "611",
+    "problem_url": "https://leetcode.com/problems/valid-triangle-number/"
+  },
+  {
+    "source_id": "2169549656",
+    "problem": "16. 3Sum Closest",
+    "url": "https://leetcode.com/submissions/detail/2169549656/",
+    "sha256": "bc5e6fd602a8ecb9f0e44ec632687e618414fddc4768c3af3f1071bec6d3319d",
+    "path": "topics/search-and-sort/originals/16__2169549656.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "16",
+    "problem_url": "https://leetcode.com/problems/3sum-closest/"
+  },
+  {
+    "source_id": "2169541356",
+    "problem": "75. Sort Colors",
+    "url": "https://leetcode.com/submissions/detail/2169541356/",
+    "sha256": "dbaae433cd667b3b391924fc2db4eb27a36a4309720bf587f2065777d1a5a23a",
+    "path": "topics/search-and-sort/originals/75__2169541356.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "75",
+    "problem_url": "https://leetcode.com/problems/sort-colors/"
+  },
+  {
+    "source_id": "2169320670",
+    "problem": "26. Remove Duplicates from Sorted Array",
+    "url": "https://leetcode.com/submissions/detail/2169320670/",
+    "sha256": "9b8497906d212092a044799cbe6a22a8beffa26438a9eac8ce623e3acb29df9b",
+    "path": "topics/search-and-sort/originals/26__2169320670.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "26",
+    "problem_url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/"
+  },
+  {
+    "source_id": "2169317874",
+    "problem": "80. Remove Duplicates from Sorted Array II",
+    "url": "https://leetcode.com/submissions/detail/2169317874/",
+    "sha256": "f82673bcda2391ea9ed6040c28f26b59dfb3db2dc46959244ea11c9b4606405e",
+    "path": "topics/search-and-sort/originals/80__2169317874.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "80",
+    "problem_url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/"
+  },
+  {
+    "source_id": "2169299910",
+    "problem": "2778. Sum of Squares of Special Elements",
+    "url": "https://leetcode.com/submissions/detail/2169299910/",
+    "sha256": "c2763bf135b2cd8e1e3440a226284a42ef3e1cae16974c2ec6b51f00a4707e10",
+    "path": "topics/math-and-bits/originals/2778__2169299910.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "2778",
+    "problem_url": "https://leetcode.com/problems/sum-of-squares-of-special-elements/"
+  },
+  {
+    "source_id": "2169294097",
+    "problem": "131. Palindrome Partitioning",
+    "url": "https://leetcode.com/submissions/detail/2169294097/",
+    "sha256": "9cdb22c73477d1331385d26dee5e32b3afb01062703cb9de1645a751543a6150",
+    "path": "topics/dp-and-backtracking/originals/131__2169294097.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "131",
+    "problem_url": "https://leetcode.com/problems/palindrome-partitioning/"
+  },
+  {
+    "source_id": "2169282143",
+    "problem": "1109. Corporate Flight Bookings",
+    "url": "https://leetcode.com/submissions/detail/2169282143/",
+    "sha256": "06361d70d4375764ed7ee0cb2e2e658ae4fa98c2aeb7e94224741ed7c742f13f",
+    "path": "topics/windows-and-prefixes/originals/1109__2169282143.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "1109",
+    "problem_url": "https://leetcode.com/problems/corporate-flight-bookings/"
+  },
+  {
+    "source_id": "2169112095",
+    "problem": "945. Minimum Increment to Make Array Unique",
+    "url": "https://leetcode.com/submissions/detail/2169112095/",
+    "sha256": "038ff98e0869d559574053d875b74d190ecde90c06be9aab1ecac0aec6ac760b",
+    "path": "topics/greedy-and-intervals/originals/945__2169112095.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "945",
+    "problem_url": "https://leetcode.com/problems/minimum-increment-to-make-array-unique/"
+  },
+  {
+    "source_id": "2168599877",
+    "problem": "17. Letter Combinations of a Phone Number",
+    "url": "https://leetcode.com/submissions/detail/2168599877/",
+    "sha256": "ad7efa7f7e84a237013ff1939a93d7b5d1f8b4ac81c6c949d1d9fa94620519c4",
+    "path": "topics/dp-and-backtracking/originals/17__2168599877.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "17",
+    "problem_url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/"
   }
 ]

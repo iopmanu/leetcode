@@ -4,7 +4,7 @@
 
 ## Main algorithms and structures
 
-Identify the smallest state that determines every legal continuation, then choose whether to count, optimize, or enumerate it. The complete catalog of **23 problems / 31 submissions** is last; links below point directly to unchanged originals.
+Identify the smallest state that determines every legal continuation, then choose whether to count, optimize, or enumerate it. The complete catalog of **25 problems / 33 submissions** is last; links below point directly to unchanged originals.
 
 Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/segment parameter, and `L` a searched word's length. Hash-table bounds are expected. Space includes recursion, containers, and by-value string copies for lvalue calls; output storage is listed separately. Exponential search bounds below are upper bounds, not claims that every input attains them.
 
@@ -31,6 +31,8 @@ Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/s
 | Row placement + directional attack scans | Place one queen per row and enumerate boards | O(n² n! + Qn²) upper bound, Q returned boards | O(n²) board + O(n) stack + O(Qn²) copied output | [N-Queens with scans](originals/51__2164697200.cpp) |
 | In-place mark/restore DFS | Match a word without reusing a cell on one path | O(rc·3ᴸ + L) upper bound | O(min(L,rc)) search stack + O(L) word copy | [Word Search](originals/79__2168591618.cpp) |
 | Memoized sets of generated strings | Return all valid strings with minimum deletions | Conservative expected O(n²·2ⁿ); includes set/string copies and uncached failures | O(n²+n·2ⁿ) upper bound for memo objects/live strings; output also may be exponential | [Set-valued recursion](originals/301__2165615628.cpp) |
+| Per-position Cartesian-product enumeration | Choose one allowed symbol per position and emit every full sequence | O(dP), P product of per-digit choice counts | O(d) buffer/stack/input copy + O(dP) output; fixed map | [Mapped letters + shared buffer](originals/17__2168599877.cpp) · [literal class](snippets/mapped-choice-letter-enumeration.cpp) |
+| Interval predicate + partition enumeration | Reuse palindrome truth values while producing every valid cut path | O(n²+n·2ⁿ) worst case | O(n²+n) auxiliary table/path/stack/input copy + O(nP) output for P partitions | [Table + push/recurse/pop](originals/131__2169294097.cpp) · [literal method](snippets/palindrome-table-partition-enumeration.cpp) |
 
 ## Combinations and tricks
 
@@ -114,10 +116,30 @@ Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/s
 - **Tradeoff / trap:** Recursive Pascal can retain O(r²) auxiliary vector data in addition to O(r²) output and O(r) frames. Distinct Subsequences never clears its member memo. Increasing Path uses `resize(...,-1)`, which does not reset existing cells when dimensions stay the same, so repeated calls can reuse stale answers. Distinct Subsequences II explicitly resets its arrays each call. These notes describe single-call judge implementations, not a reusable shared-state API.
 - **Originals:** [Iterative Pascal](originals/118__2116229650.cpp), [live recursive row copies](originals/118__791480396.cpp), [extra-row recursive variant](originals/118__791476688.cpp), [retained prefix memo](originals/115__2133267031.cpp), [resize-based grid memo](originals/329__2139455187.cpp), [explicit reset](originals/940__2133936040.cpp).
 
+### Reuse a predicate table while enumerating paths instead of optimizing one answer
+
+- **Recognize:** Every partition edge asks whether the same substring is valid, but the result must contain all complete paths.
+- **Compose:** In [palindrome partitioning](originals/131__2169294097.cpp), precompute the palindrome table, push a valid substring onto the path, recurse at its right boundary plus one, and pop it again. Compare the existing [minimum-cut recurrence](originals/132__2165701086.cpp), which retains just an optimum.
+- **Invariant:** The path concatenates exactly to the processed prefix, and every next edge has a true table entry. Each complete cut sequence is emitted once. Predicate reuse removes repeated palindrome scans, but cannot remove the potentially exponential returned partitions.
+- **Tradeoff / trap:** The literal table loop is `l <= s.size()`, including unnecessary lower-triangle positions. At `l == n`, string indexing reads the terminator; under the lowercase non-NUL source contract it differs from every `s[r]`, preventing the table write by short-circuiting. Embedded NUL characters can defeat that protection. This bound is preserved and is not a generic indexing pattern. The output copies every path, giving O(nP) output storage for P partitions; the worst-case time bound is O(n²+n·2ⁿ).
+- **Exact code:** [Complete original method, including the bounds quirk](snippets/palindrome-table-partition-enumeration.cpp).
+
 ## Problem and source appendix
 
 
 All captured submissions are retained, including equivalent resubmissions and exact duplicates. Submission IDs distinguish files; they are not rankings of quality. The source itself is authoritative when a note is too brief.
+
+### 17. Letter Combinations of a Phone Number
+
+[Problem](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) · Tags: Backtracking, Cartesian product, Shared character buffer
+
+Choose one mapped letter per digit, append it to a shared buffer, recurse to the next digit, then pop; copy the buffer at each complete choice sequence.
+
+**Original-code context:** For d digits and P equal to the product of their 3- or 4-letter choice counts, time and output storage are O(dP); auxiliary buffer, recursion, and by-value input copy are O(d), plus the fixed map. The literal empty-input result is a vector containing one empty string; no guard was added. An unmapped digit creates an empty map entry through operator[] and stops that branch.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2168599877](originals/17__2168599877.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2168599877/)
 
 ### 22. Generate Parentheses
 
@@ -209,6 +231,18 @@ Memoize matching target prefix inside source prefix; choose skip or consume matc
 - [Original 2116229650](originals/118__2116229650.cpp) · [LeetCode submission](https://leetcode.com/problems/pascals-triangle/submissions/2116229650/)
 - [Original 791480396](originals/118__791480396.cpp) · [LeetCode submission](https://leetcode.com/problems/pascals-triangle/submissions/791480396/)
 - [Original 791476688](originals/118__791476688.cpp) · [LeetCode submission](https://leetcode.com/problems/pascals-triangle/submissions/791476688/)
+
+### 131. Palindrome Partitioning
+
+[Problem](https://leetcode.com/problems/palindrome-partitioning/) · Tags: Palindrome table, Backtracking, Partition enumeration
+
+Build a substring palindrome table, then enumerate paths of palindromic pieces with push/recurse/pop and copy each complete path into the result.
+
+**Original-code context:** The table loop is literally l <= s.size(), including l > r. Reading s[s.size()] obtains the string terminator; for the original lowercase non-NUL input it cannot equal s[r], so short-circuiting prevents an out-of-range table write at l == n. An embedded NUL can invalidate that protection. The extra lower-triangle work is retained. Worst-case work is O(n squared + n times 2^n); the table and active path/stack need O(n squared + n) auxiliary space, plus O(nP) output for P returned partitions. The by-value input also copies O(n) characters.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169294097](originals/131__2169294097.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169294097/)
 
 ### 132. Palindrome Partitioning II
 

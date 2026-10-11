@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**19 captured problems · 29 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**20 captured problems · 30 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -27,6 +27,7 @@ A greedy choice needs an exchange argument or a dominance invariant; sorted inpu
 | Earliest short palindrome | Accept the first qualifying block of length k or k+1 | O(nk) worst-case comparisons | O(1) scan state; by-value string can add O(n) | [Direct palindrome tests](originals/2472__2143088360.cpp) |
 | Character-span closure | Counts of selected characters exactly fill their bounding interval | O(n+a²), a≤26, including copied output characters | O(a) summaries/deque; by-value string can add O(n), plus O(n) output | [Closed substring selection](originals/1520__2146064854.cpp) |
 | High-to-low bit partition refinement | Earlier bit-optimal groups constrain later reorderings | O(Bn), B=15 in source | O(n+B) live group copies and result | [Power-array refinement](originals/4059__2147456833.cpp) |
+| Dense value buckets + excess carry | Keep one value at each processed position and push all surplus upward | O(n+M), M maximum input value; includes allocation and scan | O(n+M) counts; input is unchanged | [Minimum increments](originals/945__2169112095.cpp) · [exact excerpt](snippets/dense-bucket-duplicate-carry.cpp) |
 
 ## Combinations and tricks
 
@@ -85,6 +86,14 @@ A greedy choice needs an exchange argument or a dominance invariant; sorted inpu
 - **Compose:** [Domino candidates from the first pair](originals/1007__2157541300.cpp); [palindrome tests at lengths k and k+1](originals/2472__2143088360.cpp); or [character counts + first/last spans](originals/1520__2146064854.cpp).
 - **Invariant:** A common domino value must be on every domino, including the first. A longer palindrome contains a central palindrome of length k or k+1. For character spans, total occurrence count equal to bounding length certifies a block closed under every selected character's occurrences.
 - **Tradeoff / trap:** The palindrome source checks characters directly rather than building a DP table; its O(1) scan state excludes the potential by-value string copy. The character-span source uses a deque in first-appearance order and clears it after emitting a closed block; preserve that specific construction instead of substituting a generic interval algorithm.
+
+### Carry surplus through value buckets and charge each unit of movement
+
+- **Recognize:** Values may only increase, one item can occupy each value, and the nonnegative value range is small enough to materialize.
+- **Compose:** Dense frequency buckets + ascending greedy carry in [minimum increments for uniqueness](originals/945__2169112095.cpp). Keep one item at an occupied value, carry `counts[v]-1` to `v+1`, and add that number to the cost.
+- **Invariant:** Every lower position is settled, and every carried item must move at least once because the current slot is full. Retaining one at the lowest available value cannot force a cheaper item to move farther; repeating this cheapest necessary move yields the minimum total.
+- **Tradeoff / trap:** Allocation and scanning use `M+n` slots, where M is the maximum input value. The O(n+M) bound is numeric-range dependent; this source does not sort and does not have O(n log n) work. Nonempty nonnegative input is required. The old bucket count remains unchanged after carry but is never read again; only the next bucket drives future decisions.
+- **Exact code:** [Literal bucket-carry method](snippets/dense-bucket-duplicate-carry.cpp).
 
 ## Problem and source appendix
 
@@ -203,6 +212,18 @@ Sort; lightest/heaviest pointers; pair if feasible, otherwise consume heaviest a
 - [Original 2147809080](originals/881__2147809080.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2147809080/)
 - [Original 2140480045](originals/881__2140480045.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2140480045/)
 - [Original 2140479869](originals/881__2140479869.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2140479869/)
+
+### 945. Minimum Increment to Make Array Unique
+
+[Problem](https://leetcode.com/problems/minimum-increment-to-make-array-unique/) · Tags: Dense counting buckets, Greedy carry, Unique values
+
+Count values in a dense array, scan upward, keep one item at each value and carry every excess item to the next bucket, charging one increment per carried item.
+
+**Original-code context:** For n elements and M equal to the maximum value, work and bucket space are O(n+M), including initialization and the full scan. This is not a sorting-based implementation. It assumes nonempty nonnegative input and allocates exactly M+n buckets. The processed bucket count is not reset, but that bucket is never revisited; only the propagated count matters. Increment totals remain int under the original limits.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169112095](originals/945__2169112095.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169112095/)
 
 ### 1007. Minimum Domino Rotations For Equal Row
 

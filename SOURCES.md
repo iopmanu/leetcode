@@ -2,7 +2,7 @@
 
 Every implementation here is an unchanged local copy of a captured accepted C++ submission. The [manifest](sources.json) records its SHA-256; the [coverage page](COVERAGE.md) documents aggregate history-verification results and unresolved count differences. Problem and submission links point back to LeetCode.
 
-369 submission records · 249 problems · 359 distinct code texts.
+382 submission records · 261 problems · 372 distinct code texts.
 
 ## Range queries
 
@@ -201,6 +201,10 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 - [Original 2147771319](topics/search-and-sort/originals/15__2147771319.cpp) · [LeetCode submission](https://leetcode.com/problems/3sum/submissions/2147771319/)
 - [Original 2131829341](topics/search-and-sort/originals/15__2131829341.cpp) · [LeetCode submission](https://leetcode.com/problems/3sum/submissions/2131829341/)
 
+### [16. 3Sum Closest](https://leetcode.com/problems/3sum-closest/)
+
+- [Original 2169549656](topics/search-and-sort/originals/16__2169549656.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169549656/)
+
 ### [18. 4Sum](https://leetcode.com/problems/4sum/)
 
 - [Original 2147786844](topics/search-and-sort/originals/18__2147786844.cpp) · [LeetCode submission](https://leetcode.com/problems/4sum/submissions/2147786844/)
@@ -211,6 +215,8 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 ### [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
 
 - [Original 2147762984](topics/search-and-sort/originals/26__2147762984.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-duplicates-from-sorted-array/submissions/2147762984/)
+- [Original 2169320670](topics/search-and-sort/originals/26__2169320670.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169320670/)
+
 
 ### [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
 
@@ -236,6 +242,14 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 
 - [Original 2146688351](topics/search-and-sort/originals/74__2146688351.cpp) · [LeetCode submission](https://leetcode.com/problems/search-a-2d-matrix/submissions/2146688351/)
 - [Original 2127411724](topics/search-and-sort/originals/74__2127411724.cpp) · [LeetCode submission](https://leetcode.com/problems/search-a-2d-matrix/submissions/2127411724/)
+
+### [75. Sort Colors](https://leetcode.com/problems/sort-colors/)
+
+- [Original 2169541356](topics/search-and-sort/originals/75__2169541356.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169541356/)
+
+### [80. Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/)
+
+- [Original 2169317874](topics/search-and-sort/originals/80__2169317874.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169317874/)
 
 ### [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/)
 
@@ -313,6 +327,10 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 ### [493. Reverse Pairs](https://leetcode.com/problems/reverse-pairs/)
 
 - [Original 2150875619](topics/search-and-sort/originals/493__2150875619.cpp) · [LeetCode submission](https://leetcode.com/problems/reverse-pairs/submissions/2150875619/)
+
+### [611. Valid Triangle Number](https://leetcode.com/problems/valid-triangle-number/)
+
+- [Original 2169562141](topics/search-and-sort/originals/611__2169562141.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169562141/)
 
 ### [658. Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)
 
@@ -793,6 +811,10 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 
 [Topic notes and variants](topics/dp-and-backtracking/README.md)
 
+### [17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
+
+- [Original 2168599877](topics/dp-and-backtracking/originals/17__2168599877.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2168599877/)
+
 ### [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)
 
 - [Original 2160263536](topics/dp-and-backtracking/originals/22__2160263536.cpp) · [LeetCode submission](https://leetcode.com/problems/generate-parentheses/submissions/2160263536/)
@@ -827,6 +849,10 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 - [Original 2116229650](topics/dp-and-backtracking/originals/118__2116229650.cpp) · [LeetCode submission](https://leetcode.com/problems/pascals-triangle/submissions/2116229650/)
 - [Original 791480396](topics/dp-and-backtracking/originals/118__791480396.cpp) · [LeetCode submission](https://leetcode.com/problems/pascals-triangle/submissions/791480396/)
 - [Original 791476688](topics/dp-and-backtracking/originals/118__791476688.cpp) · [LeetCode submission](https://leetcode.com/problems/pascals-triangle/submissions/791476688/)
+
+### [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/)
+
+- [Original 2169294097](topics/dp-and-backtracking/originals/131__2169294097.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169294097/)
 
 ### [132. Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/)
 
@@ -932,10 +958,22 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 
 - [Original 2131779135](topics/windows-and-prefixes/originals/567__2131779135.cpp) · [LeetCode submission](https://leetcode.com/problems/permutation-in-string/submissions/2131779135/)
 
+### [713. Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)
+
+- [Original 2169623873](topics/windows-and-prefixes/originals/713__2169623873.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169623873/)
+
 ### [1004. Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/)
 
 - [Original 2127149237](topics/windows-and-prefixes/originals/1004__2127149237.cpp) · [LeetCode submission](https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2127149237/)
 - [Original 2027338195](topics/windows-and-prefixes/originals/1004__2027338195.cpp) · [LeetCode submission](https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2027338195/)
+
+### [1109. Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)
+
+- [Original 2169282143](topics/windows-and-prefixes/originals/1109__2169282143.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169282143/)
+
+### [1456. Maximum Number of Vowels in a Substring of Given Length](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/)
+
+- [Original 2169572072](topics/windows-and-prefixes/originals/1456__2169572072.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169572072/)
 
 ### [1477. Find Two Non-overlapping Sub-arrays Each With Target Sum](https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/)
 
@@ -956,6 +994,10 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 ### [2444. Count Subarrays With Fixed Bounds](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/)
 
 - [Original 2153831199](topics/windows-and-prefixes/originals/2444__2153831199.cpp) · [LeetCode submission](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/submissions/2153831199/)
+
+### [2461. Maximum Sum of Distinct Subarrays With Length K](https://leetcode.com/problems/maximum-sum-of-distinct-subarrays-with-length-k/)
+
+- [Original 2169620244](topics/windows-and-prefixes/originals/2461__2169620244.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169620244/)
 
 ### [3355. Zero Array Transformation I](https://leetcode.com/problems/zero-array-transformation-i/)
 
@@ -1019,6 +1061,10 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 - [Original 2147809080](topics/greedy-and-intervals/originals/881__2147809080.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2147809080/)
 - [Original 2140480045](topics/greedy-and-intervals/originals/881__2140480045.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2140480045/)
 - [Original 2140479869](topics/greedy-and-intervals/originals/881__2140479869.cpp) · [LeetCode submission](https://leetcode.com/problems/boats-to-save-people/submissions/2140479869/)
+
+### [945. Minimum Increment to Make Array Unique](https://leetcode.com/problems/minimum-increment-to-make-array-unique/)
+
+- [Original 2169112095](topics/greedy-and-intervals/originals/945__2169112095.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169112095/)
 
 ### [1007. Minimum Domino Rotations For Equal Row](https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/)
 
@@ -1121,6 +1167,10 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 ### [2553. Separate the Digits in an Array](https://leetcode.com/problems/separate-the-digits-in-an-array/)
 
 - [Original 2000541813](topics/math-and-bits/originals/2553__2000541813.cpp) · [LeetCode submission](https://leetcode.com/problems/separate-the-digits-in-an-array/submissions/2000541813/)
+
+### [2778. Sum of Squares of Special Elements](https://leetcode.com/problems/sum-of-squares-of-special-elements/)
+
+- [Original 2169299910](topics/math-and-bits/originals/2778__2169299910.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169299910/)
 
 ### [3005. Count Elements With Maximum Frequency](https://leetcode.com/problems/count-elements-with-maximum-frequency/)
 

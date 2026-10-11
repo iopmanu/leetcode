@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**17 captured problems · 21 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**21 captured problems · 25 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -22,7 +22,9 @@ Choose a window only when moving its boundaries has the monotonicity the proof n
 | Prefix-sum extrema | Largest absolute subarray sum is the gap between prefix extremes | O(n) | O(1) | [Minimum and maximum prefixes](originals/1749__2000684155.cpp) |
 | Prefix/suffix aggregate arrays | Precompute what is excluded by one index or lies beyond a boundary | O(n) | O(n) temporary arrays; product also returns O(n) output | [Two product arrays](originals/238__2130701387.cpp), [suffix minimum + prefix maximum](originals/3904__2131704501.cpp) |
 | Last-obstruction / last-required indices | Count valid starts ending at each right boundary | O(n) | O(1) | [Fixed-bound subarray count](originals/2444__2153831199.cpp) |
-| Difference array + prefix reconstruction | Two endpoint edits represent each range's available coverage | O(n+q) | O(n) | [Range decrement capacity](originals/3355__2119740763.cpp) |
+| Difference array + prefix reconstruction | Two endpoint edits represent each range's available coverage | O(n+q) | O(n) | [Range decrement capacity](originals/3355__2119740763.cpp), [weighted booking additions](originals/1109__2169282143.cpp) |
+| Positive-product shrinking window | Count every valid suffix ending at the current right edge | O(n) | O(1) | [Product threshold](originals/713__2169623873.cpp) · [exact excerpt](snippets/positive-product-window.cpp) |
+| Fixed-length predicate count / distinct-value sum | Update outgoing/incoming contributions; map size certifies distinctness | Vowels O(n); distinct sum expected O(n) | Vowels O(1) set + O(n) by-value input copy; distinct sum O(k) map | [Vowel count](originals/1456__2169572072.cpp), [distinct sum](originals/2461__2169620244.cpp) |
 
 ## Combinations and tricks
 
@@ -78,9 +80,25 @@ Choose a window only when moving its boundaries has the monotonicity the proof n
 ### Choose summaries that reconstruct exactly what the query needs
 
 - **Recognize:** Repeated queries need all values except one position, both sides of a split, or total coverage from many ranges.
-- **Compose:** [Exclusive left/right products](originals/238__2130701387.cpp), [prefix maximum + suffix minimum](originals/3904__2131704501.cpp), or [difference endpoints + prefix coverage](originals/3355__2119740763.cpp).
+- **Compose:** [Exclusive left/right products](originals/238__2130701387.cpp), [prefix maximum + suffix minimum](originals/3904__2131704501.cpp), or [difference endpoints + prefix coverage](originals/3355__2119740763.cpp). The added [booking source](originals/1109__2169282143.cpp) uses the same endpoints with seat weights: +weight at first−1 and −weight at last, then prefixes into a separate output vector.
 - **Invariant:** Product identities are 1; the stable-index comparison includes index i in both summaries; a range `[l,r]` contributes +1 at l and −1 at r+1.
 - **Tradeoff / trap:** The product source really allocates two full helper arrays, not just output. Coverage describes available independent decrements, so capacity at least `nums[i]` is sufficient; it does not require applying every query to every covered element. Numeric aggregates remain the integer types shown in the originals.
+
+### Count all endings after restoring a multiplicative invariant
+
+- **Recognize:** All factors are positive and every suffix of a feasible window also has product below a strict threshold.
+- **Compose:** Running product + shrinking left boundary + bulk suffix count in [the original product window](originals/713__2169623873.cpp).
+- **Invariant:** After division restores `current < k`, exactly `right-left+1` nonempty suffixes of that window end at `right` and qualify. Each index enters and leaves once. An empty window contributes zero.
+- **Tradeoff / trap:** Positivity is essential; zeros make division invalid and negative factors break monotonicity. The source retains `int` multiplication and result storage, relying on its original bounded inputs. It is the multiplicative counterpart of the positive-sum window, not a rule for arbitrary signed arrays.
+- **Exact code:** [Literal product-window method](snippets/positive-product-window.cpp).
+
+### Keep the objective and the feasibility certificate in separate summaries
+
+- **Recognize:** Every candidate has a fixed length, but its value and validity need different information.
+- **Compose:** In [distinct-window sums](originals/2461__2169620244.cpp), update a running sum and a frequency map together; erase zero counts so map size equals the number of live distinct values. [Vowel windows](originals/1456__2169572072.cpp) need only a scalar count because membership in the fixed vowel set is an independent contribution.
+- **Invariant:** Both summaries describe exactly the current k elements. A length-k window is all-distinct precisely when it contains k live keys. Adding and removing the same value correctly leaves its frequency unchanged.
+- **Tradeoff / trap:** Both implementations initialize the first full window and require `1 <= k <= n`. Distinct sums start their best at zero under positive-value constraints, and their subtraction occurs in `int` before reaching the `long long` accumulator. The vowel source takes its string by value and retains C++20 `contains`.
+- **Exact code:** [Sum + distinctness certificate](snippets/fixed-window-distinct-sum.cpp), [incoming/outgoing predicate count](snippets/fixed-window-vowel-count.cpp).
 
 ## Problem and source appendix
 
@@ -174,6 +192,18 @@ Maintain fixed-length window, decrement requirement deficits on entering, increm
 
 - [Original 2131779135](originals/567__2131779135.cpp) · [LeetCode submission](https://leetcode.com/problems/permutation-in-string/submissions/2131779135/)
 
+### 713. Subarray Product Less Than K
+
+[Problem](https://leetcode.com/problems/subarray-product-less-than-k/) · Tags: Sliding window, Positive product, Counting endings
+
+Maintain the product of the current window, divide out its left edge while the product reaches k, and add the number of valid suffixes ending at each right edge.
+
+**Original-code context:** O(n) time and O(1) auxiliary space. Strictly positive factors make the product monotone as the window grows and permit exact division; zero or negative inputs require a different argument. The original product and result use int. For k <= 1, emptied windows contribute zero; no special-case guard was added.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169623873](originals/713__2169623873.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169623873/)
+
 ### 1004. Max Consecutive Ones III
 
 [Problem](https://leetcode.com/problems/max-consecutive-ones-iii/) · Tags: Sliding windows
@@ -184,6 +214,30 @@ Track zero budget and maintain longest window; explicit shrink variant and singl
 
 - [Original 2127149237](originals/1004__2127149237.cpp) · [LeetCode submission](https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2127149237/)
 - [Original 2027338195](originals/1004__2027338195.cpp) · [LeetCode submission](https://leetcode.com/problems/max-consecutive-ones-iii/submissions/2027338195/)
+
+### 1109. Corporate Flight Bookings
+
+[Problem](https://leetcode.com/problems/corporate-flight-bookings/) · Tags: Difference array, Inclusive range updates, Prefix reconstruction
+
+Convert each one-based inclusive booking to a positive event at first-1 and a negative event at last; prefix-sum the events into per-flight totals.
+
+**Original-code context:** O(n+q) time for n flights and q bookings. The source allocates a separate n+1 difference vector and n-element output vector, so it uses O(n) auxiliary space plus O(n) output. The sentinel slot at index n makes bookings through the last flight safe. This is the existing difference-array idea applied to weighted additions.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169282143](originals/1109__2169282143.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169282143/)
+
+### 1456. Maximum Number of Vowels in a Substring of Given Length
+
+[Problem](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/) · Tags: Fixed-length window, Predicate count
+
+Count vowels in the first k characters, then adjust one scalar for the entering and leaving characters and retain the maximum.
+
+**Original-code context:** O(n) scan and fixed five-character set storage; the by-value string parameter can add O(n) copying time and space. The vowels member and C++20 contains call remain unchanged. Assumes 1 <= k <= s.size().
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169572072](originals/1456__2169572072.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169572072/)
 
 ### 1477. Find Two Non-overlapping Sub-arrays Each With Target Sum
 
@@ -236,6 +290,18 @@ For each right endpoint, count starts after last invalid value and no later than
 **Captured variants:** One observed approach.
 
 - [Original 2153831199](originals/2444__2153831199.cpp) · [LeetCode submission](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/submissions/2153831199/)
+
+### 2461. Maximum Sum of Distinct Subarrays With Length K
+
+[Problem](https://leetcode.com/problems/maximum-sum-of-distinct-subarrays-with-length-k/) · Tags: Fixed-length window, Frequency map, Running sum
+
+Initialize a length-k frequency map and sum; slide by subtracting the outgoing value, adding the incoming one, and erasing zero-frequency keys. A map size of k identifies all-distinct windows.
+
+**Original-code context:** Expected O(n) time and O(k) map space, with at most k+1 temporary keys during an update. The sum/result are long long, but the difference nums[i] - nums[i-k] is computed as int first. Requires 1 <= k <= n; result starts at zero under the original positive-value contract.
+
+**Captured variants:** One Accepted C++ submission added on 11 October 2026.
+
+- [Original 2169620244](originals/2461__2169620244.cpp) · [LeetCode submission](https://leetcode.com/submissions/detail/2169620244/)
 
 ### 3355. Zero Array Transformation I
 

@@ -7,8 +7,8 @@ Choose the state you need to maintain, then open its implementation. [Topic tabl
 | Need to maintain or discover… | Open these exact fragments | Compose them in context |
 | --- | --- | --- |
 | An ordered boundary or a rank | [Binary search](topics/search-and-sort/snippets/binary-search.cpp), [lower bound](topics/search-and-sort/snippets/binary-search-insert-position.cpp), [quickselect](topics/search-and-sort/snippets/quickselect-helper.cpp) | [Search + sorting tricks](topics/search-and-sort/README.md#combinations-and-tricks) |
-| Sorted runs and pair relationships | [Merge-sort pair counting](topics/search-and-sort/snippets/merge-sort-reverse-pairs.cpp), [3Sum pointers](topics/search-and-sort/snippets/three-sum-skip-duplicates.cpp) | [Sorting + counting](topics/search-and-sort/README.md#combinations-and-tricks) |
-| Interval totals, coverage, or outstanding counts | [Prefix frequencies](topics/windows-and-prefixes/snippets/prefix-sum-frequency.cpp), [difference array](topics/windows-and-prefixes/snippets/difference-array-capacity.cpp), [covering window](topics/windows-and-prefixes/snippets/minimum-covering-window.cpp) | [Algebra + count state](topics/windows-and-prefixes/README.md#combinations-and-tricks) |
+| Sorted runs and pair relationships | [Merge-sort pair counting](topics/search-and-sort/snippets/merge-sort-reverse-pairs.cpp), [3Sum pointers](topics/search-and-sort/snippets/three-sum-skip-duplicates.cpp), [triangle bulk count](topics/search-and-sort/snippets/triangle-two-pointer-count.cpp) | [Sorting + counting](topics/search-and-sort/README.md#combinations-and-tricks) |
+| Interval totals, coverage, or outstanding counts | [Prefix frequencies](topics/windows-and-prefixes/snippets/prefix-sum-frequency.cpp), [difference array](topics/windows-and-prefixes/snippets/difference-array-capacity.cpp), [covering window](topics/windows-and-prefixes/snippets/minimum-covering-window.cpp), [product endings](topics/windows-and-prefixes/snippets/positive-product-window.cpp), [distinct-window sum](topics/windows-and-prefixes/snippets/fixed-window-distinct-sum.cpp) | [Algebra + count state](topics/windows-and-prefixes/README.md#combinations-and-tricks) |
 | A frontier of undominated candidates | [Histogram stack](topics/monotonic-and-heaps/snippets/histogram-monotonic-stack.cpp), [prefix-sum deque](topics/monotonic-and-heaps/snippets/shortest-subarray-monotonic-deque.cpp) | [Dominance + expiry](topics/monotonic-and-heaps/README.md#combinations-and-tricks) |
 | Dynamic rank, range sum, or aggregated intervals | [Fenwick](topics/range-queries/snippets/fenwick-307.cpp), [merge-sort tree](topics/range-queries/snippets/merge-sort-tree-315.cpp), [kth empty slot](topics/range-queries/snippets/order-statistic-segment-tree-406.cpp) | [Compression + counting + descent](topics/range-queries/README.md#combinations-and-tricks) |
 | Range updates with a composable pending operation | [Assignment/max](topics/range-queries/snippets/lazy-segment-tree-699.cpp), [chmin/min](topics/range-queries/snippets/segment-tree-range-chmin.cpp), [ordered product aggregate](topics/range-queries/snippets/ordered-product-segment-tree-3525.cpp) | [Lazy operation and merge invariants](topics/range-queries/README.md#combinations-and-tricks) |
@@ -16,14 +16,14 @@ Choose the state you need to maintain, then open its implementation. [Topic tabl
 | A reachable frontier, shortest cost, or bottleneck | [Multi-source BFS](topics/dsu-and-graphs/snippets/bfs-multi-source-rotting-oranges.cpp), [Dijkstra](topics/dsu-and-graphs/snippets/dijkstra-network-delay.cpp), [minimax Dijkstra](topics/dsu-and-graphs/snippets/dijkstra-minimax-grid.cpp) | [Traversal + path-state choice](topics/dsu-and-graphs/README.md#combinations-and-tricks) |
 | Dependency or cut information | [Kahn order](topics/dsu-and-graphs/snippets/topological-sort-kahn.cpp), [cycle states](topics/dsu-and-graphs/snippets/directed-cycle-dfs.cpp), [lowlink bridges](topics/dsu-and-graphs/snippets/tarjan-bridges.cpp) | [Traversal order + summaries](topics/dsu-and-graphs/README.md#combinations-and-tricks) |
 | An extendable tree summary or linked chain | [Diameter](topics/trees-and-lists/snippets/dfs-diameter.cpp), [maximum path](topics/trees-and-lists/snippets/dfs-maximum-path-sum.cpp), [group reversal](topics/trees-and-lists/snippets/reverse-k-group.cpp) | [Return a partial result, combine a full answer](topics/trees-and-lists/README.md#combinations-and-tricks) |
-| Reusable subproblem results or reversible choices | [Memoized grid DFS](topics/dp-and-backtracking/snippets/memo-longest-increasing-path.cpp), [two extrema](topics/dp-and-backtracking/snippets/maximum-product-two-states.cpp), [mark/restore](topics/dp-and-backtracking/snippets/word-search-mark-restore.cpp) | [State compression + DAG or backtracking](topics/dp-and-backtracking/README.md#combinations-and-tricks) |
+| Reusable subproblem results or reversible choices | [Memoized grid DFS](topics/dp-and-backtracking/snippets/memo-longest-increasing-path.cpp), [two extrema](topics/dp-and-backtracking/snippets/maximum-product-two-states.cpp), [mark/restore](topics/dp-and-backtracking/snippets/word-search-mark-restore.cpp), [palindrome partition paths](topics/dp-and-backtracking/snippets/palindrome-table-partition-enumeration.cpp) | [State compression + DAG or backtracking](topics/dp-and-backtracking/README.md#combinations-and-tricks) |
 | Reusable prefixes or combined string constraints | [KMP](topics/strings-and-tries/snippets/kmp-search.cpp), [palindrome KMP](topics/strings-and-tries/snippets/shortest-palindrome-kmp.cpp), [trie](topics/strings-and-tries/snippets/trie-prefix-tree.cpp), [suffix/prefix trie](topics/strings-and-tries/snippets/prefix-suffix-trie.cpp) | [Encoding + prefix structure](topics/strings-and-tries/README.md#combinations-and-tricks) |
 | Lookup plus mutable order, identity, or frequency | [LRU](topics/design-structures/snippets/lru-cache.cpp), [LFU](topics/design-structures/snippets/lfu-cache.cpp), [frequency stack](topics/design-structures/snippets/frequency-stack.cpp), [swap-tail set](topics/design-structures/snippets/randomized-set-swap-tail.cpp), [indexed median](topics/monotonic-and-heaps/snippets/sliding-median-finder-struct.cpp) | [Combine structures by complementary operations](topics/design-structures/README.md#combinations-and-tricks) |
 | Feasible intervals or combinatorial multiplicities | [Earliest finish](topics/greedy-and-intervals/snippets/earliest-finish-intervals.cpp), [merge intervals](topics/greedy-and-intervals/snippets/merge-intervals.cpp), [pair sums](topics/math-and-bits/snippets/four-sum-pair-frequency.cpp), [pair AND masks](topics/math-and-bits/snippets/bitwise-and-pair-frequency.cpp) | [Greedy proofs](topics/greedy-and-intervals/README.md#combinations-and-tricks), [counting reductions](topics/math-and-bits/README.md#combinations-and-tricks) |
 
 ## What the excerpts preserve
 
-All **69 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
+All **80 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
 
 The snippets are not a newly designed standalone library. `tools/verify_snippets.py` verifies exact equality, not correctness for arbitrary inputs.
 
@@ -79,6 +79,30 @@ Original: [189. Rotate Array](topics/search-and-sort/originals/189__2147800911.c
 
 Complete original rotate method. Reduces k modulo nums.size(), reverses the final k elements, the preceding prefix, and then the full vector. Mutates the array in O(n) time and O(1) auxiliary space. Requires the original nonempty-array and nonnegative-k contract; no empty-input guard was added.
 
+### [Sorted triangle sides: count a whole feasible pair interval](topics/search-and-sort/snippets/triangle-two-pointer-count.cpp)
+
+Original: [611. Valid Triangle Number](topics/search-and-sort/originals/611__2169562141.cpp#L3-L21) · [submission 2169562141](https://leetcode.com/submissions/detail/2169562141/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. O(n squared) time including sorting, O(log n) usual sort stack, and input mutation. The strict inequality excludes degenerate triangles; index choices remain distinct even when values repeat. Sums and counts remain int under the original bounds.
+
+### [Sorted triple frontier: retain the closest absolute error](topics/search-and-sort/snippets/three-sum-closest-frontier.cpp)
+
+Original: [16. 3Sum Closest](topics/search-and-sort/originals/16__2169549656.cpp#L3-L25) · [submission 2169549656](https://leetcode.com/submissions/detail/2169549656/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. O(n squared) time including sorting and O(log n) usual sort stack; mutates input. result starts at INT_MAX - 100000 rather than a real triple. Sums, subtraction, and abs use int, so the sentinel relies on the original small target/value bounds. Requires at least three elements. Equal-error candidates do not replace the current result; an exact match does not stop the outer search.
+
+### [Two-pass partition: zeros first, then ones](topics/search-and-sort/snippets/two-pass-color-compaction.cpp)
+
+Original: [75. Sort Colors](topics/search-and-sort/originals/75__2169541356.cpp#L3-L16) · [submission 2169541356](https://leetcode.com/submissions/detail/2169541356/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. O(n) total time in two passes and O(1) auxiliary space. This captured implementation is zero-then-one compaction, not the single-pass Dutch-national-flag algorithm. It assumes values are 0, 1, or 2 and mutates the input.
+
+### [Sorted compaction: compare two accepted positions back](topics/search-and-sort/snippets/at-most-two-compaction.cpp)
+
+Original: [80. Remove Duplicates from Sorted Array II](topics/search-and-sort/originals/80__2169317874.cpp#L3-L13) · [submission 2169317874](https://leetcode.com/submissions/detail/2169317874/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. O(n) time and O(1) auxiliary space. Sortedness makes equal values consecutive; nums[k-2] belongs to the already accepted output prefix. The returned length identifies the meaningful prefix; tail values are unspecified. Empty input returns zero.
+
 
 ## Maintain window and prefix state
 
@@ -107,6 +131,25 @@ Complete original isZeroArray method. Each inclusive range increments diffs[left
 Original: [3. Longest Substring Without Repeating Characters](topics/windows-and-prefixes/originals/3__2027316499.cpp#L3-L17) · [submission 2027316499](https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/2027316499/)
 
 Complete original lengthOfLongestSubstring method. Last-seen indexes remain in the hash map, and left=max(left,last+1) prevents an old occurrence from moving the window backward. Expected linear time with alphabet-sized map state, plus the original by-value string copy. contains requires C++20; the unqualified max call and all names are preserved.
+
+### [Positive-product window: count every qualifying suffix](topics/windows-and-prefixes/snippets/positive-product-window.cpp)
+
+Original: [713. Subarray Product Less Than K](topics/windows-and-prefixes/originals/713__2169623873.cpp#L3-L19) · [submission 2169623873](https://leetcode.com/submissions/detail/2169623873/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. O(n) time and O(1) auxiliary space. Strictly positive factors make the product monotone as the window grows and permit exact division; zero or negative inputs require a different argument. The original product and result use int. For k <= 1, emptied windows contribute zero; no special-case guard was added.
+
+### [Fixed window: running sum plus a distinctness certificate](topics/windows-and-prefixes/snippets/fixed-window-distinct-sum.cpp)
+
+Original: [2461. Maximum Sum of Distinct Subarrays With Length K](topics/windows-and-prefixes/originals/2461__2169620244.cpp#L3-L32) · [submission 2169620244](https://leetcode.com/submissions/detail/2169620244/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. Expected O(n) time and O(k) map space, with at most k+1 temporary keys during an update. The sum/result are long long, but the difference nums[i] - nums[i-k] is computed as int first. Requires 1 <= k <= n; result starts at zero under the original positive-value contract.
+
+### [Fixed window: incoming and outgoing vowel contributions](topics/windows-and-prefixes/snippets/fixed-window-vowel-count.cpp)
+
+Original: [1456. Maximum Number of Vowels in a Substring of Given Length](topics/windows-and-prefixes/originals/1456__2169572072.cpp#L1-L28) · [submission 2169572072](https://leetcode.com/submissions/detail/2169572072/)
+
+Full original class, including its fixed vowel-set member. O(n) scan and fixed five-character set storage; the by-value string parameter can add O(n) copying time and space. The vowels member and C++20 contains call remain unchanged. Assumes 1 <= k <= s.size().
+
 
 ## Keep undominated or ordered candidates
 
@@ -382,6 +425,18 @@ Original: [79. Word Search](topics/dp-and-backtracking/originals/79__2168591618.
 
 Complete original exist method. Temporarily replaces a matched board cell with #, explores four neighbors, then restores that cell. The bitwise | operations evaluate every recursive branch, including after a successful one; the unused uint64_t key is preserved. The board alphabet must exclude #, and the original board is nonempty. Recursion uses path-length state and can perform exponential search.
 
+### [Mapped per-position choices: enumerate with one shared buffer](topics/dp-and-backtracking/snippets/mapped-choice-letter-enumeration.cpp)
+
+Original: [17. Letter Combinations of a Phone Number](topics/dp-and-backtracking/originals/17__2168599877.cpp#L1-L33) · [submission 2168599877](https://leetcode.com/submissions/detail/2168599877/)
+
+Full original class, including its fixed character mapping member. For d digits and P equal to the product of their 3- or 4-letter choice counts, time and output storage are O(dP); auxiliary buffer, recursion, and by-value input copy are O(d), plus the fixed map. The literal empty-input result is a vector containing one empty string; no guard was added. An unmapped digit creates an empty map entry through operator[] and stops that branch.
+
+### [Palindrome predicate table plus partition-path enumeration](topics/dp-and-backtracking/snippets/palindrome-table-partition-enumeration.cpp)
+
+Original: [131. Palindrome Partitioning](topics/dp-and-backtracking/originals/131__2169294097.cpp#L3-L33) · [submission 2169294097](https://leetcode.com/submissions/detail/2169294097/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. The table loop is literally l <= s.size(), including l > r. Reading s[s.size()] obtains the string terminator; for the original lowercase non-NUL input it cannot equal s[r], so short-circuiting prevents an out-of-range table write at l == n. An embedded NUL can invalidate that protection. The extra lower-triangle work is retained. Worst-case work is O(n squared + n times 2^n); the table and active path/stack need O(n squared + n) auxiliary space, plus O(nP) output for P returned partitions. The by-value input also copies O(n) characters.
+
 
 ## Reuse prefixes and encode strings
 
@@ -474,6 +529,12 @@ Original: [11. Container With Most Water](topics/greedy-and-intervals/originals/
 
 Complete original maxArea method. Each step records the current area and moves the shorter boundary, moving left on equal heights. Runs in O(n) time and O(1) auxiliary space. Width, heights, multiplication, and the result remain int under the original problem bounds.
 
+### [Dense counting buckets: carry duplicates and charge movement](topics/greedy-and-intervals/snippets/dense-bucket-duplicate-carry.cpp)
+
+Original: [945. Minimum Increment to Make Array Unique](topics/greedy-and-intervals/originals/945__2169112095.cpp#L3-L20) · [submission 2169112095](https://leetcode.com/submissions/detail/2169112095/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. For n elements and M equal to the maximum value, work and bucket space are O(n+M), including initialization and the full scan. This is not a sorting-based implementation. It assumes nonempty nonnegative input and allocates exactly M+n buckets. The processed bucket count is not reset, but that bucket is never revisited; only the propagated count matters. Increment totals remain int under the original limits.
+
 
 ## Collapse choices into counts
 
@@ -497,4 +558,9 @@ Original: [982. Triples with Bitwise AND Equal To Zero](topics/math-and-bits/ori
 
 Complete original countTriplets method. Counts every ordered pair mask, including repeated indexes, and combines each mask frequency with compatible third values. For D distinct masks, expected work is O(n squared+nD), with O(D) hash-map storage. The original int keys, frequencies, result, and bounds remain unchanged.
 
+### [Position divisibility: filter, then accumulate squared values](topics/math-and-bits/snippets/divisor-position-square-sum.cpp)
+
+Original: [2778. Sum of Squares of Special Elements](topics/math-and-bits/originals/2778__2169299910.cpp#L3-L12) · [submission 2169299910](https://leetcode.com/submissions/detail/2169299910/)
+
+Complete original method; class wrapper and judge-provided includes are outside the excerpt. O(n) time and O(1) auxiliary space. This scans every position rather than enumerating divisor pairs. Values are selected by their positions, not by whether the values divide n. Products and the result remain int under the source bounds.
 

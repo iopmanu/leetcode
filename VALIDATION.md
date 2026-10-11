@@ -1,15 +1,18 @@
 # Source-fidelity validation
 
-Snapshot: **10 October 2026**.
+Source-fidelity snapshot: **11 October 2026**. The last complete exposed-history audit remains **10 October 2026**; today’s history check was incremental. See [Coverage](COVERAGE.md) for the separate scopes.
 
 ## What was checked
 
-- **369 original C++ files** preserve the exact UTF-8 bytes of their captured code strings.
-- The originals cover **249 problems**, **11 topic folders**, and **359 distinct code texts**. Equivalent resubmissions and exact duplicates remain separate records.
-- The total original source payload is **356,082 bytes**. No header, wrapper, comment, whitespace, or final newline was added to an original.
+- The **369 prior originals and 69 prior snippets** are byte-for-byte identical to the previously published baseline. Prior source and snippet provenance records and prior tab-separated index rows are preserved.
+- **13 newly captured originals and 11 new literal snippets** were added. The ordinary deduplication resubmission adds provenance without duplicating its explanation; the booking source reuses the existing difference-array explanation.
+
+- **382 original C++ files** preserve the exact UTF-8 bytes of their captured code strings.
+- The originals cover **261 problems**, **11 topic folders**, and **372 distinct code texts**. Equivalent resubmissions and exact duplicates remain separate records.
+- The total original source payload is **363,548 bytes**. No header, wrapper, comment, whitespace, or final newline was added to an original.
 - Each manifest SHA-256 matches its original file and its separately retained captured code record.
 - Each original file is linked from its topic README and the complete source index.
-- **69 key snippets** match literal slices of the original files. Their locations and hashes are recorded in [snippets.json](snippets.json).
+- **80 key snippets** match literal slices of the original files. Their locations and hashes are recorded in [snippets.json](snippets.json).
 - The source-fidelity checker was exercised with temporary altered copies. It rejected changed bytes, a missing source file, an unlisted extra original, and an omitted manifest record.
 
 ## Repeat the checks
