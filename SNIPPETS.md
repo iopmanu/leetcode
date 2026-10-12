@@ -23,7 +23,7 @@ Choose the state you need to maintain, then open its implementation. [Topic tabl
 
 ## What the excerpts preserve
 
-All **80 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
+All **91 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
 
 The snippets are not a newly designed standalone library. `tools/verify_snippets.py` verifies exact equality, not correctness for arbitrary inputs.
 
@@ -104,6 +104,31 @@ Original: [80. Remove Duplicates from Sorted Array II](topics/search-and-sort/or
 Complete original method; class wrapper and judge-provided includes are outside the excerpt. O(n) time and O(1) auxiliary space. Sortedness makes equal values consecutive; nums[k-2] belongs to the already accepted output prefix. The returned length identifies the meaningful prefix; tail values are unspecified. Empty input returns zero.
 
 
+### [Answer search with disjoint eligible-run packing](topics/search-and-sort/snippets/answer-search-disjoint-active-runs.cpp)
+
+Original: [1482. Minimum Number of Days to Make m Bouquets](topics/search-and-sort/originals/1482__2170542125.cpp#L1-L35) · [submission 2170542125](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/submissions/2170542125/)
+
+Full unchanged source. O(n log U) time, U=1e9, O(1) auxiliary space. Predicate resets its run at gaps and after each k-length bouquet. No m*k preliminary guard; infeasible cases return -1 from the upper-bound sentinel.
+
+### [Decorate indexes, sort keys, lower-bound and scatter](topics/search-and-sort/snippets/decorate-sort-boundary-scatter.cpp)
+
+Original: [436. Find Right Interval](topics/search-and-sort/originals/436__2170376810.cpp#L1-L26) · [submission 2170376810](https://leetcode.com/problems/find-right-interval/submissions/2170376810/)
+
+Full unchanged source. O(n log n) time; O(n) additional appended-index storage and output, plus sort stack. Mutates every inner interval by appending an index and reorders the outer vector. Assumes two-field intervals at entry; repeated calls on augmented data are outside that contract.
+
+### [Answer search with additive floor throughput](topics/search-and-sort/snippets/answer-search-floor-throughput.cpp)
+
+Original: [2187. Minimum Time to Complete Trips](topics/search-and-sort/originals/2187__2170532508.cpp#L1-L26) · [submission 2170532508](https://leetcode.com/problems/minimum-time-to-complete-trips/submissions/2170532508/)
+
+Full unchanged source. O(n log U) time for U=totalTrips*min(time), O(1) auxiliary space. Positive bus times; upper bound is a constructive feasible schedule. Long long bounds and trip accumulation are retained exactly; the predicate scans all buses.
+
+### [Pair-parity binary search using mid XOR 1](topics/search-and-sort/snippets/binary-search-pair-parity.cpp)
+
+Original: [540. Single Element in a Sorted Array](topics/search-and-sort/originals/540__2170364195.cpp#L1-L26) · [submission 2170364195](https://leetcode.com/problems/single-element-in-a-sorted-array/submissions/2170364195/)
+
+Full unchanged source, including its original comments. O(log n) time, O(1) auxiliary space. Requires sorted odd-length input, exactly one singleton and all other values twice. mid^1 pairs adjacent even/odd indexes; it is not a generic neighbor operation.
+
+
 ## Maintain window and prefix state
 
 [Algorithms, costs, and tricks](topics/windows-and-prefixes/README.md)
@@ -151,6 +176,13 @@ Original: [1456. Maximum Number of Vowels in a Substring of Given Length](topics
 Full original class, including its fixed vowel-set member. O(n) scan and fixed five-character set storage; the by-value string parameter can add O(n) copying time and space. The vowels member and C++20 contains call remain unchanged. Assumes 1 <= k <= s.size().
 
 
+### [Repair a window by checking only the incoming key](topics/windows-and-prefixes/snippets/window-repair-incoming-frequency.cpp)
+
+Original: [2958. Length of Longest Subarray With at Most K Frequency](topics/windows-and-prefixes/originals/2958__2170182442.cpp#L1-L18) · [submission 2170182442](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/submissions/2170182442/)
+
+Full unchanged source. Expected O(n) time and O(u) auxiliary map space, including retained zero-frequency keys. Assumes k >= 1; the left<right guard would not remove a singleton for k=0. No source changes or added guard.
+
+
 ## Keep undominated or ordered candidates
 
 [Algorithms, costs, and tricks](topics/monotonic-and-heaps/README.md)
@@ -172,6 +204,31 @@ Complete original shortestSubarray method. The original deque direction is inten
 Original: [480. Sliding Window Median](topics/monotonic-and-heaps/originals/480__2150661436.cpp#L7-L69) · [submission 2150661436](https://leetcode.com/problems/sliding-window-median/submissions/2150661436/)
 
 Complete original nested MedianFinder struct, including aliases, members, methods, private label, and indentation. The left multiset is descending; the right multiset is ascending. Original source has vector, set, unordered_map, and utility includes and a medianSlidingWindow wrapper; these remain in the full original source rather than being copied into this contiguous struct slice. Uses contains, so it retains its original C++20 requirement. findMedian assumes at least one stored element. Indices identify active elements and must not be reused while still present. This helper uses ordered multisets rather than priority_queue heaps.
+
+### [Monotone digit deque with a deletion budget](topics/monotonic-and-heaps/snippets/budgeted-monotone-digit-deque.cpp)
+
+Original: [402. Remove K Digits](topics/monotonic-and-heaps/originals/402__2170593075.cpp#L1-L33) · [submission 2170593075](https://leetcode.com/problems/remove-k-digits/submissions/2170593075/)
+
+Full unchanged Solution wrapper. Each digit is pushed once and popped at most once, so time is O(n), auxiliary deque space O(n), plus returned string. The monotone invariant applies only while deletion budget remains. Remaining budget removes the tail; leading zeros are stripped separately. Includes and judge harness are not supplied.
+
+### [Circular next greater: register once, replay candidates](topics/monotonic-and-heaps/snippets/circular-next-greater-two-passes.cpp)
+
+Original: [503. Next Greater Element II](topics/monotonic-and-heaps/originals/503__2170588083.cpp#L1-L25) · [submission 2170588083](https://leetcode.com/problems/next-greater-element-ii/submissions/2170588083/)
+
+Full unchanged latest source. O(n) time and O(n) auxiliary deque space, plus O(n) output. First pass pushes original indexes; second pass only resolves them. Strictly greater comparison leaves equal values pending. The earlier captured accepted variant retains its own early-break condition.
+
+### [Run-length stack with threshold cancellation](topics/monotonic-and-heaps/snippets/run-length-cancellation-stack.cpp)
+
+Original: [1209. Remove All Adjacent Duplicates in String II](topics/monotonic-and-heaps/originals/1209__2170583612.cpp#L1-L25) · [submission 2170583612](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/submissions/2170583612/)
+
+Full unchanged source. O(n) time and O(n) auxiliary space, including run state and output construction. Assumes k >= 2; the new-singleton branch does not check k. Cascades are handled by exposing prior runs after popping.
+
+### [Stack simulation: push, then drain required pops](topics/monotonic-and-heaps/snippets/validate-stack-push-and-drain.cpp)
+
+Original: [946. Validate Stack Sequences](topics/monotonic-and-heaps/originals/946__2170572277.cpp#L1-L16) · [submission 2170572277](https://leetcode.com/problems/validate-stack-sequences/submissions/2170572277/)
+
+Full unchanged source. O(n) time and O(n) auxiliary deque space. Uses equal-length arrays with distinct values; popped[r] has no explicit bounds guard. This is a simulation stack rather than a monotone stack.
+
 
 ## Aggregate and update ranges
 
@@ -563,4 +620,17 @@ Complete original countTriplets method. Counts every ordered pair mask, includin
 Original: [2778. Sum of Squares of Special Elements](topics/math-and-bits/originals/2778__2169299910.cpp#L3-L12) · [submission 2169299910](https://leetcode.com/submissions/detail/2169299910/)
 
 Complete original method; class wrapper and judge-provided includes are outside the excerpt. O(n) time and O(1) auxiliary space. This scans every position rather than enumerating divisor pairs. Values are selected by their positions, not by whether the values divide n. Products and the result remain int under the source bounds.
+
+
+### [Conserved bit counts and convex concentration](topics/math-and-bits/snippets/conserved-bit-count-concentration.cpp)
+
+Original: [2897. Apply Operations on Array to Maximize Sum of Squares](topics/math-and-bits/originals/2897__2170231461.cpp#L1-L31) · [submission 2170231461](https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/submissions/2170231461/)
+
+Full unchanged source. B=30 bit positions, O(B(n+k)) time and O(B) auxiliary space. Greedily consumes one occurrence of every available bit per constructed value. Optimizes the pre-modulo square sum; hardcoded width, types and modulo are preserved.
+
+### [Equal-remainder runs and gcd-rounded valid lengths](topics/math-and-bits/snippets/equal-remainder-run-gcd-length.cpp)
+
+Original: [4076. Longest Resilient Subarray II](topics/math-and-bits/originals/4076__2168355505.cpp#L1-L23) · [submission 2168355505](https://leetcode.com/problems/longest-resilient-subarray-ii/submissions/2168355505/)
+
+Full unchanged source. Positive nonempty input and k>=1. O(n log(k+1)) standard arithmetic-operation time because gcd is recomputed per element; O(1) auxiliary space. Valid lengths are 1 modulo k/gcd(k,r). Raw remainder comparison is retained; signed-value adaptations require care.
 

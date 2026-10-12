@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**39 captured problems · 76 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**50 captured problems · 87 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -30,6 +30,13 @@ Pick the invariant first, then open a representative original. Here `n` is input
 | Sorted triple + closest objective | Record absolute error before moving the pair frontier | O(n²), including sort | O(log n) sort stack; mutates input | [Closest triple](originals/16__2169549656.cpp) |
 | Two-pass value partition | Completed zero prefix, then completed one prefix | O(n) | O(1); mutates input | [Zero-then-one compaction](originals/75__2169541356.cpp) |
 | Output-prefix multiplicity cap | Compare the incoming value with the item two output positions back | O(n) | O(1); mutates input | [Keep at most two](originals/80__2169317874.cpp) |
+| Search over independent arithmetic contributions | Sum split counts, completed trips, or rounded quotients for one threshold | O(n log U); U=1e9 for bag cap, fastestTime*totalTrips for trip time, 5e7 for divisor | O(1) | [Split counts](originals/1760__2170557741.cpp), [trip counts](originals/2187__2170532508.cpp), [rounded sum](originals/1283__2170517396.cpp) |
+| Threshold activation + disjoint run packing | Consecutive eligible positions form non-overlapping fixed-size groups | O(n log U), U=1e9 | O(1) | [Bloom threshold and resettable streak](originals/1482__2170542125.cpp) |
+| Sorted suffix counting for repeated queries | First successful product determines all successful partners | O(p log p+s log p) for p potions and s spells | O(log p) sort stack + O(s) output; sorts potions | [Product boundary to suffix count](originals/2300__2170496273.cpp) |
+| Index decoration + lower bound + output scatter | Sorted lookup keys retain original identities | O(n log n) | O(n) appended fields and output; mutates nested input | [Right-interval index lookup](originals/436__2170376810.cpp) |
+| Pair-parity boundary search | Before the singleton, even/odd adjacent slots form equal pairs | O(log n) | O(1) | [Neighbor index mid XOR 1](originals/540__2170364195.cpp) |
+| Count predicate for h-index | At least h papers have citations >= h | O(n log(n+1)); the source rescans all citations per predicate | O(1), no input mutation | [Captured full-scan predicate](originals/275__2170348113.cpp) |
+| Descending rank crossing | First rank no longer supported by its citation count | O(n log n), including sort | O(log n) sort stack; mutates input | [Sorted h-index crossing](originals/274__2170335393.cpp) |
 
 ## Combinations and tricks
 
@@ -97,6 +104,34 @@ Pick the invariant first, then open a representative original. Here `n` is input
 - **Invariant:** At each pass boundary, all earlier category positions are settled. In the sorted duplicate filter, the accepted prefix remains sorted, so equality with `nums[k-2]` means two copies are already present. The write frontier never overtakes the read position.
 - **Tradeoff / trap:** The color source is two passes, not a single-pass three-way partition. Multiplicity filtering relies on sorted input and defines only the returned prefix; the tail is unspecified. The added [ordinary deduplication submission](originals/26__2169320670.cpp) repeats the existing one-copy idea and adds provenance without another theory section.
 - **Exact code:** [Two-pass color partition](snippets/two-pass-color-compaction.cpp), [output-prefix multiplicity cap](snippets/at-most-two-compaction.cpp).
+
+### Turn a threshold into independent arithmetic contributions
+
+- **Recognize:** Given a candidate cap/time/divisor, each item contributes an exact local count and the contributions add.
+- **Compose:** Binary search plus sum of ceiling/floor formulas: [bag splits](originals/1760__2170557741.cpp) uses ceil(size/cap)-1; [completed trips](originals/2187__2170532508.cpp) uses floor(time/busTime); [divisor budget](originals/1283__2170517396.cpp) uses ceil(value/divisor).
+- **Invariant:** Split counts and rounded sums decrease with the candidate; completed trips increase. Branch direction follows that predicate, rather than the shared binary-search syntax.
+- **Tradeoff / trap:** The trip upper bound is a constructive feasible schedule: the fastest bus performs every trip. The other sources use fixed source-contract bounds. None short-circuits its scan. Numeric promotions differ: the bag numerator is still int before adding 0LL, while trip bounds promote before multiplication.
+
+### Activate positions, then pack disjoint runs greedily
+
+- **Recognize:** A global threshold makes individual positions eligible, but only consecutive groups count.
+- **Compose:** [The bouquet source](originals/1482__2170542125.cpp) binary-searches activation time and scans eligible runs. A gap resets the streak; forming a size-k group resets it again to prevent reuse.
+- **Invariant:** A run of length L can supply exactly floor(L/k) disjoint groups. Taking its earliest complete group leaves maximum room for later groups.
+- **Tradeoff / trap:** The predicate counts every group without early exit. Infeasibility is encoded by the final search boundary exceeding 1e9, not a separate m*k guard. Bounds are specific to the source problem.
+
+### Preserve identity while turning a boundary into an answer
+
+- **Recognize:** Many independent queries target the same sorted key set, and the result needs either a count or an original index.
+- **Compose:** [Product-pair queries](originals/2300__2170496273.cpp) sort partners once, find the first successful product, and count the suffix. [Right-interval lookup](originals/436__2170376810.cpp) attaches original indexes, sorts by start, then lower-bounds each end.
+- **Invariant:** Positive factors preserve product order; an increasing start-key array preserves the earliest feasible interval boundary. Attached indexes translate sorted positions back to output identities.
+- **Tradeoff / trap:** Both sources mutate input. The interval code appends a third field to every inner vector, costing O(n) additional storage beyond sorting, and is not designed for repeated calls on already augmented input. The product source widens multiplication using 1LL.
+
+### Encode a structural boundary in index parity
+
+- **Recognize:** Sorted duplicates occur exactly twice except for one singleton.
+- **Compose:** [The original search](originals/540__2170364195.cpp) compares nums[mid] with nums[mid ^ 1]. XOR toggles the least-significant bit, selecting the other slot of an even/odd pair.
+- **Invariant:** Before the singleton, pairs align at even starts; after it, alignment shifts. A matching tested pair places the singleton to the right.
+- **Tradeoff / trap:** This is a structural assumption, not a generic duplicate search. The odd-length, exactly-one-singleton contract and left < right guard keep the paired lookup in range.
 
 ## Problem and source appendix
 
@@ -567,3 +602,91 @@ Sorts nums and invokes a custom upperBound for each value, then counts those wit
 **Captured variants:** 1 accepted C++ submission retained; distinctions are described above.
 
 - [Original 2012345290](originals/3759__2012345290.cpp) · [LeetCode submission](https://leetcode.com/problems/count-elements-with-at-least-k-greater-values/submissions/2012345290/)
+
+### 1552. Magnetic Force Between Two Balls
+
+[Problem](https://leetcode.com/problems/magnetic-force-between-two-balls/)
+
+Existing answer-search plus greedy-spacing idea. This variant sorts positions, counts the first ball once, and scans from index one; this avoids the older zero-distance double-count quirk. Bounds are 1 through maximum position. O(n log n + n log M) time for M=max(position), O(log n) sort stack; input is mutated.
+
+- [Original 2170569390](originals/1552__2170569390.cpp) · [LeetCode submission](https://leetcode.com/problems/magnetic-force-between-two-balls/submissions/2170569390/)
+
+### 1760. Minimum Limit of Balls in a Bag
+
+[Problem](https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/)
+
+Binary search over cap 1..1e9. A bag contributes ceil(bag/cap)-1 required splits. O(n log U) time, O(1) auxiliary space, U=1e9. The operation accumulator is long long; bag+toCheck-1 is still evaluated as int before 0LL is added. Original bounds keep that numerator within int.
+
+- [Original 2170557741](originals/1760__2170557741.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/submissions/2170557741/)
+
+### 1482. Minimum Number of Days to Make m Bouquets
+
+[Problem](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/)
+
+Binary search days 1..1e9 and greedily count disjoint length-k runs of flowers already bloomed. Reset streak at an unavailable flower and after forming a bouquet. O(n log U), U=1e9, and O(1) auxiliary space. No preliminary m*k check; a never-feasible search returns -1 through the upper-bound sentinel.
+
+- [Original 2170542125](originals/1482__2170542125.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/submissions/2170542125/)
+
+### 2187. Minimum Time to Complete Trips
+
+[Problem](https://leetcode.com/problems/minimum-time-to-complete-trips/)
+
+Minimum feasible time via sum of floor(time/busTime). The upper bound totalTrips*min(time) is feasible because one fastest bus can perform all trips. O(n log U), U=totalTrips*min(time), O(1) auxiliary space. All time bounds and accumulated trip counts are long long; input times are positive.
+
+- [Original 2170532508](originals/2187__2170532508.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-time-to-complete-trips/submissions/2170532508/)
+
+### 1283. Find the Smallest Divisor Given a Threshold
+
+[Problem](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/)
+
+Lower-bound search on a nonincreasing sum of positive integer ceiling quotients. Fixed upper bound 5*1e7, O(n log U) time and O(1) space. Source keeps int numerator/sum and its source constraints; widening only an outer expression would not widen inner int arithmetic.
+
+- [Original 2170517396](originals/1283__2170517396.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/submissions/2170517396/)
+
+### 2300. Successful Pairs of Spells and Potions
+
+[Problem](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/)
+
+Sort potions once, binary-search the first successful product for each spell, then count the suffix. O(p log p+s log p) time, O(log p) sort stack plus O(s) output. Mutates potions. Explicit 1LL multiplication prevents int product overflow.
+
+- [Original 2170496273](originals/2300__2170496273.cpp) · [LeetCode submission](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/submissions/2170496273/)
+
+### 436. Find Right Interval
+
+[Problem](https://leetcode.com/problems/find-right-interval/)
+
+Append original index to each interval, sort by start, then lower-bound each end and scatter the found original index back. O(n log n) time, O(n) extra appended-index storage plus output and O(log n) sort stack. Mutates both interval order and each interval shape; source assumes exactly two fields at entry.
+
+- [Original 2170376810](originals/436__2170376810.cpp) · [LeetCode submission](https://leetcode.com/problems/find-right-interval/submissions/2170376810/)
+
+### 540. Single Element in a Sorted Array
+
+[Problem](https://leetcode.com/problems/single-element-in-a-sorted-array/)
+
+Binary search the boundary where even/odd pairing breaks. mid^1 selects the paired neighbor without a parity branch. O(log n) time and O(1) auxiliary space. Relies on sorted odd-length input with exactly one singleton and all other values appearing twice. Original comments, including incomplete comment text, are unchanged.
+
+- [Original 2170364195](originals/540__2170364195.cpp) · [LeetCode submission](https://leetcode.com/problems/single-element-in-a-sorted-array/submissions/2170364195/)
+
+### 275. H-Index II
+
+[Problem](https://leetcode.com/problems/h-index-ii/)
+
+The captured H-Index II source does NOT exploit sortedness for logarithmic total time. It binary-searches h in 0..n but scans all n citations in each predicate. Actual time O(n log(n+1)), auxiliary space O(1), and no input mutation.
+
+- [Original 2170348113](originals/275__2170348113.cpp) · [LeetCode submission](https://leetcode.com/problems/h-index-ii/submissions/2170348113/)
+
+### 274. H-Index
+
+[Problem](https://leetcode.com/problems/h-index/)
+
+Descending sort followed by the first index i with citations[i] <= i. Actual time O(n log n), O(log n) sort stack, and input mutation. Existing sorting/rank boundary concept; retained as provenance.
+
+- [Original 2170335393](originals/274__2170335393.cpp) · [LeetCode submission](https://leetcode.com/problems/h-index/submissions/2170335393/)
+
+### 34. Find First and Last Position of Element in Sorted Array
+
+[Problem](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
+Two boundary searches: first value >= target, then first value > target minus one. Each candidate is checked for equality and missing values return -1. O(log n) time, O(1) auxiliary space and constant-size output. Original empty/singleton fast paths and trailing newline remain unchanged.
+
+- [Original 2170313117](originals/34__2170313117.cpp) · [LeetCode submission](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/submissions/2170313117/)

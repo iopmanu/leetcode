@@ -23,8 +23,8 @@ def check(root, capture_json=None):
         "trees-and-lists", "dp-and-backtracking", "windows-and-prefixes",
         "greedy-and-intervals", "math-and-bits",
     }
-    if len(records) != 382:
-        errors.append(f"expected 382 submission records; found {len(records)}")
+    if len(records) != 405:
+        errors.append(f"expected 405 submission records; found {len(records)}")
     ids, problems, topics, hashes, paths = set(), set(), set(), set(), set()
     by_id = {}
     source_index = (root / "SOURCES.md").read_text(encoding="utf-8") if (root / "SOURCES.md").is_file() else ""
@@ -77,7 +77,7 @@ def check(root, capture_json=None):
     actual_paths = {p.relative_to(root).as_posix() for p in (root / "topics").glob("*/originals/*") if p.is_file()}
     for path in sorted(actual_paths - paths):
         errors.append(f"unlisted original: {path}")
-    for count, expected, name in [(len(problems), 261, "problems"), (len(hashes), 372, "distinct source hashes")]:
+    for count, expected, name in [(len(problems), 283, "problems"), (len(hashes), 395, "distinct source hashes")]:
         if count != expected:
             errors.append(f"expected {expected} {name}; found {count}")
     if topics != expected_topics:
@@ -87,7 +87,7 @@ def check(root, capture_json=None):
         try:
             capture = json.loads(capture_json.read_text(encoding="utf-8"))
             captured = {r["submission_id"]: r for r in capture}
-            if len(capture) != 382 or len(captured) != 382 or set(captured) != ids:
+            if len(capture) != 405 or len(captured) != 405 or set(captured) != ids:
                 errors.append("capture and manifest source IDs/counts differ")
             for sid in ids & set(captured):
                 record, original = by_id[sid], captured[sid]
@@ -115,7 +115,7 @@ def main():
         for error in errors:
             print(f"FAIL: {error}")
         return 1
-    print(f"PASS: 382 originals, 261 problems, 372 distinct code texts, 11 topics, {total_bytes:,} unchanged source bytes")
+    print(f"PASS: 405 originals, 283 problems, 395 distinct code texts, 11 topics, {total_bytes:,} unchanged source bytes")
     print("PASS: every original is linked from its topic and the complete source index")
     if args.capture_json:
         print("PASS: all original files also match the supplied captured code strings byte for byte")

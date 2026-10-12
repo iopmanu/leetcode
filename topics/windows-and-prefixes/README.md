@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**21 captured problems · 25 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**24 captured problems · 28 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -25,6 +25,8 @@ Choose a window only when moving its boundaries has the monotonicity the proof n
 | Difference array + prefix reconstruction | Two endpoint edits represent each range's available coverage | O(n+q) | O(n) | [Range decrement capacity](originals/3355__2119740763.cpp), [weighted booking additions](originals/1109__2169282143.cpp) |
 | Positive-product shrinking window | Count every valid suffix ending at the current right edge | O(n) | O(1) | [Product threshold](originals/713__2169623873.cpp) · [exact excerpt](snippets/positive-product-window.cpp) |
 | Fixed-length predicate count / distinct-value sum | Update outgoing/incoming contributions; map size certifies distinctness | Vowels O(n); distinct sum expected O(n) | Vowels O(1) set + O(n) by-value input copy; distinct sum O(k) map | [Vowel count](originals/1456__2169572072.cpp), [distinct sum](originals/2461__2169620244.cpp) |
+| Incoming-key frequency repair | Only the newly added key can violate its count cap | Expected O(n) | O(u) retained map keys, including zero counts | [At-most-k frequency window](originals/2958__2170182442.cpp) |
+| Dense counts + unique-window sum | Positive values make the maximal valid suffix optimal at each right endpoint | O(n+D), D=1,000,000, including initialization | O(D) | [Dense unique-sum window](originals/1695__2170086755.cpp) |
 
 ## Combinations and tricks
 
@@ -99,6 +101,13 @@ Choose a window only when moving its boundaries has the monotonicity the proof n
 - **Invariant:** Both summaries describe exactly the current k elements. A length-k window is all-distinct precisely when it contains k live keys. Adding and removing the same value correctly leaves its frequency unchanged.
 - **Tradeoff / trap:** Both implementations initialize the first full window and require `1 <= k <= n`. Distinct sums start their best at zero under positive-value constraints, and their subtraction occurs in `int` before reaching the `long long` accumulator. The vowel source takes its string by value and retains C++20 `contains`.
 - **Exact code:** [Sum + distinctness certificate](snippets/fixed-window-distinct-sum.cpp), [incoming/outgoing predicate count](snippets/fixed-window-vowel-count.cpp).
+
+### Repair only the constraint changed by the incoming value
+
+- **Recognize:** A valid window becomes invalid only because one new value was appended.
+- **Compose:** [Frequency-cap tracking](originals/2958__2170182442.cpp) checks only the incoming key while removing left values. [Unique-sum tracking](originals/1695__2170086755.cpp) uses the same repair but updates a running sum and dense counts.
+- **Invariant:** Other keys were valid before the append, and removal cannot increase their counts. Checking the changed key is sufficient to restore every frequency constraint.
+- **Tradeoff / trap:** The hash source retains zero-count keys, so memory follows all distinct input values, not only current-window values; k >= 1 is required by its left<right guard. The sum source assumes positive values: the longest valid suffix ending here has maximum sum. It allocates and initializes exactly one million counters, so its literal time and storage bounds include that domain size.
 
 ## Problem and source appendix
 
@@ -334,3 +343,27 @@ Precompute suffix minima, scan prefix maximum, return first boundary where their
 **Captured variants:** Same structural approach as 3903.
 
 - [Original 2131704501](originals/3904__2131704501.cpp) · [LeetCode submission](https://leetcode.com/problems/smallest-stable-index-ii/submissions/2131704501/)
+
+### 930. Binary Subarrays With Sum
+
+[Problem](https://leetcode.com/problems/binary-subarrays-with-sum/)
+
+Existing prefix-sum frequency idea. Seed the empty prefix with frequency one, query current-goal before recording current. Expected O(n) time, O(n) map space; operator[] inserts missing complement keys with zero count. Preserves original int count and sum.
+
+- [Original 2170190505](originals/930__2170190505.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-subarrays-with-sum/submissions/2170190505/)
+
+### 2958. Length of Longest Subarray With at Most K Frequency
+
+[Problem](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/)
+
+Frequency-limited sliding window. Only the newly incremented value can violate the prior valid window, so shrink while its frequency exceeds k. Expected O(n) time, O(u) retained map keys for u input-distinct values; zero counts are not erased. Original left<right guard relies on k>=1.
+
+- [Original 2170182442](originals/2958__2170182442.cpp) · [LeetCode submission](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/submissions/2170182442/)
+
+### 1695. Maximum Erasure Value
+
+[Problem](https://leetcode.com/problems/maximum-erasure-value/)
+
+Positive unique-value window with running sum and vector<int>(1e6,0) counts. Expected-free array access yields O(n+D) total time and O(D) auxiliary space, D=1,000,000, including initialization. Values must index the allocated domain and be positive for the maximal-valid-window sum argument.
+
+- [Original 2170086755](originals/1695__2170086755.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-erasure-value/submissions/2170086755/)

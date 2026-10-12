@@ -3935,5 +3935,235 @@
     "topic": "dp-and-backtracking",
     "problem_id": "17",
     "problem_url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/"
+  },
+  {
+    "source_id": "2170593075",
+    "problem": "402. Remove K Digits",
+    "url": "https://leetcode.com/problems/remove-k-digits/submissions/2170593075/",
+    "sha256": "a0d39e7918e6d43a382bbf3ffd49e77da466a639cb9acb84de95364f68b5f720",
+    "path": "topics/monotonic-and-heaps/originals/402__2170593075.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "402",
+    "problem_url": "https://leetcode.com/problems/remove-k-digits/"
+  },
+  {
+    "source_id": "2170588083",
+    "problem": "503. Next Greater Element II",
+    "url": "https://leetcode.com/problems/next-greater-element-ii/submissions/2170588083/",
+    "sha256": "2bc0e99777e9d39c5f222bc70dd2a2803a5e284b9670fda424886b5cbc916c21",
+    "path": "topics/monotonic-and-heaps/originals/503__2170588083.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "503",
+    "problem_url": "https://leetcode.com/problems/next-greater-element-ii/"
+  },
+  {
+    "source_id": "2170587971",
+    "problem": "503. Next Greater Element II",
+    "url": "https://leetcode.com/problems/next-greater-element-ii/submissions/2170587971/",
+    "sha256": "0190015dc37be4375e557c8016dddbf816d700da4c1cf88440ca8be8d66e19d4",
+    "path": "topics/monotonic-and-heaps/originals/503__2170587971.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "503",
+    "problem_url": "https://leetcode.com/problems/next-greater-element-ii/"
+  },
+  {
+    "source_id": "2170583612",
+    "problem": "1209. Remove All Adjacent Duplicates in String II",
+    "url": "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/submissions/2170583612/",
+    "sha256": "6b6c8ffbcbc279e0d57e24a982c80084a662ecff56c53d18a4b3905b7834d30e",
+    "path": "topics/monotonic-and-heaps/originals/1209__2170583612.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "1209",
+    "problem_url": "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/"
+  },
+  {
+    "source_id": "2170572277",
+    "problem": "946. Validate Stack Sequences",
+    "url": "https://leetcode.com/problems/validate-stack-sequences/submissions/2170572277/",
+    "sha256": "e00ceb7a63252d13b43450d43591c58ff33e9b242b571787d733c2491ff57a44",
+    "path": "topics/monotonic-and-heaps/originals/946__2170572277.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "946",
+    "problem_url": "https://leetcode.com/problems/validate-stack-sequences/"
+  },
+  {
+    "source_id": "2170569390",
+    "problem": "1552. Magnetic Force Between Two Balls",
+    "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/submissions/2170569390/",
+    "sha256": "bd8ba5bfa14512d8739fc08c7eeda1f357ce644a6017d71c4155b8f7cf58e8d9",
+    "path": "topics/search-and-sort/originals/1552__2170569390.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "1552",
+    "problem_url": "https://leetcode.com/problems/magnetic-force-between-two-balls/"
+  },
+  {
+    "source_id": "2170557741",
+    "problem": "1760. Minimum Limit of Balls in a Bag",
+    "url": "https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/submissions/2170557741/",
+    "sha256": "e05de2275189fc75bf8eb7b649ef811eaa96462afa376b64f494ebb5f22fff9a",
+    "path": "topics/search-and-sort/originals/1760__2170557741.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "1760",
+    "problem_url": "https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/"
+  },
+  {
+    "source_id": "2170542125",
+    "problem": "1482. Minimum Number of Days to Make m Bouquets",
+    "url": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/submissions/2170542125/",
+    "sha256": "97f935a3ce02bd0eef4a391f536d5abdd186a0a1a119f80202279439a8306441",
+    "path": "topics/search-and-sort/originals/1482__2170542125.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "1482",
+    "problem_url": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/"
+  },
+  {
+    "source_id": "2170532508",
+    "problem": "2187. Minimum Time to Complete Trips",
+    "url": "https://leetcode.com/problems/minimum-time-to-complete-trips/submissions/2170532508/",
+    "sha256": "a5ba9ea05b6fe02dc7f1842e067fcb689b7e655fa0ed2c73ea034d25f3c0bf6f",
+    "path": "topics/search-and-sort/originals/2187__2170532508.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "2187",
+    "problem_url": "https://leetcode.com/problems/minimum-time-to-complete-trips/"
+  },
+  {
+    "source_id": "2170517396",
+    "problem": "1283. Find the Smallest Divisor Given a Threshold",
+    "url": "https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/submissions/2170517396/",
+    "sha256": "0d5d747ef9fc8ef1a401258ee8dff72d7e2b6c8f2888a98e7b3584dca7aa56a9",
+    "path": "topics/search-and-sort/originals/1283__2170517396.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "1283",
+    "problem_url": "https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/"
+  },
+  {
+    "source_id": "2170496273",
+    "problem": "2300. Successful Pairs of Spells and Potions",
+    "url": "https://leetcode.com/problems/successful-pairs-of-spells-and-potions/submissions/2170496273/",
+    "sha256": "31dc32598dce392fb9da683e1397fe3e1c4c0d781b0f55e801647488ebce751d",
+    "path": "topics/search-and-sort/originals/2300__2170496273.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "2300",
+    "problem_url": "https://leetcode.com/problems/successful-pairs-of-spells-and-potions/"
+  },
+  {
+    "source_id": "2170376810",
+    "problem": "436. Find Right Interval",
+    "url": "https://leetcode.com/problems/find-right-interval/submissions/2170376810/",
+    "sha256": "91be119c6d263b286e6465f335bf5405791aec727498d665cdb1c926bb80fe28",
+    "path": "topics/search-and-sort/originals/436__2170376810.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "436",
+    "problem_url": "https://leetcode.com/problems/find-right-interval/"
+  },
+  {
+    "source_id": "2170364195",
+    "problem": "540. Single Element in a Sorted Array",
+    "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/submissions/2170364195/",
+    "sha256": "25092881318ad4721a0c782614c90e9374f5ba0aeb0527dcc484def7aca10ae4",
+    "path": "topics/search-and-sort/originals/540__2170364195.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "540",
+    "problem_url": "https://leetcode.com/problems/single-element-in-a-sorted-array/"
+  },
+  {
+    "source_id": "2170348113",
+    "problem": "275. H-Index II",
+    "url": "https://leetcode.com/problems/h-index-ii/submissions/2170348113/",
+    "sha256": "6785bb38f8756c89f977e372dee7c84ebfb185cfe38f3829d8b5d209e9c0016b",
+    "path": "topics/search-and-sort/originals/275__2170348113.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "275",
+    "problem_url": "https://leetcode.com/problems/h-index-ii/"
+  },
+  {
+    "source_id": "2170335393",
+    "problem": "274. H-Index",
+    "url": "https://leetcode.com/problems/h-index/submissions/2170335393/",
+    "sha256": "45eed41246842d297acf92fbdabd6821ba17ced178e32d8e4871b302618ed56b",
+    "path": "topics/search-and-sort/originals/274__2170335393.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "274",
+    "problem_url": "https://leetcode.com/problems/h-index/"
+  },
+  {
+    "source_id": "2170313117",
+    "problem": "34. Find First and Last Position of Element in Sorted Array",
+    "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/submissions/2170313117/",
+    "sha256": "b8142b9b88f7b14b76dad4ab947a67809bfb81f55b49872bff5329bd884634f0",
+    "path": "topics/search-and-sort/originals/34__2170313117.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "34",
+    "problem_url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/"
+  },
+  {
+    "source_id": "2170231461",
+    "problem": "2897. Apply Operations on Array to Maximize Sum of Squares",
+    "url": "https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/submissions/2170231461/",
+    "sha256": "1b3097ae7256d4b06d5b9f5b5522800525110781faa512111e34ea9aa365b0e7",
+    "path": "topics/math-and-bits/originals/2897__2170231461.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "2897",
+    "problem_url": "https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/"
+  },
+  {
+    "source_id": "2170190505",
+    "problem": "930. Binary Subarrays With Sum",
+    "url": "https://leetcode.com/problems/binary-subarrays-with-sum/submissions/2170190505/",
+    "sha256": "ae8f3392e5187ba94966dc05196dedb25b56ddd64a3ea9051473286a70a4ebaf",
+    "path": "topics/windows-and-prefixes/originals/930__2170190505.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "930",
+    "problem_url": "https://leetcode.com/problems/binary-subarrays-with-sum/"
+  },
+  {
+    "source_id": "2170182442",
+    "problem": "2958. Length of Longest Subarray With at Most K Frequency",
+    "url": "https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/submissions/2170182442/",
+    "sha256": "2918f4a520360af23449e97bac8daf44bff653922c5a7bc51dd952717417b146",
+    "path": "topics/windows-and-prefixes/originals/2958__2170182442.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "2958",
+    "problem_url": "https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/"
+  },
+  {
+    "source_id": "2170086755",
+    "problem": "1695. Maximum Erasure Value",
+    "url": "https://leetcode.com/problems/maximum-erasure-value/submissions/2170086755/",
+    "sha256": "0a484f6fa963c81d595b66ff4611bd8a88eb19b665c2d3b53ac14d9425136fa4",
+    "path": "topics/windows-and-prefixes/originals/1695__2170086755.cpp",
+    "topic": "windows-and-prefixes",
+    "problem_id": "1695",
+    "problem_url": "https://leetcode.com/problems/maximum-erasure-value/"
+  },
+  {
+    "source_id": "2168355505",
+    "problem": "4076. Longest Resilient Subarray II",
+    "url": "https://leetcode.com/problems/longest-resilient-subarray-ii/submissions/2168355505/",
+    "sha256": "87e3ca080c25dfe1ad047110faef7a7faa54b0d095dc5b6005443eb13d43aeda",
+    "path": "topics/math-and-bits/originals/4076__2168355505.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "4076",
+    "problem_url": "https://leetcode.com/problems/longest-resilient-subarray-ii/"
+  },
+  {
+    "source_id": "2168348655",
+    "problem": "4075. Longest Resilient Subarray I",
+    "url": "https://leetcode.com/problems/longest-resilient-subarray-i/submissions/2168348655/",
+    "sha256": "209b55323f6aadb37076e8dd3eda5394c35e193dcae7cfeed3fdf09b66878436",
+    "path": "topics/math-and-bits/originals/4075__2168348655.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "4075",
+    "problem_url": "https://leetcode.com/problems/longest-resilient-subarray-i/"
+  },
+  {
+    "source_id": "2168271160",
+    "problem": "4074. Maximum Product Pair With Target Sum",
+    "url": "https://leetcode.com/problems/maximum-product-pair-with-target-sum/submissions/2168271160/",
+    "sha256": "5f7fca2c64659129275797fb55f9eb81087c24710500280729e66ade7c9d6a5a",
+    "path": "topics/math-and-bits/originals/4074__2168271160.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "4074",
+    "problem_url": "https://leetcode.com/problems/maximum-product-pair-with-target-sum/"
   }
 ]

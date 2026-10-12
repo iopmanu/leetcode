@@ -23,6 +23,9 @@
 | XOR/parity summary | O(n) for total XOR; O(1) for direct parity | O(1) | [XOR game](originals/810__2166697803.cpp), [divisor parity](originals/1025__792418394.cpp) |
 | Threshold contributions instead of range enumeration | O(1), five explicit thresholds | O(1) | [Implementation](originals/3871__2136687887.cpp) |
 | Position-divisibility filter + square accumulation | O(n), scanning all positions | O(1) | [Exact excerpt](snippets/divisor-position-square-sum.cpp) · [full source](originals/2778__2169299910.cpp) |
+| Conserved bit counts + convex concentration: AND/OR redistribution preserves each bit multiplicity | O(B(n+k)), B=30 | O(B), B=30 | [Greedy bit-layer construction](originals/2897__2170231461.cpp) |
+| Equal-remainder runs + gcd progression: Valid lengths satisfy (length-1)*r divisible by k | Gcd version O(n log(k+1)); retained backward-trial version O(n²) worst case | O(1) | [Gcd length rounding](originals/4076__2168355505.cpp), [backward trials](originals/4075__2168348655.cpp) |
+| Complement lookup + candidate objective: Prior occurrences provide distinct indexes; retain valid pairs then rank by product | Expected O(n) | O(n) map and candidate pairs | [Unequal-value product pairs](originals/4074__2168271160.cpp) |
 
 ## Combinations and tricks
 
@@ -84,6 +87,20 @@ Every composition below is present in a linked original. The reusable part is th
 - **Invariant:** The partial result contains exactly the squares at processed positions dividing the total length. Convert zero-based `i` to `i+1` before testing; the array value itself is not the divisor.
 - **Tradeoff / trap:** This implementation checks all n positions, not only divisor pairs, so it is O(n) time and O(1) space. Its multiplication and accumulator stay `int` under the original constraints.
 - **Exact code:** [Literal filtered-accumulation method](snippets/divisor-position-square-sum.cpp).
+
+### Replace operations with conserved counts, then concentrate value
+
+- **Recognize:** Pairwise AND/OR operations can move bits between numbers, while the objective rewards large numbers more than evenly distributed values.
+- **Compose:** [The original source](originals/2897__2170231461.cpp) counts each bit, then repeatedly constructs one number using every bit with remaining inventory. The resulting numbers are nested bit layers.
+- **Invariant:** For each bit, AND/OR preserves the total number of set occurrences. Concentrating a transferable bit on a larger value increases the unmodded sum of squares: moving value d from b to a changes the sum by 2d(a-b)+2d² when a >= b. Repeated concentration aligns high bits with other high bits.
+- **Tradeoff / trap:** Optimization is over the true sum, before modulo; modulo only limits accumulated output. The source hardcodes 30 bit positions. It counts all n inputs even though it constructs only k output values, uses long long for the constructed value and square, and retains int bit tests within the source bounds.
+
+### Replace a backward length search with a gcd progression
+
+- **Recognize:** Deleting any single element must leave a sum divisible by k. Subtracting two deletion conditions shows all elements have the same remainder r. A length-L segment then requires (L-1)r divisible by k.
+- **Compose:** Scan maximal equal-remainder runs, then use [the gcd source](originals/4076__2168355505.cpp) to find the largest feasible length within the current run. With d=k/gcd(k,r), valid lengths are 1,1+d,1+2d,..., so round run length L down to L-(L-1)%d.
+- **Invariant:** Every element inside a run has the same remainder r; a subarray's length determines its deletion-sum divisibility. Once a different remainder appears, reset the run start. For r=0, d=1 and every run length works.
+- **Tradeoff / trap:** The [older original](originals/4075__2168348655.cpp) tries candidate lengths backward and is quadratic in the worst case. The gcd variant removes that inner trial loop, but still recomputes gcd at every position: O(n log(k+1)), not constant-cost-gcd-free O(n). Both use raw C++ remainder for run grouping; their positive-input contract matters if adapting to signed values. Empty input is outside the source contract (result starts at one).
 
 ## Problem and source appendix
 
@@ -368,3 +385,35 @@ Scan minimum odd and even; return all-even or minimum odd below minimum even.
 
 - [Original 2131978781](originals/3876__2131978781.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131978781/)
 - [Original 2131975505](originals/3876__2131975505.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131975505/)
+
+### 2897. Apply Operations on Array to Maximize Sum of Squares
+
+[Problem](https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/)
+
+Count occurrences of each of the 30 bit positions, then construct k numbers by taking every available bit each round. Maximizes the convex sum of squares by concentrating conserved bits. O(30(n+k)) time, O(30) auxiliary storage; does not mutate input. Hardcoded bit width and modulo are retained.
+
+- [Original 2170231461](originals/2897__2170231461.cpp) · [LeetCode submission](https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/submissions/2170231461/)
+
+### 4076. Longest Resilient Subarray II
+
+[Problem](https://leetcode.com/problems/longest-resilient-subarray-ii/)
+
+Scan maximal equal-remainder runs. For run length L and remainder r, valid lengths are 1 modulo d=k/gcd(k,r); take L-(L-1)%d. O(n log(k+1)) standard arithmetic-operation time because gcd is recomputed at every endpoint, O(1) auxiliary space. Inputs and k are positive; r=0 yields d=1.
+
+- [Original 2168355505](originals/4076__2168355505.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-resilient-subarray-ii/submissions/2168355505/)
+
+### 4075. Longest Resilient Subarray I
+
+[Problem](https://leetcode.com/problems/longest-resilient-subarray-i/)
+
+Scan equal-remainder runs and trial lengths backward until (length-1)*remainder is divisible by k or no improvement remains. O(n²) worst-case time and O(1) auxiliary space. A long run with k/gcd(k,r)>n keeps result=1 and triggers quadratic unsuccessful trials. Positive nonempty input and k>=1 are source assumptions; original normalized-remainder expression and trailing newline are retained.
+
+- [Original 2168348655](originals/4075__2168348655.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-resilient-subarray-i/submissions/2168348655/)
+
+### 4074. Maximum Product Pair With Target Sum
+
+[Problem](https://leetcode.com/problems/maximum-product-pair-with-target-sum/)
+
+Complement hash lookup records prior indexes and saves every unequal-value candidate pair, larger value first. A later max_element compares products. Expected O(n) time, O(n) stored candidates and map; no input mutation. Equal values are intentionally forbidden by the problem. Any optimum is allowed, so retaining the latest prior index is sufficient. Products remain int and are safe under the original -100..100 value bounds, including negative products.
+
+- [Original 2168271160](originals/4074__2168271160.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-product-pair-with-target-sum/submissions/2168271160/)

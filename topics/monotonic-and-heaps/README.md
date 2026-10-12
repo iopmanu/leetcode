@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**18 captured problems · 37 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**22 captured problems · 42 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -25,6 +25,10 @@ Use a monotonic structure when a new item permanently dominates or resolves old 
 | Sorted positions + monotonic arrival times | Dominated arrival times collapse into the fleet ahead | O(n log n), including sort | O(n) pair copy + stack | [Fleet aggregation](originals/853__2146549976.cpp) |
 | Two boundary maxima / basin stack | Settle water at a limiting boundary, or close a bounded basin | O(n) in either variant | O(1) two pointers; O(n) stack | [Boundary maxima](originals/42__2147811654.cpp), [basin stack](originals/42__2131872743.cpp) |
 | Greedy subsequence + suffix merge | Spend a discard budget, then merge by entire remaining suffix order | For s splits and input lengths m,n: O(s(m+n+k²)) worst case | O(m+n+k) temporary sequences | [Maximum-number composition](originals/321__2154885660.cpp) |
+| Budgeted monotone digit deletion | Earlier smaller digits dominate larger suffix digits | O(n), each digit enters and leaves the deque at most once | O(n) deque, plus returned string | [Original digit deque](originals/402__2170593075.cpp) |
+| Circular next-greater scan | A non-increasing stack contains unresolved original indexes | O(n), two scans and at most n pushes/pops | O(n) pending indexes and O(n) output | [Two-pass circular resolution](originals/503__2170588083.cpp) |
+| Run-length reduction stack | Adjacent surviving equal characters occupy one counted run | O(n), including reconstruction | O(n) runs and output | [Character/count cancellation](originals/1209__2170583612.cpp) |
+| Greedy stack-sequence simulation | Consume every currently forced matching pop | O(n), at most n pushes/pops | O(n) stack | [Push then drain matching pops](originals/946__2170572277.cpp) |
 
 ## Combinations and tricks
 
@@ -83,6 +87,34 @@ Use a monotonic structure when a new item permanently dominates or resolves old 
 - **Compose:** Frequency map + max-heap + a temporary batch in [the scheduler source](originals/621__2144706913.cpp).
 - **Invariant:** Pop each chosen type at most once per batch and reinsert its decremented count only after the batch. A nonfinal batch accounts for the entire cooldown length; the last contributes only its actual task count.
 - **Tradeoff / trap:** The source does not iterate once per idle slot, so large cooldown values do not add that many heap operations. Its O(n log(a+1)) work becomes O(n) for the fixed 26-letter task alphabet.
+
+### Combine a monotone frontier with a deletion budget
+
+- **Recognize:** Minimize a fixed-length subsequence under lexicographic order while preserving original order.
+- **Compose:** [The original digit deque](originals/402__2170593075.cpp) removes a larger back digit only while deletion budget remains. Once the input ends, unused deletions remove the largest-position suffix; leading-zero removal is a separate representation step.
+- **Invariant:** With budget available, the next smaller digit improves the earliest differing position. Once the budget is exhausted, surviving digits are appended unchanged; the entire final deque need not remain monotone.
+- **Tradeoff / trap:** The source uses a deque so suffix deletions and leading-zero cleanup are both constant-time per removal. Numeric formatting is specific to this problem: leading-zero removal must not be copied into a general fixed-length subsequence template.
+
+### Replay candidates without registering them twice
+
+- **Recognize:** A next-greater relation wraps at the end of an array.
+- **Compose:** [The two-pass source](originals/503__2170588083.cpp) combines a non-increasing stack of original indexes with a second pass over values. Register indexes only during the first pass.
+- **Invariant:** Each pending index is assigned at its first strictly larger candidate in circular order; it leaves the stack once. No duplicate index bookkeeping is needed during replay.
+- **Tradeoff / trap:** Equal values do not satisfy the strict relation. Unresolved entries retain -1. The newest variant always makes the second scan; the older captured variant has an additional early-break condition.
+
+### Compress reversible state into run counts
+
+- **Recognize:** Equal adjacent values cancel only when a threshold count is reached, and cancellation may expose an earlier group.
+- **Compose:** [The counted-run deque](originals/1209__2170583612.cpp) stores character/count pairs. An equal input increments the top count; reaching k removes the run.
+- **Invariant:** The stack is the reduced prefix; deleting its last run makes the prior reduced boundary available for future input.
+- **Tradeoff / trap:** The code uses a deque as a stack and reconstructs the string afterwards. It relies on k >= 2: the newly created singleton branch continues without checking the threshold.
+
+### Drain all currently enabled transitions
+
+- **Recognize:** A prescribed output order must be realizable using one stack and an input stream.
+- **Compose:** [The original simulation](originals/946__2170572277.cpp) pushes one value, then drains every top matching the next requested output.
+- **Invariant:** Popping a matching top immediately cannot obstruct any required earlier output; delaying it adds no useful choice. At termination an empty stack certifies the target under equal-length input constraints.
+- **Tradeoff / trap:** This is an ordinary simulation stack, not a monotone stack. The unguarded popped[r] access uses the original equal-length/distinct-value contract.
 
 ## Problem and source appendix
 
@@ -289,3 +321,36 @@ Repeatedly remove two largest weights and reinsert positive difference.
 **Captured variants:** One observed approach.
 
 - [Original 2144668025](originals/1046__2144668025.cpp) · [LeetCode submission](https://leetcode.com/problems/last-stone-weight/submissions/2144668025/)
+
+### 402. Remove K Digits
+
+[Problem](https://leetcode.com/problems/remove-k-digits/)
+
+A deque stores the surviving digit sequence. Remove a larger suffix digit while deletion budget remains, then trim the remaining suffix budget and leading zeros. The original retains its early k >= num.size() guard and returns zero when no nonzero digit survives.
+
+- [Original 2170593075](originals/402__2170593075.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-k-digits/submissions/2170593075/)
+
+### 503. Next Greater Element II
+
+[Problem](https://leetcode.com/problems/next-greater-element-ii/)
+
+Two passes resolve pending next-greater indexes. Only the first pass pushes indexes; the second supplies wraparound candidates. Both accepted variants are preserved; the older one additionally stops when the pending stack is empty or the scan reaches its last pending index. Strict comparison leaves equal values unresolved.
+
+- [Original 2170588083](originals/503__2170588083.cpp) · [LeetCode submission](https://leetcode.com/problems/next-greater-element-ii/submissions/2170588083/)
+- [Original 2170587971](originals/503__2170587971.cpp) · [LeetCode submission](https://leetcode.com/problems/next-greater-element-ii/submissions/2170587971/)
+
+### 1209. Remove All Adjacent Duplicates in String II
+
+[Problem](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/)
+
+Run-length stack of character/count pairs. Removing a group exposes the previous group, which can combine with later input. Reconstruction appends each remaining run. The original assumes k >= 2; a newly pushed count of one is not checked for deletion.
+
+- [Original 2170583612](originals/1209__2170583612.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/submissions/2170583612/)
+
+### 946. Validate Stack Sequences
+
+[Problem](https://leetcode.com/problems/validate-stack-sequences/)
+
+Push each arrival, then consume the maximal prefix of requested pops that matches the current top. The deque is used as a stack. The original indexes popped[r] without a separate bounds guard and relies on the source contract: equal lengths and distinct values.
+
+- [Original 2170572277](originals/946__2170572277.cpp) · [LeetCode submission](https://leetcode.com/problems/validate-stack-sequences/submissions/2170572277/)

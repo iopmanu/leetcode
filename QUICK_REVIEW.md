@@ -27,6 +27,10 @@ Cover the invariant column, explain why the composition works, then open the ori
 | One sorted pair makes many index pairs feasible | Fix largest side + bulk count | Every left index up to right-1 has at least the tested left value | [Triangle count](topics/search-and-sort/snippets/triangle-two-pointer-count.cpp) |
 | One item can occupy each nonnegative value | Dense counts + upward surplus carry | Every excess item must pay once to leave a full slot | [Duplicate carry](topics/greedy-and-intervals/snippets/dense-bucket-duplicate-carry.cpp) |
 | Return every partition using a reused validity predicate | Palindrome table + push/recurse/pop | The current pieces concatenate to exactly the processed prefix | [Partition paths](topics/dp-and-backtracking/snippets/palindrome-table-partition-enumeration.cpp) |
+| Circular order must reuse candidates without duplicating state | Register original indexes once + replay value candidates | Every pending index is resolved at most once | [Circular next greater](topics/monotonic-and-heaps/snippets/circular-next-greater-two-passes.cpp) |
+| Pair alignment changes once | Binary search + parity-matched neighbor | Even/odd pairs agree before the singleton | [Pair parity](topics/search-and-sort/snippets/binary-search-pair-parity.cpp) |
+| Deletion constraints collapse to one modular length | Equal-remainder runs + gcd progression | Valid lengths are 1 modulo k/gcd(k,r) | [Gcd-rounded run length](topics/math-and-bits/snippets/equal-remainder-run-gcd-length.cpp) |
+| AND/OR operations preserve bit inventories | Bit counts + convex concentration | Each constructed number consumes at most one occurrence of every available bit | [Conserved bit layers](topics/math-and-bits/snippets/conserved-bit-count-concentration.cpp) |
 
 ## Before adapting an original
 
@@ -50,3 +54,6 @@ Cover the invariant column, explain why the composition works, then open the ori
 - [Closest triple](topics/search-and-sort/snippets/three-sum-closest-frontier.cpp) retains an `int` sentinel and `int` differences; its bounded source contract matters.
 
 For all retained variants and their context, use the final appendix in each [topic chapter](README.md#topics). No original has been silently repaired or replaced with a new template.
+
+- The [H-Index II original](topics/search-and-sort/originals/275__2170348113.cpp) rescans all citations per binary-search predicate: O(n log(n+1)), not O(log n).
+- The [unique-sum window](topics/windows-and-prefixes/originals/1695__2170086755.cpp) initializes one million counters; its literal cost includes that fixed domain.

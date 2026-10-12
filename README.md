@@ -2,9 +2,9 @@
 
 Start with an algorithm or a reusable trick, learn how its state composes with another structure, then open the exact implementation. Problems are examples and source references, collected at the end of each chapter.
 
-All implementation links lead to **VanyushaDoronin's unchanged captured LeetCode code**: **382 accepted submission records, 261 problems, 80 literal snippets, 11 topics**. Explanations organize the originals; no new algorithm implementations are supplied.
+All implementation links lead to **VanyushaDoronin's unchanged captured LeetCode code**: **405 accepted submission records, 283 problems, 91 literal snippets, 11 topics**. Explanations organize the originals; no new algorithm implementations are supplied.
 
-Latest incremental source update: **11 October 2026**. The last complete exposed-history audit remains **10 October 2026**; [coverage](COVERAGE.md) keeps those scopes separate.
+Latest incremental source update: **12 October 2026**. The last complete exposed-history audit remains **10 October 2026**; [coverage](COVERAGE.md) keeps those scopes separate.
 
 ## Start here
 
@@ -47,6 +47,10 @@ These are compositions actually present in the captured sources, not a list of h
 | Need the best path through a branching node | Postorder + child summaries + global best | Return one extendable branch; combine two only for the completed answer | [Maximum path sum](topics/trees-and-lists/snippets/dfs-maximum-path-sum.cpp) |
 | Need the longest palindromic prefix | Reverse string + safe delimiter + KMP LPS | The final border cannot cross the delimiter as an ordinary character match | [Shortest-palindrome KMP](topics/strings-and-tries/snippets/shortest-palindrome-kmp.cpp) |
 | Count tuples with repeated pair outcomes | Pair enumeration + frequency map + compatibility test | Frequencies preserve index multiplicity after collapsing equal summaries | [Sum complements](topics/math-and-bits/snippets/four-sum-pair-frequency.cpp), [AND-mask compatibility](topics/math-and-bits/snippets/bitwise-and-pair-frequency.cpp) |
+| Circular order must reuse candidates without duplicating state | Register original indexes once + replay value candidates | Every pending index is resolved at most once | [Circular next greater](topics/monotonic-and-heaps/snippets/circular-next-greater-two-passes.cpp) |
+| Pair alignment changes once | Binary search + parity-matched neighbor | Even/odd pairs agree before the singleton | [Pair parity](topics/search-and-sort/snippets/binary-search-pair-parity.cpp) |
+| Deletion constraints collapse to one modular length | Equal-remainder runs + gcd progression | Valid lengths are 1 modulo k/gcd(k,r) | [Gcd-rounded run length](topics/math-and-bits/snippets/equal-remainder-run-gcd-length.cpp) |
+| AND/OR operations preserve bit inventories | Bit counts + convex concentration | Each constructed number consumes at most one occurrence of every available bit | [Conserved bit layers](topics/math-and-bits/snippets/conserved-bit-count-concentration.cpp) |
 
 ## Read the cost of this implementation
 
@@ -87,4 +91,4 @@ For an additional byte-for-byte comparison with the separately retained normaliz
 python3 tools/check_originals.py --capture-json /path/to/normalized-records.json
 ```
 
-The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 80 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.
+The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 91 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.

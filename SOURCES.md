@@ -2,7 +2,7 @@
 
 Every implementation here is an unchanged local copy of a captured accepted C++ submission. The [manifest](sources.json) records its SHA-256; the [coverage page](COVERAGE.md) documents aggregate history-verification results and unresolved count differences. Problem and submission links point back to LeetCode.
 
-382 submission records · 261 problems · 372 distinct code texts.
+405 submission records · 283 problems · 395 distinct code texts.
 
 ## Range queries
 
@@ -1213,3 +1213,98 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 
 - [Original 2131978781](topics/math-and-bits/originals/3876__2131978781.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131978781/)
 - [Original 2131975505](topics/math-and-bits/originals/3876__2131975505.cpp) · [LeetCode submission](https://leetcode.com/problems/construct-uniform-parity-array-ii/submissions/2131975505/)
+
+## Additional sources captured on 12 October 2026
+
+### [402. Remove K Digits](https://leetcode.com/problems/remove-k-digits/)
+
+- [Original 2170593075](topics/monotonic-and-heaps/originals/402__2170593075.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-k-digits/submissions/2170593075/)
+
+### [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/)
+
+- [Original 2170588083](topics/monotonic-and-heaps/originals/503__2170588083.cpp) · [LeetCode submission](https://leetcode.com/problems/next-greater-element-ii/submissions/2170588083/)
+
+### [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/)
+
+- [Original 2170587971](topics/monotonic-and-heaps/originals/503__2170587971.cpp) · [LeetCode submission](https://leetcode.com/problems/next-greater-element-ii/submissions/2170587971/)
+
+### [1209. Remove All Adjacent Duplicates in String II](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/)
+
+- [Original 2170583612](topics/monotonic-and-heaps/originals/1209__2170583612.cpp) · [LeetCode submission](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/submissions/2170583612/)
+
+### [946. Validate Stack Sequences](https://leetcode.com/problems/validate-stack-sequences/)
+
+- [Original 2170572277](topics/monotonic-and-heaps/originals/946__2170572277.cpp) · [LeetCode submission](https://leetcode.com/problems/validate-stack-sequences/submissions/2170572277/)
+
+### [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/)
+
+- [Original 2170569390](topics/search-and-sort/originals/1552__2170569390.cpp) · [LeetCode submission](https://leetcode.com/problems/magnetic-force-between-two-balls/submissions/2170569390/)
+
+### [1760. Minimum Limit of Balls in a Bag](https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/)
+
+- [Original 2170557741](topics/search-and-sort/originals/1760__2170557741.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/submissions/2170557741/)
+
+### [1482. Minimum Number of Days to Make m Bouquets](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/)
+
+- [Original 2170542125](topics/search-and-sort/originals/1482__2170542125.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/submissions/2170542125/)
+
+### [2187. Minimum Time to Complete Trips](https://leetcode.com/problems/minimum-time-to-complete-trips/)
+
+- [Original 2170532508](topics/search-and-sort/originals/2187__2170532508.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-time-to-complete-trips/submissions/2170532508/)
+
+### [1283. Find the Smallest Divisor Given a Threshold](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/)
+
+- [Original 2170517396](topics/search-and-sort/originals/1283__2170517396.cpp) · [LeetCode submission](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/submissions/2170517396/)
+
+### [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/)
+
+- [Original 2170496273](topics/search-and-sort/originals/2300__2170496273.cpp) · [LeetCode submission](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/submissions/2170496273/)
+
+### [436. Find Right Interval](https://leetcode.com/problems/find-right-interval/)
+
+- [Original 2170376810](topics/search-and-sort/originals/436__2170376810.cpp) · [LeetCode submission](https://leetcode.com/problems/find-right-interval/submissions/2170376810/)
+
+### [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/)
+
+- [Original 2170364195](topics/search-and-sort/originals/540__2170364195.cpp) · [LeetCode submission](https://leetcode.com/problems/single-element-in-a-sorted-array/submissions/2170364195/)
+
+### [275. H-Index II](https://leetcode.com/problems/h-index-ii/)
+
+- [Original 2170348113](topics/search-and-sort/originals/275__2170348113.cpp) · [LeetCode submission](https://leetcode.com/problems/h-index-ii/submissions/2170348113/)
+
+### [274. H-Index](https://leetcode.com/problems/h-index/)
+
+- [Original 2170335393](topics/search-and-sort/originals/274__2170335393.cpp) · [LeetCode submission](https://leetcode.com/problems/h-index/submissions/2170335393/)
+
+### [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
+- [Original 2170313117](topics/search-and-sort/originals/34__2170313117.cpp) · [LeetCode submission](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/submissions/2170313117/)
+
+### [2897. Apply Operations on Array to Maximize Sum of Squares](https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/)
+
+- [Original 2170231461](topics/math-and-bits/originals/2897__2170231461.cpp) · [LeetCode submission](https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/submissions/2170231461/)
+
+### [930. Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/)
+
+- [Original 2170190505](topics/windows-and-prefixes/originals/930__2170190505.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-subarrays-with-sum/submissions/2170190505/)
+
+### [2958. Length of Longest Subarray With at Most K Frequency](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/)
+
+- [Original 2170182442](topics/windows-and-prefixes/originals/2958__2170182442.cpp) · [LeetCode submission](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/submissions/2170182442/)
+
+### [1695. Maximum Erasure Value](https://leetcode.com/problems/maximum-erasure-value/)
+
+- [Original 2170086755](topics/windows-and-prefixes/originals/1695__2170086755.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-erasure-value/submissions/2170086755/)
+
+### [4076. Longest Resilient Subarray II](https://leetcode.com/problems/longest-resilient-subarray-ii/)
+
+- [Original 2168355505](topics/math-and-bits/originals/4076__2168355505.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-resilient-subarray-ii/submissions/2168355505/)
+
+### [4075. Longest Resilient Subarray I](https://leetcode.com/problems/longest-resilient-subarray-i/)
+
+- [Original 2168348655](topics/math-and-bits/originals/4075__2168348655.cpp) · [LeetCode submission](https://leetcode.com/problems/longest-resilient-subarray-i/submissions/2168348655/)
+
+### [4074. Maximum Product Pair With Target Sum](https://leetcode.com/problems/maximum-product-pair-with-target-sum/)
+
+- [Original 2168271160](topics/math-and-bits/originals/4074__2168271160.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-product-pair-with-target-sum/submissions/2168271160/)
+
