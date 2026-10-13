@@ -2,7 +2,7 @@
 
 Every implementation here is an unchanged local copy of a captured accepted C++ submission. The [manifest](sources.json) records its SHA-256; the [coverage page](COVERAGE.md) documents aggregate history-verification results and unresolved count differences. Problem and submission links point back to LeetCode.
 
-405 submission records · 283 problems · 395 distinct code texts.
+413 submission records · 291 problems · 403 distinct code texts.
 
 ## Range queries
 
@@ -1307,4 +1307,39 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 ### [4074. Maximum Product Pair With Target Sum](https://leetcode.com/problems/maximum-product-pair-with-target-sum/)
 
 - [Original 2168271160](topics/math-and-bits/originals/4074__2168271160.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-product-pair-with-target-sum/submissions/2168271160/)
+
+
+## Additional sources captured on 13 October 2026
+
+### [931. Minimum Falling Path Sum](https://leetcode.com/problems/minimum-falling-path-sum/)
+
+- [Original 2171546662](topics/dp-and-backtracking/originals/931__2171546662.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-falling-path-sum/submissions/2171546662/)
+
+### [31. Next Permutation](https://leetcode.com/problems/next-permutation/)
+
+- [Original 2171277650](topics/search-and-sort/originals/31__2171277650.cpp) · [LeetCode submission](https://leetcode.com/problems/next-permutation/submissions/2171277650/)
+
+### [1091. Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/)
+
+- [Original 2171171780](topics/dsu-and-graphs/originals/1091__2171171780.cpp) · [LeetCode submission](https://leetcode.com/problems/shortest-path-in-binary-matrix/submissions/2171171780/)
+
+### [1834. Single-Threaded CPU](https://leetcode.com/problems/single-threaded-cpu/)
+
+- [Original 2171135592](topics/monotonic-and-heaps/originals/1834__2171135592.cpp) · [LeetCode submission](https://leetcode.com/problems/single-threaded-cpu/submissions/2171135592/)
+
+### [1642. Furthest Building You Can Reach](https://leetcode.com/problems/furthest-building-you-can-reach/)
+
+- [Original 2171117425](topics/monotonic-and-heaps/originals/1642__2171117425.cpp) · [LeetCode submission](https://leetcode.com/problems/furthest-building-you-can-reach/submissions/2171117425/)
+
+### [3727. Maximum Alternating Sum of Squares](https://leetcode.com/problems/maximum-alternating-sum-of-squares/)
+
+- [Original 2171038633](topics/greedy-and-intervals/originals/3727__2171038633.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-alternating-sum-of-squares/submissions/2171038633/)
+
+### [373. Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
+
+- [Original 2170618601](topics/monotonic-and-heaps/originals/373__2170618601.cpp) · [LeetCode submission](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/submissions/2170618601/)
+
+### [692. Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/)
+
+- [Original 2170605459](topics/search-and-sort/originals/692__2170605459.cpp) · [LeetCode submission](https://leetcode.com/problems/top-k-frequent-words/submissions/2170605459/)
 

@@ -2,9 +2,9 @@
 
 Start with an algorithm or a reusable trick, learn how its state composes with another structure, then open the exact implementation. Problems are examples and source references, collected at the end of each chapter.
 
-All implementation links lead to **VanyushaDoronin's unchanged captured LeetCode code**: **405 accepted submission records, 283 problems, 91 literal snippets, 11 topics**. Explanations organize the originals; no new algorithm implementations are supplied.
+All implementation links lead to **VanyushaDoronin's unchanged captured LeetCode code**: **413 accepted submission records, 291 problems, 99 literal snippets, 11 topics**. Explanations organize the originals; no new algorithm implementations are supplied.
 
-Latest incremental source update: **12 October 2026**. The last complete exposed-history audit remains **10 October 2026**; [coverage](COVERAGE.md) keeps those scopes separate.
+Latest incremental source update: **13 October 2026**. The last complete exposed-history audit remains **10 October 2026**; [coverage](COVERAGE.md) keeps those scopes separate.
 
 ## Start here
 
@@ -51,6 +51,11 @@ These are compositions actually present in the captured sources, not a list of h
 | Pair alignment changes once | Binary search + parity-matched neighbor | Even/odd pairs agree before the singleton | [Pair parity](topics/search-and-sort/snippets/binary-search-pair-parity.cpp) |
 | Deletion constraints collapse to one modular length | Equal-remainder runs + gcd progression | Valid lengths are 1 modulo k/gcd(k,r) | [Gcd-rounded run length](topics/math-and-bits/snippets/equal-remainder-run-gcd-length.cpp) |
 | AND/OR operations preserve bit inventories | Bit counts + convex concentration | Each constructed number consumes at most one occurrence of every available bit | [Conserved bit layers](topics/math-and-bits/snippets/conserved-bit-count-concentration.cpp) |
+| Each sorted product row is implicit | One heap head per row + unique successor | No pair needs multiple discovery paths | [Cartesian row frontier](topics/monotonic-and-heaps/snippets/implicit-cartesian-row-frontier.cpp) |
+| A few expensive steps can be made free | Bounded heap + exchange of the cheapest free step | Free resources cover the largest encountered costs | [Resource allocation](topics/monotonic-and-heaps/snippets/heap-exchange-scarce-free-steps.cpp) |
+| Winners have semantic ties | Composite quickselect order + output-only sort | Selection and presentation agree on every tie | [Word-rank selection](topics/search-and-sort/snippets/composite-rank-quickselect-words.cpp) |
+| Arrival order and execution priority differ | Sorted arrival pointer + ready-task heap + clock jumps | Admit all due tasks before each non-preemptive choice | [Event-driven scheduler](topics/monotonic-and-heaps/snippets/sorted-arrivals-ready-task-heap.cpp) |
+| Need the immediate next multiset arrangement | Rightmost pivot + smallest increase + suffix reversal | Preserve the longest prefix, then minimize the tail | [Next permutation](topics/search-and-sort/snippets/lexicographic-pivot-suffix-reversal.cpp) |
 
 ## Read the cost of this implementation
 
@@ -91,4 +96,4 @@ For an additional byte-for-byte comparison with the separately retained normaliz
 python3 tools/check_originals.py --capture-json /path/to/normalized-records.json
 ```
 
-The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 91 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.
+The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 99 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.

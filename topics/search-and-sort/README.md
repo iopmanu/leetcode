@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**50 captured problems · 87 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**52 captured problems · 89 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -37,6 +37,8 @@ Pick the invariant first, then open a representative original. Here `n` is input
 | Pair-parity boundary search | Before the singleton, even/odd adjacent slots form equal pairs | O(log n) | O(1) | [Neighbor index mid XOR 1](originals/540__2170364195.cpp) |
 | Count predicate for h-index | At least h papers have citations >= h | O(n log(n+1)); the source rescans all citations per predicate | O(1), no input mutation | [Captured full-scan predicate](originals/275__2170348113.cpp) |
 | Descending rank crossing | First rank no longer supported by its citation count | O(n log n), including sort | O(log n) sort stack; mutates input | [Sorted h-index crossing](originals/274__2170335393.cpp) |
+| Lexicographic successor via suffix reversal | Preserve the longest possible prefix, minimally increase its pivot, then minimize the tail | O(n) | O(1); mutates input | [Pivot, rightmost successor, suffix reversal](originals/31__2171277650.cpp) |
+| Composite-rank quickselect + output-only sort | Select by frequency and lexical tie-break, then order winners | Expected hashing O(T); average selection O(uL), worst O(u²L); output sort O(kL log(k+1)) | O(uL+u) counts/pairs/worst recursion, plus O(kL) output | [Word-rank selection](originals/692__2170605459.cpp) |
 
 ## Combinations and tricks
 
@@ -132,6 +134,21 @@ Pick the invariant first, then open a representative original. Here `n` is input
 - **Compose:** [The original search](originals/540__2170364195.cpp) compares nums[mid] with nums[mid ^ 1]. XOR toggles the least-significant bit, selecting the other slot of an even/odd pair.
 - **Invariant:** Before the singleton, pairs align at even starts; after it, alignment shifts. A matching tested pair places the singleton to the right.
 - **Tradeoff / trap:** This is a structural assumption, not a generic duplicate search. The odd-length, exactly-one-singleton contract and left < right guard keep the paired lookup in range.
+
+### Increase the latest possible position, then minimize everything after it
+
+- **Recognize:** Need the immediately next lexicographic arrangement of the same multiset, including duplicate values, without enumerating permutations.
+- **Compose:** [The captured source](originals/31__2171277650.cpp) locates the maximal non-increasing suffix beginning at left. Its preceding value is the pivot. Scanning from the right finds the smallest suffix value strictly greater than that pivot; swap them, then reverse the suffix.
+- **Invariant:** The suffix is already the largest arrangement of its values, so a larger permutation must change an earlier position. Changing the rightmost possible pivot preserves the longest prefix. Because the suffix is non-increasing, its rightmost qualifying value is the smallest strict increase; after the swap the suffix remains non-increasing, so reversal gives the smallest possible tail.
+- **Boundary / source quirks:** With no pivot, the complete array is non-increasing and reversing it implements the required wraparound. The strict comparisons handle equal values. The source assumes at least one element: nums.size()-1 is not an empty-input guard. It returns no boolean indicating whether wraparound occurred.
+- **Cost:** At most two scans and one reversal: O(n) time, O(1) auxiliary space, with in-place mutation.
+
+### Use one total order for selection and presentation
+
+- **Recognize:** Only k winners are needed, but ties have a semantic secondary order and the final answer must be sorted.
+- **Compose:** [The word-ranking source](originals/692__2170605459.cpp) extends count-plus-quickselect: its less helper orders lower frequency first and lexically larger words first, making the retained suffix the winners. A final sort reverses this into descending frequency and ascending lexical order.
+- **Invariant:** Selection and presentation encode the same winner order; reversing only the frequency comparison would select the wrong tied words.
+- **Tradeoff / trap:** For total input characters T, u distinct words and maximum word length L, hashing is expected O(T), average selection O(uL), worst selection O(u²L), and output sorting O(kL log(k+1)). Midpoint pivots are deterministic, so average behavior is not a randomized guarantee. Adversarial hash collisions can add cost. The original expression pairs.size()-k-1 underflows in unsigned arithmetic when k equals u before conversion to int; it is retained, not presented as a portable rank-boundary idiom.
 
 ## Problem and source appendix
 
@@ -690,3 +707,19 @@ Descending sort followed by the first index i with citations[i] <= i. Actual tim
 Two boundary searches: first value >= target, then first value > target minus one. Each candidate is checked for equality and missing values return -1. O(log n) time, O(1) auxiliary space and constant-size output. Original empty/singleton fast paths and trailing newline remain unchanged.
 
 - [Original 2170313117](originals/34__2170313117.cpp) · [LeetCode submission](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/submissions/2170313117/)
+
+### 31. Next Permutation
+
+[Problem](https://leetcode.com/problems/next-permutation/)
+
+Find the maximal non-increasing suffix, increase its preceding pivot using the rightmost strictly greater suffix value, then reverse the suffix into its minimum order. If no pivot exists, reverse the whole array to wrap to the first permutation. O(n) time and O(1) auxiliary space; mutates input. Strict inequalities support duplicates. The source assumes nonempty input.
+
+- [Original 2171277650](originals/31__2171277650.cpp) · [LeetCode submission](https://leetcode.com/problems/next-permutation/submissions/2171277650/)
+
+### 692. Top K Frequent Words
+
+[Problem](https://leetcode.com/problems/top-k-frequent-words/)
+
+Count strings, quickselect the worst-to-best rank boundary using frequency and reverse lexical ties, copy the retained suffix, then sort only that output by the desired order. This is a comparator-sensitive extension of existing frequency selection, not a new quickselect implementation. String hashing, copies and comparisons are not constant-cost.
+
+- [Original 2170605459](originals/692__2170605459.cpp) · [LeetCode submission](https://leetcode.com/problems/top-k-frequent-words/submissions/2170605459/)

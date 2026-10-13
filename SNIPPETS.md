@@ -23,7 +23,7 @@ Choose the state you need to maintain, then open its implementation. [Topic tabl
 
 ## What the excerpts preserve
 
-All **91 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
+All **99 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
 
 The snippets are not a newly designed standalone library. `tools/verify_snippets.py` verifies exact equality, not correctness for arbitrary inputs.
 
@@ -129,6 +129,19 @@ Original: [540. Single Element in a Sorted Array](topics/search-and-sort/origina
 Full unchanged source, including its original comments. O(log n) time, O(1) auxiliary space. Requires sorted odd-length input, exactly one singleton and all other values twice. mid^1 pairs adjacent even/odd indexes; it is not a generic neighbor operation.
 
 
+### [Lexicographic successor: pivot, minimal increase, reversed suffix](topics/search-and-sort/snippets/lexicographic-pivot-suffix-reversal.cpp)
+
+Original: [31. Next Permutation](topics/search-and-sort/originals/31__2171277650.cpp#L1-L24) · [submission 2171277650](https://leetcode.com/problems/next-permutation/submissions/2171277650/)
+
+Full unchanged Solution wrapper. O(n) time, O(1) auxiliary space, mutates the input. The maximal non-increasing suffix determines the rightmost pivot; the rightmost strictly larger suffix value gives the smallest increase. Reversing the tail minimizes it. No pivot reverses the full array, and no wraparound boolean is returned. Nonempty input is assumed; duplicates are supported.
+
+### [Composite-rank quickselect with output-only sorting](topics/search-and-sort/snippets/composite-rank-quickselect-words.cpp)
+
+Original: [692. Top K Frequent Words](topics/search-and-sort/originals/692__2170605459.cpp#L1-L67) · [submission 2170605459](https://leetcode.com/problems/top-k-frequent-words/submissions/2170605459/)
+
+Full unchanged Solution class; includes and judge harness are outside the excerpt. Count strings, quickselect the worst-to-best rank boundary using frequency and reverse lexical ties, copy the retained suffix, then sort only that output by the desired order. This is a comparator-sensitive extension of existing frequency selection, not a new quickselect implementation. String hashing, copies and comparisons are not constant-cost. See the linked topic table for literal time and space costs and the combinations section for limitations.
+
+
 ## Maintain window and prefix state
 
 [Algorithms, costs, and tricks](topics/windows-and-prefixes/README.md)
@@ -228,6 +241,25 @@ Full unchanged source. O(n) time and O(n) auxiliary space, including run state a
 Original: [946. Validate Stack Sequences](topics/monotonic-and-heaps/originals/946__2170572277.cpp#L1-L16) · [submission 2170572277](https://leetcode.com/problems/validate-stack-sequences/submissions/2170572277/)
 
 Full unchanged source. O(n) time and O(n) auxiliary deque space. Uses equal-length arrays with distinct values; popped[r] has no explicit bounds guard. This is a simulation stack rather than a monotone stack.
+
+
+### [Sorted arrivals and a priority heap with an event-driven clock](topics/monotonic-and-heaps/snippets/sorted-arrivals-ready-task-heap.cpp)
+
+Original: [1834. Single-Threaded CPU](topics/monotonic-and-heaps/originals/1834__2171135592.cpp#L1-L32) · [submission 2171135592](https://leetcode.com/problems/single-threaded-cpu/submissions/2171135592/)
+
+Full unchanged Solution wrapper. O(n log n) time, O(n) heap and appended-index storage, plus O(n) returned order and sort stack. Appends indexes to two-field rows and sorts the input. The {duration,index} heap tie-break differs from arrival order. Non-preemptive tasks run completely; newly due arrivals are admitted before the next selection. long long time and the guarded-by-invariant idle lookup are retained; input must be nonempty.
+
+### [Exchange allocation with a bounded climb heap](topics/monotonic-and-heaps/snippets/heap-exchange-scarce-free-steps.cpp)
+
+Original: [1642. Furthest Building You Can Reach](topics/monotonic-and-heaps/originals/1642__2171117425.cpp#L1-L25) · [submission 2171117425](https://leetcode.com/problems/furthest-building-you-can-reach/submissions/2171117425/)
+
+Full unchanged Solution class; includes and judge harness are outside the excerpt. Keep the largest encountered positive climbs assigned to ladders. A min-heap evicts the smallest retained climb to the brick budget whenever its size exceeds the ladder count. The input remains unchanged; nonempty heights and nonnegative resources are assumed. See the linked topic table for literal time and space costs and the combinations section for limitations.
+
+### [Lazy Cartesian-product row frontier](topics/monotonic-and-heaps/snippets/implicit-cartesian-row-frontier.cpp)
+
+Original: [373. Find K Pairs with Smallest Sums](topics/monotonic-and-heaps/originals/373__2170618601.cpp#L1-L24) · [submission 2170618601](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/submissions/2170618601/)
+
+Full unchanged Solution class; includes and judge harness are outside the excerpt. View the sorted Cartesian-product sum matrix as sorted rows. Seed at most min(k,nums1.size()) row heads, pop the smallest head, then advance only that row. The original requires nonempty sorted arrays and uses int sums; the unused local sum is preserved. See the linked topic table for literal time and space costs and the combinations section for limitations.
 
 
 ## Aggregate and update ranges
@@ -414,6 +446,13 @@ Original: [1871. Jump Game VII](topics/dsu-and-graphs/originals/1871__2012395473
 Complete original canReach method. A deque stores reachable zero positions, while farthest records the largest already-scanned endpoint so overlapping jump ranges are not rescanned. Each position is scanned at most once, giving O(n) time and O(n) queue storage. Preserves size_t queue entries, int loop indexes, and the original valid jump-range/start-cell assumptions. This is unweighted BFS.
 
 
+### [Eight-neighbor BFS with destructive discovery and cell-count distance](topics/dsu-and-graphs/snippets/eight-neighbor-bfs-cell-count.cpp)
+
+Original: [1091. Shortest Path in Binary Matrix](topics/dsu-and-graphs/originals/1091__2171171780.cpp#L1-L55) · [submission 2171171780](https://leetcode.com/problems/shortest-path-in-binary-matrix/submissions/2171171780/)
+
+Full unchanged Solution wrapper. O(rc) time, O(rc) worst-case queue space, constant-sized direction storage. Generates all eight offsets, marks grid zeroes as one on enqueue, and never restores them. path begins at one to count cells, so an open singleton returns one. Diagonals require only an open destination, not open orthogonal corner cells. Assumes a nonempty binary grid and returns a length without path reconstruction.
+
+
 ## Propagate summaries and reconnect pointers
 
 [Algorithms, costs, and tricks](topics/trees-and-lists/README.md)
@@ -493,6 +532,13 @@ Full original class, including its fixed character mapping member. For d digits 
 Original: [131. Palindrome Partitioning](topics/dp-and-backtracking/originals/131__2169294097.cpp#L3-L33) · [submission 2169294097](https://leetcode.com/submissions/detail/2169294097/)
 
 Complete original method; class wrapper and judge-provided includes are outside the excerpt. The table loop is literally l <= s.size(), including l > r. Reading s[s.size()] obtains the string terminator; for the original lowercase non-NUL input it cannot equal s[r], so short-circuiting prevents an out-of-range table write at l == n. An embedded NUL can invalidate that protection. The extra lower-triangle work is retained. Worst-case work is O(n squared + n times 2^n); the table and active path/stack need O(n squared + n) auxiliary space, plus O(nP) output for P returned partitions. The by-value input also copies O(n) characters.
+
+
+### [Shared suffix-cost memo with packed row and column](topics/dp-and-backtracking/snippets/shared-packed-coordinate-suffix-memo.cpp)
+
+Original: [931. Minimum Falling Path Sum](topics/dp-and-backtracking/originals/931__2171546662.cpp#L1-L37) · [submission 2171546662](https://leetcode.com/problems/minimum-falling-path-sum/submissions/2171546662/)
+
+Full unchanged Solution wrapper. Expected O(rc) time; O(rc) local hash memo and O(r) recursion, no input mutation. Row-increasing transitions permit negative costs and make the suffix answer independent of the starting column. Bounds are checked before packing two 32-bit coordinates. Preserves the extra j == m call, uncached terminal cells, 1e7 impossible sentinel and C++20 contains. Sentinel safety and nonempty input rely on the original source contract.
 
 
 ## Reuse prefixes and encode strings
@@ -591,6 +637,13 @@ Complete original maxArea method. Each step records the current area and moves t
 Original: [945. Minimum Increment to Make Array Unique](topics/greedy-and-intervals/originals/945__2169112095.cpp#L3-L20) · [submission 2169112095](https://leetcode.com/submissions/detail/2169112095/)
 
 Complete original method; class wrapper and judge-provided includes are outside the excerpt. For n elements and M equal to the maximum value, work and bucket space are O(n+M), including initialization and the full scan. This is not a sorting-based implementation. It assumes nonempty nonnegative input and allocates exactly M+n buckets. The processed bucket count is not reset, but that bucket is never revisited; only the propagated count matters. Increment totals remain int under the original limits.
+
+
+### [Magnitude ordering for signed squared rewards](topics/greedy-and-intervals/snippets/magnitude-signed-slot-assignment.cpp)
+
+Original: [3727. Maximum Alternating Sum of Squares](topics/greedy-and-intervals/originals/3727__2171038633.cpp#L1-L24) · [submission 2171038633](https://leetcode.com/problems/maximum-alternating-sum-of-squares/submissions/2171038633/)
+
+Full unchanged Solution class; includes and judge harness are outside the excerpt. Sort by absolute value, take large magnitudes for positive square slots and small magnitudes for negative slots. Alternating the two ends realizes the optimal assignment because squaring removes the original signs. The source mutates nums and retains its original isRightChoise spelling. See the linked topic table for literal time and space costs and the combinations section for limitations.
 
 
 ## Collapse choices into counts

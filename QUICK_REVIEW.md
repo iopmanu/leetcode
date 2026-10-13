@@ -31,6 +31,11 @@ Cover the invariant column, explain why the composition works, then open the ori
 | Pair alignment changes once | Binary search + parity-matched neighbor | Even/odd pairs agree before the singleton | [Pair parity](topics/search-and-sort/snippets/binary-search-pair-parity.cpp) |
 | Deletion constraints collapse to one modular length | Equal-remainder runs + gcd progression | Valid lengths are 1 modulo k/gcd(k,r) | [Gcd-rounded run length](topics/math-and-bits/snippets/equal-remainder-run-gcd-length.cpp) |
 | AND/OR operations preserve bit inventories | Bit counts + convex concentration | Each constructed number consumes at most one occurrence of every available bit | [Conserved bit layers](topics/math-and-bits/snippets/conserved-bit-count-concentration.cpp) |
+| Each sorted product row is implicit | One heap head per row + unique successor | No pair needs multiple discovery paths | [Cartesian row frontier](topics/monotonic-and-heaps/snippets/implicit-cartesian-row-frontier.cpp) |
+| A few expensive steps can be made free | Bounded heap + exchange of the cheapest free step | Free resources cover the largest encountered costs | [Resource allocation](topics/monotonic-and-heaps/snippets/heap-exchange-scarce-free-steps.cpp) |
+| Winners have semantic ties | Composite quickselect order + output-only sort | Selection and presentation agree on every tie | [Word-rank selection](topics/search-and-sort/snippets/composite-rank-quickselect-words.cpp) |
+| Arrival order and execution priority differ | Sorted arrival pointer + ready-task heap + clock jumps | Admit all due tasks before each non-preemptive choice | [Event-driven scheduler](topics/monotonic-and-heaps/snippets/sorted-arrivals-ready-task-heap.cpp) |
+| Need the immediate next multiset arrangement | Rightmost pivot + smallest increase + suffix reversal | Preserve the longest prefix, then minimize the tail | [Next permutation](topics/search-and-sort/snippets/lexicographic-pivot-suffix-reversal.cpp) |
 
 ## Before adapting an original
 

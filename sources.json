@@ -4165,5 +4165,85 @@
     "topic": "math-and-bits",
     "problem_id": "4074",
     "problem_url": "https://leetcode.com/problems/maximum-product-pair-with-target-sum/"
+  },
+  {
+    "source_id": "2171546662",
+    "problem": "931. Minimum Falling Path Sum",
+    "url": "https://leetcode.com/problems/minimum-falling-path-sum/submissions/2171546662/",
+    "sha256": "c7e70263dbc37390d7a85de9f8cf003a03013eb137aa3d270f82e8ba3b511e49",
+    "path": "topics/dp-and-backtracking/originals/931__2171546662.cpp",
+    "topic": "dp-and-backtracking",
+    "problem_id": "931",
+    "problem_url": "https://leetcode.com/problems/minimum-falling-path-sum/"
+  },
+  {
+    "source_id": "2171277650",
+    "problem": "31. Next Permutation",
+    "url": "https://leetcode.com/problems/next-permutation/submissions/2171277650/",
+    "sha256": "bc2d7980f4d0c77d7c62356982a606cc41b35e77f179d11864c6c0290f3a1b90",
+    "path": "topics/search-and-sort/originals/31__2171277650.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "31",
+    "problem_url": "https://leetcode.com/problems/next-permutation/"
+  },
+  {
+    "source_id": "2171171780",
+    "problem": "1091. Shortest Path in Binary Matrix",
+    "url": "https://leetcode.com/problems/shortest-path-in-binary-matrix/submissions/2171171780/",
+    "sha256": "76a8494559cbcabd4bc26221612b8776e7ab2b49dd24f0705c833f388a01a0ba",
+    "path": "topics/dsu-and-graphs/originals/1091__2171171780.cpp",
+    "topic": "dsu-and-graphs",
+    "problem_id": "1091",
+    "problem_url": "https://leetcode.com/problems/shortest-path-in-binary-matrix/"
+  },
+  {
+    "source_id": "2171135592",
+    "problem": "1834. Single-Threaded CPU",
+    "url": "https://leetcode.com/problems/single-threaded-cpu/submissions/2171135592/",
+    "sha256": "9ed288c71e323a66aa7344c304f4bd998ea51f5c989e478e5419eb02c4810155",
+    "path": "topics/monotonic-and-heaps/originals/1834__2171135592.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "1834",
+    "problem_url": "https://leetcode.com/problems/single-threaded-cpu/"
+  },
+  {
+    "source_id": "2171117425",
+    "problem": "1642. Furthest Building You Can Reach",
+    "url": "https://leetcode.com/problems/furthest-building-you-can-reach/submissions/2171117425/",
+    "sha256": "6686ecee671884f2fe6154d3a2b41a8467b6c18c77ec6ab10ec5597320de43d8",
+    "path": "topics/monotonic-and-heaps/originals/1642__2171117425.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "1642",
+    "problem_url": "https://leetcode.com/problems/furthest-building-you-can-reach/"
+  },
+  {
+    "source_id": "2171038633",
+    "problem": "3727. Maximum Alternating Sum of Squares",
+    "url": "https://leetcode.com/problems/maximum-alternating-sum-of-squares/submissions/2171038633/",
+    "sha256": "334daf3820dd2442f0f553fc209cf8f80180140433f5f7338aa3cfc1f9af88f3",
+    "path": "topics/greedy-and-intervals/originals/3727__2171038633.cpp",
+    "topic": "greedy-and-intervals",
+    "problem_id": "3727",
+    "problem_url": "https://leetcode.com/problems/maximum-alternating-sum-of-squares/"
+  },
+  {
+    "source_id": "2170618601",
+    "problem": "373. Find K Pairs with Smallest Sums",
+    "url": "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/submissions/2170618601/",
+    "sha256": "5137dab7c46f7a03e7294a43ac959f87e91c4a813d6929bc3baf04e1693079a8",
+    "path": "topics/monotonic-and-heaps/originals/373__2170618601.cpp",
+    "topic": "monotonic-and-heaps",
+    "problem_id": "373",
+    "problem_url": "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/"
+  },
+  {
+    "source_id": "2170605459",
+    "problem": "692. Top K Frequent Words",
+    "url": "https://leetcode.com/problems/top-k-frequent-words/submissions/2170605459/",
+    "sha256": "380588cd9e120766ba5f88d30dff350b341b917323983e828d12012fc22fd574",
+    "path": "topics/search-and-sort/originals/692__2170605459.cpp",
+    "topic": "search-and-sort",
+    "problem_id": "692",
+    "problem_url": "https://leetcode.com/problems/top-k-frequent-words/"
   }
 ]

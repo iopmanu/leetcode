@@ -4,7 +4,7 @@
 
 ## Main algorithms and structures
 
-Identify the smallest state that determines every legal continuation, then choose whether to count, optimize, or enumerate it. The complete catalog of **25 problems / 33 submissions** is last; links below point directly to unchanged originals.
+Identify the smallest state that determines every legal continuation, then choose whether to count, optimize, or enumerate it. The complete catalog of **26 problems / 34 submissions** is last; links below point directly to unchanged originals.
 
 Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/segment parameter, and `L` a searched word's length. Hash-table bounds are expected. Space includes recursion, containers, and by-value string copies for lvalue calls; output storage is listed separately. Exponential search bounds below are upper bounds, not claims that every input attains them.
 
@@ -33,6 +33,7 @@ Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/s
 | Memoized sets of generated strings | Return all valid strings with minimum deletions | Conservative expected O(n²·2ⁿ); includes set/string copies and uncached failures | O(n²+n·2ⁿ) upper bound for memo objects/live strings; output also may be exponential | [Set-valued recursion](originals/301__2165615628.cpp) |
 | Per-position Cartesian-product enumeration | Choose one allowed symbol per position and emit every full sequence | O(dP), P product of per-digit choice counts | O(d) buffer/stack/input copy + O(dP) output; fixed map | [Mapped letters + shared buffer](originals/17__2168599877.cpp) · [literal class](snippets/mapped-choice-letter-enumeration.cpp) |
 | Interval predicate + partition enumeration | Reuse palindrome truth values while producing every valid cut path | O(n²+n·2ⁿ) worst case | O(n²+n) auxiliary table/path/stack/input copy + O(nP) output for P partitions | [Table + push/recurse/pop](originals/131__2169294097.cpp) · [literal method](snippets/palindrome-table-partition-enumeration.cpp) |
+| Shared suffix-cost memo across multiple starts | Row increases on every transition; all starts reuse the same cell continuation | Expected O(rc); fixed three outgoing choices | O(rc) hash memo + O(r) recursion; no input mutation | [Packed-coordinate falling-path memo](originals/931__2171546662.cpp) |
 
 ## Combinations and tricks
 
@@ -123,6 +124,14 @@ Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/s
 - **Invariant:** The path concatenates exactly to the processed prefix, and every next edge has a true table entry. Each complete cut sequence is emitted once. Predicate reuse removes repeated palindrome scans, but cannot remove the potentially exponential returned partitions.
 - **Tradeoff / trap:** The literal table loop is `l <= s.size()`, including unnecessary lower-triangle positions. At `l == n`, string indexing reads the terminator; under the lowercase non-NUL source contract it differs from every `s[r]`, preventing the table write by short-circuiting. Embedded NUL characters can defeat that protection. This bound is preserved and is not a generic indexing pattern. The output copies every path, giving O(nP) output storage for P partitions; the worst-case time bound is O(n²+n·2ⁿ).
 - **Exact code:** [Complete original method, including the bounds quirk](snippets/palindrome-table-partition-enumeration.cpp).
+
+### Share suffix costs across starts with one per-call coordinate cache
+
+- **Recognize:** Many allowed starting positions converge on the same later cells, and moving to the next row makes the dependency graph acyclic even when costs are negative.
+- **Compose:** [The falling-path source](originals/931__2171546662.cpp) computes each cell's own value plus the minimum of three next-row continuations. One local hash map is shared across all top-row calls, so converging starts reuse suffix answers. The packed key places row in the high 32 bits and column in the low 32 bits, after rejecting invalid coordinates.
+- **Invariant:** A cached value is the minimum cost from that cell through the bottom row, including the cell itself. It is independent of the accumulated prefix and the chosen top-row start; no path-history flag or start-coordinate dimension belongs in the key. The local cache is fresh for each call.
+- **Cost / limits:** There are O(rc) nonterminal states with three transitions each: expected O(rc) time, O(rc) memo and O(r) stack. Terminal values are not cached but receive only a constant number of calls per predecessor expansion, preserving this bound. All top-row starts are explored, so the hash map is not a sparse-state memory saving here; this is not a rolling-row O(c)-space implementation.
+- **Source quirks:** The loop uses j <= m, making one extra rejected start. The 1e7 sentinel safely exceeds all valid sums under the captured n <= 100 and cell-value -100..100 contract; it must be reconsidered for wider costs. The source assumes a nonempty rectangular grid, leaves it unchanged, and uses C++20 contains.
 
 ## Problem and source appendix
 
@@ -414,3 +423,11 @@ Alternating base sum plus best nonnegative segment gain over each adjacent-pair 
 **Captured variants:** One observed approach.
 
 - [Original 2147436566](originals/4058__2147436566.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/submissions/2147436566/)
+
+### 931. Minimum Falling Path Sum
+
+[Problem](https://leetcode.com/problems/minimum-falling-path-sum/)
+
+Share memoized minimum suffix costs across every top-row starting column. Each transition increases the row, so position alone determines the continuation even with negative costs. Bounds are checked before packing row and column into disjoint 32-bit halves of a uint64_t key. Expected O(rc) time, O(rc) memo plus O(r) recursion; input unchanged. Bottom-row values are returned without caching. Source quirks retained: j <= m tries one extra invalid start, 1e7 is the impossible sentinel, and unordered_map::contains requires C++20.
+
+- [Original 2171546662](originals/931__2171546662.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-falling-path-sum/submissions/2171546662/)

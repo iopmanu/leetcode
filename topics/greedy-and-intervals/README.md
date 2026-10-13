@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**20 captured problems · 30 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**21 captured problems · 31 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -28,6 +28,7 @@ A greedy choice needs an exchange argument or a dominance invariant; sorted inpu
 | Character-span closure | Counts of selected characters exactly fill their bounding interval | O(n+a²), a≤26, including copied output characters | O(a) summaries/deque; by-value string can add O(n), plus O(n) output | [Closed substring selection](originals/1520__2146064854.cpp) |
 | High-to-low bit partition refinement | Earlier bit-optimal groups constrain later reorderings | O(Bn), B=15 in source | O(n+B) live group copies and result | [Power-array refinement](originals/4059__2147456833.cpp) |
 | Dense value buckets + excess carry | Keep one value at each processed position and push all surplus upward | O(n+M), M maximum input value; includes allocation and scan | O(n+M) counts; input is unchanged | [Minimum increments](originals/945__2169112095.cpp) · [exact excerpt](snippets/dense-bucket-duplicate-carry.cpp) |
+| Magnitude ordering + signed-slot assignment | Largest squares occupy positive coefficients | O(n log n) | O(log n) sort stack; mutates input | [Alternating squared reward](originals/3727__2171038633.cpp) |
 
 ## Combinations and tricks
 
@@ -94,6 +95,13 @@ A greedy choice needs an exchange argument or a dominance invariant; sorted inpu
 - **Invariant:** Every lower position is settled, and every carried item must move at least once because the current slot is full. Retaining one at the lowest available value cannot force a cheaper item to move farther; repeating this cheapest necessary move yields the minimum total.
 - **Tradeoff / trap:** Allocation and scanning use `M+n` slots, where M is the maximum input value. The O(n+M) bound is numeric-range dependent; this source does not sort and does not have O(n log n) work. Nonempty nonnegative input is required. The old bucket count remains unchanged after carry but is never read again; only the next bucket drives future decisions.
 - **Exact code:** [Literal bucket-carry method](snippets/dense-bucket-duplicate-carry.cpp).
+
+### Separate value transformation from coefficient assignment
+
+- **Recognize:** Reordering is allowed and the objective assigns fixed positive and negative coefficients to transformed values.
+- **Compose:** [The squared-reward source](originals/3727__2171038633.cpp) sorts by absolute value, then alternates the largest remaining magnitude into a positive slot and the smallest into a negative slot.
+- **Invariant:** Exchanging positive-slot square a with negative-slot square b improves the objective by 2(b-a) when b>a. Thus the ceil(n/2) largest squares belong to positive slots.
+- **Tradeoff / trap:** Original signs do not affect squares. Multiplication is widened with 1LL, but std::abs(int) is not safe for INT_MIN outside the original bounds. The accumulator still requires a fitting long long sum; the input is reordered in place.
 
 ## Problem and source appendix
 
@@ -323,3 +331,11 @@ Process bits from high to low; refine active prefix groups into ones then zeros,
 
 - [Original 2147456833](originals/4059__2147456833.cpp) · [LeetCode submission](https://leetcode.com/problems/lexicographically-largest-power-array/submissions/2147456833/)
 - [Original 2147456124](originals/4059__2147456124.cpp) · [LeetCode submission](https://leetcode.com/problems/lexicographically-largest-power-array/submissions/2147456124/)
+
+### 3727. Maximum Alternating Sum of Squares
+
+[Problem](https://leetcode.com/problems/maximum-alternating-sum-of-squares/)
+
+Sort by absolute value, take large magnitudes for positive square slots and small magnitudes for negative slots. Alternating the two ends realizes the optimal assignment because squaring removes the original signs. The source mutates nums and retains its original isRightChoise spelling.
+
+- [Original 2171038633](originals/3727__2171038633.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-alternating-sum-of-squares/submissions/2171038633/)

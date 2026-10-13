@@ -23,6 +23,7 @@ Choose by the information that must survive a traversal: component identity, dis
 | Degree statistics + pair correction | Degree-sum thresholds: O(E+V log V+q(V+D)), D distinct endpoint pairs; judge lookup O(V+E) upper bound | O(V+D) for corrected pairs; judge source stores lists, O(V+E) | [Parallel-edge correction](originals/1782__2162018515.cpp) · [Stored in/out lists](originals/997__2155347510.cpp) |
 | Bounded neighbor candidates | Four distinct vertices with additive scores: expected O(V+E) upper bound; at most nine candidate pairs per central edge | O(V), at most three stored neighbors per used vertex | [Top-three candidate source](originals/2242__2161904938.cpp) |
 | Repeated reachability queues without a visited guard | Actual DAG source costs O(V²+E+P+q), P all enqueued path prefixes across starts; P can be exponential | O(V²+E+W), W the largest queue; W can also be exponential | [Unguarded original](originals/1462__2156120061.cpp) |
+| Eight-neighbor layered grid BFS | Discover once on enqueue; layer count measures cells: O(N) | O(N) queue; mutates discovered grid cells | [Eight-way cell-count variant](originals/1091__2171171780.cpp) |
 
 ## Combinations and tricks
 
@@ -123,6 +124,13 @@ Choose by the information that must survive a traversal: component identity, dis
 - **Compose:** Fix each central edge b–c; retain the three highest-scoring neighbors of each vertex; test at most 3×3 choices for endpoints a and d.
 - **Invariant:** For an endpoint choice, at most two neighbors can be forbidden by the other selected vertices, so three candidates suffice. Check a != c, d != b, and a != d explicitly.
 - **Tradeoff / source:** [The bounded-candidate implementation](originals/2242__2161904938.cpp) sorts at most four entries on each neighbor insertion, so preprocessing and edge enumeration are expected linear, not full adjacency sorting. The cap of three depends on this four-vertex problem; it is not a general longest-path method.
+
+### Adapt grid-neighbor geometry and distance units explicitly
+
+- **Neighbor geometry:** [The eight-neighbor source](originals/1091__2171171780.cpp) generates all offsets in {-1,0,1} x {-1,0,1} except {0,0}. Both straight and diagonal moves cost one; only the target cell is checked, so diagonals are allowed even when the two orthogonally adjacent cells are blocked.
+- **State representation:** A zero becomes one immediately on enqueue. Original obstacles and already discovered cells share the same exclusion value, which is sufficient because neither may be enqueued again. The input can no longer distinguish those categories after the search; no separate visited matrix is allocated.
+- **Distance convention:** path starts at one and the queue size is frozen for each layer. When a destination is dequeued, path counts cells on the route, including both endpoints, rather than the number of moves. The open singleton case therefore returns one naturally; blocked endpoints are rejected before mutation.
+- **Cost / source limits:** O(rc) time because each reachable cell is queued once and has eight candidates, and O(rc) worst-case auxiliary queue space despite in-place visitation. Directions occupy constant storage. The code assumes a nonempty rectangular binary grid, does not restore discovered zeroes, and returns only a length, with no predecessor path. Reusing its mutated grid for another search changes the input. Its single visited flag would be insufficient if state included an obstacle budget or if moves had unequal costs.
 
 ## Problem and source appendix
 
@@ -500,3 +508,11 @@ BFS (row,col,trash_mask,energy,moves); recharge cells restore energy; keep best 
 **Captured variants:** One observed approach.
 
 - [Original 2131979696](originals/3568__2131979696.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/submissions/2131979696/)
+
+### 1091. Shortest Path in Binary Matrix
+
+[Problem](https://leetcode.com/problems/shortest-path-in-binary-matrix/)
+
+Eight-neighbor, single-source layered BFS using the grid itself as the discovered set. Mark every zero as one when enqueued, including the start. The distance counter starts at one because the answer counts visited cells, so an open 1x1 grid returns one. O(rc) time and O(rc) worst-case queue space; eight direction offsets are constant space. Blocked endpoints return -1 immediately; other searches permanently mutate discovered cells. Diagonal movement checks only the destination, with no corner-blocking rule.
+
+- [Original 2171171780](originals/1091__2171171780.cpp) · [LeetCode submission](https://leetcode.com/problems/shortest-path-in-binary-matrix/submissions/2171171780/)

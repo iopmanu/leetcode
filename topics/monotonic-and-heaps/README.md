@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**22 captured problems · 42 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**25 captured problems · 45 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -29,6 +29,9 @@ Use a monotonic structure when a new item permanently dominates or resolves old 
 | Circular next-greater scan | A non-increasing stack contains unresolved original indexes | O(n), two scans and at most n pushes/pops | O(n) pending indexes and O(n) output | [Two-pass circular resolution](originals/503__2170588083.cpp) |
 | Run-length reduction stack | Adjacent surviving equal characters occupy one counted run | O(n), including reconstruction | O(n) runs and output | [Character/count cancellation](originals/1209__2170583612.cpp) |
 | Greedy stack-sequence simulation | Consume every currently forced matching pop | O(n), at most n pushes/pops | O(n) stack | [Push then drain matching pops](originals/946__2170572277.cpp) |
+| Sorted arrivals + ready-task min-heap | Arrival order controls eligibility; {duration,index} controls selection among eligible tasks | O(n log n), independent of idle-time magnitude | O(n) heap and appended fields, plus O(n) output; mutates nested input | [Event-driven non-preemptive scheduling](originals/1834__2171135592.cpp) |
+| Exchangeable resources + bounded min-heap | Reserve ladders for the largest positive climbs seen | O(n log(min(n,ladders+1)+1)) | O(min(n,ladders+1)) | [Ladder allocation](originals/1642__2171117425.cpp) |
+| Lazy sorted Cartesian-product frontier | One smallest unreported pair per seeded row | O((h+q) log(h+1)), h=min(k,m), q=min(k,mn) | O(h) heap, plus O(q) output | [Pair-sum row heads](originals/373__2170618601.cpp) |
 
 ## Combinations and tricks
 
@@ -115,6 +118,28 @@ Use a monotonic structure when a new item permanently dominates or resolves old 
 - **Compose:** [The original simulation](originals/946__2170572277.cpp) pushes one value, then drains every top matching the next requested output.
 - **Invariant:** Popping a matching top immediately cannot obstruct any required earlier output; delaying it adds no useful choice. At termination an empty stack certifies the target under equal-length input constraints.
 - **Tradeoff / trap:** This is an ordinary simulation stack, not a monotone stack. The unguarded popped[r] access uses the original equal-length/distinct-value contract.
+
+### Separate when a task becomes eligible from how eligible tasks are ranked
+
+- **Recognize:** Tasks arrive at different times, and the next task is chosen by a different key among those already available.
+- **Compose:** [The original scheduler](originals/1834__2171135592.cpp) appends original indexes, sorts the arrivals, and advances one pointer through them. Its min-heap stores two-element vectors {processingTime, originalIndex}, whose lexicographic order implements both priority and tie-breaking. If the heap is empty, the clock jumps directly to the next arrival.
+- **Invariant:** Before each selection, the heap contains all arrived, unprocessed tasks. The source drains the heap only while no unadmitted arrival is due. A selected task runs to completion even if its finish crosses several arrivals; then the drain stops, and every task with arrival <= time is admitted before another selection. Equality at completion also triggers admission first.
+- **Cost / limits:** Each task enters and leaves the heap once, so sorting and heap work total O(n log n); large timestamps do not cause per-time-unit iterations. O(n) auxiliary storage includes the heap and the appended index fields, with O(n) returned order separately. This simulates the specified non-preemptive policy; it does not prove optimality for a different scheduling objective.
+- **Source quirks:** time is long long. Sorting reorders tasks and push_back changes each row from two fields to three; reuse of already decorated input is outside the entry contract. Nonempty input is assumed. The apparently unguarded tasks[ptr] in the idle branch is safe because the outer condition plus an empty heap implies ptr < tasks.size().
+
+### Reassign expensive steps to a scarce free resource
+
+- **Recognize:** A limited number of steps can be paid for free; all other costs share one budget.
+- **Compose:** [The climb heap](originals/1642__2171117425.cpp) provisionally assigns each positive step a ladder. If too many are retained, the cheapest one is charged to bricks.
+- **Invariant:** After repair, the heap holds the largest at most ladders climbs in the processed prefix. Swapping a ladder from a smaller climb to a larger climb cannot increase brick cost.
+- **Tradeoff / trap:** No visited set or history rescan is needed: only the weakest retained allocation must be exposed. A push temporarily holds ladders+1 entries. The original uses int height differences and a nonempty input contract; the negative brick test reports the last reachable building.
+
+### Enumerate a Cartesian product without materializing it
+
+- **Recognize:** Combining two sorted collections makes each fixed-left row independently sorted, but the full product is too large.
+- **Compose:** [The pair-sum frontier](originals/373__2170618601.cpp) reuses the sorted-list heap-head idea with implicit rows. A popped (i,j) generates only (i,j+1), so pairs have a unique generating predecessor and need no deduplication set.
+- **Invariant:** Each seeded row contributes its first unreported pair. Rows beyond the first k cannot be needed to obtain k smallest sums: k earlier row heads already have no larger sums (ties may be chosen arbitrarily).
+- **Tradeoff / trap:** This source pushes heads individually rather than heapifying, so seeding costs O(h log(h+1)). It requires nums2[0] to exist and int pair sums to fit. Index tie-breaks arise from vector lexicographic comparison. Here m,n are array lengths, h=min(k,m), and q=min(k,mn).
 
 ## Problem and source appendix
 
@@ -354,3 +379,27 @@ Run-length stack of character/count pairs. Removing a group exposes the previous
 Push each arrival, then consume the maximal prefix of requested pops that matches the current top. The deque is used as a stack. The original indexes popped[r] without a separate bounds guard and relies on the source contract: equal lengths and distinct values.
 
 - [Original 2170572277](originals/946__2170572277.cpp) · [LeetCode submission](https://leetcode.com/problems/validate-stack-sequences/submissions/2170572277/)
+
+### 1834. Single-Threaded CPU
+
+[Problem](https://leetcode.com/problems/single-threaded-cpu/)
+
+Decorate each task with its original index and sort by arrival time. A min-heap of {processingTime, originalIndex} chooses among arrived tasks; the long long clock jumps to the next arrival when idle. The inner drain stops before selecting another task once a new arrival is due, allowing the running non-preemptive task to finish. O(n log n) time; O(n) heap and appended-index storage, plus O(n) output and O(log n) sort stack. Mutates task order and row shape; expects nonempty two-field tasks.
+
+- [Original 2171135592](originals/1834__2171135592.cpp) · [LeetCode submission](https://leetcode.com/problems/single-threaded-cpu/submissions/2171135592/)
+
+### 1642. Furthest Building You Can Reach
+
+[Problem](https://leetcode.com/problems/furthest-building-you-can-reach/)
+
+Keep the largest encountered positive climbs assigned to ladders. A min-heap evicts the smallest retained climb to the brick budget whenever its size exceeds the ladder count. The input remains unchanged; nonempty heights and nonnegative resources are assumed.
+
+- [Original 2171117425](originals/1642__2171117425.cpp) · [LeetCode submission](https://leetcode.com/problems/furthest-building-you-can-reach/submissions/2171117425/)
+
+### 373. Find K Pairs with Smallest Sums
+
+[Problem](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
+
+View the sorted Cartesian-product sum matrix as sorted rows. Seed at most min(k,nums1.size()) row heads, pop the smallest head, then advance only that row. The original requires nonempty sorted arrays and uses int sums; the unused local sum is preserved.
+
+- [Original 2170618601](originals/373__2170618601.cpp) · [LeetCode submission](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/submissions/2170618601/)
