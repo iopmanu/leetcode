@@ -2,7 +2,7 @@
 
 Every implementation here is an unchanged local copy of a captured accepted C++ submission. The [manifest](sources.json) records its SHA-256; the [coverage page](COVERAGE.md) documents aggregate history-verification results and unresolved count differences. Problem and submission links point back to LeetCode.
 
-413 submission records · 291 problems · 403 distinct code texts.
+417 submission records · 294 problems · 407 distinct code texts.
 
 ## Range queries
 
@@ -1342,4 +1342,23 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 ### [692. Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/)
 
 - [Original 2170605459](topics/search-and-sort/originals/692__2170605459.cpp) · [LeetCode submission](https://leetcode.com/problems/top-k-frequent-words/submissions/2170605459/)
+
+
+## Additional sources captured on 14 October 2026
+
+### [129. Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+
+- [Original 2172497539](topics/trees-and-lists/originals/129__2172497539.cpp) · [LeetCode submission](https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172497539/)
+
+### [103. Binary Tree Zigzag Level Order Traversal](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
+
+- [Original 2172482505](topics/trees-and-lists/originals/103__2172482505.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/submissions/2172482505/)
+
+### [3723. Maximize Sum of Squares of Digits](https://leetcode.com/problems/maximize-sum-of-squares-of-digits/)
+
+- [Original 2171846233](topics/math-and-bits/originals/3723__2171846233.cpp) · [LeetCode submission](https://leetcode.com/problems/maximize-sum-of-squares-of-digits/submissions/2171846233/)
+
+### [129. Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+
+- [Original 2172498569](topics/trees-and-lists/originals/129__2172498569.cpp) · [LeetCode submission](https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172498569/)
 

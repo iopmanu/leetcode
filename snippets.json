@@ -1384,5 +1384,61 @@
     "end_line": 24,
     "sha256": "334daf3820dd2442f0f553fc209cf8f80180140433f5f7338aa3cfc1f9af88f3",
     "context": "Full unchanged Solution class; includes and judge harness are outside the excerpt. Sort by absolute value, take large magnitudes for positive square slots and small magnitudes for negative slots. Alternating the two ends realizes the optimal assignment because squaring removes the original signs. The source mutates nums and retains its original isRightChoise spelling. See the linked topic table for literal time and space costs and the combinations section for limitations."
+  },
+  {
+    "path": "topics/trees-and-lists/snippets/shared-path-buffer-leaf-evaluation.cpp",
+    "label": "Shared path buffer with leaf-only evaluation",
+    "source_id": "2172497539",
+    "source_path": "topics/trees-and-lists/originals/129__2172497539.cpp",
+    "source_url": "https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172497539/",
+    "problem": "129. Sum Root to Leaf Numbers",
+    "start_byte": 382,
+    "end_byte": 1246,
+    "start_line": 14,
+    "end_line": 45,
+    "sha256": "c638a7fbc7f4bec7e138c0b5dbdf023ed528a603f508022b35ddff8a7f705c49",
+    "context": "The exact method retains the ten-slot digit buffer, leaf rescans, std::pow, unused variable, and reset behavior. Requires the original depth and integer bounds."
+  },
+  {
+    "path": "topics/trees-and-lists/snippets/frozen-frontier-output-zigzag.cpp",
+    "label": "Frozen BFS frontier with alternating output order",
+    "source_id": "2172482505",
+    "source_path": "topics/trees-and-lists/originals/103__2172482505.cpp",
+    "source_url": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/submissions/2172482505/",
+    "problem": "103. Binary Tree Zigzag Level Order Traversal",
+    "start_byte": 382,
+    "end_byte": 1324,
+    "start_line": 14,
+    "end_line": 49,
+    "sha256": "6227a03b1e9bbef29d3198c9f167004ae6b550fdba2214d35357ef8cafe716c4",
+    "context": "The exact method keeps left-to-right discovery, null child placeholders, and reverses only alternate completed output levels."
+  },
+  {
+    "path": "topics/math-and-bits/snippets/bounded-digit-concentration.cpp",
+    "label": "Concentrate bounded digits with quotient and remainder",
+    "source_id": "2171846233",
+    "source_path": "topics/math-and-bits/originals/3723__2171846233.cpp",
+    "source_url": "https://leetcode.com/problems/maximize-sum-of-squares-of-digits/submissions/2171846233/",
+    "problem": "3723. Maximize Sum of Squares of Digits",
+    "start_byte": 25,
+    "end_byte": 375,
+    "start_line": 3,
+    "end_line": 16,
+    "sha256": "4f0185df4448502dbc7863bd1680f7aa79c104cbd0bb3b1caab6c07087c0f46b",
+    "context": "The exact method emits nines, at most one remainder digit, and trailing zeros under the original positive bounded input contract."
+  },
+  {
+    "path": "topics/trees-and-lists/snippets/inherited-decimal-prefix.cpp",
+    "label": "Inherited decimal prefix with child-result summation",
+    "source_id": "2172498569",
+    "source_path": "topics/trees-and-lists/originals/129__2172498569.cpp",
+    "source_url": "https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172498569/",
+    "problem": "129. Sum Root to Leaf Numbers",
+    "start_byte": 382,
+    "end_byte": 933,
+    "start_line": 14,
+    "end_line": 33,
+    "sha256": "a6010fc87e15271023dd04680f3154de437ab726550e789a89b149f982c8ee06",
+    "context": "The exact scalar-prefix method uses integer multiply/add, returns completed leaf values, and sums child results; unused locals are preserved."
   }
 ]

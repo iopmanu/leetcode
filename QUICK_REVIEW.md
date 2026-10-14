@@ -36,6 +36,8 @@ Cover the invariant column, explain why the composition works, then open the ori
 | Winners have semantic ties | Composite quickselect order + output-only sort | Selection and presentation agree on every tie | [Word-rank selection](topics/search-and-sort/snippets/composite-rank-quickselect-words.cpp) |
 | Arrival order and execution priority differ | Sorted arrival pointer + ready-task heap + clock jumps | Admit all due tasks before each non-preemptive choice | [Event-driven scheduler](topics/monotonic-and-heaps/snippets/sorted-arrivals-ready-task-heap.cpp) |
 | Need the immediate next multiset arrangement | Rightmost pivot + smallest increase + suffix reversal | Preserve the longest prefix, then minimize the tail | [Next permutation](topics/search-and-sort/snippets/lexicographic-pivot-suffix-reversal.cpp) |
+| Leaves need the complete ancestor path | Depth-indexed buffer + leaf-only evaluation | Only the current prefix is read; leaf rescans determine cost | [Path-buffer method](topics/trees-and-lists/snippets/shared-path-buffer-leaf-evaluation.cpp) |
+| A fixed sum must maximize bounded digit squares | Concentrate mass + quotient/remainder + descending construction | At most one digit is neither zero nor nine | [Digit concentration](topics/math-and-bits/snippets/bounded-digit-concentration.cpp) |
 
 ## Before adapting an original
 

@@ -23,7 +23,7 @@ Choose the state you need to maintain, then open its implementation. [Topic tabl
 
 ## What the excerpts preserve
 
-All **99 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
+All **103 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
 
 The snippets are not a newly designed standalone library. `tools/verify_snippets.py` verifies exact equality, not correctness for arbitrary inputs.
 
@@ -481,6 +481,25 @@ Original: [206. Reverse Linked List](topics/trees-and-lists/originals/206__21435
 
 Complete original reverseList method. Requires ListNode. Rewires the existing next pointers, retaining the original while(current) formatting and tmp variable.
 
+### [Shared path buffer with leaf-only evaluation](topics/trees-and-lists/snippets/shared-path-buffer-leaf-evaluation.cpp)
+
+Original: [129. Sum Root to Leaf Numbers](topics/trees-and-lists/originals/129__2172497539.cpp#L14-L45) · [submission 2172497539](https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172497539/)
+
+The exact method retains the ten-slot digit buffer, leaf rescans, std::pow, unused variable, and reset behavior. Requires the original depth and integer bounds.
+
+### [Frozen BFS frontier with alternating output order](topics/trees-and-lists/snippets/frozen-frontier-output-zigzag.cpp)
+
+Original: [103. Binary Tree Zigzag Level Order Traversal](topics/trees-and-lists/originals/103__2172482505.cpp#L14-L49) · [submission 2172482505](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/submissions/2172482505/)
+
+The exact method keeps left-to-right discovery, null child placeholders, and reverses only alternate completed output levels.
+
+### [Inherited decimal prefix with child-result summation](topics/trees-and-lists/snippets/inherited-decimal-prefix.cpp)
+
+Original: [129. Sum Root to Leaf Numbers](topics/trees-and-lists/originals/129__2172498569.cpp#L14-L33) · [submission 2172498569](https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172498569/)
+
+The exact scalar-prefix method uses integer multiply/add, returns completed leaf values, and sums child results; unused locals are preserved.
+
+
 ## Memoize states and restore choices
 
 [Algorithms, costs, and tricks](topics/dp-and-backtracking/README.md)
@@ -686,4 +705,11 @@ Full unchanged source. B=30 bit positions, O(B(n+k)) time and O(B) auxiliary spa
 Original: [4076. Longest Resilient Subarray II](topics/math-and-bits/originals/4076__2168355505.cpp#L1-L23) · [submission 2168355505](https://leetcode.com/problems/longest-resilient-subarray-ii/submissions/2168355505/)
 
 Full unchanged source. Positive nonempty input and k>=1. O(n log(k+1)) standard arithmetic-operation time because gcd is recomputed per element; O(1) auxiliary space. Valid lengths are 1 modulo k/gcd(k,r). Raw remainder comparison is retained; signed-value adaptations require care.
+
+
+### [Concentrate bounded digits with quotient and remainder](topics/math-and-bits/snippets/bounded-digit-concentration.cpp)
+
+Original: [3723. Maximize Sum of Squares of Digits](topics/math-and-bits/originals/3723__2171846233.cpp#L3-L16) · [submission 2171846233](https://leetcode.com/problems/maximize-sum-of-squares-of-digits/submissions/2171846233/)
+
+The exact method emits nines, at most one remainder digit, and trailing zeros under the original positive bounded input contract.
 

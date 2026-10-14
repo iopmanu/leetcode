@@ -4245,5 +4245,45 @@
     "topic": "search-and-sort",
     "problem_id": "692",
     "problem_url": "https://leetcode.com/problems/top-k-frequent-words/"
+  },
+  {
+    "source_id": "2172497539",
+    "problem": "129. Sum Root to Leaf Numbers",
+    "url": "https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172497539/",
+    "sha256": "8ec4096d5bd604452083acdd0276eb7e2310550eecf83f7b4443ece69793a8f3",
+    "path": "topics/trees-and-lists/originals/129__2172497539.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "129",
+    "problem_url": "https://leetcode.com/problems/sum-root-to-leaf-numbers/"
+  },
+  {
+    "source_id": "2172482505",
+    "problem": "103. Binary Tree Zigzag Level Order Traversal",
+    "url": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/submissions/2172482505/",
+    "sha256": "31f6f78485835552c48ed73eda062fe668824e663417ecc3cfcbcabdebf5db23",
+    "path": "topics/trees-and-lists/originals/103__2172482505.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "103",
+    "problem_url": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/"
+  },
+  {
+    "source_id": "2171846233",
+    "problem": "3723. Maximize Sum of Squares of Digits",
+    "url": "https://leetcode.com/problems/maximize-sum-of-squares-of-digits/submissions/2171846233/",
+    "sha256": "aaed690bcf3626aaa5307c2d4a7135ee97cd6e7d165b491615c7de3c7ab254e4",
+    "path": "topics/math-and-bits/originals/3723__2171846233.cpp",
+    "topic": "math-and-bits",
+    "problem_id": "3723",
+    "problem_url": "https://leetcode.com/problems/maximize-sum-of-squares-of-digits/"
+  },
+  {
+    "source_id": "2172498569",
+    "problem": "129. Sum Root to Leaf Numbers",
+    "url": "https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172498569/",
+    "sha256": "4b18b08cc7636d76eef0c18647c9e2cf9473a24cd422abd51e37209f8efd945c",
+    "path": "topics/trees-and-lists/originals/129__2172498569.cpp",
+    "topic": "trees-and-lists",
+    "problem_id": "129",
+    "problem_url": "https://leetcode.com/problems/sum-root-to-leaf-numbers/"
   }
 ]

@@ -4,7 +4,7 @@
 
 ## Main algorithms and structures
 
-Choose what crosses an edge: a pointer, an ancestor constraint, or a completed subtree summary. The complete catalog of **28 problems / 36 submissions** is last; every implementation link opens unchanged captured code.
+Choose what crosses an edge: a pointer, an ancestor constraint, or a completed subtree summary. The complete catalog of **30 problems / 39 submissions** is last; every implementation link opens unchanged captured code.
 
 Here `n,m` are node counts, `h` tree height, `w` maximum width, `N` total nodes across `k` lists, and `B` serialized bytes. Hash operations are expected constant-time. Space includes recursion and temporary containers; newly allocated output is stated separately. A skewed tree can have `h=n`.
 
@@ -23,15 +23,16 @@ Here `n,m` are node counts, `h` tree height, `w` maximum width, `N` total nodes 
 | Pointer-to-clone map | Copy identity-dependent next/random edges | Expected O(n) | O(n) map + O(n) output nodes | [Two-pass deep copy](originals/138__2143802245.cpp) |
 | Carry state + appended output list | Add digit streams without integer conversion | O(max(n,m)) | O(1) working state + O(max(n,m)) output nodes | [Digit addition](originals/2__2143813487.cpp) |
 | Structural DFS | Compare, invert, or measure a tree | O(n) for one tree; O(n+m) equality upper bound | O(h) frames; equality O(h₁+h₂) upper bound | [Equality](originals/100__2140598575.cpp), [invert](originals/226__2140574036.cpp), [height](originals/104__2140575615.cpp) |
-| Ancestor bounds / path aggregate | Validity depends on all ancestors | O(n) | O(h) frames | [Exclusive BST bounds](originals/98__2140737519.cpp), [ancestor maximum](originals/1448__2140724204.cpp) |
+| Ancestor bounds / path aggregate | Validity depends on all ancestors | O(n) | O(h) frames | [Exclusive BST bounds](originals/98__2140737519.cpp), [ancestor maximum](originals/1448__2140724204.cpp), [decimal prefix](originals/129__2172498569.cpp) |
 | Postorder numerical summaries | Parent needs child height, gain, or sum/count | O(n) | O(h) frames | [Balance](originals/110__2140593789.cpp), [diameter](originals/543__2140582704.cpp), [path gain](originals/124__2153370936.cpp), [sum/count](originals/2265__2137363284.cpp) |
-| Queue with frozen level length | Output belongs to a whole depth layer | O(n) | O(w) queue/level buffer; output O(n) levels or O(h) view | [Level order](originals/102__2140704978.cpp), [right view](originals/199__2140707899.cpp) |
+| Queue with frozen level length | Output belongs to a whole depth layer | O(n) | O(w) queue/level buffer; output O(n) levels or O(h) view | [Level order](originals/102__2140704978.cpp), [right view](originals/199__2140707899.cpp), [output-only zigzag](originals/103__2172482505.cpp) |
 | Inorder counting / BST-directed descent | Rank by sorted traversal or find target split | Kth source O(n); LCA O(h) | O(h) recursive frames in both | [Full inorder kth](originals/230__2140766874.cpp), [recursive LCA](originals/235__2140699724.cpp) |
 | Preorder cursor + inorder index map | Reconstruct distinct-valued tree from traversals | Expected O(n) | O(n) map + O(h) frames + O(n) output; one extra unused node allocated | [Traversal reconstruction](originals/105__2141508524.cpp) |
 | Null-marked preorder codec | Serialize shape and values unambiguously | O(B+n) encode/decode | O(B+h) streams/string copies + O(n) decoded nodes | [Preorder codec](originals/297__2153777400.cpp), [equivalent codec](originals/297__2141912475.cpp) |
 | Unique IDs + paired traversal codec | Traversal reconstruction must allow duplicate values | Expected O(B+n) encode/decode | O(B+n+h) buffers/maps/frames + O(n) decoded nodes | [Indexed inorder/preorder codec](originals/297__2141671426.cpp) |
 | Candidate DFS + structural equality | Find an exact subtree without preprocessing | O(nm) worst case | O(h₁+h₂) frames upper bound | [Repeated matching](originals/572__2140623050.cpp) |
 | Postorder greedy coverage + pointer set | A local placement covers parent/self/children | Expected O(n) | O(n) covered set + O(h) frames | [Camera placement](originals/968__2155106387.cpp) |
+| Shared depth-indexed path + leaf-only evaluation | The leaf answer needs the complete ancestor digit path | O(n + sum of leaf path lengths), bounded by O(nh); O(n) under the fixed ten-level contract | Ten integers + O(h) recursion | [Exact excerpt](snippets/shared-path-buffer-leaf-evaluation.cpp) · [full source](originals/129__2172497539.cpp) |
 
 ## Combinations and tricks
 
@@ -91,6 +92,8 @@ Here `n,m` are node counts, `h` tree height, `w` maximum width, `N` total nodes 
 - **Tradeoff / trap:** Reading `back()` after adding children mixes levels. Queue memory is O(width), while recursion elsewhere follows O(height); wide and skewed trees stress different resources. Level-order output itself stores all n values.
 - **Originals:** [Frozen-size BFS](originals/102__2140704978.cpp), [rightmost representative](originals/199__2140707899.cpp).
 
+- **Output-order variant:** [Zigzag traversal](originals/103__2172482505.cpp) keeps left-to-right child discovery and reverses only the completed level when `result.size()` is odd. Null children are enqueued and skipped; empty levels are not emitted. Each real node creates two child entries, so placeholder processing and all reversals still total O(n), with O(w) working storage and O(n) output. The queue invariant permits null placeholders; reversing presentation does not reverse traversal. [Literal method](snippets/frozen-frontier-output-zigzag.cpp).
+
 ### Serialize enough structure to make decoding deterministic
 
 - **Recognize:** Values alone do not identify tree shape, especially when duplicates are allowed.
@@ -106,6 +109,16 @@ Here `n,m` are node counts, `h` tree height, `w` maximum width, `N` total nodes 
 - **Invariant:** After a subtree is processed, uncovered demand can remain only at its root. A camera at the parent of an uncovered child covers at least that child's demand and can also help the sibling/ancestor, which motivates the greedy choice.
 - **Tradeoff / trap:** This captured implementation uses a pointer set of up to O(n) elements, not a constant-state three-value return. By contrast, [subtree matching](originals/572__2140623050.cpp) repeatedly recomputes structural equality at candidate roots, producing O(nm) worst-case work rather than one summarized postorder pass.
 - **Originals:** [Coverage-set greedy](originals/968__2155106387.cpp), [structural equality](originals/100__2140598575.cpp), [candidate-root search](originals/572__2140623050.cpp).
+
+### Shared path buffer + leaf-only evaluation
+
+- **Recognize:** The captured variant stores ancestor digits explicitly and evaluates them at leaves.
+- **Compose:** DFS + a depth-indexed shared buffer + leaf evaluation in [the original](originals/129__2172497539.cpp), also available as a [literal method](snippets/shared-path-buffer-leaf-evaluation.cpp).
+- **Invariant:** `buffer[0..height]` is the current root-to-node digit path. Each visit overwrites its slot. Only this prefix is read at a leaf; stale deeper slots and the leaf's skipped reset do not affect correctness.
+- **Actual work:** Each leaf rescans its path. Total work is O(n + sum of leaf path lengths), bounded by O(nh) under bounded arithmetic, rather than an unrestricted O(n) running-value DFS. The supported fixed depth of at most ten makes it O(n) here.
+- **Original limitations:** The buffer has ten slots; an index of ten or greater is out of bounds. `std::pow` uses floating-point arithmetic before conversion to `int`; digits, reconstructed numbers and accumulated sum require the original bounds. The unused outer `current` remains unchanged.
+
+- **Scalar-prefix variant from the same problem:** [The later original](originals/129__2172498569.cpp) passes `sum*10 + current->val` by value, returns that number at a leaf, and adds child results. This combines the existing inherited-state and returned-summary ideas: O(n) time, O(h) call frames, no leaf rescan or path buffer. It retains the original `int` bounds and unused locals. [Literal method](snippets/inherited-decimal-prefix.cpp).
 
 ## Problem and source appendix
 
@@ -403,3 +416,28 @@ Return pair (sum,count) for subtree and count matching integer average.
 **Captured variants:** One observed approach.
 
 - [Original 2137363284](originals/2265__2137363284.cpp) · [LeetCode submission](https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/submissions/2137363284/)
+
+### 129. Sum Root to Leaf Numbers
+
+[Problem](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+
+The exact method retains the ten-slot digit buffer, leaf rescans, std::pow, unused variable, and reset behavior. Requires the original depth and integer bounds.
+
+- [Original 2172497539](originals/129__2172497539.cpp) · [LeetCode submission](https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172497539/)
+
+#### Later scalar-prefix source
+
+[Problem](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+
+By-value decimal prefix and child-result summation, as described in the shared-path comparison above.
+
+- [Original 2172498569](originals/129__2172498569.cpp) · [LeetCode submission](https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172498569/)
+
+
+### 103. Binary Tree Zigzag Level Order Traversal
+
+[Problem](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
+
+The exact method keeps left-to-right discovery, null child placeholders, and reverses only alternate completed output levels.
+
+- [Original 2172482505](originals/103__2172482505.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/submissions/2172482505/)

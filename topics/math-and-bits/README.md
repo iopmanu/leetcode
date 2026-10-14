@@ -26,6 +26,7 @@
 | Conserved bit counts + convex concentration: AND/OR redistribution preserves each bit multiplicity | O(B(n+k)), B=30 | O(B), B=30 | [Greedy bit-layer construction](originals/2897__2170231461.cpp) |
 | Equal-remainder runs + gcd progression: Valid lengths satisfy (length-1)*r divisible by k | Gcd version O(n log(k+1)); retained backward-trial version O(n²) worst case | O(1) | [Gcd length rounding](originals/4076__2168355505.cpp), [backward trials](originals/4075__2168348655.cpp) |
 | Complement lookup + candidate objective: Prior occurrences provide distinct indexes; retain valid pairs then rank by product | Expected O(n) | O(n) map and candidate pairs | [Unequal-value product pairs](originals/4074__2168271160.cpp) |
+| Bounded digit mass concentration + decimal construction | Θ(num) for feasible output; O(1) rejection | O(1) auxiliary state + Θ(num) returned string | [Exact excerpt](snippets/bounded-digit-concentration.cpp) · [full source](originals/3723__2171846233.cpp) |
 
 ## Combinations and tricks
 
@@ -94,6 +95,9 @@ Every composition below is present in a linked original. The reusable part is th
 - **Compose:** [The original source](originals/2897__2170231461.cpp) counts each bit, then repeatedly constructs one number using every bit with remaining inventory. The resulting numbers are nested bit layers.
 - **Invariant:** For each bit, AND/OR preserves the total number of set occurrences. Concentrating a transferable bit on a larger value increases the unmodded sum of squares: moving value d from b to a changes the sum by 2d(a-b)+2d² when a >= b. Repeated concentration aligns high bits with other high bits.
 - **Tradeoff / trap:** Optimization is over the true sum, before modulo; modulo only limits accumulated output. The source hardcodes 30 bit positions. It counts all n inputs even though it constructs only k output values, uses long long for the constructed value and square, and retains int bit tests within the source bounds.
+
+- **Bounded-decimal variant:** [Digit construction](originals/3723__2171846233.cpp) distributes a fixed digit sum into `sum/9` nines, one optional `sum%9` digit, then zeros. For 0 < a ≤ b < 9, moving one unit from a to b increases the squared sum by 2(b−a)+2, so at most one digit of an optimum lies strictly between zero and nine. Descending placement selects the largest number among equal-scoring permutations. This reuses the concentration idea without bit counts or a heap. [Literal method](snippets/bounded-digit-concentration.cpp).
+- **Original digit bounds:** Rejects `sum > 9*num`. Feasible construction costs Θ(num) output time/space and O(1) auxiliary state. Positive valid inputs and nonoverflowing `9*num` are assumed; negative inputs are not validated, and sum zero produces only zeros outside the original positive-sum contract.
 
 ### Replace a backward length search with a gcd progression
 
@@ -417,3 +421,11 @@ Scan equal-remainder runs and trial lengths backward until (length-1)*remainder 
 Complement hash lookup records prior indexes and saves every unequal-value candidate pair, larger value first. A later max_element compares products. Expected O(n) time, O(n) stored candidates and map; no input mutation. Equal values are intentionally forbidden by the problem. Any optimum is allowed, so retaining the latest prior index is sufficient. Products remain int and are safe under the original -100..100 value bounds, including negative products.
 
 - [Original 2168271160](originals/4074__2168271160.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-product-pair-with-target-sum/submissions/2168271160/)
+
+### 3723. Maximize Sum of Squares of Digits
+
+[Problem](https://leetcode.com/problems/maximize-sum-of-squares-of-digits/)
+
+The exact method emits nines, at most one remainder digit, and trailing zeros under the original positive bounded input contract.
+
+- [Original 2171846233](originals/3723__2171846233.cpp) · [LeetCode submission](https://leetcode.com/problems/maximize-sum-of-squares-of-digits/submissions/2171846233/)
