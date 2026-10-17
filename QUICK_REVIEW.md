@@ -38,6 +38,10 @@ Cover the invariant column, explain why the composition works, then open the ori
 | Need the immediate next multiset arrangement | Rightmost pivot + smallest increase + suffix reversal | Preserve the longest prefix, then minimize the tail | [Next permutation](topics/search-and-sort/snippets/lexicographic-pivot-suffix-reversal.cpp) |
 | Leaves need the complete ancestor path | Depth-indexed buffer + leaf-only evaluation | Only the current prefix is read; leaf rescans determine cost | [Path-buffer method](topics/trees-and-lists/snippets/shared-path-buffer-leaf-evaluation.cpp) |
 | A fixed sum must maximize bounded digit squares | Concentrate mass + quotient/remainder + descending construction | At most one digit is neither zero nor nine | [Digit concentration](topics/math-and-bits/snippets/bounded-digit-concentration.cpp) |
+| Static rectangle totals need four boundary terms | Padded 2D prefixes + inclusion–exclusion | Subtract excluded strips and restore their shared corner | [Rectangle sums](topics/range-queries/snippets/padded-2d-prefix-rectangle.cpp) |
+| One new value changes a whole interval of subarray starts | Last occurrence + additive lazy first/second moments | Update Σx² using the old Σx, then update Σx | [Distinct-count moments](topics/range-queries/snippets/last-occurrence-lazy-moments.cpp) |
+| A unique sorted arrangement is reached by arbitrary swaps | Original indexes + permutation cycles | A cycle of length c contributes c−1 swaps | [Cycle count](topics/search-and-sort/snippets/composite-key-permutation-cycles.cpp) |
+| Sorted tree values must be consumed incrementally | Deferred left spine + stack | The stack top is the next unvisited inorder node | [Lazy iterator](topics/trees-and-lists/snippets/deferred-inorder-stack-iterator.cpp) |
 
 ## Before adapting an original
 
@@ -64,3 +68,6 @@ For all retained variants and their context, use the final appendix in each [top
 
 - The [H-Index II original](topics/search-and-sort/originals/275__2170348113.cpp) rescans all citations per binary-search predicate: O(n log(n+1)), not O(log n).
 - The [unique-sum window](topics/windows-and-prefixes/originals/1695__2170086755.cpp) initializes one million counters; its literal cost includes that fixed domain.
+
+- [Equal-partition memoization](topics/dp-and-backtracking/snippets/index-selected-sum-memo.cpp) allocates 4,020,201 int cells on the stack and initializes all of them; it is not a compressed half-target DP.
+- [Moment updates](topics/range-queries/snippets/last-occurrence-lazy-moments.cpp) must update the square sum before changing the first moment; last-seen values directly index a 100001-entry array.

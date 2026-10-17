@@ -4,7 +4,7 @@
 
 ## Main algorithms and structures
 
-Identify the smallest state that determines every legal continuation, then choose whether to count, optimize, or enumerate it. The complete catalog of **26 problems / 34 submissions** is last; links below point directly to unchanged originals.
+Identify the smallest state that determines every legal continuation, then choose whether to count, optimize, or enumerate it. The complete catalog of **28 problems / 36 submissions** is last; links below point directly to unchanged originals.
 
 Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/segment parameter, and `L` a searched word's length. Hash-table bounds are expected. Space includes recursion, containers, and by-value string copies for lvalue calls; output storage is listed separately. Exponential search bounds below are upper bounds, not claims that every input attains them.
 
@@ -34,6 +34,7 @@ Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/s
 | Per-position Cartesian-product enumeration | Choose one allowed symbol per position and emit every full sequence | O(dP), P product of per-digit choice counts | O(d) buffer/stack/input copy + O(dP) output; fixed map | [Mapped letters + shared buffer](originals/17__2168599877.cpp) · [literal class](snippets/mapped-choice-letter-enumeration.cpp) |
 | Interval predicate + partition enumeration | Reuse palindrome truth values while producing every valid cut path | O(n²+n·2ⁿ) worst case | O(n²+n) auxiliary table/path/stack/input copy + O(nP) output for P partitions | [Table + push/recurse/pop](originals/131__2169294097.cpp) · [literal method](snippets/palindrome-table-partition-enumeration.cpp) |
 | Shared suffix-cost memo across multiple starts | Row increases on every transition; all starts reuse the same cell continuation | Expected O(rc); fixed three outgoing choices | O(rc) hash memo + O(r) recursion; no input mutation | [Packed-coordinate falling-path memo](originals/931__2171546662.cpp) |
+| Index × selected-sum include/skip memo | Equal partition depends on both progress and accumulated sum | O(M+n+R), R≤n(S+1), S total sum; M=201×20001 initialization | M int cells on the stack + O(n) recursive frames | [Exact fixed-table method](snippets/index-selected-sum-memo.cpp) |
 
 ## Combinations and tricks
 
@@ -68,6 +69,7 @@ Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/s
 - **Invariant:** A memo key must refer to one consistent moment in the transition. Negative budget/prefix balance is infeasible; a destination parenthesis path is valid only at balance zero. Packed coordinates must occupy disjoint bit fields.
 - **Tradeoff / trap:** The parenthesis source has no parity or remaining-length pruning and uses bitwise `|`, evaluating both directions. Its balance can grow with path length, yielding O(rc(r+c)) rather than O(rc) state space. Score DFS distinguishes uncached `-2` from impossible `INT_MIN` and checks impossibility **before** addition to avoid overflowing the sentinel.
 - **Originals:** [Post-payment memo](originals/3742__2161116179.cpp), [forward spent-cost table](originals/3742__2161115436.cpp), [packed post-cell balance](originals/2267__2157018872.cpp), [plain position-only grid DP](originals/64__2126173167.cpp).
+- **Selected-sum variant:** In [equal-partition memoization](snippets/index-selected-sum-memo.cpp), the state is (next index, selected prefix sum). Include or skip the next element; both branches advance the index, so elements cannot be reused. At the end, compare sum with total−sum. Equal states have the same remaining choice set. The source allocates and initializes M=201×20001 int cells on every call, then visits R≤n(S+1) nonterminal states for total sum S: O(M+n+R) time, M int cells plus O(n) frames. The local array alone is 16,080,804 bytes with 4-byte int, about 15.34 MiB, which can exceed ordinary process stack limits. It has no odd-total rejection or half-target pruning; logical OR does short-circuit. Nonnegative values and the fixed index/sum bounds are structural requirements. [Full original](originals/416__2174848246.cpp).
 
 ### Prove acyclicity before discarding path history
 
@@ -100,6 +102,7 @@ Here `n,m` are sequence lengths, `r,c` grid dimensions, `k` a budget/remainder/s
 - **Invariant:** Mutable state describes exactly the current partial assignment when entering and leaving a failed branch. Successful Sudoku deliberately returns without undoing, preserving the solution; enumerators undo even after recording an answer so they can continue searching.
 - **Tradeoff / trap:** N-Queens tests up to n candidates with O(n) attack scans per search node, not constant-time diagonal sets. Its right-diagonal bound is `col <= n`, which reads the string's terminator at `col==n`; that is outside board columns and is not a reusable indexing convention. Returned boards/strings are copied, so include Qn² or nCₙ output storage and work.
 - **Originals:** [Sudoku constraint sets](originals/37__2164710608.cpp), [scanning queen attacks](originals/51__2164697200.cpp), [balance-pruned string buffer](originals/22__2160263536.cpp).
+- **Validation-only variant:** [The captured Sudoku validator](originals/36__2174855744.cpp) checks each nonempty cell against its row, column and box sets before inserting into all three. It reuses the solver’s constraint representation without search, mutation or undo. For the fixed 9×9 contract, 81 inspections and bounded set storage are O(1); this is not the solver’s exponential search. It checks current consistency, not solvability. Nested unordered maps/sets, C++20 contains and the unvalidated shape/symbol assumptions remain unchanged. The technique is already represented above, so this source receives provenance without a redundant snippet.
 
 ### Memoizing a set is not the same cost as memoizing a number
 
@@ -431,3 +434,15 @@ Alternating base sum plus best nonnegative segment gain over each adjacent-pair 
 Share memoized minimum suffix costs across every top-row starting column. Each transition increases the row, so position alone determines the continuation even with negative costs. Bounds are checked before packing row and column into disjoint 32-bit halves of a uint64_t key. Expected O(rc) time, O(rc) memo plus O(r) recursion; input unchanged. Bottom-row values are returned without caching. Source quirks retained: j <= m tries one extra invalid start, 1e7 is the impossible sentinel, and unordered_map::contains requires C++20.
 
 - [Original 2171546662](originals/931__2171546662.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-falling-path-sum/submissions/2171546662/)
+
+### 36. Valid Sudoku
+
+[Problem](https://leetcode.com/problems/valid-sudoku/)
+
+- [Original 2174855744](originals/36__2174855744.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-sudoku/submissions/2174855744/). Validation-only reuse of the solver’s row, column and box constraint sets. Fixed 9×9 consistency check; no search, board mutation or solvability guarantee. C++20 contains and the original shape/symbol bounds are retained.
+
+### 416. Partition Equal Subset Sum
+
+[Problem](https://leetcode.com/problems/partition-equal-subset-sum/)
+
+- [Original 2174848246](originals/416__2174848246.cpp) · [LeetCode submission](https://leetcode.com/problems/partition-equal-subset-sum/submissions/2174848246/). Exact method, including the fixed 201×20001 int local memo and full initialization. It explores full selected sums without odd-total or half-target pruning; nonnegative values, original bounds and sufficient stack space are required.

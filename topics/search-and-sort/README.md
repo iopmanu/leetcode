@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**52 captured problems · 89 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**54 captured problems · 91 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -39,6 +39,7 @@ Pick the invariant first, then open a representative original. Here `n` is input
 | Descending rank crossing | First rank no longer supported by its citation count | O(n log n), including sort | O(log n) sort stack; mutates input | [Sorted h-index crossing](originals/274__2170335393.cpp) |
 | Lexicographic successor via suffix reversal | Preserve the longest possible prefix, minimally increase its pivot, then minimize the tail | O(n) | O(1); mutates input | [Pivot, rightmost successor, suffix reversal](originals/31__2171277650.cpp) |
 | Composite-rank quickselect + output-only sort | Select by frequency and lexical tie-break, then order winners | Expected hashing O(T); average selection O(uL), worst O(u²L); output sort O(kL log(k+1)) | O(uL+u) counts/pairs/worst recursion, plus O(kL) output | [Word-rank selection](originals/692__2170605459.cpp) |
+| Composite-key sort + permutation-cycle decomposition | Count arbitrary swaps to a unique target order | Expected O(nD + n log(n+1)), D maximum decimal digits | O(n), including indexed records, digit-sum cache and visited flags | [Exact cycle count](snippets/composite-key-permutation-cycles.cpp) · [Full source](originals/3551__2174794356.cpp) |
 
 ## Combinations and tricks
 
@@ -149,6 +150,15 @@ Pick the invariant first, then open a representative original. Here `n` is input
 - **Compose:** [The word-ranking source](originals/692__2170605459.cpp) extends count-plus-quickselect: its less helper orders lower frequency first and lexically larger words first, making the retained suffix the winners. A final sort reverses this into descending frequency and ascending lexical order.
 - **Invariant:** Selection and presentation encode the same winner order; reversing only the frequency comparison would select the wrong tied words.
 - **Tradeoff / trap:** For total input characters T, u distinct words and maximum word length L, hashing is expected O(T), average selection O(uL), worst selection O(u²L), and output sorting O(kL log(k+1)). Midpoint pivots are deterministic, so average behavior is not a randomized guarantee. Adversarial hash collisions can add cost. The original expression pairs.size()-k-1 underflows in unsigned arithmetic when k equals u before conversion to int; it is retained, not presented as a portable rank-boundary idiom.
+- **All-position sorting variant:** [Character-frequency sorting](originals/451__2174851351.cpp) counts symbols, then sorts all n character positions by frequency and character. Reverse iterators make forward output descend by frequency and then by character; the secondary key keeps identical symbols grouped. It is expected O(n log(n+1)), not bucket-linear or a sort of only u distinct symbols. The map holds O(u) entries, sorting uses its usual O(log n) stack, and the by-value string may add an O(n) input copy before becoming returned output. Comparator lookups use already-inserted keys. This repeats count-derived ordering, so the original is linked without another generic sorting snippet.
+
+### Turn a unique target order into disjoint permutation cycles
+
+- **Recognize:** You need the minimum number of arbitrary swaps to reach a fully determined sorted arrangement.
+- **Compose:** [The exact method](snippets/composite-key-permutation-cycles.cpp) attaches each value’s original index, caches its decimal digit sum, and sorts the records by (digit sum, value). Traverse the resulting sorted-position-to-original-position permutation with visited flags.
+- **Invariant:** Each index belongs to one cycle. A cycle of length c needs c−1 swaps, and the disjoint cycle costs add. The inverse mapping has the same cycle lengths, so the source’s mapping direction is sufficient.
+- **Actual cost / contract:** For n values and at most D digits each, expected O(nD+n log(n+1)) time and O(n) extra storage, including the vector-of-vectors records, cached sums and visited flags. The input itself is not sorted. Positive, distinct values make the target order unique; this code does not optimize the assignment of duplicate values. Hashing is expected-time; collision-heavy comparator lookups can make sorting O(n² log(n+1)). Nonpositive inputs are outside its digit-sum contract.
+- **Original:** [Digit-key sorting and cycle count](originals/3551__2174794356.cpp).
 
 ## Problem and source appendix
 
@@ -723,3 +733,15 @@ Find the maximal non-increasing suffix, increase its preceding pivot using the r
 Count strings, quickselect the worst-to-best rank boundary using frequency and reverse lexical ties, copy the retained suffix, then sort only that output by the desired order. This is a comparator-sensitive extension of existing frequency selection, not a new quickselect implementation. String hashing, copies and comparisons are not constant-cost.
 
 - [Original 2170605459](originals/692__2170605459.cpp) · [LeetCode submission](https://leetcode.com/problems/top-k-frequent-words/submissions/2170605459/)
+
+### 451. Sort Characters By Frequency
+
+[Problem](https://leetcode.com/problems/sort-characters-by-frequency/)
+
+- [Original 2174851351](originals/451__2174851351.cpp) · [LeetCode submission](https://leetcode.com/problems/sort-characters-by-frequency/submissions/2174851351/). Frequency-derived total ordering of every character position. Reverse iterators produce descending frequency and descending character ties. Expected O(n log n), with an O(u) frequency map and possible O(n) by-value input copy; no bucket or distinct-symbol sorting substitution.
+
+### 3551. Minimum Swaps to Sort by Digit Sum
+
+[Problem](https://leetcode.com/problems/minimum-swaps-to-sort-by-digit-sum/)
+
+- [Original 2174794356](originals/3551__2174794356.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-swaps-to-sort-by-digit-sum/submissions/2174794356/). Exact method retains original indexes, caches digit sums, sorts by digit sum then value, and sums cycle lengths minus one. The minimum-swap argument relies on the original distinct positive values; equal-value assignment is not solved here.

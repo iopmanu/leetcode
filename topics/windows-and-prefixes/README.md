@@ -2,7 +2,7 @@
 
 [All topics](../../README.md) · [Source index](../../SOURCES.md) · [Coverage](../../COVERAGE.md)
 
-**24 captured problems · 28 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
+**26 captured problems · 31 accepted submission records.** Every linked implementation below is an unchanged captured source file. These notes describe the code; they do not replace it with a common API.
 
 ## Main algorithms and structures
 
@@ -27,6 +27,8 @@ Choose a window only when moving its boundaries has the monotonicity the proof n
 | Fixed-length predicate count / distinct-value sum | Update outgoing/incoming contributions; map size certifies distinctness | Vowels O(n); distinct sum expected O(n) | Vowels O(1) set + O(n) by-value input copy; distinct sum O(k) map | [Vowel count](originals/1456__2169572072.cpp), [distinct sum](originals/2461__2169620244.cpp) |
 | Incoming-key frequency repair | Only the newly added key can violate its count cap | Expected O(n) | O(u) retained map keys, including zero counts | [At-most-k frequency window](originals/2958__2170182442.cpp) |
 | Dense counts + unique-window sum | Positive values make the maximal valid suffix optimal at each right endpoint | O(n+D), D=1,000,000, including initialization | O(D) | [Dense unique-sum window](originals/1695__2170086755.cpp) |
+| Internal prefix-coordinate histogram | Minimize crossings by maximizing aligned legal boundaries | Expected O(B), B total bricks | O(D) distinct internal coordinates | [Boundary voting](snippets/internal-boundary-frequency.cpp) · [Full source](originals/554__2174864553.cpp) |
+| Frequency map + at-most-k live keys | Longest interval with a distinct-value cap | O(n) for the k=2 wrapper; expected O(n) for general k | O(1) for k=2; general helper O(min(n,k+1)) live entries | [Exact helper](snippets/at-most-k-live-frequency-keys.cpp) · [Counter variant](originals/904__2172918509.cpp) |
 
 ## Combinations and tricks
 
@@ -57,6 +59,7 @@ Choose a window only when moving its boundaries has the monotonicity the proof n
 - **Compose:** Running prefix + frequency map initialized with one zero prefix in [the retained counting source](originals/560__2130713437.cpp).
 - **Invariant:** Before inserting current prefix P, the map contains only earlier endpoints; occurrences of `P−target` correspond one-to-one to valid nonempty intervals ending here.
 - **Tradeoff / trap:** Query before inserting, especially for target zero. The [older variant](originals/560__2025473825.cpp) uses `operator[]` for lookup and therefore creates missing zero-count keys; both variants still use O(n) space. Prefix extremes in [the absolute-sum source](originals/1749__2000684155.cpp) need only two values because they optimize a difference instead of counting every matching prefix.
+- **Internal-boundary voting variant:** [This exact method](snippets/internal-boundary-frequency.cpp) turns each wall row into cumulative brick-end coordinates and counts equal internal boundaries. A cut at x crosses height−frequency[x] bricks, so minimizing crossings means maximizing aligned boundaries. Positive widths let each row vote at most once per coordinate; excluding the common right edge is essential. It uses long long coordinates/counts and 0LL accumulation, then explicitly scans the map for its maximum. For B bricks and D distinct internal coordinates: expected O(B) time, O(D) space; collision-heavy hashing can reach O(BD). Nonempty equal-width rows are assumed. An empty histogram correctly returns the wall height. [Full original](originals/554__2174864553.cpp).
 
 ### Match multisets by boundary crossings, then lift characters to words
 
@@ -101,6 +104,7 @@ Choose a window only when moving its boundaries has the monotonicity the proof n
 - **Invariant:** Both summaries describe exactly the current k elements. A length-k window is all-distinct precisely when it contains k live keys. Adding and removing the same value correctly leaves its frequency unchanged.
 - **Tradeoff / trap:** Both implementations initialize the first full window and require `1 <= k <= n`. Distinct sums start their best at zero under positive-value constraints, and their subtraction occurs in `int` before reaching the `long long` accumulator. The vowel source takes its string by value and retains C++20 `contains`.
 - **Exact code:** [Sum + distinctness certificate](snippets/fixed-window-distinct-sum.cpp), [incoming/outgoing predicate count](snippets/fixed-window-vowel-count.cpp).
+- **Variable-width distinct-cap variant:** [The exact at-most-k helper](snippets/at-most-k-live-frequency-keys.cpp) counts live keys, erases a key when its count reaches zero, and shrinks until map size ≤ baskets. For each right endpoint, the surviving interval is its longest valid suffix, so index width is the objective. Each endpoint advances at most n times. The delivered wrapper fixes k=2, so at most three keys are present even before repair: O(n) time and O(1) auxiliary space, including collision handling in that bounded map. For general nonnegative k, the helper has expected O(n) time and O(min(n,k+1)) live map storage; collision-heavy hashing can increase that generalized time. The [earlier source](originals/904__2172918509.cpp) maintains the same width with an explicit element counter; the later source retains that variable unused. Both return zero on empty input and keep their original INT_MIN sentinel. No second snippet duplicates the same window proof.
 
 ### Repair only the constraint changed by the incoming value
 
@@ -367,3 +371,16 @@ Frequency-limited sliding window. Only the newly incremented value can violate t
 Positive unique-value window with running sum and vector<int>(1e6,0) counts. Expected-free array access yields O(n+D) total time and O(D) auxiliary space, D=1,000,000, including initialization. Values must index the allocated domain and be positive for the maximal-valid-window sum argument.
 
 - [Original 2170086755](originals/1695__2170086755.cpp) · [LeetCode submission](https://leetcode.com/problems/maximum-erasure-value/submissions/2170086755/)
+
+### 554. Brick Wall
+
+[Problem](https://leetcode.com/problems/brick-wall/)
+
+- [Original 2174864553](originals/554__2174864553.cpp) · [LeetCode submission](https://leetcode.com/problems/brick-wall/submissions/2174864553/). Exact method: accumulate row-end coordinates in long long, exclude the common outer edge, and scan the histogram for its maximum. Positive equal-width rows are assumed; an empty histogram returns the wall height.
+
+### 904. Fruit Into Baskets
+
+[Problem](https://leetcode.com/problems/fruit-into-baskets/)
+
+- [Original 2172918744](originals/904__2172918744.cpp) · [LeetCode submission](https://leetcode.com/problems/fruit-into-baskets/submissions/2172918744/). Exact helper uses the number of live frequency-map keys as its feasibility certificate. The wrapper passes baskets=2. Zero counts are erased, width is computed from indexes, and the unused currentFrequencies variable remains unchanged.
+- [Original 2172918509](originals/904__2172918509.cpp) · [LeetCode submission](https://leetcode.com/problems/fruit-into-baskets/submissions/2172918509/). Earlier at-most-two-distinct variant with an explicit live-element counter. It uses the same frequency map, zero-count erasure and shrink invariant as the later index-width variant; retained as provenance rather than another duplicate snippet.

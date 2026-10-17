@@ -1,6 +1,17 @@
 # Coverage and limitations
 
-## Current handbook: incremental update on 14 October 2026
+## Current handbook: incremental update on 17 October 2026
+
+The handbook preserves **434 Accepted C++ submissions from 309 problems**, **424 distinct code texts**, **116 literal snippets**, and **11 topics**. This update adds **17 source IDs from 15 new C++ problems**, including two earlier Accepted C++ variants found by reading complete changed histories. All 417 prior originals, 103 prior snippets, and their provenance records remain unchanged.
+
+- Compared all **572 unique practice rows across 12 pages** against the prior 559-row inventory. No prior problem URL disappeared. Exactly **15 new or changed histories** were identified and reopened across all exposed languages and statuses; their **29 attempt rows** had complete ordinals. The 17 Accepted C++ IDs in those histories all have captured sources. Other histories were compared by inventory count, not reread.
+- The account displays **567 solved problems and five attempting**; practice-row counts total **1,516 attempts**. The final boundary refresh at **21:01:29 UTC on 17 October 2026** still showed latest captured ID **2174886009**. Repeating that latest source capture produced identical bytes.
+- All 17 source strings were read from complete rendered preformatted C++ blocks, excluding only displayed line-number nodes. Independent recursive and iterative DOM text traversals agreed. The capture method reproduced previously published source 2172498569 exactly. Leading, internal and terminal whitespace exposed by the page were retained; this is not an independent raw export.
+- Added **16,220 source bytes**, for **407,051 preserved original bytes**. All source hashes and retained capture strings agree; all 116 excerpts are literal contiguous source slices with verified byte offsets and inclusive line ranges. Four sources reuse already-covered techniques and are retained with provenance and variant notes rather than redundant snippets.
+
+The profile displays **310 C++ solved problems**, while captured originals cover **309**. The previously documented **one-problem aggregate gap remains unresolved**. This is an incremental update, not a full account-history reaudit. The last complete exposed-history audit remains the 10 October audit of the then-inventoried 527 solved problems. Hidden, deleted, inaccessible, future, other-language and non-Accepted sources are outside the coverage claim. Private attempt-level history is not published. Source-fidelity checks do not compile or test the algorithms, and no original implementation was silently repaired.
+
+## Previous incremental snapshot: 14 October 2026
 
 The handbook preserves **417 Accepted C++ submissions from 294 problems**, **407 distinct code texts**, **103 literal snippets**, and **11 topics**. Four new source IDs from three new C++ problems were added. All 413 prior originals, 99 prior snippets, and their provenance records remain unchanged.
 

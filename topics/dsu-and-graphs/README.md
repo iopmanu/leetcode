@@ -24,6 +24,7 @@ Choose by the information that must survive a traversal: component identity, dis
 | Bounded neighbor candidates | Four distinct vertices with additive scores: expected O(V+E) upper bound; at most nine candidate pairs per central edge | O(V), at most three stored neighbors per used vertex | [Top-three candidate source](originals/2242__2161904938.cpp) |
 | Repeated reachability queues without a visited guard | Actual DAG source costs O(V²+E+P+q), P all enqueued path prefixes across starts; P can be exponential | O(V²+E+W), W the largest queue; W can also be exponential | [Unguarded original](originals/1462__2156120061.cpp) |
 | Eight-neighbor layered grid BFS | Discover once on enqueue; layer count measures cells: O(N) | O(N) queue; mutates discovered grid cells | [Eight-way cell-count variant](originals/1091__2171171780.cpp) |
+| Component-wise two-color BFS | Every edge must join opposite sides: O(V+E) | O(V) colors and queue; reuses input adjacency | [Component loop + helper](snippets/component-wise-two-color-bfs.cpp) · [Full source](originals/785__2174837725.cpp) |
 
 ## Combinations and tricks
 
@@ -54,6 +55,7 @@ Choose by the information that must survive a traversal: component identity, dis
 - **Compose:** Generate neighbors only when a state is processed; mark them when enqueued; seed all sources at distance zero and freeze each current layer when measuring time.
 - **Invariant:** The first enqueue fixes the shortest unweighted distance. Registering a visited state before following edges also prevents cyclic DFS/clone recursion from repeating it.
 - **Tradeoff / sources:** [Lock BFS](originals/752__2156069275.cpp) and [simultaneous grid spread](originals/994__2155965323.cpp) maintain this invariant. [Word mutation](originals/127__2157580907.cpp) erases dictionary entries on enqueue and costs expected O(wL²) for w length-L words and a fixed alphabet, counting O(L) string hashing; storage is O(wL). The [older word source](originals/127__2157579775.cpp) inserts absent generated strings through operator[] and allows duplicate queued states. [Graph cloning](originals/133__2155372665.cpp) registers each new clone before recursing.
+- **Two-color certificate:** [The component loop and helper](snippets/component-wise-two-color-bfs.cpp) use zero for undiscovered and one/two for the bipartition sides. Assign the opposite color before enqueueing a neighbor; an edge joining equal colors rejects the graph. Restart from every remaining uncolored vertex so disconnected components are checked. Each discovery fixes parity relative to its component root; an inconsistent edge exposes an odd cycle. Coloring before enqueue gives O(V+E) time and O(V) colors/queue, with no extra adjacency copy or recursion. The literal layer-size loop is unnecessary for the parity proof but remains unchanged. Valid indexes and the undirected input contract are required. [Full original](originals/785__2174837725.cpp).
 
 ### Expand BFS state, then discard dominated resource labels
 
@@ -516,3 +518,9 @@ BFS (row,col,trash_mask,energy,moves); recharge cells restore energy; keep best 
 Eight-neighbor, single-source layered BFS using the grid itself as the discovered set. Mark every zero as one when enqueued, including the start. The distance counter starts at one because the answer counts visited cells, so an open 1x1 grid returns one. O(rc) time and O(rc) worst-case queue space; eight direction offsets are constant space. Blocked endpoints return -1 immediately; other searches permanently mutate discovered cells. Diagonal movement checks only the destination, with no corner-blocking rule.
 
 - [Original 2171171780](originals/1091__2171171780.cpp) · [LeetCode submission](https://leetcode.com/problems/shortest-path-in-binary-matrix/submissions/2171171780/)
+
+### 785. Is Graph Bipartite?
+
+[Problem](https://leetcode.com/problems/is-graph-bipartite/)
+
+- [Original 2174837725](originals/785__2174837725.cpp) · [LeetCode submission](https://leetcode.com/problems/is-graph-bipartite/submissions/2174837725/). Both the outer disconnected-component loop and coloring helper are retained as one contiguous excerpt. Colors are assigned before enqueueing. Requires valid vertex indexes and the original undirected graph contract.

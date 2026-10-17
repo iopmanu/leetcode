@@ -2,9 +2,9 @@
 
 Start with an algorithm or a reusable trick, learn how its state composes with another structure, then open the exact implementation. Problems are examples and source references, collected at the end of each chapter.
 
-All implementation links lead to **VanyushaDoronin's unchanged captured LeetCode code**: **417 accepted submission records, 294 problems, 103 literal snippets, 11 topics**. Explanations organize the originals; no new algorithm implementations are supplied.
+All implementation links lead to **VanyushaDoronin's unchanged captured LeetCode code**: **434 accepted submission records, 309 problems, 116 literal snippets, 11 topics**. Explanations organize the originals; no new algorithm implementations are supplied.
 
-Latest incremental source update: **14 October 2026**. The last complete exposed-history audit remains **10 October 2026**; [coverage](COVERAGE.md) keeps those scopes separate.
+Latest incremental source update: **17 October 2026**. The last complete exposed-history audit remains **10 October 2026**; [coverage](COVERAGE.md) keeps those scopes separate.
 
 ## Start here
 
@@ -58,6 +58,10 @@ These are compositions actually present in the captured sources, not a list of h
 | Need the immediate next multiset arrangement | Rightmost pivot + smallest increase + suffix reversal | Preserve the longest prefix, then minimize the tail | [Next permutation](topics/search-and-sort/snippets/lexicographic-pivot-suffix-reversal.cpp) |
 | Leaves need the complete ancestor path | Depth-indexed buffer + leaf-only evaluation | Only the current prefix is read; leaf rescans determine cost | [Path-buffer method](topics/trees-and-lists/snippets/shared-path-buffer-leaf-evaluation.cpp) |
 | A fixed sum must maximize bounded digit squares | Concentrate mass + quotient/remainder + descending construction | At most one digit is neither zero nor nine | [Digit concentration](topics/math-and-bits/snippets/bounded-digit-concentration.cpp) |
+| Static rectangle totals need four boundary terms | Padded 2D prefixes + inclusion–exclusion | Subtract excluded strips and restore their shared corner | [Rectangle sums](topics/range-queries/snippets/padded-2d-prefix-rectangle.cpp) |
+| One new value changes a whole interval of subarray starts | Last occurrence + additive lazy first/second moments | Update Σx² using the old Σx, then update Σx | [Distinct-count moments](topics/range-queries/snippets/last-occurrence-lazy-moments.cpp) |
+| A unique sorted arrangement is reached by arbitrary swaps | Original indexes + permutation cycles | A cycle of length c contributes c−1 swaps | [Cycle count](topics/search-and-sort/snippets/composite-key-permutation-cycles.cpp) |
+| Sorted tree values must be consumed incrementally | Deferred left spine + stack | The stack top is the next unvisited inorder node | [Lazy iterator](topics/trees-and-lists/snippets/deferred-inorder-stack-iterator.cpp) |
 
 ## Read the cost of this implementation
 
@@ -98,4 +102,4 @@ For an additional byte-for-byte comparison with the separately retained normaliz
 python3 tools/check_originals.py --capture-json /path/to/normalized-records.json
 ```
 
-The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 103 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.
+The original-source checker verifies recorded hashes, source IDs, local paths, source coverage, and that every original is linked from its topic index. The snippet checker verifies that all 116 excerpts are literal source slices. Neither checker compiles the solutions or asserts that every algorithm works outside its original LeetCode context.

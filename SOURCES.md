@@ -2,7 +2,7 @@
 
 Every implementation here is an unchanged local copy of a captured accepted C++ submission. The [manifest](sources.json) records its SHA-256; the [coverage page](COVERAGE.md) documents aggregate history-verification results and unresolved count differences. Problem and submission links point back to LeetCode.
 
-417 submission records · 294 problems · 407 distinct code texts.
+434 submission records · 309 problems · 424 distinct code texts.
 
 ## Range queries
 
@@ -1361,4 +1361,69 @@ Every implementation here is an unchanged local copy of a captured accepted C++ 
 ### [129. Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
 
 - [Original 2172498569](topics/trees-and-lists/originals/129__2172498569.cpp) · [LeetCode submission](https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/2172498569/)
+
+
+## Additional sources captured on 17 October 2026
+
+### [304. Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/)
+
+- [Original 2174886009](topics/range-queries/originals/304__2174886009.cpp) · [LeetCode submission](https://leetcode.com/problems/range-sum-query-2d-immutable/submissions/2174886009/)
+
+### [554. Brick Wall](https://leetcode.com/problems/brick-wall/)
+
+- [Original 2174864553](topics/windows-and-prefixes/originals/554__2174864553.cpp) · [LeetCode submission](https://leetcode.com/problems/brick-wall/submissions/2174864553/)
+
+### [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/)
+
+- [Original 2174855744](topics/dp-and-backtracking/originals/36__2174855744.cpp) · [LeetCode submission](https://leetcode.com/problems/valid-sudoku/submissions/2174855744/)
+
+### [451. Sort Characters By Frequency](https://leetcode.com/problems/sort-characters-by-frequency/)
+
+- [Original 2174851351](topics/search-and-sort/originals/451__2174851351.cpp) · [LeetCode submission](https://leetcode.com/problems/sort-characters-by-frequency/submissions/2174851351/)
+
+### [416. Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)
+
+- [Original 2174848246](topics/dp-and-backtracking/originals/416__2174848246.cpp) · [LeetCode submission](https://leetcode.com/problems/partition-equal-subset-sum/submissions/2174848246/)
+
+### [785. Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)
+
+- [Original 2174837725](topics/dsu-and-graphs/originals/785__2174837725.cpp) · [LeetCode submission](https://leetcode.com/problems/is-graph-bipartite/submissions/2174837725/)
+
+### [3551. Minimum Swaps to Sort by Digit Sum](https://leetcode.com/problems/minimum-swaps-to-sort-by-digit-sum/)
+
+- [Original 2174794356](topics/search-and-sort/originals/3551__2174794356.cpp) · [LeetCode submission](https://leetcode.com/problems/minimum-swaps-to-sort-by-digit-sum/submissions/2174794356/)
+
+### [2916. Subarrays Distinct Element Sum of Squares II](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-ii/)
+
+- [Original 2174770149](topics/range-queries/originals/2916__2174770149.cpp) · [LeetCode submission](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-ii/submissions/2174770149/)
+
+### [2913. Subarrays Distinct Element Sum of Squares I](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-i/)
+
+- [Original 2173332289](topics/range-queries/originals/2913__2173332289.cpp) · [LeetCode submission](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-i/submissions/2173332289/)
+
+### [236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+
+- [Original 2173321274](topics/trees-and-lists/originals/236__2173321274.cpp) · [LeetCode submission](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/submissions/2173321274/)
+- [Original 2173316848](topics/trees-and-lists/originals/236__2173316848.cpp) · [LeetCode submission](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/submissions/2173316848/)
+
+### [450. Delete Node in a BST](https://leetcode.com/problems/delete-node-in-a-bst/)
+
+- [Original 2173191498](topics/trees-and-lists/originals/450__2173191498.cpp) · [LeetCode submission](https://leetcode.com/problems/delete-node-in-a-bst/submissions/2173191498/)
+
+### [173. Binary Search Tree Iterator](https://leetcode.com/problems/binary-search-tree-iterator/)
+
+- [Original 2173130008](topics/trees-and-lists/originals/173__2173130008.cpp) · [LeetCode submission](https://leetcode.com/problems/binary-search-tree-iterator/submissions/2173130008/)
+
+### [701. Insert into a Binary Search Tree](https://leetcode.com/problems/insert-into-a-binary-search-tree/)
+
+- [Original 2172963709](topics/trees-and-lists/originals/701__2172963709.cpp) · [LeetCode submission](https://leetcode.com/problems/insert-into-a-binary-search-tree/submissions/2172963709/)
+
+### [904. Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets/)
+
+- [Original 2172918744](topics/windows-and-prefixes/originals/904__2172918744.cpp) · [LeetCode submission](https://leetcode.com/problems/fruit-into-baskets/submissions/2172918744/)
+- [Original 2172918509](topics/windows-and-prefixes/originals/904__2172918509.cpp) · [LeetCode submission](https://leetcode.com/problems/fruit-into-baskets/submissions/2172918509/)
+
+### [113. Path Sum II](https://leetcode.com/problems/path-sum-ii/)
+
+- [Original 2172506136](topics/trees-and-lists/originals/113__2172506136.cpp) · [LeetCode submission](https://leetcode.com/problems/path-sum-ii/submissions/2172506136/)
 

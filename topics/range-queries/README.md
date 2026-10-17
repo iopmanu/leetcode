@@ -14,6 +14,8 @@ Choose the summary a range must return, then the update it must support. These l
 | Lazy assignment + maximum: overwrite an interval and query its highest point | O(log n) per range operation; compressed event processing O(n log n) including sort | O(n) | [Assignment tree](snippets/lazy-segment-tree-699.cpp) · [Full compression/event loop](originals/699__2155079538.cpp) |
 | Lazy chmin + point query: intervals offer costs to covered coordinates | Initialization O(M); O(log M) per update/in-range point query; total O(M + (I+Q) log M) | O(M), not O(I+Q) | [Range-chmin tree](snippets/segment-tree-range-chmin.cpp) · [Full raw-coordinate source](originals/1851__2168532079.cpp) |
 | Ordered product/prefix-count segment tree: merge a noncommutative summary | Build O(nk); update/query O(k log n), with k ≤ 5 | O(n) actual fixed six-slot arrays; O(log n) query stack | [Ordered merge](snippets/ordered-product-segment-tree-3525.cpp) · [Full source](originals/3525__2150176033.cpp) |
+| Padded 2D prefix sums: immutable rectangle totals | Build Θ(rc); query Θ(1) | Θ((r+1)(c+1)) int table | [Rectangle inclusion–exclusion](snippets/padded-2d-prefix-rectangle.cpp) · [Full source](originals/304__2174886009.cpp) |
+| Additive lazy tree of first/second moments + last occurrences | O(U + n log(n+1)) total; U=100001 initialization | O(n+U), including tree and last-seen array | [Exact sweep and tree](snippets/last-occurrence-lazy-moments.cpp) · [Quadratic baseline](originals/2913__2173332289.cpp) |
 
 ## Combinations and tricks
 
@@ -58,6 +60,23 @@ Choose the summary a range must return, then the update it must support. These l
 - **Compose:** A segment tree decomposes the index range; each covered node's sorted vector answers the value condition with lower_bound.
 - **Invariant:** Covered nodes partition the requested range, so their counts add without overlap. lower_bound counts strictly smaller values, preserving duplicate semantics.
 - **Tradeoff / source:** [Suffix counting](originals/315__2150813916.cpp) is O(n log² n), not the O(n log n) of a different merge-counting solution. The [other captured variant](originals/315__2150760829.cpp) guards construction of an empty input; the newer constructor relies on the original nonempty constraint.
+
+### Cancel rectangle overlap with padded prefixes
+
+- **Recognize:** A static matrix must answer many rectangle-sum queries.
+- **Compose:** In [the exact class](snippets/padded-2d-prefix-rectangle.cpp), P[i][j] stores the sum over [0,i)×[0,j). A zero row and column make edge rectangles use the same formula.
+- **Invariant:** Build each entry from the current cell plus upper and left prefixes, subtracting their shared corner. For an inclusive query, subtract the two excluded strips and restore their overlap.
+- **Actual cost / contract:** Build Θ(rc), query Θ(1), table Θ((r+1)(c+1)). The matrix must be nonempty and rectangular; query coordinates must be valid. Arithmetic remains int. This is immutable preprocessing, so subsequent input changes are not reflected.
+- **Original:** [Constructor and rectangle queries](originals/304__2174886009.cpp).
+
+### Turn last occurrences into interval updates of moments
+
+- **Recognize:** For every subarray, a statistic changes only at starts after the incoming value’s previous occurrence, and the objective is a power of that statistic.
+- **Compose:** [The exact sweep and lazy tree](snippets/last-occurrence-lazy-moments.cpp) keep one leaf per possible left endpoint. At right endpoint i, let p be nums[i]’s previous position. Distinct counts rise by one exactly for starts in [p+1,i]. Update that interval, then add the root’s sum of squared counts to the answer.
+- **Invariant:** After processing i, each active leaf l stores the distinct count in nums[l..i]; future starts remain zero. A node stores both Σx and Σx². Adding v to every value in a segment of length L changes the square sum by 2vΣx + Lv² and the first moment by Lv. The square update must read the old first moment. Pending additions compose by addition, modulo the same MOD.
+- **Actual cost / contract:** The zero-initialized tree costs O(n); the last-seen array always initializes U=100001 entries. Total O(U+n log(n+1)) time and O(n+U) space, including O(log n) update recursion. Values directly index that fixed domain; no coordinate compression is performed. Widened intermediate arithmetic and modulo are retained exactly.
+- **Baseline comparison:** [The smaller-constraint original](originals/2913__2173332289.cpp) starts a new unordered_set at every left endpoint, extends rightward, and adds seen.size()². It costs expected O(n²) time and O(n) live set space; adversarial hash collisions can make it O(n³). It retains int accumulation without modulo under its original small bounds. This repeats work instead of batching affected starts; it is preserved without another duplicate enumeration snippet.
+- **Original:** [Moment tree and last-occurrence sweep](originals/2916__2174770149.cpp). The general rule for pending tags is discussed above under “Match the lazy tag to its algebra.”
 
 ## Problem and source appendix
 
@@ -135,3 +154,21 @@ Each node stores full product modulo k plus counts of prefix-product remainders;
 **Captured variants:** One source; important richer aggregation pattern.
 
 - [Original 2150176033](originals/3525__2150176033.cpp) · [LeetCode submission](https://leetcode.com/problems/find-x-value-of-array-ii/submissions/2150176033/)
+
+### 304. Range Sum Query 2D - Immutable
+
+[Problem](https://leetcode.com/problems/range-sum-query-2d-immutable/)
+
+- [Original 2174886009](originals/304__2174886009.cpp) · [LeetCode submission](https://leetcode.com/problems/range-sum-query-2d-immutable/submissions/2174886009/). Exact NumMatrix class, including the stored int table, constructor and constant-time rectangle query. Requires a nonempty rectangular matrix, valid coordinates and the original integer bounds; updates are not supported.
+
+### 2916. Subarrays Distinct Element Sum of Squares II
+
+[Problem](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-ii/)
+
+- [Original 2174770149](originals/2916__2174770149.cpp) · [LeetCode submission](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-ii/submissions/2174770149/). Full exact class keeps the modular first/second-moment tree, additive lazy tags and last-occurrence sweep together. Values index a fixed 100001-entry array; the squared aggregate must be updated using the previous first moment.
+
+### 2913. Subarrays Distinct Element Sum of Squares I
+
+[Problem](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-i/)
+
+- [Original 2173332289](originals/2913__2173332289.cpp) · [LeetCode submission](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-i/submissions/2173332289/). Quadratic baseline for the distinct-count square objective: restart a hash set at each left boundary and extend rightward. Expected O(n²) time and O(n) live set space; int accumulation follows the smaller original constraints.

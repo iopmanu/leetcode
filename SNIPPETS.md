@@ -11,7 +11,7 @@ Choose the state you need to maintain, then open its implementation. [Topic tabl
 | Interval totals, coverage, or outstanding counts | [Prefix frequencies](topics/windows-and-prefixes/snippets/prefix-sum-frequency.cpp), [difference array](topics/windows-and-prefixes/snippets/difference-array-capacity.cpp), [covering window](topics/windows-and-prefixes/snippets/minimum-covering-window.cpp), [product endings](topics/windows-and-prefixes/snippets/positive-product-window.cpp), [distinct-window sum](topics/windows-and-prefixes/snippets/fixed-window-distinct-sum.cpp) | [Algebra + count state](topics/windows-and-prefixes/README.md#combinations-and-tricks) |
 | A frontier of undominated candidates | [Histogram stack](topics/monotonic-and-heaps/snippets/histogram-monotonic-stack.cpp), [prefix-sum deque](topics/monotonic-and-heaps/snippets/shortest-subarray-monotonic-deque.cpp) | [Dominance + expiry](topics/monotonic-and-heaps/README.md#combinations-and-tricks) |
 | Dynamic rank, range sum, or aggregated intervals | [Fenwick](topics/range-queries/snippets/fenwick-307.cpp), [merge-sort tree](topics/range-queries/snippets/merge-sort-tree-315.cpp), [kth empty slot](topics/range-queries/snippets/order-statistic-segment-tree-406.cpp) | [Compression + counting + descent](topics/range-queries/README.md#combinations-and-tricks) |
-| Range updates with a composable pending operation | [Assignment/max](topics/range-queries/snippets/lazy-segment-tree-699.cpp), [chmin/min](topics/range-queries/snippets/segment-tree-range-chmin.cpp), [ordered product aggregate](topics/range-queries/snippets/ordered-product-segment-tree-3525.cpp) | [Lazy operation and merge invariants](topics/range-queries/README.md#combinations-and-tricks) |
+| Range updates with a composable pending operation | [Assignment/max](topics/range-queries/snippets/lazy-segment-tree-699.cpp), [chmin/min](topics/range-queries/snippets/segment-tree-range-chmin.cpp), [ordered product aggregate](topics/range-queries/snippets/ordered-product-segment-tree-3525.cpp), [additive moments](topics/range-queries/snippets/last-occurrence-lazy-moments.cpp) | [Lazy operation and merge invariants](topics/range-queries/README.md#combinations-and-tricks) |
 | Components under additions | [Union-find](topics/dsu-and-graphs/snippets/union-find-struct.cpp), [reverse-time DSU](topics/dsu-and-graphs/snippets/reverse-dsu-last-day-to-cross.cpp), [Kruskal](topics/dsu-and-graphs/snippets/kruskal-min-cost-connect-points.cpp) | [Connectivity + time reversal or edge order](topics/dsu-and-graphs/README.md#combinations-and-tricks) |
 | A reachable frontier, shortest cost, or bottleneck | [Multi-source BFS](topics/dsu-and-graphs/snippets/bfs-multi-source-rotting-oranges.cpp), [Dijkstra](topics/dsu-and-graphs/snippets/dijkstra-network-delay.cpp), [minimax Dijkstra](topics/dsu-and-graphs/snippets/dijkstra-minimax-grid.cpp) | [Traversal + path-state choice](topics/dsu-and-graphs/README.md#combinations-and-tricks) |
 | Dependency or cut information | [Kahn order](topics/dsu-and-graphs/snippets/topological-sort-kahn.cpp), [cycle states](topics/dsu-and-graphs/snippets/directed-cycle-dfs.cpp), [lowlink bridges](topics/dsu-and-graphs/snippets/tarjan-bridges.cpp) | [Traversal order + summaries](topics/dsu-and-graphs/README.md#combinations-and-tricks) |
@@ -23,7 +23,7 @@ Choose the state you need to maintain, then open its implementation. [Topic tabl
 
 ## What the excerpts preserve
 
-All **103 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
+All **116 `.cpp` fragments** are unchanged contiguous slices of captured submissions. Names, types, indentation, comments, helpers, and quirks remain as written. Some need the original class, includes, LeetCode node types, or caller: the context below each link identifies these dependencies. [Full originals](SOURCES.md) retain the complete submitted code; [snippet provenance](snippets.json) records the exact ranges.
 
 The snippets are not a newly designed standalone library. `tools/verify_snippets.py` verifies exact equality, not correctness for arbitrary inputs.
 
@@ -141,6 +141,11 @@ Original: [692. Top K Frequent Words](topics/search-and-sort/originals/692__2170
 
 Full unchanged Solution class; includes and judge harness are outside the excerpt. Count strings, quickselect the worst-to-best rank boundary using frequency and reverse lexical ties, copy the retained suffix, then sort only that output by the desired order. This is a comparator-sensitive extension of existing frequency selection, not a new quickselect implementation. String hashing, copies and comparisons are not constant-cost. See the linked topic table for literal time and space costs and the combinations section for limitations.
 
+### [Composite-key sorting with permutation-cycle swap counts](topics/search-and-sort/snippets/composite-key-permutation-cycles.cpp)
+
+Original: [3551. Minimum Swaps to Sort by Digit Sum](topics/search-and-sort/originals/3551__2174794356.cpp#L3-L54) · [submission 2174794356](https://leetcode.com/problems/minimum-swaps-to-sort-by-digit-sum/submissions/2174794356/)
+
+Exact method retains original indexes, caches digit sums, sorts by digit sum then value, and sums cycle lengths minus one. The minimum-swap argument relies on the original distinct positive values; equal-value assignment is not solved here.
 
 ## Maintain window and prefix state
 
@@ -195,6 +200,17 @@ Original: [2958. Length of Longest Subarray With at Most K Frequency](topics/win
 
 Full unchanged source. Expected O(n) time and O(u) auxiliary map space, including retained zero-frequency keys. Assumes k >= 1; the left<right guard would not remove a singleton for k=0. No source changes or added guard.
 
+### [Internal prefix boundaries with complementary crossing count](topics/windows-and-prefixes/snippets/internal-boundary-frequency.cpp)
+
+Original: [554. Brick Wall](topics/windows-and-prefixes/originals/554__2174864553.cpp#L3-L23) · [submission 2174864553](https://leetcode.com/problems/brick-wall/submissions/2174864553/)
+
+Exact method: accumulate row-end coordinates in long long, exclude the common outer edge, and scan the histogram for its maximum. Positive equal-width rows are assumed; an empty histogram returns the wall height.
+
+### [At-most-k distinct window with zero-count key removal](topics/windows-and-prefixes/snippets/at-most-k-live-frequency-keys.cpp)
+
+Original: [904. Fruit Into Baskets](topics/windows-and-prefixes/originals/904__2172918744.cpp#L7-L29) · [submission 2172918744](https://leetcode.com/problems/fruit-into-baskets/submissions/2172918744/)
+
+Exact helper uses the number of live frequency-map keys as its feasibility certificate. The wrapper passes baskets=2. Zero counts are erased, width is computed from indexes, and the unused currentFrequencies variable remains unchanged.
 
 ## Keep undominated or ordered candidates
 
@@ -308,6 +324,17 @@ Original: [1851. Minimum Interval to Include Each Query](topics/range-queries/or
 
 Complete original nested SegmentTree definition, including tree, lazy, capacity, public methods, private overloads, and index helpers. Pending updates compose with min; INT_MAX means no pending bound and is the disjoint-query identity. The original caller allocates maxEnd+1 raw coordinates and makes point queries. Initialization/storage are linear in that coordinate capacity, with logarithmic updates and queries. No coordinate compression, bounds checks, or interface changes were added.
 
+### [Padded 2D prefixes with rectangle inclusion–exclusion](topics/range-queries/snippets/padded-2d-prefix-rectangle.cpp)
+
+Original: [304. Range Sum Query 2D - Immutable](topics/range-queries/originals/304__2174886009.cpp#L1-L19) · [submission 2174886009](https://leetcode.com/problems/range-sum-query-2d-immutable/submissions/2174886009/)
+
+Exact NumMatrix class, including the stored int table, constructor and constant-time rectangle query. Requires a nonempty rectangular matrix, valid coordinates and the original integer bounds; updates are not supported.
+
+### [Last-occurrence intervals with lazy first and second moments](topics/range-queries/snippets/last-occurrence-lazy-moments.cpp)
+
+Original: [2916. Subarrays Distinct Element Sum of Squares II](topics/range-queries/originals/2916__2174770149.cpp#L1-L71) · [submission 2174770149](https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-ii/submissions/2174770149/)
+
+Full exact class keeps the modular first/second-moment tree, additive lazy tags and last-occurrence sweep together. Values index a fixed 100001-entry array; the squared aggregate must be updated using the previous first moment.
 
 ## Compose connectivity and traversal
 
@@ -452,6 +479,11 @@ Original: [1091. Shortest Path in Binary Matrix](topics/dsu-and-graphs/originals
 
 Full unchanged Solution wrapper. O(rc) time, O(rc) worst-case queue space, constant-sized direction storage. Generates all eight offsets, marks grid zeroes as one on enqueue, and never restores them. path begins at one to count cells, so an open singleton returns one. Diagonals require only an open destination, not open orthogonal corner cells. Assumes a nonempty binary grid and returns a length without path reconstruction.
 
+### [Component-wise BFS with a two-color edge certificate](topics/dsu-and-graphs/snippets/component-wise-two-color-bfs.cpp)
+
+Original: [785. Is Graph Bipartite?](topics/dsu-and-graphs/originals/785__2174837725.cpp#L3-L44) · [submission 2174837725](https://leetcode.com/problems/is-graph-bipartite/submissions/2174837725/)
+
+Both the outer disconnected-component loop and coloring helper are retained as one contiguous excerpt. Colors are assigned before enqueueing. Requires valid vertex indexes and the original undirected graph contract.
 
 ## Propagate summaries and reconnect pointers
 
@@ -499,6 +531,41 @@ Original: [129. Sum Root to Leaf Numbers](topics/trees-and-lists/originals/129__
 
 The exact scalar-prefix method uses integer multiply/add, returns completed leaf values, and sums child results; unused locals are preserved.
 
+### [General-tree LCA from returned subtree evidence](topics/trees-and-lists/snippets/postorder-general-tree-lca.cpp)
+
+Original: [236. Lowest Common Ancestor of a Binary Tree](topics/trees-and-lists/originals/236__2173321274.cpp#L12-L21) · [submission 2173321274](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/submissions/2173321274/)
+
+Exact recursive method compares node pointers, returns a found target immediately, and combines non-null child answers. Assumes both targets exist; a single present target can otherwise be returned without proving the other exists.
+
+### [BST deletion with predecessor replacement and subtree reconnection](topics/trees-and-lists/snippets/bst-delete-predecessor-reconnect.cpp)
+
+Original: [450. Delete Node in a BST](topics/trees-and-lists/originals/450__2173191498.cpp#L3-L30) · [submission 2173191498](https://leetcode.com/problems/delete-node-in-a-bst/submissions/2173191498/)
+
+Exact method reconnects returned subtree roots, deletes removed nodes, and copies the maximum left-subtree value in the two-child case. Preserves mutation, ownership and distinct-key assumptions.
+
+### [Deferred inorder traversal with a left-spine stack](topics/trees-and-lists/snippets/deferred-inorder-stack-iterator.cpp)
+
+Original: [173. Binary Search Tree Iterator](topics/trees-and-lists/originals/173__2173130008.cpp#L1-L30) · [submission 2173130008](https://leetcode.com/problems/binary-search-tree-iterator/submissions/2173130008/)
+
+Full exact iterator class preserves the deferred left spine and raw TreeNode pointers. next requires a nonempty stack; traversal assumes the tree remains alive and structurally stable.
+
+### [BST insertion by reconnecting returned subtree roots](topics/trees-and-lists/snippets/bst-insert-returned-subtree.cpp)
+
+Original: [701. Insert into a Binary Search Tree](topics/trees-and-lists/originals/701__2172963709.cpp#L14-L30) · [submission 2172963709](https://leetcode.com/problems/insert-into-a-binary-search-tree/submissions/2172963709/)
+
+Exact method and recursive closure allocate one node at the first null link and reconnect the returned root. Equal values would go left; the original distinct-value contract and mutable tree ownership remain unchanged.
+
+### [Shared root-to-leaf path with conditional output copies](topics/trees-and-lists/snippets/shared-path-output-copy.cpp)
+
+Original: [113. Path Sum II](topics/trees-and-lists/originals/113__2172506136.cpp#L14-L41) · [submission 2172506136](https://leetcode.com/problems/path-sum-ii/submissions/2172506136/)
+
+Exact method pairs push/pop of a shared path with a by-value running sum, copying the path only for matching leaves. Include output-copy work and storage; int accumulation retains the original bounds.
+
+### [Two retained root paths with a common-prefix LCA](topics/trees-and-lists/snippets/retained-path-common-prefix-lca.cpp)
+
+Original: [236. Lowest Common Ancestor of a Binary Tree](topics/trees-and-lists/originals/236__2173316848.cpp#L12-L49) · [submission 2173316848](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/submissions/2173316848/)
+
+Exact earlier method searches separately for each target, preserves each successful pointer path, and compares their common prefix. Unsuccessful branches pop their nodes. Both path vectors, recursion and pointer identity are retained.
 
 ## Memoize states and restore choices
 
@@ -559,6 +626,11 @@ Original: [931. Minimum Falling Path Sum](topics/dp-and-backtracking/originals/9
 
 Full unchanged Solution wrapper. Expected O(rc) time; O(rc) local hash memo and O(r) recursion, no input mutation. Row-increasing transitions permit negative costs and make the suffix answer independent of the starting column. Bounds are checked before packing two 32-bit coordinates. Preserves the extra j == m call, uncached terminal cells, 1e7 impossible sentinel and C++20 contains. Sentinel safety and nonempty input rely on the original source contract.
 
+### [Index and selected-sum memoization with include-or-skip choices](topics/dp-and-backtracking/snippets/index-selected-sum-memo.cpp)
+
+Original: [416. Partition Equal Subset Sum](topics/dp-and-backtracking/originals/416__2174848246.cpp#L3-L23) · [submission 2174848246](https://leetcode.com/problems/partition-equal-subset-sum/submissions/2174848246/)
+
+Exact method, including the fixed 201×20001 int local memo and full initialization. It explores full selected sums without odd-total or half-target pruning; nonnegative values, original bounds and sufficient stack space are required.
 
 ## Reuse prefixes and encode strings
 
